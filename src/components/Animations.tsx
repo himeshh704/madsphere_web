@@ -127,19 +127,19 @@ export function FloatingOrbs() {
       <motion.div
         animate={{ x: [0, 100, -50, 0], y: [0, -80, 60, 0], scale: [1, 1.2, 0.9, 1] }}
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[15%] left-[10%] w-[400px] h-[400px] rounded-full opacity-[0.04] dark:opacity-[0.06]"
+        className="absolute top-[15%] left-[10%] w-[200px] md:w-[400px] h-[200px] md:h-[400px] rounded-full opacity-[0.04] dark:opacity-[0.06]"
         style={{ background: "radial-gradient(circle, #0047FF 0%, transparent 70%)" }}
       />
       <motion.div
         animate={{ x: [0, -70, 90, 0], y: [0, 100, -40, 0], scale: [1, 0.8, 1.1, 1] }}
         transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[55%] right-[5%] w-[500px] h-[500px] rounded-full opacity-[0.03] dark:opacity-[0.05]"
+        className="absolute top-[55%] right-[5%] w-[250px] md:w-[500px] h-[250px] md:h-[500px] rounded-full opacity-[0.03] dark:opacity-[0.05]"
         style={{ background: "radial-gradient(circle, #7C3AED 0%, transparent 70%)" }}
       />
       <motion.div
         animate={{ x: [0, 60, -80, 0], y: [0, -60, 80, 0] }}
         transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-[10%] left-[30%] w-[350px] h-[350px] rounded-full opacity-[0.03] dark:opacity-[0.04]"
+        className="absolute bottom-[10%] left-[30%] w-[180px] md:w-[350px] h-[180px] md:h-[350px] rounded-full opacity-[0.03] dark:opacity-[0.04]"
         style={{ background: "radial-gradient(circle, #DB2777 0%, transparent 70%)" }}
       />
     </div>
@@ -149,8 +149,10 @@ export function FloatingOrbs() {
 export function MagneticWrap({ children, className }: { children: React.ReactNode; className?: string }) {
   const x = useSpring(0, { stiffness: 200, damping: 15 });
   const y = useSpring(0, { stiffness: 200, damping: 15 });
+  const isTouch = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isTouch) return;
     const r = e.currentTarget.getBoundingClientRect();
     x.set((e.clientX - r.left - r.width / 2) * 0.3);
     y.set((e.clientY - r.top - r.height / 2) * 0.3);

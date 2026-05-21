@@ -8,12 +8,12 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { ArrowRight, Play } from "lucide-react";
-import Navbar from "@/components/Navbar";
 import Marquee from "@/components/Marquee";
 import ExpertiseScroll from "@/components/ExpertiseScroll";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
-import { CustomCursor, TextReveal, AnimatedCounter, FloatingOrbs, MagneticWrap } from "@/components/Animations";
+import { TextReveal, AnimatedCounter, FloatingOrbs, MagneticWrap } from "@/components/Animations";
 import { fadeUp, scaleIn, stagger, slideIn } from "@/lib/motion";
 import { heroCards, socials, stats, works, process, clients } from "@/data/site";
 
@@ -32,7 +32,9 @@ function ParallaxImg({ src, alt, className }: { src: string; alt: string; classN
 function Tilt3D({ children, className }: { children: React.ReactNode; className?: string }) {
   const rx = useSpring(useMotionValue(0), { stiffness: 200, damping: 20 });
   const ry = useSpring(useMotionValue(0), { stiffness: 200, damping: 20 });
+  const isTouch = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isTouch) return;
     const r = e.currentTarget.getBoundingClientRect();
     rx.set(((e.clientY - r.top - r.height / 2) / r.height) * -12);
     ry.set(((e.clientX - r.left - r.width / 2) / r.width) * 12);
@@ -60,6 +62,7 @@ function parseStatNumber(val: string): { num: number; suffix: string } {
 }
 
 export default function Home() {
+  const router = useRouter();
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
@@ -68,31 +71,7 @@ export default function Home() {
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
 
   return (
-    <div className="relative bg-white text-zinc-900 dark:bg-[#050505] dark:text-zinc-100 overflow-x-hidden">
-      <FloatingOrbs />
-      <CustomCursor />
-      <Navbar />
-
-      {/* Mascot — fixed bottom-right peek */}
-      <motion.div
-        initial={{ y: 200, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 2.5, type: "spring", stiffness: 100, damping: 12 }}
-        className="fixed bottom-0 right-6 md:right-12 z-40 pointer-events-auto hidden md:block"
-        data-cursor
-      >
-        <motion.img
-          src="/mascot.png"
-          alt="Madsphere mascot"
-          className="w-20 lg:w-28 h-auto drop-shadow-2xl"
-          style={{ marginBottom: -10 }}
-          animate={{ y: [0, -6, 0], rotate: [0, 2, 0, -2, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          whileHover={{ scale: 1.15, y: -16, rotate: -8 }}
-          draggable={false}
-        />
-      </motion.div>
-
+    <div className="relative overflow-x-hidden">
       {/* Hero */}
       <section id="home" ref={heroRef} className="relative z-10 pt-28 px-4 sm:px-8 max-w-[1700px] mx-auto" style={{ perspective: "1200px" }}>
         <motion.div
@@ -193,14 +172,16 @@ export default function Home() {
               </motion.span>
               <MagneticWrap>
                 <motion.button
+                  onClick={() => router.push('/about')}
                   whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.95 }}
-                  className="self-start flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full transition-colors"
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  className="self-start flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full transition-colors shadow-xl shadow-blue-500/20"
                   data-cursor
                 >
                   Read More
-                  <span className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
-                    <Play className="w-3 h-3 fill-[#0047FF] text-[#0047FF]" />
+                  <span className="w-5 h-5 bg-white rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Play className="w-3 h-3 fill-[#0047FF] text-[#0047FF] ml-0.5" />
                   </span>
                 </motion.button>
               </MagneticWrap>
@@ -237,13 +218,13 @@ export default function Home() {
               <TextReveal>We've helped startups, scale-ups, and established brands cut through the noise</TextReveal>
             </motion.h2>
 
-            <div className="flex gap-4" style={{ height: 380, perspective: "1000px" }}>
+            <div className="flex flex-col sm:flex-row gap-4 h-[280px] sm:h-[380px]" style={{ perspective: "1000px" }}>
               <motion.div
                 initial={{ opacity: 0, rotateY: -25, x: -50 }}
                 whileInView={{ opacity: 1, rotateY: 0, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                className="flex-1"
+                className="flex-1 min-h-0"
               >
                 <Tilt3D className="w-full h-full rounded-xl overflow-hidden">
                   <ParallaxImg src="https://images.unsplash.com/photo-1601506521937-0121a7fc2a6b?q=80&w=900&fit=crop" alt="" className="w-full h-full" />
@@ -254,7 +235,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, rotateY: 0, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="w-[44%]"
+                className="sm:w-[44%] min-h-0"
               >
                 <Tilt3D className="w-full h-full rounded-xl overflow-hidden">
                   <ParallaxImg src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&fit=crop" alt="" className="w-full h-full" />
@@ -330,12 +311,14 @@ export default function Home() {
           >
             <MagneticWrap>
               <motion.button
+                onClick={() => router.push('/works')}
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-8 py-3 rounded-full transition-colors"
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                className="flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-8 py-3 rounded-full transition-colors shadow-xl shadow-blue-500/20"
                 data-cursor
               >
-                View All Work <ArrowRight className="w-4 h-4" />
+                View All Work <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </motion.button>
             </MagneticWrap>
           </motion.div>
@@ -386,35 +369,7 @@ export default function Home() {
         <TestimonialCarousel />
       </section>
 
-      <footer className="relative z-10 bg-[#050505] text-white pt-20 pb-0 overflow-hidden">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-[1400px] mx-auto px-6 md:px-16 flex flex-col items-center text-center"
-        >
-          <h2 className="text-4xl md:text-6xl font-bold mb-8">
-            Ready to make<br />something great?
-          </h2>
-          <MagneticWrap>
-            <motion.button
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-white text-black hover:bg-zinc-100 text-xs font-bold uppercase tracking-widest px-8 py-3 rounded-full transition-colors"
-              data-cursor
-            >
-              Work With Us
-            </motion.button>
-          </MagneticWrap>
-        </motion.div>
-        <p
-          className="mt-16 text-center text-[11vw] font-bold leading-none select-none"
-          style={{ fontFamily: "Georgia, serif", color: "#111" }}
-        >
-          MADSPHERE
-        </p>
-      </footer>
+
     </div>
   );
 }

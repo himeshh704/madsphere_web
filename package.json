@@ -2,6 +2,7 @@
   "name": "madsphere-web",
   "version": "0.1.0",
   "private": true,
+  "author": "Himesh Choudhary",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

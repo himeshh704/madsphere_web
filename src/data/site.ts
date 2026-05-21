@@ -1,8 +1,8 @@
 export const nav = [
-  { label: "Home",             href: "#home" },
-  { label: "About",            href: "#about" },
-  { label: "Works",            href: "#works" },
-  { label: "Career Inquiries", href: "#careers" },
+  { label: "Home",             href: "/" },
+  { label: "About",            href: "/about" },
+  { label: "Works",            href: "/works" },
+  { label: "Career Inquiries", href: "/careers" },
 ] as const;
 
 export const heroCards = [

@@ -23,6 +23,12 @@ export const metadata: Metadata = {
 
 import { ThemeProvider } from "@/components/ThemeProvider";
 
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Mascot from "@/components/Mascot";
+import Preloader from "@/components/Preloader";
+import { FloatingOrbs } from "@/components/Animations";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -41,7 +47,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <Preloader />
+          <FloatingOrbs />
+          <Navbar />
+          <Mascot />
+          <div className="flex-1 flex flex-col">
+            {children}
+          </div>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
