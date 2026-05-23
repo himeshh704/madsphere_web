@@ -5,7 +5,7 @@ This document serves as a comprehensive developer reference for the custom UI an
 ---
 
 ## 1. Initial Load & Route Transition Preloaders
-Located in: [`src/components/Preloader.tsx`](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/components/Preloader.tsx)
+Located in: [`src/components/Preloader.tsx`](./src/components/Preloader.tsx)
 
 We implement two distinct preloader workflows depending on the client lifecycle:
 
@@ -23,7 +23,7 @@ We implement two distinct preloader workflows depending on the client lifecycle:
 ---
 
 ## 2. Page Scroll & Sequential Animations
-Located in: [`src/app/page.tsx`](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/page.tsx)
+Located in: [`src/app/page.tsx`](./src/app/page.tsx)
 
 ### A. How We Work Process Sequence
 - **Connecting Dotted Connectors (Desktop)**: On screens `>= 1024px`, absolute SVG paths connect the right edges of the process steps to the left edges of subsequent columns using S-curve cubic Bezier curves (`d="M ... C ..."`).
@@ -37,7 +37,7 @@ Located in: [`src/app/page.tsx`](file:///c:/Users/choud/.gemini/antigravity/scra
 ---
 
 ## 3. Robust Code Copy & Inspection Protections
-Located in: [`src/components/AntiInspect.tsx`](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/components/AntiInspect.tsx) and [`src/app/globals.css`](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/globals.css)
+Located in: [`src/components/AntiInspect.tsx`](./src/components/AntiInspect.tsx) and [`src/app/globals.css`](./src/app/globals.css)
 
 To protect intellectual property, we block browser source-inspection vectors:
 
@@ -54,7 +54,7 @@ To protect intellectual property, we block browser source-inspection vectors:
 ---
 
 ## 4. Mobile Responsive & Layout Optimizations
-Located in: [`src/app/works/page.tsx`](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/works/page.tsx) and [`src/components/Footer.tsx`](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/components/Footer.tsx)
+Located in: [`src/app/works/page.tsx`](./src/app/works/page.tsx) and [`src/components/Footer.tsx`](./src/components/Footer.tsx)
 
 - **Parallax Guard (Works grid)**: On mobile, the two portfolio columns stack vertically. We use a media query listener (`innerWidth >= 768`) to disable column vertical translations (`y1` and `y2` useTransform) below tablet size. This prevents layout shifting and huge gaps on mobile devices.
 - **Footer CTA Portrait Fixes**:
