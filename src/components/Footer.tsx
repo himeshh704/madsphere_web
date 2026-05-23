@@ -26,8 +26,8 @@ export default function Footer() {
             initial={{ opacity: 0, scale: 0, rotate: -20 }}
             whileInView={{ opacity: 0.8, scale: 1, rotate: -5 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.4, type: "spring", stiffness: 200, damping: 15 }}
-            className="absolute top-[10%] left-[20%] w-16 h-16 md:w-20 md:h-20 -z-0 rounded-lg overflow-hidden mix-blend-screen dark:mix-blend-lighten"
+            transition={{ delay: 0.4, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute top-[10%] left-[20%] w-16 h-16 md:w-20 md:h-20 z-0 rounded-lg overflow-hidden mix-blend-multiply dark:mix-blend-screen"
           >
             <div className="absolute inset-0 bg-red-600 mix-blend-overlay z-10"></div>
             <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&fit=crop" className="w-full h-full object-cover filter grayscale contrast-125" alt="Portrait" />
@@ -36,8 +36,8 @@ export default function Footer() {
             initial={{ opacity: 0, scale: 0, rotate: 20 }}
             whileInView={{ opacity: 0.8, scale: 1, rotate: 5 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.6, type: "spring", stiffness: 200, damping: 15 }}
-            className="absolute top-[20%] right-[15%] w-16 h-16 md:w-20 md:h-20 -z-0 rounded-lg overflow-hidden mix-blend-screen dark:mix-blend-lighten"
+            transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute top-[20%] right-[15%] w-16 h-16 md:w-20 md:h-20 z-0 rounded-lg overflow-hidden mix-blend-multiply dark:mix-blend-screen"
           >
             <div className="absolute inset-0 bg-red-600 mix-blend-overlay z-10"></div>
             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&fit=crop" className="w-full h-full object-cover filter grayscale contrast-125" alt="Portrait" />
