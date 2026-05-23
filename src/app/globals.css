@@ -35,7 +35,28 @@ body {
   font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  
+  /* Prevent selecting text or dragging images globally */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
+
+/* Allow selection in form inputs/textareas for normal usability */
+input, textarea, select {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Block media element dragging globally */
+img, video {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
 
 /* Glassmorphism utility */
 .glass {

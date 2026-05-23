@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
 import { TextReveal } from "@/components/Animations";
 import { works } from "@/data/site";
@@ -32,24 +32,31 @@ function TiltCard({ children, className }: { children: React.ReactNode; classNam
 
 export default function WorksPage() {
   const containerRef = useRef(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end start"] });
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const y2 = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
   return (
     <main className="pt-40 pb-32 min-h-screen px-6 md:px-12 max-w-[1800px] mx-auto overflow-hidden" ref={containerRef}>
-      <div className="flex flex-col gap-6 max-w-4xl mb-16 md:mb-24">
+      <section className="flex flex-col gap-6 max-w-4xl mb-16 md:mb-24">
         <h1 className="text-5xl sm:text-6xl md:text-[8rem] font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 leading-[0.85]">
           <TextReveal>The Archive.</TextReveal>
         </h1>
         <p className="text-xl md:text-2xl text-zinc-500 max-w-2xl font-serif italic mt-6">
           A curated selection of our finest engineering and design accomplishments.
         </p>
-      </div>
+      </section>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
         
-        <motion.div style={{ y: y1 }} className="flex flex-col gap-12 md:gap-32 md:mt-24">
+        <motion.div style={{ y: isDesktop ? y1 : undefined }} className="flex flex-col gap-12 md:gap-32 md:mt-24">
           {works.filter((_, i) => i % 2 === 0).map((work) => (
             <TiltCard key={work.id} className="group relative rounded-3xl overflow-hidden aspect-[4/5] md:aspect-[3/4] cursor-pointer">
               <img 
@@ -73,7 +80,7 @@ export default function WorksPage() {
           ))}
         </motion.div>
 
-        <motion.div style={{ y: y2 }} className="flex flex-col gap-12 md:gap-32">
+        <motion.div style={{ y: isDesktop ? y2 : undefined }} className="flex flex-col gap-12 md:gap-32">
           {works.filter((_, i) => i % 2 === 1).map((work) => (
             <TiltCard key={work.id} className="group relative rounded-3xl overflow-hidden aspect-[4/5] md:aspect-[3/4] cursor-pointer">
               <img 
@@ -97,7 +104,7 @@ export default function WorksPage() {
           ))}
         </motion.div>
 
-      </div>
+      </section>
     </main>
   );
 }

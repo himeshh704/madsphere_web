@@ -165,3 +165,22 @@ export function MagneticWrap({ children, className }: { children: React.ReactNod
     </motion.div>
   );
 }
+
+export function Tilt3D({ children, className }: { children: React.ReactNode; className?: string }) {
+  const rx = useSpring(useMotionValue(0), { stiffness: 200, damping: 20 });
+  const ry = useSpring(useMotionValue(0), { stiffness: 200, damping: 20 });
+  const isTouch = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isTouch) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    rx.set(((e.clientY - r.top - r.height / 2) / r.height) * -12);
+    ry.set(((e.clientX - r.left - r.width / 2) / r.width) * 12);
+  };
+  const onLeave = () => { rx.set(0); ry.set(0); };
+  return (
+    <motion.div style={{ rotateX: rx, rotateY: ry, transformPerspective: 800 }} onMouseMove={onMove} onMouseLeave={onLeave} className={className}>
+      {children}
+    </motion.div>
+  );
+}
+

@@ -40,14 +40,14 @@ export default function CareersPage() {
       <div className={`absolute inset-0 transition-opacity duration-700 pointer-events-none ${activeJob !== null ? 'opacity-90 bg-black' : 'opacity-0'}`} />
 
       <div className="px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
-        <div className="flex flex-col gap-6 max-w-4xl mb-24 md:mb-32">
+        <section className="flex flex-col gap-6 max-w-4xl mb-24 md:mb-32">
           <h1 className="text-5xl sm:text-6xl md:text-[8rem] font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 leading-[0.85] mix-blend-difference text-white">
             <TextReveal>Join the</TextReveal><br/>
             <TextReveal>madness.</TextReveal>
           </h1>
-        </div>
+        </section>
 
-        <div className="border-t-2 border-zinc-900 dark:border-white/20">
+        <section className="border-t-2 border-zinc-900 dark:border-white/20">
           {jobs.map((job, idx) => {
             const isActive = activeJob === idx;
             return (
@@ -99,7 +99,7 @@ export default function CareersPage() {
               </div>
             );
           })}
-        </div>
+        </section>
       </div>
     </main>
   );

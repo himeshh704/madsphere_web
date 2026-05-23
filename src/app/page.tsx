@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   motion,
   useScroll,
@@ -13,39 +13,25 @@ import { ArrowRight, Play } from "lucide-react";
 import Marquee from "@/components/Marquee";
 import ExpertiseScroll from "@/components/ExpertiseScroll";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
-import { TextReveal, AnimatedCounter, FloatingOrbs, MagneticWrap } from "@/components/Animations";
+import { TextReveal, AnimatedCounter, FloatingOrbs, MagneticWrap, Tilt3D } from "@/components/Animations";
 import { fadeUp, scaleIn, stagger, slideIn } from "@/lib/motion";
 import { heroCards, socials, stats, works, process, clients } from "@/data/site";
 
 function ParallaxImg({ src, alt, className }: { src: string; alt: string; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.2, 1.05, 1.2]);
   return (
     <div ref={ref} className={`overflow-hidden ${className ?? ""}`}>
-      <motion.img src={src} alt={alt} style={{ y, scale }} className="w-full h-full object-cover" />
+      <motion.img src={src} alt={alt} style={{ y: mounted ? y : undefined, scale: mounted ? scale : undefined }} className="w-full h-full object-cover" />
     </div>
   );
 }
 
-function Tilt3D({ children, className }: { children: React.ReactNode; className?: string }) {
-  const rx = useSpring(useMotionValue(0), { stiffness: 200, damping: 20 });
-  const ry = useSpring(useMotionValue(0), { stiffness: 200, damping: 20 });
-  const isTouch = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isTouch) return;
-    const r = e.currentTarget.getBoundingClientRect();
-    rx.set(((e.clientY - r.top - r.height / 2) / r.height) * -12);
-    ry.set(((e.clientX - r.left - r.width / 2) / r.width) * 12);
-  };
-  const onLeave = () => { rx.set(0); ry.set(0); };
-  return (
-    <motion.div style={{ rotateX: rx, rotateY: ry, transformPerspective: 800 }} onMouseMove={onMove} onMouseLeave={onLeave} className={className}>
-      {children}
-    </motion.div>
-  );
-}
+
 
 function SectionTag({ label }: { label: string }) {
   return (
@@ -64,6 +50,15 @@ function parseStatNumber(val: string): { num: number; suffix: string } {
 export default function Home() {
   const router = useRouter();
   const heroRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+    const check = () => setIsDesktop(window.innerWidth >= 1024);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
@@ -78,7 +73,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          style={{ y: textY }}
+          style={{ y: mounted ? textY : undefined }}
           className="mb-5 px-1"
         >
           <img src="/logo.png" alt="Madsphere" className="h-16 md:h-24 w-auto dark:invert" />
@@ -88,11 +83,15 @@ export default function Home() {
           initial={{ opacity: 0, rotateX: 12, scale: 0.88, y: 80 }}
           animate={{ opacity: 1, rotateX: 0, scale: 1, y: 0 }}
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-          style={{ rotateX: heroRotate, scale: heroScale, transformOrigin: "center top" }}
+          style={{ 
+            rotateX: mounted ? heroRotate : undefined, 
+            scale: mounted ? heroScale : undefined, 
+            transformOrigin: "center top" 
+          }}
           className="relative w-full rounded-[24px] overflow-hidden shadow-2xl"
         >
           <div style={{ height: "78vh", minHeight: 500 }} className="relative">
-            <motion.div style={{ y: bgY }} className="absolute inset-0 scale-110">
+            <motion.div style={{ y: mounted ? bgY : undefined }} className="absolute inset-0 scale-110">
               <img src="/hero_gradient_bg.png" alt="" className="w-full h-full object-cover" />
             </motion.div>
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/50" />
@@ -117,7 +116,7 @@ export default function Home() {
               ))}
             </div>
 
-            <motion.div style={{ y: textY }} className="absolute left-8 bottom-[120px] md:bottom-[130px] z-10 max-w-2xl">
+            <motion.div style={{ y: mounted ? textY : undefined }} className="absolute left-8 right-8 bottom-[120px] md:bottom-[130px] md:right-auto z-10 max-w-2xl">
               <h1 className="text-3xl md:text-5xl lg:text-6xl text-white font-semibold leading-[1.1] tracking-tight">
                 <TextReveal>We make brands impossible to ignore.</TextReveal>
               </h1>
@@ -334,27 +333,98 @@ export default function Home() {
           <SectionTag label="Process" />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-start" style={{ perspective: "1000px" }}>
-          {process.map(({ step, title, desc, img }, i) => (
-            <motion.div
-              key={step}
-              initial={{ opacity: 0, rotateY: i % 2 === 0 ? -25 : 25, y: 50 }}
-              whileInView={{ opacity: 1, rotateY: 0, y: 0 }}
+        <div className="relative w-full">
+          {/* Dotted lines connecting process steps on desktop */}
+          <svg className="absolute top-0 left-0 w-full h-[350px] pointer-events-none hidden lg:block z-0" viewBox="0 0 1200 350" preserveAspectRatio="none">
+            {/* Step 1 -> Step 2 */}
+            <motion.path
+              d="M 270,100 C 300,100 300,196 330,196"
+              fill="none"
+              stroke="currentColor"
+              className="text-[#0047FF]/40 dark:text-[#0047FF]/50"
+              strokeWidth="2"
+              strokeDasharray="6,6"
+              initial={{ pathLength: 0, opacity: 0 }}
+              whileInView={{ pathLength: 1, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col gap-4"
-              style={{ marginTop: i % 2 === 1 ? "6rem" : 0 }}
-            >
-              <Tilt3D className="p-7 border border-zinc-200 dark:border-zinc-800 rounded-xl flex flex-col gap-3 cursor-pointer">
-                <span className="text-[10px] font-bold text-zinc-400">[STEP — {step}]</span>
-                <h3 className="text-lg font-bold">{title}</h3>
-                <p className="text-xs text-zinc-500 leading-relaxed">{desc}</p>
-              </Tilt3D>
-              <Tilt3D className="aspect-square rounded-xl overflow-hidden">
-                <ParallaxImg src={img} alt={title} className="w-full h-full" />
-              </Tilt3D>
-            </motion.div>
-          ))}
+              transition={{
+                pathLength: { duration: 0.5, delay: isDesktop ? 0.45 : 0, ease: "easeInOut" },
+                opacity: { duration: 0.2, delay: isDesktop ? 0.45 : 0 }
+              }}
+            />
+            {/* Step 2 -> Step 3 */}
+            <motion.path
+              d="M 570,196 C 600,196 600,100 630,100"
+              fill="none"
+              stroke="currentColor"
+              className="text-[#0047FF]/40 dark:text-[#0047FF]/50"
+              strokeWidth="2"
+              strokeDasharray="6,6"
+              initial={{ pathLength: 0, opacity: 0 }}
+              whileInView={{ pathLength: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{
+                pathLength: { duration: 0.5, delay: isDesktop ? 1.25 : 0, ease: "easeInOut" },
+                opacity: { duration: 0.2, delay: isDesktop ? 1.25 : 0 }
+              }}
+            />
+            {/* Step 3 -> Step 4 */}
+            <motion.path
+              d="M 870,100 C 900,100 900,196 930,196"
+              fill="none"
+              stroke="currentColor"
+              className="text-[#0047FF]/40 dark:text-[#0047FF]/50"
+              strokeWidth="2"
+              strokeDasharray="6,6"
+              initial={{ pathLength: 0, opacity: 0 }}
+              whileInView={{ pathLength: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{
+                pathLength: { duration: 0.5, delay: isDesktop ? 2.05 : 0, ease: "easeInOut" },
+                opacity: { duration: 0.2, delay: isDesktop ? 2.05 : 0 }
+              }}
+            />
+          </svg>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-start relative z-10" style={{ perspective: "1000px" }}>
+            {process.map(({ step, title, desc, img }, i) => {
+              const cardDelay = isDesktop ? i * 0.8 : i * 0.15;
+              return (
+                <motion.div
+                  key={step}
+                  initial={{ 
+                    opacity: 0, 
+                    x: isDesktop ? -40 : 0, 
+                    y: isDesktop ? 0 : 30,
+                    rotateY: isDesktop ? -15 : 0 
+                  }}
+                  whileInView={{ 
+                    opacity: 1, 
+                    x: 0, 
+                    y: 0,
+                    rotateY: 0 
+                  }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ 
+                    duration: 0.8, 
+                    delay: cardDelay, 
+                    ease: [0.16, 1, 0.3, 1] 
+                  }}
+                  className="flex flex-col gap-4"
+                  style={{ marginTop: isDesktop && i % 2 === 1 ? "6rem" : 0 }}
+                >
+                  <Tilt3D className="p-7 border border-zinc-200 dark:border-zinc-800 rounded-xl flex flex-col gap-3 cursor-pointer bg-white/80 dark:bg-black/80 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow">
+                    <span className="text-[10px] font-bold text-zinc-400">[STEP — {step}]</span>
+                    <h3 className="text-lg font-bold">{title}</h3>
+                    <p className="text-xs text-zinc-500 leading-relaxed">{desc}</p>
+                  </Tilt3D>
+                  <Tilt3D className="aspect-square rounded-xl overflow-hidden shadow-sm">
+                    <ParallaxImg src={img} alt={title} className="w-full h-full" />
+                  </Tilt3D>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
