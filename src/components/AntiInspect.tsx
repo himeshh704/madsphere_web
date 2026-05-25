@@ -94,7 +94,7 @@ export default function AntiInspect() {
     return (
       <div className="fixed inset-0 z-[99999] bg-[#070708] text-white flex flex-col items-center justify-center p-6 text-center">
         <div className="flex flex-col items-center gap-6 max-w-md">
-          <img src="/logo.png" alt="Madsphere Logo" className="h-10 md:h-12 w-auto invert opacity-90 mb-4" />
+          <img src="/logo_white.png" alt="Madsphere Logo" className="h-10 md:h-12 w-auto opacity-90 mb-4" />
           <h1 className="text-3xl font-bold tracking-tighter uppercase font-serif text-blue-500">Notice</h1>
           <p className="text-sm text-zinc-400 font-serif leading-relaxed">
             Developer tools and source inspection are disabled on this site.

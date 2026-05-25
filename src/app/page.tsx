@@ -76,7 +76,8 @@ export default function Home() {
           style={{ y: mounted ? textY : undefined }}
           className="mb-5 px-1"
         >
-          <img src="/logo.png" alt="Madsphere" className="h-16 md:h-24 w-auto dark:invert" />
+          <img src="/logo.png" alt="Madsphere" className="h-16 md:h-24 w-auto dark:hidden" />
+          <img src="/logo_white.png" alt="Madsphere" className="h-16 md:h-24 w-auto hidden dark:block" />
         </motion.div>
 
         <motion.div

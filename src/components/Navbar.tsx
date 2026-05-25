@@ -33,7 +33,8 @@ export default function Navbar() {
       <div className="max-w-[1800px] mx-auto px-6 md:px-12 flex items-center justify-between">
 
         <Link href="/" onClick={navigate}>
-          <img src="/logo.png" alt="Madsphere" className="h-6 md:h-7 w-auto dark:invert" />
+          <img src="/logo.png" alt="Madsphere" className="h-6 md:h-7 w-auto dark:hidden" />
+          <img src="/logo_white.png" alt="Madsphere" className="h-6 md:h-7 w-auto hidden dark:block" />
         </Link>
 
         <nav className="hidden md:flex items-center bg-zinc-100/80 dark:bg-zinc-900/80 backdrop-blur rounded-full px-1.5 py-1 border border-zinc-200 dark:border-zinc-800">

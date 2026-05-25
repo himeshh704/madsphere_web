@@ -86,7 +86,7 @@ export default function Preloader() {
                   transition={{ duration: 0.6, ease: "easeOut" }}
                   className="flex flex-col items-center gap-2"
                 >
-                  <img src="/logo.png" alt="Madsphere" className="h-12 md:h-16 w-auto invert opacity-90" />
+                  <img src="/logo_white.png" alt="Madsphere" className="h-12 md:h-16 w-auto opacity-90" />
                   <span className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase mt-2">
                     Loading Experience
                   </span>
@@ -196,7 +196,7 @@ export default function Preloader() {
             ) : (
               // Fast transition preloader for page changes
               <div className="flex flex-col items-center gap-6 overflow-hidden">
-                <img src="/logo.png" alt="Madsphere" className="h-8 md:h-10 w-auto invert opacity-90" />
+                <img src="/logo_white.png" alt="Madsphere" className="h-8 md:h-10 w-auto opacity-90" />
                 <div className="w-36 h-[2px] bg-white/10 relative overflow-hidden rounded-full">
                   <motion.div
                     className="absolute top-0 left-0 bottom-0 bg-white"
