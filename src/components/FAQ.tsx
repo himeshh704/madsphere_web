@@ -30,7 +30,7 @@ const faqs = [
   {
     id: "Q-05",
     question: "Do you offer both design and Webflow development services together?",
-    answer: "Yes! We specialize in end-to-end delivery, meaning we design in Figma and develop in Webflow, Next.js, or whatever stack best suits the project."
+    answer: "Yes! We specialize in end-to-end delivery, designing custom interfaces and developing them in Next.js or whatever modern stack best suits the project requirements."
   },
   {
     id: "Q-06",
