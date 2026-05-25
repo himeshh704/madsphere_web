@@ -26,11 +26,13 @@ export default function Footer() {
             
             {/* Decorative images behind text - Pop up slower and Float */}
             <motion.div 
-              initial={{ opacity: 0, scale: 0, rotate: -25, y: 30 }}
+              inherit={false}
+              initial={{ opacity: 0, scale: 0.8, rotate: -15, y: 100 }}
               whileInView={{ opacity: 1, scale: 1, rotate: -6, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-50px" }}
               whileHover={{ scale: 1.15, rotate: 0, zIndex: 30 }}
-              transition={{ type: "spring", stiffness: 60, damping: 18, delay: 0.3 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
               className="absolute top-[12%] left-[0%] sm:left-[5%] md:left-[10%] lg:left-[15%] w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 z-0 rounded-lg overflow-hidden cursor-pointer shadow-lg border border-white/10 bg-zinc-200 dark:bg-zinc-800"
             >
               <motion.div
@@ -44,11 +46,13 @@ export default function Footer() {
             </motion.div>
             
             <motion.div 
-              initial={{ opacity: 0, scale: 0, rotate: 25, y: 30 }}
+              inherit={false}
+              initial={{ opacity: 0, scale: 0.8, rotate: 15, y: 100 }}
               whileInView={{ opacity: 1, scale: 1, rotate: 6, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-50px" }}
               whileHover={{ scale: 1.15, rotate: 0, zIndex: 30 }}
-              transition={{ type: "spring", stiffness: 60, damping: 18, delay: 0.45 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.35 }}
               className="absolute top-[22%] right-[0%] sm:right-[5%] md:right-[10%] lg:right-[15%] w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 z-0 rounded-lg overflow-hidden cursor-pointer shadow-lg border border-white/10 bg-zinc-200 dark:bg-zinc-800"
             >
               <motion.div
