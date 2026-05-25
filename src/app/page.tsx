@@ -103,10 +103,10 @@ export default function Home() {
                     href={href}
                     target="_blank"
                     rel="noreferrer"
-                    initial={{ opacity: 0, x: 40, rotateY: 45 }}
-                    animate={{ opacity: 1, x: 0, rotateY: 0 }}
+                    initial={{ opacity: 0, x: isDesktop ? 40 : 0, y: isDesktop ? 0 : 20, rotateY: isDesktop ? 45 : 0 }}
+                    animate={{ opacity: 1, x: 0, y: 0, rotateY: 0 }}
                     transition={{ delay: 1.2 + i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    whileHover={{ scale: 1.2, rotateZ: 8 }}
+                    whileHover={{ scale: 1.12, rotateZ: 6 }}
                     className="w-10 h-10 bg-white/30 backdrop-blur-md border border-white/20 rounded-lg flex items-center justify-center text-white text-sm font-semibold"
                     data-cursor
                   >
@@ -172,10 +172,10 @@ export default function Home() {
               <MagneticWrap>
                 <motion.button
                   onClick={() => router.push('/about')}
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  className="self-start flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full transition-colors shadow-xl shadow-blue-500/20"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: "spring", stiffness: 350, damping: 15 }}
+                  className="self-start flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full transition-colors shadow-xl shadow-blue-500/20 cursor-pointer"
                   data-cursor
                 >
                   Read More
@@ -219,8 +219,8 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row gap-4 h-[280px] sm:h-[380px]" style={{ perspective: "1000px" }}>
               <motion.div
-                initial={{ opacity: 0, rotateY: -25, x: -50 }}
-                whileInView={{ opacity: 1, rotateY: 0, x: 0 }}
+                initial={{ opacity: 0, rotateY: isDesktop ? -25 : 0, x: isDesktop ? -50 : 0, y: isDesktop ? 0 : 40 }}
+                whileInView={{ opacity: 1, rotateY: 0, x: 0, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
                 className="flex-1 min-h-0"
@@ -230,8 +230,8 @@ export default function Home() {
                 </Tilt3D>
               </motion.div>
               <motion.div
-                initial={{ opacity: 0, rotateY: 25, x: 50 }}
-                whileInView={{ opacity: 1, rotateY: 0, x: 0 }}
+                initial={{ opacity: 0, rotateY: isDesktop ? 25 : 0, x: isDesktop ? 50 : 0, y: isDesktop ? 0 : 40 }}
+                whileInView={{ opacity: 1, rotateY: 0, x: 0, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                 className="sm:w-[44%] min-h-0"
@@ -311,10 +311,10 @@ export default function Home() {
             <MagneticWrap>
               <motion.button
                 onClick={() => router.push('/works')}
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                className="flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-8 py-3 rounded-full transition-colors shadow-xl shadow-blue-500/20"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: "spring", stiffness: 350, damping: 15 }}
+                className="flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-8 py-3 rounded-full transition-colors shadow-xl shadow-blue-500/20 cursor-pointer"
                 data-cursor
               >
                 View All Work <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

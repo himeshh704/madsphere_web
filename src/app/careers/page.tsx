@@ -88,9 +88,15 @@ export default function CareersPage() {
                           {job.desc}
                         </p>
                         <div className="flex items-end justify-start md:justify-end">
-                          <button className="flex items-center gap-3 md:gap-4 bg-[#0047FF] text-white px-6 py-4 md:px-10 md:py-5 rounded-full text-base md:text-lg font-bold uppercase tracking-widest hover:scale-105 transition-transform">
+                          <motion.button 
+                            onClick={() => window.location.href = "mailto:hello@madsphere.in?subject=Job Application - " + job.title}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.96 }}
+                            transition={{ type: "spring", stiffness: 350, damping: 15 }}
+                            className="flex items-center gap-3 md:gap-4 bg-[#0047FF] hover:bg-blue-700 text-white px-6 py-4 md:px-10 md:py-5 rounded-full text-base md:text-lg font-bold uppercase tracking-widest shadow-lg shadow-blue-500/20 cursor-pointer"
+                          >
                             Apply Now <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6" />
-                          </button>
+                          </motion.button>
                         </div>
                       </div>
                     </motion.div>

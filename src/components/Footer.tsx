@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/form";
 import { Instagram, Linkedin, Facebook, Twitter } from "lucide-react";
-import { MagneticWrap } from "@/components/Animations";
+import { MagneticWrap, TextReveal } from "@/components/Animations";
 
 export default function Footer() {
   const router = useRouter();
@@ -17,27 +17,30 @@ export default function Footer() {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-[1400px] w-full mx-auto px-6 md:px-16 flex flex-col items-center text-center mb-24"
       >
-        <div className="relative inline-block mb-8">
+        <div className="relative inline-block w-full max-w-4xl mb-8">
           <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-[1.1] relative z-10 text-center">
-            Ready to make<br />something great?
+            <TextReveal>Ready to make</TextReveal><br />
+            <TextReveal>something great?</TextReveal>
           </h2>
           {/* Decorative images behind text */}
           <motion.div 
-            initial={{ opacity: 0, scale: 0, rotate: -20 }}
-            whileInView={{ opacity: 0.8, scale: 1, rotate: -5 }}
+            initial={{ opacity: 0, scale: 0, rotate: -25, y: 30 }}
+            whileInView={{ opacity: 0.9, scale: 1, rotate: -6, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.4, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-[10%] left-[20%] w-16 h-16 md:w-20 md:h-20 z-0 rounded-lg overflow-hidden mix-blend-multiply dark:mix-blend-screen"
+            whileHover={{ scale: 1.15, rotate: 0, zIndex: 30 }}
+            transition={{ type: "spring", stiffness: 150, damping: 12, delay: 0.3 }}
+            className="absolute top-[12%] left-[0%] sm:left-[5%] md:left-[10%] lg:left-[15%] w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 z-0 rounded-lg overflow-hidden mix-blend-multiply dark:mix-blend-screen cursor-pointer"
           >
             <div className="absolute inset-0 bg-red-600 mix-blend-overlay z-10"></div>
             <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&fit=crop" className="w-full h-full object-cover filter grayscale contrast-125" alt="Portrait" />
           </motion.div>
           <motion.div 
-            initial={{ opacity: 0, scale: 0, rotate: 20 }}
-            whileInView={{ opacity: 0.8, scale: 1, rotate: 5 }}
+            initial={{ opacity: 0, scale: 0, rotate: 25, y: 30 }}
+            whileInView={{ opacity: 0.9, scale: 1, rotate: 6, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-[20%] right-[15%] w-16 h-16 md:w-20 md:h-20 z-0 rounded-lg overflow-hidden mix-blend-multiply dark:mix-blend-screen"
+            whileHover={{ scale: 1.15, rotate: 0, zIndex: 30 }}
+            transition={{ type: "spring", stiffness: 150, damping: 12, delay: 0.45 }}
+            className="absolute top-[22%] right-[0%] sm:right-[5%] md:right-[10%] lg:right-[15%] w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 z-0 rounded-lg overflow-hidden mix-blend-multiply dark:mix-blend-screen cursor-pointer"
           >
             <div className="absolute inset-0 bg-red-600 mix-blend-overlay z-10"></div>
             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&fit=crop" className="w-full h-full object-cover filter grayscale contrast-125" alt="Portrait" />
@@ -52,9 +55,9 @@ export default function Footer() {
           <motion.button
             onClick={() => router.push('/contact')}
             whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            className="bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest pl-6 pr-2 py-2 rounded-full transition-colors shadow-xl shadow-blue-500/20 flex items-center gap-4 relative z-10"
+            whileTap={{ scale: 0.96 }}
+            transition={{ type: "spring", stiffness: 350, damping: 15 }}
+            className="bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest pl-6 pr-2 py-2 rounded-full transition-colors shadow-xl shadow-blue-500/20 flex items-center gap-4 relative z-10 cursor-pointer"
           >
             CONTACT US 
             <span className="w-7 h-7 bg-white text-[#0047FF] rounded-full flex items-center justify-center">
@@ -66,9 +69,9 @@ export default function Footer() {
         </MagneticWrap>
       </motion.div>
 
-      <div className="w-full relative px-6 md:px-16 mb-16">
+      <div className="w-full relative px-6 md:px-16 mb-16 overflow-hidden">
         <h1 
-          className="text-center text-[14vw] font-bold leading-none select-none tracking-tighter"
+          className="text-center text-[13vw] font-bold leading-none select-none tracking-tight pr-4"
           style={{ 
             fontFamily: "Georgia, serif", 
             background: "linear-gradient(to bottom, currentColor 0%, transparent 120%)",

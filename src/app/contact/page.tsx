@@ -139,9 +139,10 @@ export default function ContactPage() {
               <motion.button 
                 type="submit"
                 disabled={isSubmitting || isSuccess}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className={`w-full py-4 rounded-xl text-white font-bold transition-colors flex items-center justify-center gap-2 ${isSuccess ? 'bg-green-500' : 'bg-[#0047FF] hover:bg-blue-700'} disabled:opacity-70`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: "spring", stiffness: 350, damping: 15 }}
+                className={`w-full py-4 rounded-xl text-white font-bold transition-colors flex items-center justify-center gap-2 ${isSuccess ? 'bg-green-500' : 'bg-[#0047FF] hover:bg-blue-700'} disabled:opacity-70 cursor-pointer`}
               >
                 {isSubmitting ? (
                   <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

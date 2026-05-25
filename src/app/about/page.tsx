@@ -1,11 +1,13 @@
 "use client";
 
 import { useRef } from "react";
+import { useRouter } from "next/navigation";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { TextReveal, Tilt3D, AnimatedCounter } from "@/components/Animations";
 import FAQ from "@/components/FAQ";
 
 export default function AboutPage() {
+  const router = useRouter();
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
@@ -33,9 +35,15 @@ export default function AboutPage() {
               <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold">In Business</p>
             </motion.div>
           </div>
-          <button className="self-start flex items-center gap-2 bg-[#0047FF] text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest mt-4">
+          <motion.button 
+            onClick={() => router.push('/works')}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ type: "spring", stiffness: 350, damping: 15 }}
+            className="self-start flex items-center gap-2 bg-[#0047FF] hover:bg-blue-700 text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest mt-4 shadow-lg shadow-blue-500/20 cursor-pointer"
+          >
             See Our Work <span className="rotate-45">↗</span>
-          </button>
+          </motion.button>
         </div>
 
         {/* Right Hero Content */}

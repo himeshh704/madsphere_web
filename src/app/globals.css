@@ -23,11 +23,11 @@
   --foreground: #f4f4f6;
 }
 
-html {
+html, body {
   scroll-behavior: smooth;
+  max-width: 100%;
   overflow-x: hidden;
 }
-
 
 body {
   background-color: var(--background);

@@ -1,9 +1,24 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function AntiInspect() {
+  const [blocked, setBlocked] = useState(false);
+
   useEffect(() => {
+    // Check for audit bypass in URL or sessionStorage
+    const isAudit = typeof window !== "undefined" && (
+      new URLSearchParams(window.location.search).get("audit") === "true" ||
+      sessionStorage.getItem("audit_bypass") === "true"
+    );
+
+    if (isAudit) {
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("audit_bypass", "true");
+      }
+      return; // Bypass all inspection protections for official auditing
+    }
+
     // Disable right-click context menu
     const handleContextMenu = (e: MouseEvent) => {
       e.preventDefault();
@@ -47,7 +62,6 @@ export default function AntiInspect() {
       }
     };
 
-    // Event listeners
     document.addEventListener("contextmenu", handleContextMenu);
     document.addEventListener("copy", handleCopy);
     document.addEventListener("dragstart", handleDragStart);
@@ -58,14 +72,11 @@ export default function AntiInspect() {
     if (process.env.NODE_ENV === "production") {
       devtoolsInterval = setInterval(() => {
         const start = performance.now();
-        // The debugger statement pauses the browser execution ONLY when DevTools is open.
         debugger;
         const end = performance.now();
-        // If execution paused, it means DevTools is open
+        // If execution takes longer than 100ms, it indicates debugger paused due to open DevTools
         if (end - start > 100) {
-          // Clear document body to hide code/assets and alert them
-          document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#050505;color:#fff;font-family:sans-serif;font-weight:bold;text-transform:uppercase;letter-spacing:0.2em;">Developer tools are disabled.</div>';
-          window.location.reload();
+          setBlocked(true);
         }
       }, 1000);
     }
@@ -79,6 +90,23 @@ export default function AntiInspect() {
     };
   }, []);
 
+  if (blocked) {
+    return (
+      <div className="fixed inset-0 z-[99999] bg-[#070708] text-white flex flex-col items-center justify-center p-6 text-center">
+        <div className="flex flex-col items-center gap-6 max-w-md">
+          <img src="/logo.png" alt="Madsphere Logo" className="h-10 md:h-12 w-auto invert opacity-90 mb-4" />
+          <h1 className="text-3xl font-bold tracking-tighter uppercase font-serif text-blue-500">Notice</h1>
+          <p className="text-sm text-zinc-400 font-serif leading-relaxed">
+            Developer tools and source inspection are disabled on this site.
+          </p>
+          <div className="w-16 h-[1px] bg-zinc-800 my-2"></div>
+          <p className="text-[10px] text-zinc-600 uppercase tracking-widest font-bold">
+            Madsphere Marketing Agency &bull; All Rights Reserved
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return null;
 }
-
