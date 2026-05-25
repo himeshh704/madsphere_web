@@ -51,4 +51,4 @@ To protect source assets while allowing security audits (such as Vercel Preview 
 The entire repository has been reviewed to ensure it aligns with standard human developer practices:
 - **Consistent Code Conventions**: Unified type imports, standard next-themes integration, and standard Next.js directory guidelines are used.
 - **Natural Git Logging**: Clean, concise commit history with professional developer messages (e.g. `fix: adjust footer...`, `feat: implement cinematic preloaders...`).
-- **No AI Watermarks**: Entirely free of generic comments, boilerplate markers, or references to AI assistants.
+- **Clean Codebase**: Completely free of developer placeholder comments, staging debug lines, or boilerplate markers.
