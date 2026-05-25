@@ -80,10 +80,26 @@ export default function AboutPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { title: "Wired in our Blood.", desc: "We thrive in environments where we are able to deliver speed, agility and excellence. It is integral to hold ourselves and our partners to a higher standard and we never settle for less." },
-            { title: "Technology to Simplify.", desc: "We believe any technology's governing principle is to simplify the consumer's life and provide immersive user experiences. Therefore, technology is strictly our guiding light to answer business needs." },
-            { title: "Creativity is Sacred, Aesthetics are God.", desc: "We create path-breaking work that challenges the status quo and positively impacts our clients' businesses. We make sure form accommodates function, and design helps our brand stand out." },
-            { title: "Be Culturally Relevant.", desc: "We exist to make brands cultural. By producing culturally relevant work, we naturally stand out in a sea of sameness." }
+            { 
+              title: "Wired in our Blood.", 
+              desc: "We thrive in environments where we are able to deliver speed, agility and excellence. It is integral to hold ourselves and our partners to a higher standard and we never settle for less.",
+              img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600&fit=crop"
+            },
+            { 
+              title: "Technology to Simplify.", 
+              desc: "We believe any technology's governing principle is to simplify the consumer's life and provide immersive user experiences. Therefore, technology is strictly our guiding light to answer business needs.",
+              img: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=600&fit=crop"
+            },
+            { 
+              title: "Creativity is Sacred, Aesthetics are God.", 
+              desc: "We create path-breaking work that challenges the status quo and positively impacts our clients' businesses. We make sure form accommodates function, and design helps our brand stand out.",
+              img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=600&fit=crop"
+            },
+            { 
+              title: "Be Culturally Relevant.", 
+              desc: "We exist to make brands cultural. By producing culturally relevant work, we naturally stand out in a sea of sameness.",
+              img: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=600&fit=crop"
+            }
           ].map((principle, idx) => (
             <motion.div 
               key={idx}
@@ -95,7 +111,7 @@ export default function AboutPage() {
             >
               <Tilt3D className="w-full aspect-[4/3] rounded-xl overflow-hidden cursor-pointer group">
                 <img 
-                  src="https://images.unsplash.com/photo-1615397323945-8f6448ab3d29?q=80&w=600&fit=crop" 
+                  src={principle.img} 
                   alt={principle.title} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
