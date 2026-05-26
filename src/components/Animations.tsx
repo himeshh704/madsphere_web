@@ -69,15 +69,37 @@ export function CustomCursor() {
 
 export function TextReveal({ children, className }: { children: string; className?: string }) {
   const words = children.split(" ");
+  
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.04
+      }
+    }
+  };
+
+  const childVariants = {
+    hidden: { y: "110%", rotateX: 40 },
+    visible: { 
+      y: "0%", 
+      rotateX: 0,
+      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const }
+    }
+  };
+
   return (
-    <span className={className}>
+    <motion.span 
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      className={`inline-block ${className ?? ""}`}
+    >
       {words.map((word, i) => (
-        <span key={i} className="inline-block overflow-hidden" style={{ marginRight: "0.3em" }}>
+        <span key={i} className="inline-block overflow-hidden" style={{ marginRight: "0.25em" }}>
           <motion.span
-            initial={{ y: "110%", rotateX: 40 }}
-            whileInView={{ y: "0%", rotateX: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
+            variants={childVariants}
             className="inline-block"
             style={{ transformPerspective: 500 }}
           >
@@ -85,7 +107,7 @@ export function TextReveal({ children, className }: { children: string; classNam
           </motion.span>
         </span>
       ))}
-    </span>
+    </motion.span>
   );
 }
 
