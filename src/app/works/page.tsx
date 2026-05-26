@@ -431,13 +431,41 @@ export default function WorksPage() {
         
         <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-4 relative z-10 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
           <span>Send us</span>
-          <span className="inline-flex w-10 h-10 md:w-14 md:h-14 rounded-full overflow-hidden border-2 border-white/20 align-middle shadow-md rotate-[-6deg] shrink-0">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&fit=crop" className="w-full h-full object-cover" alt="" />
-          </span>
+          <motion.span 
+            initial={{ opacity: 0, scale: 0, rotate: -25, y: 30 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: -6, y: 0 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.25, rotate: 0, zIndex: 30 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.1 }}
+            className="inline-flex w-10 h-10 md:w-14 md:h-14 rounded-full overflow-hidden border-2 border-white/20 align-middle shadow-md shrink-0 cursor-pointer"
+          >
+            <motion.span
+              animate={{ y: [0, -4, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="w-full h-full block"
+            >
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&fit=crop" className="w-full h-full object-cover" alt="" />
+            </motion.span>
+          </motion.span>
           <span>your CV at</span>
-          <span className="inline-flex w-10 h-10 md:w-14 md:h-14 rounded-full overflow-hidden border-2 border-white/20 align-middle shadow-md rotate-[6deg] shrink-0">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&fit=crop" className="w-full h-full object-cover" alt="" />
-          </span>
+          <motion.span 
+            initial={{ opacity: 0, scale: 0, rotate: 25, y: 30 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 6, y: 0 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.25, rotate: 0, zIndex: 30 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.25 }}
+            className="inline-flex w-10 h-10 md:w-14 md:h-14 rounded-full overflow-hidden border-2 border-white/20 align-middle shadow-md shrink-0 cursor-pointer"
+          >
+            <motion.span
+              animate={{ y: [0, -4, 0] }}
+              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.15 }}
+              className="w-full h-full block"
+            >
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&fit=crop" className="w-full h-full object-cover" alt="" />
+            </motion.span>
+          </motion.span>
         </h2>
 
         <p className="text-xs sm:text-sm md:text-base text-zinc-400 max-w-lg mb-10 relative z-10">

@@ -10,6 +10,7 @@ This report documents the codebase audit, visual shortcomings resolved, animatio
 | :--- | :--- | :--- | :--- | :--- |
 | **Missing Title on Homepage** | Desktop & Mobile | Double `whileInView` animation conflict between `<motion.h2>` and child `<TextReveal>` in Framer Motion caused text to remain at `opacity: 0` / translated out of boundaries, rendering "Featured Work" and other headings invisible. Also lacked high-contrast text color defaults. | Replaced `<motion.h2>` wrappers with standard `h2` elements styled with high-contrast classes (`text-zinc-900 dark:text-zinc-50`), letting `<TextReveal>` manage letter-by-letter scroll animations reliably. | **Resolved** |
 | **Works Page Section Parity** | Desktop & Mobile | Works page (`/works`) previously lacked full parity with Figma specifications, showing only the works grid without the supplementary agency process, testimonials, and careers sections. | Restructured the Works page to stack all Figma specification modules: Header Grid, Philosophy Section, Client Marquee, White-boxed Works Grid, Process Steps, Client Stories, and Careers Banner. | **Resolved** |
+| **Footer & Banner Avatar Motion Parity** | Desktop & Mobile | Avatars inside the Works page Careers Banner were static spans without scroll reveal animations, floating loops, or hover magnification, creating a mismatch with the interactive footer portraits. | Refactored the inline banner avatars to use `motion.span` wrappers that trigger staggered scroll entry, continuous vertical float cycles (`y: [0, -4, 0]`), scale magnification on hover (`scale: 1.25`, `rotate: 0`), and tap actions. | **Resolved** |
 | **Footer 'E' Character Clipping** | Desktop & Mobile | Massive font sizing (`14vw`) on serif bold text combined with tight kerning (`tracking-tighter`) exceeded parent container boundaries, causing the rightmost letter `E` in `MADSPHERE` to be clipped. | Reduced logo size to `13vw`, adjusted spacing to `tracking-tight`, and applied safety padding (`pr-4`) on the logo element. | **Resolved** |
 | **Horizontal Viewport Overflows** | Mobile (`< 768px`) | Animations sliding from `x: -50px` or `x: 50px` (About section images) pushed columns beyond the narrow device width, forcing a horizontal scrollbar. | Configured responsive animation initial coordinates using screen detection: images slide vertically (`y: 40`) on mobile and horizontally only on desktop. | **Resolved** |
 | **Decorative Image Overlaps** | Mobile (`< 640px`) | Left and right decorative footer portraits positioned using static percentages (`left-[20%]`, `right-[15%]`) converged too closely on narrow viewports, obscuring the heading text. | Added responsive placement classes (`left-0 sm:left-[5%] md:left-[10%] lg:left-[15%]`) and responsive sizing to sit outwards on mobile. | **Resolved** |
@@ -34,9 +35,9 @@ To maintain brand-wide tactile consistency, all primary action buttons have been
 - **Cursor Pointer**: Explicitly set `cursor-pointer` to guarantee active hover states across all viewport configurations.
 
 ### C. Portrait Spring & Magnification
-The decorative footer images now act as interactive design highlights:
+The decorative footer images and Careers banner inline avatars now act as interactive design highlights:
 - **Spring Entrance**: Staggered pop-up on scroll (`stiffness: 150`, `damping: 12`) starting from `scale: 0` to `scale: 1`.
-- **Hover Pop-Up**: Magnifies to `scale: 1.15`, resets rotation (`rotate: 0`), and jumps to foreground layer (`z-index: 30`) to look premium and engaging.
+- **Hover Pop-Up**: Magnifies to `scale: 1.25`, resets rotation (`rotate: 0`), and jumps to foreground layer (`z-index: 30`) to look premium and engaging.
 
 ---
 

@@ -41,11 +41,11 @@ Located in: [`src/app/works/page.tsx`](./src/app/works/page.tsx)
 
 The Works page is a multi-section document designed to mirror Figma specifications:
 1. **Header Grid**: Contains a staggered 2-column flex layout splitting the "Featured Work" title on the left and the portfolio tag and styling descriptor on the right.
-2. **Philosophy Block & Client Marquee**: Showcases the core creative-engineering philosophy header coupled with a fast auto-scrolling brand logo marquee.
+2. **Philosophy Block & Client Marquee**: Showcases the centered creative-engineering philosophy header and the brand logo marquee loop.
 3. **White-boxed Works Grid**: Wrapped in a prominent rounded container (`rounded-[2rem] bg-white border dark:bg-[#070708]`) that houses the category filters and the 3-column staggered masonry grid.
 4. **How We Work**: Embeds the responsive 4-step process cards alongside custom 3D image assets (chrome cube, hand, dispenser, iridescent ring).
 5. **Client Stories**: Embeds the testimonial slider to build social proof.
-6. **Careers Banner**: A dark call-to-action block prompting visitors to submit their CV with a quick redirect button.
+6. **Careers Banner**: A dark call-to-action block featuring inline overlapping avatars with slow spring scroll entry, vertical float cycles, and hover zoom effects mirroring the footer style.
 
 ---
 
