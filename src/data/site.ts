@@ -103,14 +103,14 @@ export const works = [
   },
   {
     id: "05",
-    title: "Style & Oment",
+    title: "style moment",
     tags: "UI/UX • Fashion Editorial • Webflow",
     img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1600&fit=crop",
     categories: ["Design"]
   },
   {
     id: "06",
-    title: "Habity App",
+    title: "Habitly App",
     tags: "Mobile App • React Native • UI/UX",
     img: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1600&fit=crop",
     categories: ["Development", "Design"]
@@ -139,10 +139,10 @@ export const works = [
 ] as const;
 
 export const process = [
-  { step: "01", title: "Discovery",    desc: "Deep dive into your brand, market, competitors. No assumptions — only insight.",       img: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=700&fit=crop" },
-  { step: "02", title: "Strategy",     desc: "Positioning, channels, and creative direction defined to drive your specific goals.",   img: "https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=700&fit=crop" },
-  { step: "03", title: "Execution",    desc: "Ideas become assets — campaigns, visuals, content, code — crafted to a high standard.", img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=700&fit=crop" },
-  { step: "04", title: "Launch & Grow",desc: "We ship, monitor, optimise, and report. Every iteration gets sharper.",                img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=700&fit=crop" },
+  { step: "01", title: "Discovery",    desc: "Deep dive into your brand, market, competitors, and customers. No assumptions only insight.",       img: "/process_step_01.png" },
+  { step: "02", title: "Strategy",     desc: "We define positioning, channels, and creative direction that will drive your specific goals forward.",   img: "/process_step_02.png" },
+  { step: "03", title: "Strategy",     desc: "Ideas become assets. Campaigns, visuals, content, code crafted and tested to a high standard.", img: "/process_step_03.png" },
+  { step: "04", title: "Launch & Grow",desc: "We ship, monitor, optimise, and report. Every campaign gets sharper with each iteration.",                img: "/process_step_04.png" },
 ] as const;
 
 export const testimonials = [

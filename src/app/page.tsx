@@ -5,32 +5,88 @@ import {
   motion,
   useScroll,
   useTransform,
-  useMotionValue,
-  useSpring,
+  AnimatePresence,
 } from "framer-motion";
+
+const GalileoIcon = () => (
+  <svg className="w-5 h-5 mr-2 text-zinc-400 dark:text-zinc-600 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
+    <circle cx="12" cy="12" r="4" fill="currentColor" />
+  </svg>
+);
+
+const EuphoriaIcon = () => (
+  <svg className="w-5 h-5 mr-2 text-zinc-400 dark:text-zinc-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    <circle cx="12" cy="12" r="4" fill="currentColor" />
+    <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1l2.1-2.1M17 7l2.1-2.1" />
+  </svg>
+);
+
+const EuropaIcon = () => (
+  <svg className="w-5 h-5 mr-2 text-zinc-400 dark:text-zinc-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="12" cy="12" r="10" />
+    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+  </svg>
+);
+
+const GlobalBankIcon = () => (
+  <svg className="w-5 h-5 mr-2 text-zinc-400 dark:text-zinc-600 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2L2 12l10 10 10-10L12 2zm0 4.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11z" />
+  </svg>
+);
+
+const IkigaiIcon = () => (
+  <svg className="w-6 h-5 mr-2 text-zinc-400 dark:text-zinc-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <rect x="2" y="7" width="20" height="10" rx="5" />
+    <circle cx="12" cy="12" r="2" fill="currentColor" />
+  </svg>
+);
+
+const GoodwellIcon = () => (
+  <svg className="w-5 h-5 mr-2 text-zinc-400 dark:text-zinc-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    <path d="M18 10h-4a4 4 0 1 0 0 8h4v-8z" />
+    <path d="M6 14h4a4 4 0 1 0 0-8H6v8z" />
+  </svg>
+);
 import { useRouter } from "next/navigation";
-import { ArrowRight, Play } from "lucide-react";
+import { Play } from "lucide-react";
 import Marquee from "@/components/Marquee";
 import ExpertiseScroll from "@/components/ExpertiseScroll";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
-import { TextReveal, AnimatedCounter, FloatingOrbs, MagneticWrap, Tilt3D } from "@/components/Animations";
-import { fadeUp, scaleIn, stagger, slideIn } from "@/lib/motion";
+import { TextReveal, AnimatedCounter, MagneticWrap, Tilt3D } from "@/components/Animations";
+import { fadeUp, stagger, slideIn } from "@/lib/motion";
 import { heroCards, socials, stats, works, process, clients } from "@/data/site";
 
 function ParallaxImg({ src, alt, className }: { src: string; alt: string; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+  
   useEffect(() => {
     let active = true;
-    setTimeout(() => { if (active) setMounted(true); }, 0);
-    return () => { active = false; };
+    setTimeout(() => {
+      if (active) {
+        setMounted(true);
+        setIsDesktop(window.innerWidth >= 1024);
+      }
+    }, 0);
+    const check = () => {
+      if (active) setIsDesktop(window.innerWidth >= 1024);
+    };
+    window.addEventListener("resize", check);
+    return () => {
+      active = false;
+      window.removeEventListener("resize", check);
+    };
   }, []);
+  
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.2, 1.05, 1.2]);
+  
   return (
     <div ref={ref} className={`overflow-hidden ${className ?? ""}`}>
-      <motion.img src={src} alt={alt} style={{ y: mounted ? y : undefined, scale: mounted ? scale : undefined }} className="w-full h-full object-cover" />
+      <motion.img src={src} alt={alt} style={{ y: (mounted && isDesktop) ? y : undefined, scale: (mounted && isDesktop) ? scale : undefined }} className="w-full h-full object-cover" />
     </div>
   );
 }
@@ -56,6 +112,9 @@ export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  
+  const tabs = ["All", "Branding", "Design", "Development"] as const;
+  const [activeTab, setActiveTab] = useState<typeof tabs[number]>("All");
   useEffect(() => {
     let active = true;
     setTimeout(() => { if (active) setMounted(true); }, 0);
@@ -290,82 +349,239 @@ export default function Home() {
         <ExpertiseScroll />
       </section>
 
-      {/* Work */}
-      <section id="works" className="relative z-10 py-24 bg-zinc-50 dark:bg-[#0a0a0a]">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-16">
-          <div className="flex items-center justify-center gap-4 mb-14">
-            <motion.h2
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="text-3xl font-bold"
-            >
-              <TextReveal>Featured Work</TextReveal>
-            </motion.h2>
-            <SectionTag label="Work Portfolio" />
+      {/* Work & Clients Section */}
+      <section id="works" className="relative z-10 py-24 bg-[#f4f4f5]/60 dark:bg-[#0a0a0b] border-t border-zinc-100 dark:border-zinc-900">
+        {/* Header Line for Featured Work */}
+        <div className="max-w-[1400px] mx-auto px-6 md:px-16 mb-16">
+          <div className="flex items-center gap-6">
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 shrink-0">
+              Featured Work
+            </h2>
+            <div className="flex-1 h-px bg-zinc-200 dark:bg-zinc-800" />
           </div>
+        </div>
 
-          <div className="flex flex-col gap-6" style={{ perspective: "1200px" }}>
-            {works.slice(0, 4).map((work, i) => (
-              <Tilt3D key={work.id} className="w-full">
-                <motion.div
-                  initial={{ opacity: 0, rotateX: 14, y: 80, scale: 0.92 }}
-                  whileInView={{ opacity: 1, rotateX: 0, y: 0, scale: 1 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.8, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative w-full rounded-2xl overflow-hidden cursor-pointer group"
-                  style={{ height: "55vh", minHeight: 300 }}
-                  data-cursor
+        {/* Our Clients Block */}
+        <div className="max-w-[1200px] mx-auto px-6 md:px-16 mb-24 text-center">
+          <div className="flex justify-center mb-6">
+            <SectionTag label="Our Clients" />
+          </div>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 max-w-4xl mx-auto leading-[1.1] mb-6">
+            We Play at the intersection of creativity & engineering
+          </h2>
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm md:text-base max-w-3xl mx-auto leading-relaxed">
+            From emerging artists to globally established brands, we help bring wonder to every corner of the world. Here are some of the projects we&apos;ve executed for our clients.
+          </p>
+          
+          {/* Client Logos Row */}
+          <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 text-zinc-400 dark:text-zinc-500 font-medium text-lg mt-12 px-6">
+            <div className="flex items-center hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+              <GalileoIcon /> Galileo
+            </div>
+            <div className="flex items-center hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+              <EuphoriaIcon /> Euphoria
+            </div>
+            <div className="flex items-center hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+              <EuropaIcon /> Europa
+            </div>
+            <div className="flex items-center hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+              <GlobalBankIcon /> GlobalBank
+            </div>
+            <div className="flex items-center hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+              <IkigaiIcon /> Ikigai Labs
+            </div>
+            <div className="flex items-center hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+              <GoodwellIcon /> Goodwell
+            </div>
+          </div>
+        </div>
+
+        {/* The world is our Playground Works Card Container */}
+        <div className="max-w-[1400px] mx-auto px-4 md:px-8 mb-12">
+          <div className="bg-white dark:bg-[#111112] border border-zinc-200/60 dark:border-zinc-800/80 rounded-[32px] p-6 md:p-12 shadow-xl shadow-zinc-100/50 dark:shadow-none">
+            {/* Header: Title on Left, Tag on Right */}
+            <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8">
+              <div className="max-w-2xl">
+                <h3 className="text-3xl md:text-5xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 leading-[1.05]">
+                  The world is our Playground
+                </h3>
+                <p className="text-zinc-500 dark:text-zinc-400 text-sm md:text-base mt-4 leading-relaxed">
+                  Our agency is a dedicated outreach to brands that aim to create stop-and-stare wonder. We bring the best of imagination and engineering in the same room to create innovative experiences for global audiences through digital executions.
+                </p>
+              </div>
+              <div className="shrink-0 self-start md:self-auto">
+                <SectionTag label="Our Works" />
+              </div>
+            </div>
+
+            {/* Tabs Filter Selector */}
+            <div className="flex gap-6 border-b border-zinc-100 dark:border-zinc-800/80 pb-4 mb-12 overflow-x-auto scrollbar-none">
+              {tabs.map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`text-sm font-bold tracking-wider uppercase transition-colors relative pb-4 -mb-4 focus-visible:outline-none ${
+                    activeTab === tab 
+                      ? "text-blue-600 dark:text-blue-500" 
+                      : "text-zinc-400 dark:text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-300"
+                  }`}
                 >
-                  <motion.img
-                    src={work.img}
-                    alt={work.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                  <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/10" />
-                  <motion.div
-                    initial={{ y: 25, opacity: 0 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.35 + i * 0.08, duration: 0.5 }}
-                    className="absolute bottom-5 left-5 right-5 h-14 bg-black/55 backdrop-blur-md rounded-xl flex items-center justify-between px-5 border border-white/10"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-bold text-white/50 border border-white/20 px-2 py-0.5 rounded">[{work.id}]</span>
-                      <span className="text-white font-bold text-lg">{work.title}</span>
-                    </div>
-                    <span className="hidden sm:block text-[10px] font-bold uppercase tracking-widest text-white/50">{work.tags}</span>
-                  </motion.div>
-                </motion.div>
-              </Tilt3D>
-            ))}
-          </div>
+                  {tab}
+                  {activeTab === tab && (
+                    <motion.div 
+                      layoutId="activeTabBorderHome" 
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-500" 
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex justify-center mt-12"
-          >
-            <MagneticWrap>
-              <motion.button
-                onClick={() => router.push('/works')}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.96 }}
-                transition={{ type: "spring", stiffness: 350, damping: 15 }}
-                className="flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-8 py-3 rounded-full transition-colors shadow-xl shadow-blue-500/20 cursor-pointer"
-                data-cursor
-              >
-                View All Work <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </motion.button>
-            </MagneticWrap>
-          </motion.div>
+            {(() => {
+              const filteredWorks = works.filter((work) => {
+                if (activeTab === "All") return true;
+                return (work.categories as readonly string[]).includes(activeTab);
+              });
+
+              const col1: (typeof works)[number][] = [];
+              const col2: (typeof works)[number][] = [];
+              const col3: (typeof works)[number][] = [];
+              
+              if (filteredWorks.length === works.length) {
+                const itemMap = new Map(filteredWorks.map(w => [w.id, w]));
+                const id1 = ["01", "04", "06"] as const;
+                const id2 = ["02", "05", "07"] as const;
+                const id3 = ["03", "08", "09"] as const;
+                
+                id1.forEach(id => { const item = itemMap.get(id); if (item) col1.push(item); });
+                id2.forEach(id => { const item = itemMap.get(id); if (item) col2.push(item); });
+                id3.forEach(id => { const item = itemMap.get(id); if (item) col3.push(item); });
+              } else {
+                filteredWorks.forEach((item, idx) => {
+                  if (idx % 3 === 0) col1.push(item);
+                  else if (idx % 3 === 1) col2.push(item);
+                  else col3.push(item);
+                });
+              }
+
+              return (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+                  <div className="flex flex-col gap-6">
+                    <AnimatePresence mode="popLayout">
+                      {col1.map((work) => (
+                        <motion.div
+                          key={work.id}
+                          layout
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          transition={{ duration: 0.4 }}
+                        >
+                          <Tilt3D className="group relative rounded-2xl overflow-hidden cursor-pointer w-full aspect-[4/5] sm:aspect-square md:aspect-[3/4]" data-cursor>
+                            <motion.img
+                              src={work.img}
+                              alt={work.title}
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
+                            <div className="absolute inset-x-3 bottom-3 translate-y-0 opacity-100 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-300 z-10">
+                              <div className="bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-white/20 p-4 rounded-xl flex justify-between items-center w-full">
+                                <div className="flex flex-col">
+                                  <span className="text-white text-base font-bold leading-tight">{work.title}</span>
+                                  <div className="h-px bg-white/20 w-12 my-1.5" />
+                                  <span className="text-white/60 text-[9px] uppercase tracking-wider">{work.tags}</span>
+                                </div>
+                                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black text-sm font-bold shrink-0 ml-3">
+                                  →
+                                </div>
+                              </div>
+                            </div>
+                          </Tilt3D>
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
+                  </div>
+
+                  <div className="flex flex-col gap-6 lg:mt-12">
+                    <AnimatePresence mode="popLayout">
+                      {col2.map((work) => (
+                        <motion.div
+                          key={work.id}
+                          layout
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          transition={{ duration: 0.4 }}
+                        >
+                          <Tilt3D className="group relative rounded-2xl overflow-hidden cursor-pointer w-full aspect-[4/5] sm:aspect-square md:aspect-[3/4]" data-cursor>
+                            <motion.img
+                              src={work.img}
+                              alt={work.title}
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
+                            <div className="absolute inset-x-3 bottom-3 translate-y-0 opacity-100 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-300 z-10">
+                              <div className="bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-white/20 p-4 rounded-xl flex justify-between items-center w-full">
+                                <div className="flex flex-col">
+                                  <span className="text-white text-base font-bold leading-tight">{work.title}</span>
+                                  <div className="h-px bg-white/20 w-12 my-1.5" />
+                                  <span className="text-white/60 text-[9px] uppercase tracking-wider">{work.tags}</span>
+                                </div>
+                                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black text-sm font-bold shrink-0 ml-3">
+                                  →
+                                </div>
+                              </div>
+                            </div>
+                          </Tilt3D>
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
+                  </div>
+
+                  <div className="flex flex-col gap-6 lg:mt-24">
+                    <AnimatePresence mode="popLayout">
+                      {col3.map((work) => (
+                        <motion.div
+                          key={work.id}
+                          layout
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          transition={{ duration: 0.4 }}
+                        >
+                          <Tilt3D className="group relative rounded-2xl overflow-hidden cursor-pointer w-full aspect-[4/5] sm:aspect-square md:aspect-[3/4]" data-cursor>
+                            <motion.img
+                              src={work.img}
+                              alt={work.title}
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
+                            <div className="absolute inset-x-3 bottom-3 translate-y-0 opacity-100 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-300 z-10">
+                              <div className="bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-white/20 p-4 rounded-xl flex justify-between items-center w-full">
+                                <div className="flex flex-col">
+                                  <span className="text-white text-base font-bold leading-tight">{work.title}</span>
+                                  <div className="h-px bg-white/20 w-12 my-1.5" />
+                                  <span className="text-white/60 text-[9px] uppercase tracking-wider">{work.tags}</span>
+                                </div>
+                                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black text-sm font-bold shrink-0 ml-3">
+                                  →
+                                </div>
+                              </div>
+                            </div>
+                          </Tilt3D>
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
         </div>
       </section>
 
-      {/* Process */}
-      <section className="relative z-10 py-28 px-6 md:px-16 max-w-[1400px] mx-auto">
+      <section className="relative z-10 py-28 px-6 md:px-16 max-w-[1400px] mx-auto border-t border-zinc-100 dark:border-zinc-900">
         <div className="flex items-center gap-4 mb-20">
           <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-4xl font-bold">
             <TextReveal>How We Work</TextReveal>
@@ -374,94 +590,85 @@ export default function Home() {
         </div>
 
         <div className="relative w-full">
-          {/* Dotted lines connecting process steps on desktop */}
-          <svg className="absolute top-0 left-0 w-full h-[350px] pointer-events-none hidden lg:block z-0" viewBox="0 0 1200 350" preserveAspectRatio="none">
-            {/* Step 1 -> Step 2 */}
-            <motion.path
-              d="M 270,100 C 300,100 300,196 330,196"
-              fill="none"
-              stroke="currentColor"
-              className="text-[#0047FF]/40 dark:text-[#0047FF]/50"
-              strokeWidth="2"
-              strokeDasharray="6,6"
-              initial={{ pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{
-                pathLength: { duration: 0.5, delay: isDesktop ? 0.45 : 0, ease: "easeInOut" },
-                opacity: { duration: 0.2, delay: isDesktop ? 0.45 : 0 }
-              }}
-            />
-            {/* Step 2 -> Step 3 */}
-            <motion.path
-              d="M 570,196 C 600,196 600,100 630,100"
-              fill="none"
-              stroke="currentColor"
-              className="text-[#0047FF]/40 dark:text-[#0047FF]/50"
-              strokeWidth="2"
-              strokeDasharray="6,6"
-              initial={{ pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{
-                pathLength: { duration: 0.5, delay: isDesktop ? 1.25 : 0, ease: "easeInOut" },
-                opacity: { duration: 0.2, delay: isDesktop ? 1.25 : 0 }
-              }}
-            />
-            {/* Step 3 -> Step 4 */}
-            <motion.path
-              d="M 870,100 C 900,100 900,196 930,196"
-              fill="none"
-              stroke="currentColor"
-              className="text-[#0047FF]/40 dark:text-[#0047FF]/50"
-              strokeWidth="2"
-              strokeDasharray="6,6"
-              initial={{ pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{
-                pathLength: { duration: 0.5, delay: isDesktop ? 2.05 : 0, ease: "easeInOut" },
-                opacity: { duration: 0.2, delay: isDesktop ? 2.05 : 0 }
-              }}
-            />
-          </svg>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-start relative z-10" style={{ perspective: "1000px" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-start relative z-10 lg:grid-rows-5" style={{ perspective: "1000px" }}>
             {process.map(({ step, title, desc, img }, i) => {
-              const cardDelay = isDesktop ? i * 0.8 : i * 0.15;
+              const cardDelay = isDesktop ? i * 0.3 : i * 0.15;
               return (
-                <motion.div
-                  key={step}
-                  initial={{ 
-                    opacity: 0, 
-                    x: isDesktop ? -40 : 0, 
-                    y: isDesktop ? 0 : 30,
-                    rotateY: isDesktop ? -15 : 0 
-                  }}
-                  whileInView={{ 
-                    opacity: 1, 
-                    x: 0, 
-                    y: 0,
-                    rotateY: 0 
-                  }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ 
-                    duration: 0.8, 
-                    delay: cardDelay, 
-                    ease: [0.16, 1, 0.3, 1] 
-                  }}
-                  className="flex flex-col gap-4"
-                  style={{ marginTop: isDesktop && i % 2 === 1 ? "6rem" : 0 }}
-                >
-                  <Tilt3D className="p-7 border border-zinc-200 dark:border-zinc-800 rounded-xl flex flex-col gap-3 cursor-pointer bg-white/80 dark:bg-black/80 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow">
-                    <span className="text-[10px] font-bold text-zinc-400">[STEP — {step}]</span>
-                    <h3 className="text-lg font-bold">{title}</h3>
-                    <p className="text-xs text-zinc-500 leading-relaxed">{desc}</p>
-                  </Tilt3D>
-                  <Tilt3D className="aspect-square rounded-xl overflow-hidden shadow-sm">
-                    <ParallaxImg src={img} alt={title} className="w-full h-full" />
-                  </Tilt3D>
-                </motion.div>
+                <div key={step} className="contents">
+                  {i % 2 === 0 ? (
+                    <>
+                      <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: cardDelay, ease: [0.16, 1, 0.3, 1] }}
+                        className={`w-full ${
+                          i === 0 ? "lg:col-start-1 lg:row-start-1" : "lg:col-start-3 lg:row-start-3"
+                        }`}
+                      >
+                        <Tilt3D className="p-6 md:p-8 border border-zinc-200/60 dark:border-zinc-800/80 rounded-2xl flex flex-col justify-between cursor-pointer bg-white dark:bg-[#111112] shadow-sm hover:shadow-md transition-shadow w-full aspect-square">
+                          <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest leading-none">
+                            (STEP - {step})
+                          </span>
+                          <div className="flex flex-col gap-2 mt-auto">
+                            <h3 className="text-xl md:text-2xl font-bold text-zinc-900 dark:text-zinc-50">{title}</h3>
+                            <p className="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">{desc}</p>
+                          </div>
+                        </Tilt3D>
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: cardDelay + 0.1, ease: [0.16, 1, 0.3, 1] }}
+                        className={`w-full ${
+                          i === 0 ? "lg:col-start-1 lg:row-start-2" : "lg:col-start-3 lg:row-start-4"
+                        }`}
+                      >
+                        <Tilt3D className="rounded-2xl overflow-hidden shadow-sm aspect-square w-full">
+                          <ParallaxImg src={img} alt={title} className="w-full h-full" />
+                        </Tilt3D>
+                      </motion.div>
+                    </>
+                  ) : (
+                    <>
+                      <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: cardDelay, ease: [0.16, 1, 0.3, 1] }}
+                        className={`w-full ${
+                          i === 1 ? "lg:col-start-2 lg:row-start-2" : "lg:col-start-4 lg:row-start-4"
+                        }`}
+                      >
+                        <Tilt3D className="rounded-2xl overflow-hidden shadow-sm aspect-square w-full">
+                          <ParallaxImg src={img} alt={title} className="w-full h-full" />
+                        </Tilt3D>
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: cardDelay + 0.1, ease: [0.16, 1, 0.3, 1] }}
+                        className={`w-full ${
+                          i === 1 ? "lg:col-start-2 lg:row-start-3" : "lg:col-start-4 lg:row-start-5"
+                        }`}
+                      >
+                        <Tilt3D className="p-6 md:p-8 border border-zinc-200/60 dark:border-zinc-800/80 rounded-2xl flex flex-col justify-between cursor-pointer bg-white dark:bg-[#111112] shadow-sm hover:shadow-md transition-shadow w-full aspect-square">
+                          <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest leading-none">
+                            (STEP - {step})
+                          </span>
+                          <div className="flex flex-col gap-2 mt-auto">
+                            <h3 className="text-xl md:text-2xl font-bold text-zinc-900 dark:text-zinc-50">{title}</h3>
+                            <p className="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">{desc}</p>
+                          </div>
+                        </Tilt3D>
+                      </motion.div>
+                    </>
+                  )}
+                </div>
               );
             })}
           </div>
