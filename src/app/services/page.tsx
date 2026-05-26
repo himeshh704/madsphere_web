@@ -185,7 +185,7 @@ export default function ServicesPage() {
               </div>
               <div>
                 <h4 className="text-xl font-bold mb-2">Design That Moves</h4>
-                <p className="text-zinc-500 font-serif">Design shouldn't just sit there. It's designed for moving digital experiences that engage real users.</p>
+                <p className="text-zinc-500 font-serif">Design shouldn&apos;t just sit there. It&apos;s designed for moving digital experiences that engage real users.</p>
               </div>
             </div>
           </div>

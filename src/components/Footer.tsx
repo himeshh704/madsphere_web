@@ -67,7 +67,7 @@ export default function Footer() {
           </div>
 
           <p className="text-sm md:text-base text-zinc-400 font-serif mb-8 max-w-md mx-auto relative z-10">
-            Tell us your goals, and we'll help you design the perfect creative solution.
+            Tell us your goals, and we&apos;ll help you design the perfect creative solution.
           </p>
           
           <MagneticWrap>

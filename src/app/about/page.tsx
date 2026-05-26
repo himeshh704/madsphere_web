@@ -54,7 +54,7 @@ export default function AboutPage() {
             </h1>
           </div>
           <p className="text-sm md:text-base text-zinc-500 font-serif max-w-2xl leading-relaxed mb-6">
-            We're a team of strategists, innovators, designers, and developers united by one obsession: solving your business challenges creatively. Since 2018, we've helped startups, scale-ups, and established brands cut through the noise.
+            We&apos;re a team of strategists, innovators, designers, and developers united by one obsession: solving your business challenges creatively. Since 2018, we&apos;ve helped startups, scale-ups, and established brands cut through the noise.
           </p>
           
           <Tilt3D className="w-full h-[40vh] md:h-[50vh] rounded-2xl overflow-hidden relative">
@@ -155,7 +155,7 @@ export default function AboutPage() {
               </div>
               <div>
                 <h4 className="text-xl font-bold mb-2">Our Mission</h4>
-                <p className="text-zinc-500 font-serif">Design shouldn't just sit there. It's designed for moving digital experiences that engage real users.</p>
+                <p className="text-zinc-500 font-serif">Design shouldn&apos;t just sit there. It&apos;s designed for moving digital experiences that engage real users.</p>
               </div>
             </div>
           </div>

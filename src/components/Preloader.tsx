@@ -35,22 +35,28 @@ export default function Preloader() {
   useEffect(() => {
     if (isInitial) return;
 
-    setLoading(true);
-    setProgress(0);
+    let interval: NodeJS.Timeout;
+    const timeout = setTimeout(() => {
+      setLoading(true);
+      setProgress(0);
 
-    let currentProgress = 0;
-    const interval = setInterval(() => {
-      currentProgress += Math.floor(Math.random() * 20) + 15;
-      if (currentProgress >= 100) {
-        clearInterval(interval);
-        setTimeout(() => setLoading(false), 200);
-        setProgress(100);
-        return;
-      }
-      setProgress(currentProgress);
-    }, 50); // ~400ms quick wiper loader
+      let currentProgress = 0;
+      interval = setInterval(() => {
+        currentProgress += Math.floor(Math.random() * 20) + 15;
+        if (currentProgress >= 100) {
+          clearInterval(interval);
+          setTimeout(() => setLoading(false), 200);
+          setProgress(100);
+          return;
+        }
+        setProgress(currentProgress);
+      }, 50); // ~400ms quick wiper loader
+    }, 0);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(timeout);
+      if (interval) clearInterval(interval);
+    };
   }, [pathname, isInitial]);
 
   return (

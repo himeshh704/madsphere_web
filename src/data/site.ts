@@ -73,10 +73,69 @@ export const expertise = [
 ] as const;
 
 export const works = [
-  { id: "01", title: "XYZ 1", tags: "Corporate • Webflow • UX • Speed", img: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=1600&fit=crop" },
-  { id: "02", title: "XYZ 1", tags: "Corporate • Webflow • UX • Speed", img: "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?q=80&w=1600&fit=crop" },
-  { id: "03", title: "XYZ 1", tags: "Corporate • Webflow • UX • Speed", img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1600&fit=crop" },
-  { id: "04", title: "XYZ 1", tags: "Corporate • Webflow • UX • Speed", img: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=1600&fit=crop" },
+  {
+    id: "01",
+    title: "Astra Co",
+    tags: "E-Commerce • Next.js • Design System",
+    img: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1600&fit=crop",
+    categories: ["Design", "Development"]
+  },
+  {
+    id: "02",
+    title: "Hyper",
+    tags: "Product Launch • Creative • 3D Design",
+    img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1600&fit=crop",
+    categories: ["Design", "Branding"]
+  },
+  {
+    id: "03",
+    title: "Yooma Billing",
+    tags: "Campaign • Advertising • Print",
+    img: "https://images.unsplash.com/photo-1509281373149-e957c6296406?q=80&w=1600&fit=crop",
+    categories: ["Branding", "Design"]
+  },
+  {
+    id: "04",
+    title: "N Logo",
+    tags: "Identity • Logo Design • Guidelines",
+    img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1600&fit=crop",
+    categories: ["Branding"]
+  },
+  {
+    id: "05",
+    title: "Style & Oment",
+    tags: "UI/UX • Fashion Editorial • Webflow",
+    img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1600&fit=crop",
+    categories: ["Design"]
+  },
+  {
+    id: "06",
+    title: "Habity App",
+    tags: "Mobile App • React Native • UI/UX",
+    img: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1600&fit=crop",
+    categories: ["Development", "Design"]
+  },
+  {
+    id: "07",
+    title: "Skincare Packaging",
+    tags: "Packaging • Art Direction • Identity",
+    img: "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?q=80&w=1600&fit=crop",
+    categories: ["Branding"]
+  },
+  {
+    id: "08",
+    title: "Finance Dashboard",
+    tags: "Fintech • Web App • Dashboard",
+    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&fit=crop",
+    categories: ["Development", "Design"]
+  },
+  {
+    id: "09",
+    title: "Social Campaign",
+    tags: "Social Media • Marketing • Web",
+    img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1600&fit=crop",
+    categories: ["Branding", "Development"]
+  }
 ] as const;
 
 export const process = [

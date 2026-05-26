@@ -20,7 +20,11 @@ import { heroCards, socials, stats, works, process, clients } from "@/data/site"
 function ParallaxImg({ src, alt, className }: { src: string; alt: string; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    let active = true;
+    setTimeout(() => { if (active) setMounted(true); }, 0);
+    return () => { active = false; };
+  }, []);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.2, 1.05, 1.2]);
@@ -53,11 +57,15 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   useEffect(() => {
-    setMounted(true);
+    let active = true;
+    setTimeout(() => { if (active) setMounted(true); }, 0);
     const check = () => setIsDesktop(window.innerWidth >= 1024);
     check();
     window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    return () => {
+      active = false;
+      window.removeEventListener("resize", check);
+    };
   }, []);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
@@ -123,11 +131,12 @@ export default function Home() {
               </h1>
             </motion.div>
 
+            {/* Desktop Hero Cards */}
             <motion.div
               variants={stagger(0.06)}
               initial="hidden"
               animate="show"
-              className="absolute bottom-5 left-5 right-16 flex gap-3 overflow-x-auto scrollbar-none z-10"
+              className="absolute bottom-5 left-5 right-16 hidden md:flex gap-3 overflow-x-auto scrollbar-none z-10"
             >
               {heroCards.map((card) => (
                 <motion.div
@@ -147,6 +156,36 @@ export default function Home() {
                 </motion.div>
               ))}
             </motion.div>
+
+            {/* Mobile Hero Cards Auto-scrolling Marquee */}
+            <div 
+              className="absolute bottom-5 left-5 right-5 flex md:hidden overflow-hidden z-10"
+              style={{
+                maskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)",
+                WebkitMaskImage: "linear-gradient(to right, transparent, white 8%, white 92%, transparent)"
+              }}
+            >
+              <motion.div
+                animate={{ x: ["0%", "-50%"] }}
+                transition={{ repeat: Infinity, repeatType: "loop", duration: 15, ease: "linear" }}
+                className="flex gap-3 shrink-0"
+                style={{ width: "fit-content" }}
+              >
+                {[...heroCards, ...heroCards].map((card, idx) => (
+                  <div
+                    key={`${card.id}-${idx}`}
+                    className="shrink-0 flex items-center gap-3 bg-white/35 backdrop-blur-xl border border-white/25 rounded-xl px-3 py-2"
+                    style={{ width: 180 }}
+                  >
+                    <img src={card.img} alt={card.label} className="w-11 h-11 rounded-lg object-cover shrink-0" />
+                    <div className="min-w-0">
+                      <p className="text-[9px] font-bold text-white/60">({card.id})</p>
+                      <p className="text-xs font-bold text-white leading-tight truncate">{card.label}</p>
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
           </div>
         </motion.div>
       </section>
@@ -215,7 +254,7 @@ export default function Home() {
               viewport={{ once: true }}
               className="text-4xl md:text-5xl font-bold leading-[1.15]"
             >
-              <TextReveal>We've helped startups, scale-ups, and established brands cut through the noise</TextReveal>
+              <TextReveal>We&apos;ve helped startups, scale-ups, and established brands cut through the noise</TextReveal>
             </motion.h2>
 
             <div className="flex flex-col sm:flex-row gap-4 h-[280px] sm:h-[380px]" style={{ perspective: "1000px" }}>
@@ -263,11 +302,11 @@ export default function Home() {
             >
               <TextReveal>Featured Work</TextReveal>
             </motion.h2>
-            <SectionTag label="Portfolio" />
+            <SectionTag label="Work Portfolio" />
           </div>
 
           <div className="flex flex-col gap-6" style={{ perspective: "1200px" }}>
-            {works.map((work, i) => (
+            {works.slice(0, 4).map((work, i) => (
               <Tilt3D key={work.id} className="w-full">
                 <motion.div
                   initial={{ opacity: 0, rotateX: 14, y: 80, scale: 0.92 }}
@@ -331,7 +370,7 @@ export default function Home() {
           <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-4xl font-bold">
             <TextReveal>How We Work</TextReveal>
           </motion.h2>
-          <SectionTag label="Process" />
+          <SectionTag label="Working Process" />
         </div>
 
         <div className="relative w-full">
@@ -435,7 +474,7 @@ export default function Home() {
           <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-3xl font-bold">
             <TextReveal>Client Stories</TextReveal>
           </motion.h2>
-          <SectionTag label="Testimonials" />
+          <SectionTag label="Testimonial" />
         </div>
         <TestimonialCarousel />
       </section>

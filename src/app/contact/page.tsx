@@ -39,7 +39,7 @@ export default function ContactPage() {
           </span>
         </div>
         <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50">
-          <TextReveal>Let's make something great</TextReveal>
+          <TextReveal>Let&apos;s make something great</TextReveal>
         </h1>
       </section>
 
@@ -50,7 +50,7 @@ export default function ContactPage() {
           <div className="flex flex-col gap-10">
             <div>
               <h3 className="text-2xl font-bold mb-2">We typically respond within 24 hours.</h3>
-              <p className="text-zinc-500 font-serif">Whether you're a growing startup or an established brand, we'd love to hear about your goals and see how we can help.</p>
+              <p className="text-zinc-500 font-serif">Whether you&apos;re a growing startup or an established brand, we&apos;d love to hear about your goals and see how we can help.</p>
             </div>
 
             <div className="flex flex-col gap-4">
@@ -90,7 +90,7 @@ export default function ContactPage() {
           <div className="flex flex-col gap-6">
             <div>
               <h3 className="text-xl font-bold mb-2">Send us a message</h3>
-              <p className="text-zinc-500 text-sm font-serif">Fill out the form — we'll get back to you shortly.</p>
+              <p className="text-zinc-500 text-sm font-serif">Fill out the form — we&apos;ll get back to you shortly.</p>
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-6">
