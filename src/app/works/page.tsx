@@ -144,15 +144,13 @@ export default function WorksPage() {
       </section>
 
       {/* 2. Philosophy & Marquee Section */}
-      <section className="flex flex-col gap-6 max-w-5xl mb-16">
-        <div className="flex items-center gap-4">
-          <SectionTag label="Our Philosophy" />
-        </div>
+      <section className="flex flex-col items-center text-center gap-6 max-w-4xl mx-auto mb-16">
+        <SectionTag label="Our Clients" />
         <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 leading-tight">
           <TextReveal>We Play at the intersection of creativity & engineering</TextReveal>
         </h2>
-        <p className="text-base md:text-lg text-zinc-500 dark:text-zinc-400 max-w-3xl leading-relaxed mt-2">
-          From emerging startups to globally established companies, we design and build standard websites that capture and keep your audience&apos;s attention.
+        <p className="text-base md:text-lg text-zinc-500 dark:text-zinc-400 max-w-2xl leading-relaxed">
+          From emerging artists to globally established brands, we help bring wonder to every corner of the world. Here are some of the projects we&apos;ve executed for our clients.
         </p>
       </section>
 
@@ -163,18 +161,16 @@ export default function WorksPage() {
 
       {/* 3. Works Masonry Grid (White Rounded Box Wrapper) */}
       <section className="w-full bg-white dark:bg-[#070708] border border-zinc-200 dark:border-zinc-800 rounded-[2rem] p-6 sm:p-10 md:p-16 shadow-2xl mb-28">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-          <div className="flex flex-col gap-3 max-w-xl">
-            <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-50 leading-tight">
+        <div className="flex flex-col gap-4 mb-12">
+          <div className="flex items-center flex-wrap gap-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-zinc-900 dark:text-zinc-50 leading-none">
               The world is our Playground
             </h2>
-            <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
-              Our agency is a dedicated outreach to brands that aim to create stop-and-stare wonder. We bring the best of imagination and engineering in the same room.
-            </p>
-          </div>
-          <div className="shrink-0">
             <SectionTag label="Our Works" />
           </div>
+          <p className="text-xs sm:text-sm md:text-base text-zinc-500 dark:text-zinc-400 max-w-3xl leading-relaxed">
+            Our agency is a dedicated outreach to brands that aim to create stop-and-stare wonder. We bring the best of imagination and engineering in the same room to create innovative experiences for global audiences through digital executions.
+          </p>
         </div>
 
         {/* Tabs Filter Selector */}
@@ -433,29 +429,35 @@ export default function WorksPage() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full opacity-[0.08] pointer-events-none"
              style={{ background: "radial-gradient(circle, #0047FF 0%, transparent 70%)" }} />
         
-        <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-6 relative z-10">
-          Send us your CV at
+        <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-4 relative z-10 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+          <span>Send us</span>
+          <span className="inline-flex w-10 h-10 md:w-14 md:h-14 rounded-full overflow-hidden border-2 border-white/20 align-middle shadow-md rotate-[-6deg] shrink-0">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&fit=crop" className="w-full h-full object-cover" alt="" />
+          </span>
+          <span>your CV at</span>
+          <span className="inline-flex w-10 h-10 md:w-14 md:h-14 rounded-full overflow-hidden border-2 border-white/20 align-middle shadow-md rotate-[6deg] shrink-0">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&fit=crop" className="w-full h-full object-cover" alt="" />
+          </span>
         </h2>
 
-        {/* Team Avatars Grid */}
-        <div className="flex items-center -space-x-4 mb-10 relative z-10">
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&fit=crop" alt="Team member" className="w-12 h-12 rounded-full border-2 border-black object-cover" />
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&fit=crop" alt="Team member" className="w-12 h-12 rounded-full border-2 border-black object-cover" />
-          <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=100&fit=crop" alt="Team member" className="w-12 h-12 rounded-full border-2 border-black object-cover" />
-          <div className="w-12 h-12 rounded-full border-2 border-black bg-zinc-800 flex items-center justify-center text-xs font-bold text-white tracking-tighter">
-            +12
-          </div>
-        </div>
+        <p className="text-xs sm:text-sm md:text-base text-zinc-400 max-w-lg mb-10 relative z-10">
+          Tell us your goals, and we&apos;ll help you design the perfect creative solution.
+        </p>
 
         <MagneticWrap className="relative z-10">
           <motion.button
-            onClick={() => router.push("/careers")}
+            onClick={() => window.location.href = "mailto:hello@madsphere.in?subject=Job Inquiry / CV Submission"}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.96 }}
             transition={{ type: "spring", stiffness: 350, damping: 15 }}
-            className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold uppercase tracking-widest px-8 py-3.5 rounded-full text-xs transition-colors flex items-center gap-3 cursor-pointer shadow-lg shadow-yellow-500/20"
+            className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold uppercase tracking-wider px-8 py-3 rounded-full text-xs sm:text-sm transition-colors flex items-center gap-3 cursor-pointer shadow-lg shadow-yellow-500/20"
           >
-            Inquire Now <ArrowRight className="w-4 h-4" />
+            hello@madsphere.in
+            <span className="w-6 h-6 sm:w-7 h-7 bg-white text-black rounded-full flex items-center justify-center shrink-0">
+              <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
           </motion.button>
         </MagneticWrap>
       </section>
