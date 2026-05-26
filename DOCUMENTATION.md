@@ -1,6 +1,6 @@
 # MadSphere Web Architecture & Motion Documentation
 
-This document serves as a comprehensive developer reference for the custom UI animations, route transition logic, anti-inspection protections, and responsive design systems built for the MadSphere digital agency platform.
+This document serves as a comprehensive developer reference for the custom UI animations, route transition logic, anti-inspection protections, responsive design systems, and multi-section layouts built for the MadSphere digital agency platform.
 
 ---
 
@@ -23,25 +23,38 @@ We implement two distinct preloader workflows depending on the client lifecycle:
 ---
 
 ## 2. Page Scroll & Sequential Animations
-Located in: [`src/app/page.tsx`](./src/app/page.tsx)
+Located in: [`src/app/page.tsx`](./src/app/page.tsx) and [`src/app/works/page.tsx`](./src/app/works/page.tsx)
 
 ### A. How We Work Process Sequence
 - **Connecting Dotted Connectors (Desktop)**: On screens `>= 1024px`, absolute SVG paths connect the right edges of the process steps to the left edges of subsequent columns using S-curve cubic Bezier curves (`d="M ... C ..."`).
 - **Staggered Entrance**: The cards and paths reveal sequentially. On desktop, card $i$ delays by $i \times 0.8\text{s}$, and line $i$ delays by $(i \times 0.8 + 0.45)\text{s}$. This paces the animations in a fluid chain (Card 1 ➔ Line 1 ➔ Card 2 ➔ Line 2 ➔ Card 3 ➔ Line 3 ➔ Card 4).
 - **Responsive Fallback**: On mobile, the SVG lines are hidden and cards slide up in a rapid stagger cascade ($i \times 0.15\text{s}$ delay) to keep interactions snappy.
 
-### B. Parallax & 3D Limb Tilts
-- **Scroll-Linked Parallax**: Utilizes Framer Motion's `useScroll` and `useTransform` to bind image scale/position to scroll speed.
-- **Tilt3D Engine**: Portfolio and team cards map mouse coordinates relative to the card's bounding rectangle (`getBoundingClientRect()`), updating `rotateX` and `rotateY` springs to create physical 3D depth on hover.
+### B. Parallax & 3D Limb Tilts (Touch-Optimized)
+- **Scroll-Linked Parallax**: Utilizes Framer Motion's `useScroll` and `useTransform` to bind image scale/position to scroll speed. Disabled on viewports width `< 768px` to bypass calculations during touch scrolling.
+- **Tilt3D Engine**: Portfolio and team cards map mouse coordinates relative to the card's bounding rectangle (`getBoundingClientRect()`), updating `rotateX` and `rotateY` springs to create physical 3D depth on hover. Omitted on touch-pointer viewports to optimize paint performance.
 
 ---
 
-## 3. Robust Code Copy & Inspection Protections
+## 3. Works Page Layout Architecture
+Located in: [`src/app/works/page.tsx`](./src/app/works/page.tsx)
+
+The Works page is a multi-section document designed to mirror Figma specifications:
+1. **Header Grid**: Contains a staggered 2-column flex layout splitting the "Featured Work" title on the left and the portfolio tag and styling descriptor on the right.
+2. **Philosophy Block & Client Marquee**: Showcases the core creative-engineering philosophy header coupled with a fast auto-scrolling brand logo marquee.
+3. **White-boxed Works Grid**: Wrapped in a prominent rounded container (`rounded-[2rem] bg-white border dark:bg-[#070708]`) that houses the category filters and the 3-column staggered masonry grid.
+4. **How We Work**: Embeds the responsive 4-step process cards alongside custom 3D image assets (chrome cube, hand, dispenser, iridescent ring).
+5. **Client Stories**: Embeds the testimonial slider to build social proof.
+6. **Careers Banner**: A dark call-to-action block prompting visitors to submit their CV with a quick redirect button.
+
+---
+
+## 4. Robust Code Copy & Inspection Protections
 Located in: [`src/components/AntiInspect.tsx`](./src/components/AntiInspect.tsx) and [`src/app/globals.css`](./src/app/globals.css)
 
 To protect intellectual property, we block browser source-inspection vectors:
 
-- **Keyboard & Menu Blocks**: Listens to global keydown events to intercept:
+- **Keyboard & Menu Blocks**: Intercepts:
   - F12, DevTools (`Ctrl+Shift+I` / `Cmd+Option+I`), Console window (`Ctrl+Shift+J` / `Cmd+Option+J`), and View Source (`Ctrl+U` / `Cmd+U`).
   - Page saving (`Ctrl+S` / `Cmd+S`).
   - Right-click context menus (`contextmenu` event).
@@ -50,14 +63,3 @@ To protect intellectual property, we block browser source-inspection vectors:
   - Global intercept on `dragstart` for `img` and `video` tags to prevent dragging images to desktops or directories.
 - **User-Select CSS rules**: `user-select: none` is applied globally in `globals.css` to prevent text highlighting. Normal selection is dynamically re-enabled only on `<input>`, `<textarea>`, and `<select>` fields so forms remain fully functional.
 - **DevTools Debugger Loop**: In production mode (`process.env.NODE_ENV === "production"`), a loop runs every second to check script execution speed. If DevTools is open, a `debugger` statement pauses execution. If the delay exceeds 100ms, the script clears the DOM (`document.body.innerHTML = 'Developer tools are disabled.'`) and triggers a reload.
-
----
-
-## 4. Mobile Responsive & Layout Optimizations
-Located in: [`src/app/works/page.tsx`](./src/app/works/page.tsx) and [`src/components/Footer.tsx`](./src/components/Footer.tsx)
-
-- **Parallax Guard (Works grid)**: On mobile, the two portfolio columns stack vertically. We use a media query listener (`innerWidth >= 768`) to disable column vertical translations (`y1` and `y2` useTransform) below tablet size. This prevents layout shifting and huge gaps on mobile devices.
-- **Footer CTA Portrait Fixes**:
-  - **Adaptive Blending**: Portraits use `mix-blend-multiply dark:mix-blend-screen` to display with rich contrast on light backgrounds (multiply) and glow on dark backgrounds (screen).
-  - **Curved Transitions**: Changed quick spring dynamics to a smooth, visible ease-out cubic curve (`duration: 1.2s`, `ease: [0.16, 1, 0.3, 1]`).
-  - **Z-Index Correction**: Set z-index to `z-0` to render the portraits in front of the background, but behind the text container.

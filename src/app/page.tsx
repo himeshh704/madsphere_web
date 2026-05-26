@@ -20,17 +20,37 @@ import { heroCards, socials, stats, works, process, clients } from "@/data/site"
 function ParallaxImg({ src, alt, className }: { src: string; alt: string; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
+
   useEffect(() => {
     let active = true;
+    setIsMobile(window.innerWidth < 768);
     setTimeout(() => { if (active) setMounted(true); }, 0);
-    return () => { active = false; };
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      active = false;
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
+
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.2, 1.05, 1.2]);
+
   return (
     <div ref={ref} className={`overflow-hidden ${className ?? ""}`}>
-      <motion.img src={src} alt={alt} style={{ y: mounted ? y : undefined, scale: mounted ? scale : undefined }} className="w-full h-full object-cover" />
+      <motion.img 
+        src={src} 
+        alt={alt} 
+        style={{ 
+          y: (mounted && !isMobile) ? y : undefined, 
+          scale: (mounted && !isMobile) ? scale : undefined 
+        }} 
+        className="w-full h-full object-cover" 
+      />
     </div>
   );
 }
@@ -248,14 +268,9 @@ export default function Home() {
           </div>
 
           <div className="lg:col-span-8 flex flex-col gap-10">
-            <motion.h2
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="text-4xl md:text-5xl font-bold leading-[1.15]"
-            >
+            <h2 className="text-4xl md:text-5xl font-bold leading-[1.15] text-zinc-900 dark:text-zinc-50">
               <TextReveal>We&apos;ve helped startups, scale-ups, and established brands cut through the noise</TextReveal>
-            </motion.h2>
+            </h2>
 
             <div className="flex flex-col sm:flex-row gap-4 h-[280px] sm:h-[380px]" style={{ perspective: "1000px" }}>
               <motion.div
@@ -294,14 +309,9 @@ export default function Home() {
       <section id="works" className="relative z-10 py-24 bg-zinc-50 dark:bg-[#0a0a0a]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-16">
           <div className="flex items-center justify-center gap-4 mb-14">
-            <motion.h2
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="text-3xl font-bold"
-            >
+            <h2 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">
               <TextReveal>Featured Work</TextReveal>
-            </motion.h2>
+            </h2>
             <SectionTag label="Work Portfolio" />
           </div>
 
@@ -367,9 +377,9 @@ export default function Home() {
       {/* Process */}
       <section className="relative z-10 py-28 px-6 md:px-16 max-w-[1400px] mx-auto">
         <div className="flex items-center gap-4 mb-20">
-          <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-4xl font-bold">
+          <h2 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50">
             <TextReveal>How We Work</TextReveal>
-          </motion.h2>
+          </h2>
           <SectionTag label="Working Process" />
         </div>
 
@@ -471,9 +481,9 @@ export default function Home() {
       {/* Testimonials */}
       <section className="relative z-10 py-24 px-6 md:px-16 max-w-[1400px] mx-auto border-t border-zinc-100 dark:border-zinc-800">
         <div className="flex items-center gap-4 mb-14">
-          <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-3xl font-bold">
+          <h2 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">
             <TextReveal>Client Stories</TextReveal>
-          </motion.h2>
+          </h2>
           <SectionTag label="Testimonial" />
         </div>
         <TestimonialCarousel />

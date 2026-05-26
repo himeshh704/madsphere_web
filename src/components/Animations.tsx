@@ -160,7 +160,7 @@ export function MagneticWrap({ children, className }: { children: React.ReactNod
   const onLeave = () => { x.set(0); y.set(0); };
 
   return (
-    <motion.div style={{ x, y }} onMouseMove={onMove} onMouseLeave={onLeave} className={className}>
+    <motion.div style={{ x: isTouch ? undefined : x, y: isTouch ? undefined : y }} onMouseMove={onMove} onMouseLeave={onLeave} className={className}>
       {children}
     </motion.div>
   );
@@ -178,7 +178,7 @@ export function Tilt3D({ children, className }: { children: React.ReactNode; cla
   };
   const onLeave = () => { rx.set(0); ry.set(0); };
   return (
-    <motion.div style={{ rotateX: rx, rotateY: ry, transformPerspective: 800 }} onMouseMove={onMove} onMouseLeave={onLeave} className={className}>
+    <motion.div style={{ rotateX: isTouch ? undefined : rx, rotateY: isTouch ? undefined : ry, transformPerspective: isTouch ? undefined : 800 }} onMouseMove={onMove} onMouseLeave={onLeave} className={className}>
       {children}
     </motion.div>
   );

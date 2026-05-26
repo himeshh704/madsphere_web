@@ -1,6 +1,6 @@
 # MadSphere Web Architecture & UI Audit Report
 
-This report documents the codebase audit, visual shortcomings resolved, animation optimizations implemented, and deployment verification for the MadSphere digital agency platform.
+This report documents the codebase audit, visual shortcomings resolved, animation optimizations implemented, mobile performance enhancements, and deployment verification for the MadSphere digital agency platform.
 
 ---
 
@@ -8,6 +8,8 @@ This report documents the codebase audit, visual shortcomings resolved, animatio
 
 | Shortcoming / Issue | Viewport | Root Cause | Resolution | Status |
 | :--- | :--- | :--- | :--- | :--- |
+| **Missing Title on Homepage** | Desktop & Mobile | Double `whileInView` animation conflict between `<motion.h2>` and child `<TextReveal>` in Framer Motion caused text to remain at `opacity: 0` / translated out of boundaries, rendering "Featured Work" and other headings invisible. Also lacked high-contrast text color defaults. | Replaced `<motion.h2>` wrappers with standard `h2` elements styled with high-contrast classes (`text-zinc-900 dark:text-zinc-50`), letting `<TextReveal>` manage letter-by-letter scroll animations reliably. | **Resolved** |
+| **Works Page Section Parity** | Desktop & Mobile | Works page (`/works`) previously lacked full parity with Figma specifications, showing only the works grid without the supplementary agency process, testimonials, and careers sections. | Restructured the Works page to stack all Figma specification modules: Header Grid, Philosophy Section, Client Marquee, White-boxed Works Grid, Process Steps, Client Stories, and Careers Banner. | **Resolved** |
 | **Footer 'E' Character Clipping** | Desktop & Mobile | Massive font sizing (`14vw`) on serif bold text combined with tight kerning (`tracking-tighter`) exceeded parent container boundaries, causing the rightmost letter `E` in `MADSPHERE` to be clipped. | Reduced logo size to `13vw`, adjusted spacing to `tracking-tight`, and applied safety padding (`pr-4`) on the logo element. | **Resolved** |
 | **Horizontal Viewport Overflows** | Mobile (`< 768px`) | Animations sliding from `x: -50px` or `x: 50px` (About section images) pushed columns beyond the narrow device width, forcing a horizontal scrollbar. | Configured responsive animation initial coordinates using screen detection: images slide vertically (`y: 40`) on mobile and horizontally only on desktop. | **Resolved** |
 | **Decorative Image Overlaps** | Mobile (`< 640px`) | Left and right decorative footer portraits positioned using static percentages (`left-[20%]`, `right-[15%]`) converged too closely on narrow viewports, obscuring the heading text. | Added responsive placement classes (`left-0 sm:left-[5%] md:left-[10%] lg:left-[15%]`) and responsive sizing to sit outwards on mobile. | **Resolved** |
@@ -16,22 +18,25 @@ This report documents the codebase audit, visual shortcomings resolved, animatio
 
 ---
 
-## 2. Interactive & Motion Enhancements
+## 2. Interactive, Motion, & Mobile Optimizations
 
-### A. Unified Button Interaction Model
+### A. Touch/Mobile Animation Bypass (Zero Lag)
+To guarantee buttery-smooth 60fps/120fps scrolling on low-end and high-end mobile devices:
+1. **Interactive Tilts (`TiltCard` & `Tilt3D`)**: Bypassed Framer Motion's springs on touch viewports by checking `pointer: coarse` capability. When touch is detected, the inline CSS transform properties (`rotateX`, `rotateY`, `transformPerspective`) are omitted (set to `undefined`), eliminating redraw/reflow computations during touch scrolling.
+2. **Magnetic Snaps (`MagneticWrap`)**: Disabled spring-linked movements on mobile viewports using touch detection, ensuring normal touch navigation acts without physical delay.
+3. **Parallax Image Scaling (`ParallaxImg`)**: Added window resize listeners to disable scroll-linked parallax calculations (avoiding `useTransform` coordinates binding) on mobile width viewports (`< 768px`).
+
+### B. Unified Button Interaction Model
 To maintain brand-wide tactile consistency, all primary action buttons have been refactored to use matching hover/tap states:
 - **Hover Scale**: `scale: 1.05`
 - **Click/Tap Scale**: `scale: 0.96`
 - **Spring Settings**: `type: "spring", stiffness: 350, damping: 15` (high-fidelity snap back, zero visual lag).
-- **Cursor Pointer**: Explicitly set `cursor-pointer` to guarantee active hover states across all viewport view configurations.
+- **Cursor Pointer**: Explicitly set `cursor-pointer` to guarantee active hover states across all viewport configurations.
 
-### B. Portrait Spring & Magnification
+### C. Portrait Spring & Magnification
 The decorative footer images now act as interactive design highlights:
 - **Spring Entrance**: Staggered pop-up on scroll (`stiffness: 150`, `damping: 12`) starting from `scale: 0` to `scale: 1`.
 - **Hover Pop-Up**: Magnifies to `scale: 1.15`, resets rotation (`rotate: 0`), and jumps to foreground layer (`z-index: 30`) to look premium and engaging.
-
-### C. Footer Heading Text Reveal
-The main call-to-action title `Ready to make something great?` now utilizes the custom `<TextReveal>` component. Words animate in sequentially, linking the bottom of the page seamlessly to the initial page-entrance motion styles.
 
 ---
 
