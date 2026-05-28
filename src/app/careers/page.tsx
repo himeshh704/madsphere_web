@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, Plus, Minus } from "lucide-react";
 import { TextReveal, Tilt3D, MagneticWrap } from "@/components/Animations";
 
 // Section Tag component
@@ -61,28 +62,33 @@ const positions = [
     type: "Full-Time",
     experience: "1-2 years experience",
     location: "Mumbai, Maharashtra",
+    desc: "Translate business goals into innovative brand strategy, content concepts, and campaign directions. Collaborate with design and engineering teams to craft compelling brand narratives.",
   },
   {
     title: "UI/UX Designer",
     type: "Full-Time",
     experience: "1-2 years experience",
     location: "Mumbai, Maharashtra",
+    desc: "Design modern, beautiful, and intuitive user experiences for web and mobile interfaces. Shape visual identities, user flows, and interactive layouts using industry-leading tools.",
   },
   {
     title: "Full stack Developer",
     type: "Full-Time",
     experience: "1-2 years experience",
     location: "Mumbai, Maharashtra",
+    desc: "Build fast, scalable web applications with React, Next.js, and Node.js. Obsess over micro-animations, clean code structures, and responsive layouts.",
   },
   {
     title: "Webflow Developer",
     type: "Full-Time",
     experience: "1-2 years experience",
     location: "Mumbai, Maharashtra",
+    desc: "Develop high-end marketing websites and landing pages in Webflow. Convert complex Figma designs into responsive, pixel-perfect, and interactive Webflow builds.",
   },
 ];
 
 export default function CareersPage() {
+  const [openJob, setOpenJob] = useState<number | null>(null);
   return (
     <main className="pt-32 md:pt-40 pb-0 min-h-screen bg-white dark:bg-[#070708] overflow-hidden">
       
@@ -198,29 +204,65 @@ export default function CareersPage() {
           {/* Right Column: Open Positions List */}
           <div className="lg:col-span-7 flex flex-col w-full pt-8 lg:pt-0">
             {positions.map((pos, idx) => {
+              const isOpen = openJob === idx;
               return (
                 <div 
                   key={idx}
-                  onClick={() => window.location.href = "mailto:hello@madsphere.in?subject=Application for " + pos.title}
-                  className="border-b border-zinc-200 dark:border-zinc-800 w-full group py-8 cursor-pointer flex justify-between items-center"
+                  className="border-b border-zinc-200 dark:border-zinc-800 w-full"
                 >
-                  <div className="flex flex-col gap-2">
-                    <h3 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-white transition-colors group-hover:text-[#0047FF]">
-                      {pos.title}
-                    </h3>
-                    <div className="flex items-center flex-wrap gap-2 text-xs text-zinc-400 dark:text-zinc-500 font-semibold tracking-wider uppercase">
-                      <span>{pos.type}</span>
-                      <span>|</span>
-                      <span>{pos.experience}</span>
-                      <span>|</span>
-                      <span>{pos.location}</span>
+                  <div 
+                    className="flex justify-between items-center py-8 cursor-pointer group"
+                    onClick={() => setOpenJob(isOpen ? null : idx)}
+                  >
+                    <div className="flex flex-col gap-2">
+                      <h3 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-white transition-colors group-hover:text-[#0047FF]">
+                        {pos.title}
+                      </h3>
+                      <div className="flex items-center flex-wrap gap-2 text-xs text-zinc-400 dark:text-zinc-500 font-semibold tracking-wider uppercase">
+                        <span>{pos.type}</span>
+                        <span>|</span>
+                        <span>{pos.experience}</span>
+                        <span>|</span>
+                        <span>{pos.location}</span>
+                      </div>
+                    </div>
+                    
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 border border-zinc-200 dark:border-zinc-800 transition-colors ${isOpen ? 'bg-[#0047FF] border-[#0047FF] text-white' : 'bg-transparent text-zinc-400 group-hover:bg-[#0047FF] group-hover:border-[#0047FF] group-hover:text-white'}`}>
+                      {isOpen ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
                     </div>
                   </div>
-                  
-                  {/* Subtle hover arrow effect */}
-                  <div className="w-8 h-8 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0 bg-[#0047FF] border-[#0047FF] text-white">
-                    <ArrowUpRight className="w-4 h-4" />
-                  </div>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0, filter: "blur(4px)" }}
+                        animate={{ height: "auto", opacity: 1, filter: "blur(0px)" }}
+                        exit={{ height: 0, opacity: 0, filter: "blur(4px)" }}
+                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                        className="overflow-hidden w-full"
+                      >
+                        <div className="pb-8 flex flex-col gap-6 items-start w-full">
+                          <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 leading-relaxed font-sans">
+                            {pos.desc}
+                          </p>
+                          <MagneticWrap>
+                            <motion.button
+                              onClick={() => window.location.href = "mailto:hello@madsphere.in?subject=Application for " + pos.title}
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.96 }}
+                              transition={{ type: "spring", stiffness: 350, damping: 15 }}
+                              className="bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-5 pr-1.5 py-1.5 text-[10px] font-bold uppercase tracking-widest cursor-pointer flex items-center gap-3 shadow-lg shadow-blue-500/20"
+                            >
+                              Apply for Role
+                              <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+                                <ArrowUpRight className="w-3.5 h-3.5" />
+                              </span>
+                            </motion.button>
+                          </MagneticWrap>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               );
             })}
