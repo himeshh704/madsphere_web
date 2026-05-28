@@ -113,6 +113,7 @@ export default function ServicesPage() {
                 <div 
                   className="flex justify-between items-center py-6 cursor-pointer group"
                   onClick={() => setOpenService(isOpen ? "" : service.id)}
+                  onMouseEnter={() => setOpenService(service.id)}
                 >
                   <h2 className="text-3xl md:text-5xl font-bold text-zinc-900 dark:text-white transition-colors group-hover:text-[#0047FF]">
                     {service.id}

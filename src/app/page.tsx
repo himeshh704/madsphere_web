@@ -7,6 +7,7 @@ import {
   useTransform,
   useMotionValue,
   useSpring,
+  useMotionValueEvent,
 } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Play } from "lucide-react";
@@ -71,11 +72,62 @@ function parseStatNumber(val: string): { num: number; suffix: string } {
   return match ? { num: parseInt(match[1]), suffix: match[2] } : { num: 0, suffix: val };
 }
 
+const cardVariants = {
+  hidden: (isDesktop: boolean) => ({
+    opacity: 0,
+    x: 0,
+    y: isDesktop ? 120 : 50,
+    rotateY: isDesktop ? -10 : 0
+  }),
+  visible: {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    rotateY: 0
+  }
+};
+
 export default function Home() {
   const router = useRouter();
   const heroRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const processRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: processScrollY } = useScroll({
+    target: processRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Card 0 (Step 1)
+  const card0Opacity = useTransform(processScrollY, [0.05, 0.18], [0, 1]);
+  const card0Y = useTransform(processScrollY, [0.05, 0.25], [200, 0]);
+  const card0RotateY = useTransform(processScrollY, [0.05, 0.25], [-10, 0]);
+
+  // Card 1 (Step 2)
+  const card1Opacity = useTransform(processScrollY, [0.20, 0.33], [0, 1]);
+  const card1Y = useTransform(processScrollY, [0.20, 0.45], [344, 0]);
+  const card1RotateY = useTransform(processScrollY, [0.20, 0.45], [-10, 0]);
+
+  // Card 2 (Step 3)
+  const card2Opacity = useTransform(processScrollY, [0.40, 0.53], [0, 1]);
+  const card2Y = useTransform(processScrollY, [0.40, 0.65], [536, 0]);
+  const card2RotateY = useTransform(processScrollY, [0.40, 0.65], [-10, 0]);
+
+  // Card 3 (Step 4)
+  const card3Opacity = useTransform(processScrollY, [0.60, 0.73], [0, 1]);
+  const card3Y = useTransform(processScrollY, [0.60, 0.85], [344, 0]);
+  const card3RotateY = useTransform(processScrollY, [0.60, 0.85], [-10, 0]);
+
+  // Paths
+  const path1Length = useTransform(processScrollY, [0.20, 0.40], [0, 1]);
+  const path1Opacity = useTransform(processScrollY, [0.20, 0.28], [0, 1]);
+
+  const path2Length = useTransform(processScrollY, [0.40, 0.60], [0, 1]);
+  const path2Opacity = useTransform(processScrollY, [0.40, 0.48], [0, 1]);
+
+  const path3Length = useTransform(processScrollY, [0.60, 0.80], [0, 1]);
+  const path3Opacity = useTransform(processScrollY, [0.60, 0.68], [0, 1]);
+
   useEffect(() => {
     let active = true;
     setTimeout(() => { if (active) setMounted(true); }, 0);
@@ -161,14 +213,55 @@ export default function Home() {
               {heroCards.map((card) => (
                 <motion.div
                   key={card.id}
-                  variants={fadeUp}
-                  whileHover={{ y: -8, rotateZ: -2, scale: 1.06 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 28 },
+                    show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } },
+                    hover: {}
+                  }}
+                  whileHover="hover"
                   transition={{ type: "spring", stiffness: 300 }}
                   className="shrink-0 flex items-center gap-3 bg-white/35 backdrop-blur-xl border border-white/25 rounded-xl px-3 py-2 cursor-pointer"
                   style={{ minWidth: 200 }}
                   data-cursor
                 >
-                  <img src={card.img} alt={card.label} className="w-14 h-14 rounded-lg object-cover shrink-0" />
+                  <div className="relative w-14 h-14 rounded-lg overflow-hidden shrink-0 bg-zinc-800">
+                    <img 
+                      src={card.img} 
+                      alt={card.label} 
+                      className="w-full h-full object-cover" 
+                    />
+                    <motion.div 
+                      variants={{
+                        hover: { 
+                          opacity: 0,
+                          transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
+                        }
+                      }}
+                      initial={{ opacity: 1 }}
+                      className="absolute inset-y-0 left-0 w-[68%] flex pointer-events-none overflow-hidden"
+                    >
+                      <motion.div 
+                        variants={{ hover: { x: "-110%" } }}
+                        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                        className="w-[30%] h-full bg-blue-500/15 backdrop-blur-[6px] border-r border-blue-400/20 shrink-0" 
+                      />
+                      <motion.div 
+                        variants={{ hover: { x: "-120%" } }}
+                        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                        className="w-[20%] h-full bg-purple-500/12 backdrop-blur-[5px] border-r border-purple-400/15 shrink-0" 
+                      />
+                      <motion.div 
+                        variants={{ hover: { x: "-130%" } }}
+                        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                        className="w-[25%] h-full bg-pink-500/10 backdrop-blur-[5px] border-r border-pink-400/15 shrink-0" 
+                      />
+                      <motion.div 
+                        variants={{ hover: { x: "-140%" } }}
+                        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                        className="w-[25%] h-full bg-amber-500/15 backdrop-blur-[4px] shrink-0" 
+                      />
+                    </motion.div>
+                  </div>
                   <div>
                     <p className="text-[10px] font-bold text-white/60">({card.id})</p>
                     <p className="text-sm font-bold text-white leading-tight">{card.label}</p>
@@ -197,7 +290,19 @@ export default function Home() {
                     className="shrink-0 flex items-center gap-3 bg-white/35 backdrop-blur-xl border border-white/25 rounded-xl px-3 py-2"
                     style={{ width: 180 }}
                   >
-                    <img src={card.img} alt={card.label} className="w-11 h-11 rounded-lg object-cover shrink-0" />
+                    <div className="relative w-11 h-11 rounded-lg overflow-hidden shrink-0 bg-zinc-800">
+                      <img 
+                        src={card.img} 
+                        alt={card.label} 
+                        className="w-full h-full object-cover" 
+                      />
+                      <div className="absolute inset-y-0 left-0 w-[68%] flex pointer-events-none overflow-hidden">
+                        <div className="w-[30%] h-full bg-blue-500/15 backdrop-blur-[6px] border-r border-blue-400/20 shrink-0" />
+                        <div className="w-[20%] h-full bg-purple-500/12 backdrop-blur-[5px] border-r border-purple-400/15 shrink-0" />
+                        <div className="w-[25%] h-full bg-pink-500/10 backdrop-blur-[5px] border-r border-pink-400/15 shrink-0" />
+                        <div className="w-[25%] h-full bg-amber-500/15 backdrop-blur-[4px] shrink-0" />
+                      </div>
+                    </div>
                     <div className="min-w-0">
                       <p className="text-[9px] font-bold text-white/60">({card.id})</p>
                       <p className="text-xs font-bold text-white leading-tight truncate">{card.label}</p>
@@ -306,7 +411,7 @@ export default function Home() {
       </section>
 
       {/* Work */}
-      <section id="works" className="relative z-10 py-24 bg-zinc-50 dark:bg-[#0a0a0a]">
+      <section id="works" className="hidden relative z-10 py-24 bg-zinc-50 dark:bg-[#0a0a0a]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-16">
           <div className="flex items-center justify-center gap-4 mb-14">
             <h2 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">
@@ -375,7 +480,7 @@ export default function Home() {
       </section>
 
       {/* Process */}
-      <section className="relative z-10 py-28 px-6 md:px-16 max-w-[1400px] mx-auto">
+      <section ref={processRef} className="relative z-10 py-28 px-6 md:px-16 max-w-[1400px] mx-auto">
         <div className="flex items-center gap-4 mb-20">
           <h2 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50">
             <TextReveal>How We Work</TextReveal>
@@ -394,12 +499,15 @@ export default function Home() {
               className="text-[#0047FF]/40 dark:text-[#0047FF]/50"
               strokeWidth="2"
               strokeDasharray="6,6"
-              initial={{ pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 1 }}
-              viewport={{ once: true }}
+              style={{
+                pathLength: (mounted && isDesktop) ? path1Length : undefined,
+                opacity: (mounted && isDesktop) ? path1Opacity : undefined
+              }}
+              initial={mounted ? { pathLength: 0, opacity: 0 } : { pathLength: 1, opacity: 1 }}
+              animate={(!isDesktop && mounted) ? { pathLength: 1, opacity: 1 } : undefined}
               transition={{
-                pathLength: { duration: 0.5, delay: isDesktop ? 0.45 : 0, ease: "easeInOut" },
-                opacity: { duration: 0.2, delay: isDesktop ? 0.45 : 0 }
+                pathLength: { duration: 0.6, ease: "easeInOut" },
+                opacity: { duration: 0.2 }
               }}
             />
             {/* Step 2 -> Step 3 */}
@@ -410,12 +518,15 @@ export default function Home() {
               className="text-[#0047FF]/40 dark:text-[#0047FF]/50"
               strokeWidth="2"
               strokeDasharray="6,6"
-              initial={{ pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 1 }}
-              viewport={{ once: true }}
+              style={{
+                pathLength: (mounted && isDesktop) ? path2Length : undefined,
+                opacity: (mounted && isDesktop) ? path2Opacity : undefined
+              }}
+              initial={mounted ? { pathLength: 0, opacity: 0 } : { pathLength: 1, opacity: 1 }}
+              animate={(!isDesktop && mounted) ? { pathLength: 1, opacity: 1 } : undefined}
               transition={{
-                pathLength: { duration: 0.5, delay: isDesktop ? 1.25 : 0, ease: "easeInOut" },
-                opacity: { duration: 0.2, delay: isDesktop ? 1.25 : 0 }
+                pathLength: { duration: 0.6, ease: "easeInOut" },
+                opacity: { duration: 0.2 }
               }}
             />
             {/* Step 3 -> Step 4 */}
@@ -426,42 +537,48 @@ export default function Home() {
               className="text-[#0047FF]/40 dark:text-[#0047FF]/50"
               strokeWidth="2"
               strokeDasharray="6,6"
-              initial={{ pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 1 }}
-              viewport={{ once: true }}
+              style={{
+                pathLength: (mounted && isDesktop) ? path3Length : undefined,
+                opacity: (mounted && isDesktop) ? path3Opacity : undefined
+              }}
+              initial={mounted ? { pathLength: 0, opacity: 0 } : { pathLength: 1, opacity: 1 }}
+              animate={(!isDesktop && mounted) ? { pathLength: 1, opacity: 1 } : undefined}
               transition={{
-                pathLength: { duration: 0.5, delay: isDesktop ? 2.05 : 0, ease: "easeInOut" },
-                opacity: { duration: 0.2, delay: isDesktop ? 2.05 : 0 }
+                pathLength: { duration: 0.6, ease: "easeInOut" },
+                opacity: { duration: 0.2 }
               }}
             />
           </svg>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-start relative z-10" style={{ perspective: "1000px" }}>
+          <div 
+            key={isDesktop ? "desktop" : "mobile"}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-start relative z-10" 
+            style={{ perspective: "1000px" }}
+          >
             {process.map(({ step, title, desc, img }, i) => {
-              const cardDelay = isDesktop ? i * 0.8 : i * 0.15;
+              const opacity = [card0Opacity, card1Opacity, card2Opacity, card3Opacity][i];
+              const y = [card0Y, card1Y, card2Y, card3Y][i];
+              const rotateY = [card0RotateY, card1RotateY, card2RotateY, card3RotateY][i];
+
               return (
                 <motion.div
                   key={step}
-                  initial={{ 
-                    opacity: 0, 
-                    x: isDesktop ? -40 : 0, 
-                    y: isDesktop ? 0 : 30,
-                    rotateY: isDesktop ? -15 : 0 
+                  custom={isDesktop}
+                  variants={cardVariants}
+                  initial={mounted ? "hidden" : "visible"}
+                  whileInView={(!isDesktop && mounted) ? "visible" : undefined}
+                  viewport={{ once: true, margin: "-50px" }}
+                  style={{
+                    marginTop: isDesktop && i % 2 === 1 ? "6rem" : 0,
+                    opacity: (mounted && isDesktop) ? opacity : undefined,
+                    y: (mounted && isDesktop) ? y : undefined,
+                    rotateY: (mounted && isDesktop) ? rotateY : undefined,
                   }}
-                  whileInView={{ 
-                    opacity: 1, 
-                    x: 0, 
-                    y: 0,
-                    rotateY: 0 
-                  }}
-                  viewport={{ once: true, margin: "-100px" }}
                   transition={{ 
                     duration: 0.8, 
-                    delay: cardDelay, 
                     ease: [0.16, 1, 0.3, 1] 
                   }}
                   className="flex flex-col gap-4"
-                  style={{ marginTop: isDesktop && i % 2 === 1 ? "6rem" : 0 }}
                 >
                   <Tilt3D className="p-7 border border-zinc-200 dark:border-zinc-800 rounded-xl flex flex-col gap-3 cursor-pointer bg-white/80 dark:bg-black/80 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow">
                     <span className="text-[10px] font-bold text-zinc-400">[STEP — {step}]</span>

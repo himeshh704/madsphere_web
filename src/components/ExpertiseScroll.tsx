@@ -42,6 +42,7 @@ export default function ExpertiseScroll() {
             <motion.button
               key={ex.label}
               onClick={() => setActive(i)}
+              onMouseEnter={() => setActive(i)}
               whileHover={{ x: 8 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
               className="w-full text-left py-3 focus-visible:outline-none"
