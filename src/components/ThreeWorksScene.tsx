@@ -3,6 +3,7 @@
 import { useEffect, useRef, useCallback } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { works } from "@/data/site";
 
 // Convert perspective height calculation (standard pixel Frustum mapping)
@@ -561,6 +562,9 @@ export default function ThreeWorksScene({ revealed }: { revealed: boolean }) {
     // Arches Setup
     const archesList: ArchItem[] = [];
     const loader = new GLTFLoader();
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("/draco/");
+    loader.setDRACOLoader(dracoLoader);
 
     loader.load(
       "/models/arch-dc.glb",
@@ -792,6 +796,7 @@ export default function ThreeWorksScene({ revealed }: { revealed: boolean }) {
 
       renArches.dispose();
       renCards.dispose();
+      dracoLoader.dispose();
       state.cards.forEach((c) => {
         c.mesh.geometry.dispose();
         if (Array.isArray(c.mesh.material)) {
