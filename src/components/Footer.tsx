@@ -9,11 +9,14 @@ export default function Footer() {
   const router = useRouter();
   const pathname = usePathname();
 
+  const isCareers = pathname === "/careers";
+
   if (pathname === "/works") return null;
   return (
     <footer className="relative z-10 w-full overflow-hidden flex flex-col transition-colors duration-300">
       {/* Upper Footer: Adaptive Light/Dark */}
-      <div className="w-full bg-zinc-100 dark:bg-[#050505] text-zinc-900 dark:text-white pt-32 pb-16 flex flex-col items-center relative z-10 transition-colors duration-300">
+      {!isCareers && (
+        <div className="w-full bg-zinc-100 dark:bg-[#050505] text-zinc-900 dark:text-white pt-32 pb-16 flex flex-col items-center relative z-10 transition-colors duration-300">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -91,6 +94,7 @@ export default function Footer() {
           </MagneticWrap>
         </motion.div>
       </div>
+      )}
 
       {/* Lower Footer: Solid Black Block (Always dark for high contrast) */}
       <div className="w-full bg-[#050505] text-white pt-16 pb-8 flex flex-col items-center relative z-10 border-t border-zinc-900">
