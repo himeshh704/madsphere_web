@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 export default function Mascot() {
   const pathname = usePathname();
-  if (pathname === "/works") return null;
+  if (pathname === "/works" || pathname === "/careers") return null;
   return (
     <motion.div
       initial={{ y: 200, opacity: 0 }}

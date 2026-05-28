@@ -117,12 +117,11 @@ export default function CareersPage() {
           <div className="lg:col-span-3 flex justify-center">
             <Tilt3D className="w-full max-w-[320px] aspect-square rounded-[2rem] overflow-hidden shadow-2xl relative border border-zinc-200 dark:border-zinc-800">
               <img 
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1200&fit=crop" 
+                src="/images/careers_portrait.png" 
                 alt="Creative portrait" 
                 className="w-full h-full object-cover"
                 draggable={false}
               />
-              <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 via-rose-500/20 to-cyan-500/10 mix-blend-color-dodge pointer-events-none" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
             </Tilt3D>
           </div>
