@@ -65,7 +65,7 @@ export default function Navbar() {
             transition={{ type: "spring", stiffness: 350, damping: 15 }}
             className="flex items-center gap-0 bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-widest transition-colors shadow-lg shadow-blue-500/20 cursor-pointer"
           >
-            Chat With Us
+            Let’s talk
             <span className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
               <ArrowRight className="w-3 h-3" />
             </span>
@@ -107,7 +107,7 @@ export default function Navbar() {
               transition={{ type: "spring", stiffness: 350, damping: 15 }}
               className="mt-3 flex items-center justify-between bg-[#0047FF] text-white rounded-full px-6 py-3 text-sm font-bold cursor-pointer"
             >
-              Chat With Us <ArrowRight className="w-4 h-4" />
+              Let’s talk <ArrowRight className="w-4 h-4" />
             </motion.button>
           </div>
         </div>

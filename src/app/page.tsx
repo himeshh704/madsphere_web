@@ -5,18 +5,14 @@ import {
   motion,
   useScroll,
   useTransform,
-  useMotionValue,
-  useSpring,
-  useMotionValueEvent,
 } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Play } from "lucide-react";
 import Marquee from "@/components/Marquee";
 import ExpertiseScroll from "@/components/ExpertiseScroll";
-import TestimonialCarousel from "@/components/TestimonialCarousel";
-import { TextReveal, AnimatedCounter, FloatingOrbs, MagneticWrap, Tilt3D } from "@/components/Animations";
-import { fadeUp, scaleIn, stagger, slideIn } from "@/lib/motion";
-import { heroCards, socials, stats, works, process, clients } from "@/data/site";
+import { TextReveal, FloatingOrbs, MagneticWrap, Tilt3D } from "@/components/Animations";
+import { stagger } from "@/lib/motion";
+import { heroCards, socials, process, clients } from "@/data/site";
 
 function ParallaxImg({ src, alt, className }: { src: string; alt: string; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -67,10 +63,6 @@ function SectionTag({ label }: { label: string }) {
   );
 }
 
-function parseStatNumber(val: string): { num: number; suffix: string } {
-  const match = val.match(/^(\d+)(.*)$/);
-  return match ? { num: parseInt(match[1]), suffix: match[2] } : { num: 0, suffix: val };
-}
 
 const cardVariants = {
   hidden: (isDesktop: boolean) => ({
@@ -198,9 +190,12 @@ export default function Home() {
             </div>
 
             <motion.div style={{ y: mounted ? textY : undefined }} className="absolute left-8 right-8 bottom-[120px] md:bottom-[130px] md:right-auto z-10 max-w-2xl">
-              <h1 className="text-3xl md:text-5xl lg:text-6xl text-white font-semibold leading-[1.1] tracking-tight">
-                <TextReveal>We make brands impossible to ignore.</TextReveal>
+              <h1 className="text-3xl md:text-5xl lg:text-6xl text-white font-semibold leading-[1.1] tracking-tight mb-3">
+                <TextReveal>Brands That Can&apos;t Be Ignored.</TextReveal>
               </h1>
+              <p className="text-sm md:text-base text-white/70 max-w-lg leading-relaxed font-sans hidden md:block">
+                We help emerging brands build identity systems, digital experiences, and marketing that actually feels like them.
+              </p>
             </motion.div>
 
             {/* Desktop Hero Cards */}
@@ -317,64 +312,71 @@ export default function Home() {
 
       {/* Marquee */}
       <div className="relative z-10 mt-16 border-y border-zinc-200 dark:border-zinc-800 overflow-hidden">
-        <Marquee items={clients} speed={40} />
+        <div className="flex items-center justify-center py-3 border-b border-zinc-100 dark:border-zinc-900">
+          <span className="text-[9px] font-bold tracking-[0.25em] uppercase text-zinc-400">Industries We Explore</span>
+        </div>
+        <Marquee items={clients} speed={50} />
       </div>
 
       {/* About */}
       <section id="about" className="relative z-10 py-28 px-6 md:px-16 max-w-[1400px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-          <div className="lg:col-span-4 flex flex-col gap-10">
-            <div className="flex flex-col gap-4">
-              <motion.span
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500"
-              >
-                <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> About Us
-              </motion.span>
-              <MagneticWrap>
-                <motion.button
-                  onClick={() => router.push('/about')}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.96 }}
-                  transition={{ type: "spring", stiffness: 350, damping: 15 }}
-                  className="self-start flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full transition-colors shadow-xl shadow-blue-500/20 cursor-pointer"
-                  data-cursor
-                >
-                  Read More
-                  <span className="w-5 h-5 bg-white rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Play className="w-3 h-3 fill-[#0047FF] text-[#0047FF] ml-0.5" />
-                  </span>
-                </motion.button>
-              </MagneticWrap>
-            </div>
+          <div className="lg:col-span-4 flex flex-col gap-8">
+            <motion.span
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500"
+            >
+              <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> About Us
+            </motion.span>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed font-sans"
+            >
+              A branding studio for founders and startups building something they actually believe in.
+            </motion.p>
 
             <motion.div
-              variants={stagger(0.15)}
-              initial="hidden"
-              whileInView="show"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="flex flex-col gap-8"
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex flex-col gap-3"
             >
-              {stats.map(({ value, label }) => {
-                const { num, suffix } = parseStatNumber(value);
-                return (
-                  <motion.div key={value} variants={slideIn("left")}>
-                    <p className="text-5xl font-bold tracking-tighter">
-                      <AnimatedCounter target={num} suffix={suffix} />
-                    </p>
-                    <p className="text-xs text-zinc-500 mt-1">{label}</p>
-                  </motion.div>
-                );
-              })}
+              {["Brand Strategy", "Creative Design", "Social Media", "Website Design", "Digital Marketing"].map((s, i) => (
+                <div key={i} className="flex items-center gap-3 text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                  <span className="w-1 h-1 rounded-full bg-[#0047FF] shrink-0" />
+                  {s}
+                </div>
+              ))}
             </motion.div>
+
+            <MagneticWrap>
+              <motion.button
+                onClick={() => router.push('/about')}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: "spring", stiffness: 350, damping: 15 }}
+                className="self-start flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full transition-colors shadow-xl shadow-blue-500/20 cursor-pointer"
+                data-cursor
+              >
+                Who we are
+                <span className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                  <Play className="w-3 h-3 fill-[#0047FF] text-[#0047FF] ml-0.5" />
+                </span>
+              </motion.button>
+            </MagneticWrap>
           </div>
 
           <div className="lg:col-span-8 flex flex-col gap-10">
             <h2 className="text-4xl md:text-5xl font-bold leading-[1.15] text-zinc-900 dark:text-zinc-50">
-              <TextReveal>We&apos;ve helped startups, scale-ups, and established brands cut through the noise</TextReveal>
+              <TextReveal>For brands that don&apos;t do ordinary.</TextReveal>
             </h2>
 
             <div className="flex flex-col sm:flex-row gap-4 h-[280px] sm:h-[380px]" style={{ perspective: "1000px" }}>
@@ -410,74 +412,6 @@ export default function Home() {
         <ExpertiseScroll />
       </section>
 
-      {/* Work */}
-      <section id="works" className="hidden relative z-10 py-24 bg-zinc-50 dark:bg-[#0a0a0a]">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-16">
-          <div className="flex items-center justify-center gap-4 mb-14">
-            <h2 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">
-              <TextReveal>Featured Work</TextReveal>
-            </h2>
-            <SectionTag label="Work Portfolio" />
-          </div>
-
-          <div className="flex flex-col gap-6" style={{ perspective: "1200px" }}>
-            {works.slice(0, 4).map((work, i) => (
-              <Tilt3D key={work.id} className="w-full">
-                <motion.div
-                  initial={{ opacity: 0, rotateX: 14, y: 80, scale: 0.92 }}
-                  whileInView={{ opacity: 1, rotateX: 0, y: 0, scale: 1 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.8, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative w-full rounded-2xl overflow-hidden cursor-pointer group"
-                  style={{ height: "55vh", minHeight: 300 }}
-                  data-cursor
-                >
-                  <motion.img
-                    src={work.img}
-                    alt={work.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                  <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/10" />
-                  <motion.div
-                    initial={{ y: 25, opacity: 0 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.35 + i * 0.08, duration: 0.5 }}
-                    className="absolute bottom-5 left-5 right-5 h-14 bg-black/55 backdrop-blur-md rounded-xl flex items-center justify-between px-5 border border-white/10"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-bold text-white/50 border border-white/20 px-2 py-0.5 rounded">[{work.id}]</span>
-                      <span className="text-white font-bold text-lg">{work.title}</span>
-                    </div>
-                    <span className="hidden sm:block text-[10px] font-bold uppercase tracking-widest text-white/50">{work.tags}</span>
-                  </motion.div>
-                </motion.div>
-              </Tilt3D>
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex justify-center mt-12"
-          >
-            <MagneticWrap>
-              <motion.button
-                onClick={() => router.push('/works')}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.96 }}
-                transition={{ type: "spring", stiffness: 350, damping: 15 }}
-                className="flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-8 py-3 rounded-full transition-colors shadow-xl shadow-blue-500/20 cursor-pointer"
-                data-cursor
-              >
-                View All Work <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </motion.button>
-            </MagneticWrap>
-          </motion.div>
-        </div>
-      </section>
 
       {/* Process */}
       <section ref={processRef} className="relative z-10 py-28 px-6 md:px-16 max-w-[1400px] mx-auto">
@@ -485,7 +419,7 @@ export default function Home() {
           <h2 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50">
             <TextReveal>How We Work</TextReveal>
           </h2>
-          <SectionTag label="Working Process" />
+          <SectionTag label="Process" />
         </div>
 
         <div className="relative w-full">
@@ -595,15 +529,89 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="relative z-10 py-24 px-6 md:px-16 max-w-[1400px] mx-auto border-t border-zinc-100 dark:border-zinc-800">
-        <div className="flex items-center gap-4 mb-14">
-          <h2 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">
-            <TextReveal>Client Stories</TextReveal>
-          </h2>
-          <SectionTag label="Testimonial" />
+      {/* Founder / Behind the Studio — trust section */}
+      <section className="relative z-10 py-28 px-6 md:px-16 bg-zinc-50 dark:bg-[#0a0a0a] border-t border-zinc-100 dark:border-zinc-800">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+
+          {/* Left: text */}
+          <div className="lg:col-span-7 flex flex-col gap-8">
+            <motion.span
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500"
+            >
+              <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> Behind the studio
+            </motion.span>
+
+            <h2 className="text-4xl md:text-5xl font-bold leading-[1.15] text-zinc-900 dark:text-zinc-50">
+              <TextReveal>We started this because we thought brands deserved more.</TextReveal>
+            </h2>
+
+            <div className="flex flex-col gap-5 text-sm md:text-base text-zinc-500 dark:text-zinc-400 leading-relaxed font-sans max-w-2xl">
+              <p>
+                MadSphere started with two people who were tired of seeing the same brand templates on every website. Same layouts. Same fonts. Same promise of &ldquo;we&rsquo;ll make you stand out&rdquo; — from agencies that all look the same.
+              </p>
+              <p>
+                We wanted to build something different. A studio that treats every project like it matters, because to the person building that brand, it does.
+              </p>
+              <p>
+                Are we young? Sure. But we&apos;re obsessive about the details. We&apos;re building this for founders who feel the same way about their work as we do about ours.
+              </p>
+            </div>
+
+            <MagneticWrap>
+              <motion.button
+                onClick={() => router.push('/about')}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: "spring", stiffness: 350, damping: 15 }}
+                className="self-start flex items-center gap-3 bg-zinc-900 dark:bg-zinc-100 hover:bg-black dark:hover:bg-white text-white dark:text-zinc-900 text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full transition-colors cursor-pointer"
+                data-cursor
+              >
+                Meet the team
+                <span className="w-5 h-5 bg-white dark:bg-zinc-900 rounded-full flex items-center justify-center">
+                  <ArrowRight className="w-3 h-3 text-zinc-900 dark:text-white" />
+                </span>
+              </motion.button>
+            </MagneticWrap>
+          </div>
+
+          {/* Right: two portrait photos */}
+          <div className="lg:col-span-5 grid grid-cols-2 gap-4" style={{ perspective: "1000px" }}>
+            <motion.div
+              initial={{ opacity: 0, y: 40, rotateY: -15 }}
+              whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <Tilt3D className="w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-xl">
+                <img
+                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&fit=crop"
+                  alt="Founder"
+                  className="w-full h-full object-cover"
+                />
+              </Tilt3D>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 60, rotateY: 15 }}
+              whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-10"
+            >
+              <Tilt3D className="w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-xl">
+                <img
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&fit=crop"
+                  alt="Co-Founder"
+                  className="w-full h-full object-cover"
+                />
+              </Tilt3D>
+            </motion.div>
+          </div>
+
         </div>
-        <TestimonialCarousel />
       </section>
 
 

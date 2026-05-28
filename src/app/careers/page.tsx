@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Plus, Minus } from "lucide-react";
 import { TextReveal, Tilt3D, MagneticWrap } from "@/components/Animations";
+import ApplyModal from "@/components/ApplyModal";
 
 // Section Tag component
 function SectionTag({ label }: { label: string }) {
@@ -89,6 +90,7 @@ const positions = [
 
 export default function CareersPage() {
   const [openJob, setOpenJob] = useState<number | null>(null);
+  const [applyRole, setApplyRole] = useState<string | null>(null);
   return (
     <main className="pt-32 md:pt-40 pb-0 min-h-screen bg-white dark:bg-[#070708] overflow-hidden">
       
@@ -247,7 +249,7 @@ export default function CareersPage() {
                           </p>
                           <MagneticWrap>
                             <motion.button
-                              onClick={() => window.location.href = "mailto:hello@madsphere.in?subject=Application for " + pos.title}
+                              onClick={() => setApplyRole(pos.title)}
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.96 }}
                               transition={{ type: "spring", stiffness: 350, damping: 15 }}
@@ -310,13 +312,13 @@ export default function CareersPage() {
 
           <MagneticWrap className="relative z-10">
             <motion.button
-              onClick={() => window.location.href = "mailto:hello@madsphere.in?subject=Job Inquiry / CV Submission"}
+              onClick={() => setApplyRole("General Inquiry / CV Submission")}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.96 }}
               transition={{ type: "spring", stiffness: 350, damping: 15 }}
               className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold uppercase tracking-wider pl-8 pr-3 py-3 rounded-full text-xs sm:text-sm transition-colors flex items-center gap-4 cursor-pointer shadow-lg shadow-yellow-500/20"
             >
-              hello@madsphere.in
+              Send us your CV
               <span className="w-7 h-7 bg-white text-black rounded-full flex items-center justify-center shrink-0">
                 <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -326,6 +328,11 @@ export default function CareersPage() {
           </MagneticWrap>
         </div>
       </section>
+
+      {/* Application Modal */}
+      {applyRole && (
+        <ApplyModal role={applyRole} onClose={() => setApplyRole(null)} />
+      )}
 
     </main>
   );

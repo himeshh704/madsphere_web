@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { TextReveal, Tilt3D, AnimatedCounter } from "@/components/Animations";
+import { TextReveal, Tilt3D } from "@/components/Animations";
 import FAQ from "@/components/FAQ";
 
 export default function AboutPage() {
@@ -15,26 +15,13 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-[#070708] pt-32 pb-20 overflow-hidden" ref={containerRef}>
       
+      {/* Hero */}
       <section className="px-6 md:px-16 max-w-[1500px] mx-auto mb-32 relative z-10 flex flex-col lg:flex-row gap-16 items-start">
         {/* Left Sticky Sidebar */}
         <div className="lg:w-[250px] shrink-0 lg:sticky top-32 flex flex-col gap-12">
           <span className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 border-l border-zinc-300 dark:border-zinc-700 pl-4">
             <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> Who we are
           </span>
-          <div className="flex flex-col gap-8">
-            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <p className="text-4xl font-bold mb-1"><AnimatedCounter target={120} suffix="+" /></p>
-              <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold">Projects Delivered</p>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-              <p className="text-4xl font-bold mb-1"><AnimatedCounter target={40} suffix="+" /></p>
-              <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold">Happy Clients</p>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-              <p className="text-4xl font-bold mb-1"><AnimatedCounter target={8} suffix="yr" /></p>
-              <p className="text-xs text-zinc-500 uppercase tracking-widest font-bold">In Business</p>
-            </motion.div>
-          </div>
           <motion.button 
             onClick={() => router.push('/works')}
             whileHover={{ scale: 1.05 }}
@@ -49,12 +36,16 @@ export default function AboutPage() {
         {/* Right Hero Content */}
         <div className="flex-1 flex flex-col gap-8 w-full min-w-0">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-4">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50">
-              <TextReveal>Driven by bold ideas.</TextReveal>
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 max-w-3xl leading-tight">
+              <TextReveal>We started this because we thought brands deserved more.</TextReveal>
             </h1>
           </div>
-          <p className="text-sm md:text-base text-zinc-500 font-serif max-w-2xl leading-relaxed mb-6">
-            We&apos;re a team of strategists, innovators, designers, and developers united by one obsession: solving your business challenges creatively. Since 2018, we&apos;ve helped startups, scale-ups, and established brands cut through the noise.
+          <p className="text-sm md:text-base text-zinc-500 font-sans max-w-2xl leading-relaxed mb-6">
+            MadSphere is a branding studio — for founders, startups, and anyone building something they actually believe in.
+            <br /><br />
+            Every project starts with one question: what does this brand need to say, and who needs to hear it? From there, we build.
+            <br /><br />
+            We&apos;re young, we&apos;re hungry, and we think the best work happens when ego stays out of the room.
           </p>
           
           <Tilt3D className="w-full h-[40vh] md:h-[50vh] rounded-2xl overflow-hidden relative">
@@ -81,23 +72,23 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { 
-              title: "Wired in our Blood.", 
-              desc: "We thrive in environments where we are able to deliver speed, agility and excellence. It is integral to hold ourselves and our partners to a higher standard and we never settle for less.",
+              title: "Strategy before everything.", 
+              desc: "Design without a reason is just decoration. Every colour, font, and image we use has a job to do.",
               img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600&fit=crop"
             },
             { 
-              title: "Technology to Simplify.", 
-              desc: "We believe any technology's governing principle is to simplify the consumer's life and provide immersive user experiences. Therefore, technology is strictly our guiding light to answer business needs.",
+              title: "Craft over template.", 
+              desc: "We don't do templates. Every project — identity, website, campaign — starts from zero and gets the attention it deserves.",
               img: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=600&fit=crop"
             },
             { 
-              title: "Creativity is Sacred, Aesthetics are God.", 
-              desc: "We create path-breaking work that challenges the status quo and positively impacts our clients' businesses. We make sure form accommodates function, and design helps our brand stand out.",
+              title: "Culture drives creativity.", 
+              desc: "The best brands understand the culture they live in. We help brands stay relevant without losing their identity.",
               img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=600&fit=crop"
             },
             { 
-              title: "Be Culturally Relevant.", 
-              desc: "We exist to make brands cultural. By producing culturally relevant work, we naturally stand out in a sea of sameness.",
+              title: "Honest partnership.", 
+              desc: "We keep it real. Say what we'll do, do what we said, and never pretend to be bigger than we are.",
               img: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=600&fit=crop"
             }
           ].map((principle, idx) => (
@@ -118,7 +109,7 @@ export default function AboutPage() {
               </Tilt3D>
               <div className="text-center">
                 <h3 className="font-bold text-lg mb-2">{principle.title}</h3>
-                <p className="text-xs text-zinc-500 font-serif leading-relaxed">{principle.desc}</p>
+                <p className="text-xs text-zinc-500 font-sans leading-relaxed">{principle.desc}</p>
               </div>
             </motion.div>
           ))}
@@ -128,37 +119,108 @@ export default function AboutPage() {
       {/* Values Section */}
       <section className="max-w-[1500px] mx-auto px-6 md:px-12 mb-32 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start border-t border-zinc-200 dark:border-zinc-800 pt-16">
+
+          {/* Left: animated heading */}
           <div className="flex flex-col gap-6">
-            <span className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500">
+            <motion.span
+              initial={{ opacity: 0, x: -16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500"
+            >
               <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> Our core value
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight">
-              <TextReveal>Creating the</TextReveal><br/>
-              <TextReveal>Future Together</TextReveal><br/>
-              <TextReveal>Forward</TextReveal>
-            </h2>
-          </div>
-          
-          <div className="flex flex-col gap-12 pt-8">
-            <div className="flex gap-6">
-              <div className="w-8 h-8 rounded-full bg-[#0047FF] text-white flex items-center justify-center shrink-0">
-                <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M13 1L1 13M13 1L13 13M13 1L1 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </div>
-              <div>
-                <h4 className="text-xl font-bold mb-2">Our Vision</h4>
-                <p className="text-zinc-500 font-serif">To make digital experiences that have meaning and strategy, driving engagement and business value.</p>
-              </div>
+            </motion.span>
+
+            <div className="overflow-hidden">
+              <motion.h2
+                initial={{ y: 80, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="text-4xl md:text-5xl font-bold leading-tight relative"
+              >
+                What we<br/>
+                <span className="relative inline-block">
+                  stand for
+                  {/* Animated underline */}
+                  <motion.span
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute bottom-1 left-0 right-0 h-[3px] bg-[#0047FF] origin-left block rounded-full"
+                  />
+                </span>
+              </motion.h2>
             </div>
-            <div className="flex gap-6">
-              <div className="w-8 h-8 rounded-full bg-[#0047FF] text-white flex items-center justify-center shrink-0">
-                <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M13 1L1 13M13 1L13 13M13 1L1 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </div>
-              <div>
-                <h4 className="text-xl font-bold mb-2">Our Mission</h4>
-                <p className="text-zinc-500 font-serif">Design shouldn&apos;t just sit there. It&apos;s designed for moving digital experiences that engage real users.</p>
-              </div>
-            </div>
+
+            {/* Animated dots decorative column */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.6 }}
+              className="hidden lg:flex flex-col gap-3 mt-4"
+            >
+              {[...Array(5)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.7 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                  className="h-px bg-zinc-200 dark:bg-zinc-800 origin-left"
+                  style={{ width: `${60 - i * 10}%` }}
+                />
+              ))}
+            </motion.div>
           </div>
+
+          {/* Right: animated value cards */}
+          <div className="flex flex-col gap-8 pt-8">
+            {[
+              {
+                label: "Our Vision",
+                text: "A studio where every brand gets treated like the only one that matters. Because for the person building it, it is.",
+              },
+              {
+                label: "Our Mission",
+                text: "Help emerging brands discover who they are, build something beautiful, and reach the people who need to see it.",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, x: 40, filter: "blur(6px)" }}
+                whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.7, delay: i * 0.18, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ x: 6 }}
+                className="flex gap-5 p-6 rounded-2xl bg-white dark:bg-zinc-900/60 border border-zinc-100 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow duration-300 group cursor-default"
+              >
+                {/* Animated icon */}
+                <motion.div
+                  whileHover={{ rotate: 45, scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 12 }}
+                  className="w-9 h-9 rounded-full bg-[#0047FF] text-white flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/25"
+                >
+                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                    <path d="M13 1L1 13M13 1L13 13M13 1L1 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </motion.div>
+
+                <div>
+                  <h4 className="text-lg font-bold mb-2 text-zinc-900 dark:text-zinc-100 group-hover:text-[#0047FF] transition-colors duration-300">
+                    {item.label}
+                  </h4>
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed">
+                    {item.text}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
         </div>
       </section>
 

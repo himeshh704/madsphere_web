@@ -26,8 +26,8 @@ export default function Footer() {
         >
           <div className="relative inline-block w-full max-w-4xl mb-8">
             <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-[1.1] relative z-10 text-center">
-              <TextReveal>Ready to make</TextReveal><br />
-              <TextReveal>something great?</TextReveal>
+              <TextReveal>Let&apos;s build</TextReveal><br />
+              <TextReveal>something real.</TextReveal>
             </h2>
             
             {/* Decorative images behind text - Pop up slower and Float */}
@@ -73,7 +73,7 @@ export default function Footer() {
           </div>
 
           <p className="text-sm md:text-base text-zinc-400 font-serif mb-8 max-w-md mx-auto relative z-10">
-            Tell us your goals, and we&apos;ll help you design the perfect creative solution.
+            Tell us where you are, where you want to go, and we&apos;ll figure out the rest together.
           </p>
           
           <MagneticWrap>

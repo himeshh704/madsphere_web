@@ -7,11 +7,11 @@ export const nav = [
 ] as const;
 
 export const heroCards = [
-  { id: "01", label: "UI UX Design",     img: "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=200&fit=crop" },
-  { id: "02", label: "Web Development",  img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=200&fit=crop" },
-  { id: "03", label: "Brand Identity",   img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=200&fit=crop" },
-  { id: "04", label: "Growth Ops",       img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=200&fit=crop" },
-  { id: "05", label: "Content Strategy", img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=200&fit=crop" },
+  { id: "01", label: "Brand Strategy",        img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=200&fit=crop" },
+  { id: "02", label: "Creative Design",       img: "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=200&fit=crop" },
+  { id: "03", label: "Social Media Marketing",img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=200&fit=crop" },
+  { id: "04", label: "Website Design",        img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=200&fit=crop" },
+  { id: "05", label: "Digital Marketing",     img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=200&fit=crop" },
 ] as const;
 
 export const socials = [
@@ -21,53 +21,50 @@ export const socials = [
   { label: "𝕏",  href: "https://x.com" },
 ] as const;
 
-export const stats = [
-  { value: "120+", label: "Projects Delivered" },
-  { value: "40+",  label: "Happy Clients" },
-  { value: "8yr",  label: "In Business" },
-] as const;
+// Stats removed — no fabricated numbers
+export const stats: { value: string; label: string }[] = [];
 
 export const expertise = [
   {
     label: "BRAND STRATEGY",
-    desc: "Positioning, identity, messaging frameworks — the foundation your brand needs to stand apart and stay strong.",
-    tags: ["Positioning", "Identity", "Naming"],
+    desc: "The part that comes before the logo. We figure out who you're for, what you stand for, and why anyone should care — so your brand lands the way you intended.",
+    tags: ["Positioning", "Messaging", "Identity"],
     img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=900&fit=crop",
     accent: "#0047FF",
   },
   {
-    label: "DIGITAL MARKETING",
-    desc: "Paid, organic, and performance-driven strategies that reach your audience with precision and scale.",
-    tags: ["SEO", "Paid Ads", "Analytics"],
-    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=900&fit=crop",
-    accent: "#7C3AED",
-  },
-  {
     label: "CREATIVE DESIGN",
-    desc: "Visual systems, UI/UX and print — every touchpoint crafted to feel cohesive, premium, and on-brand.",
-    tags: ["UI/UX", "Print", "Motion"],
+    desc: "Visuals that feel as good as they look. From logos and typography to full brand systems, we design with intention. Nothing here came from a template.",
+    tags: ["Logo", "Brand Systems", "Art Direction"],
     img: "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=900&fit=crop",
     accent: "#DB2777",
   },
   {
-    label: "VIDEO PRODUCTION",
-    desc: "From concept to final cut — cinematic brand films, ads, and social content that moves people.",
-    tags: ["Brand Films", "Ads", "Social"],
-    img: "https://images.unsplash.com/photo-1601506521937-0121a7fc2a6b?q=80&w=900&fit=crop",
-    accent: "#D97706",
-  },
-  {
-    label: "CONTENT & SOCIAL",
-    desc: "Content that earns attention organically and converts it into loyal brand communities.",
-    tags: ["Content", "Community", "Social"],
-    img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=900&fit=crop",
+    label: "SOCIAL MEDIA MARKETING",
+    desc: "Content that actually starts conversations, not just likes. We make visuals and captions that fit your brand, not what the algorithm tells you to post.",
+    tags: ["Content", "Instagram", "Strategy"],
+    img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=900&fit=crop",
     accent: "#059669",
   },
   {
-    label: "PERFORMANCE ADS",
-    desc: "Data-driven creative and media buying that turns ad spend into scalable, measurable revenue.",
-    tags: ["Meta Ads", "Google", "Creative"],
-    img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=900&fit=crop",
+    label: "DIGITAL MARKETING",
+    desc: "Ads and campaigns that actually make your phone ring or your cart fill up. We manage Meta, Google, and everything in between so you don't burn money on stuff that looks good but does nothing.",
+    tags: ["Meta Ads", "Google", "Performance"],
+    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=900&fit=crop",
+    accent: "#7C3AED",
+  },
+  {
+    label: "WEBSITE DESIGN",
+    desc: "Websites that don't just sit there and look pretty — they actually do something. Whether it's a brand site, a store, or a landing page, we build it to perform.",
+    tags: ["Webflow", "Next.js", "E-Commerce"],
+    img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=900&fit=crop",
+    accent: "#D97706",
+  },
+  {
+    label: "VIDEO PRODUCTION",
+    desc: "Reels, brand films, product videos — anything that moves. We make video content that stops the thumb from scrolling and actually makes people watch.",
+    tags: ["Reels", "Brand Films", "Short-Form"],
+    img: "https://images.unsplash.com/photo-1601506521937-0121a7fc2a6b?q=80&w=900&fit=crop",
     accent: "#DC2626",
   },
 ] as const;
@@ -139,10 +136,30 @@ export const works = [
 ] as const;
 
 export const process = [
-  { step: "01", title: "Discovery",    desc: "Deep dive into your brand, market, competitors, and customers. No assumptions only insight.",       img: "/process_step_01.png" },
-  { step: "02", title: "Strategy",     desc: "We define positioning, channels, and creative direction that will drive your specific goals forward.",   img: "/process_step_02.png" },
-  { step: "03", title: "Strategy",     desc: "Ideas become assets. Campaigns, visuals, content, code crafted and tested to a high standard.", img: "/process_step_03.png" },
-  { step: "04", title: "Launch & Grow",desc: "We ship, monitor, optimise, and report. Every campaign gets sharper with each iteration.",                img: "/process_step_04.png" },
+  {
+    step: "01",
+    title: "Discovery",
+    desc: "We figure out who you are, what's going on in your market, and what you're actually trying to achieve. No assumptions. Just listening.",
+    img: "/process_step_01.png"
+  },
+  {
+    step: "02",
+    title: "Strategy",
+    desc: "Now we decide where you're headed. Positioning, messaging, the whole direction — mapped out so there's no guesswork later.",
+    img: "/process_step_02.png"
+  },
+  {
+    step: "03",
+    title: "Create",
+    desc: "This is where it all becomes real. Designs get built, words get written, videos get shot — everything has a reason for being there.",
+    img: "/process_step_03.png"
+  },
+  {
+    step: "04",
+    title: "Launch & Grow",
+    desc: "We put it live, see how it lands, and keep making it better. Good work isn't a one-time thing — it's a cycle.",
+    img: "/process_step_04.png"
+  },
 ] as const;
 
 export const testimonials = [
@@ -154,4 +171,5 @@ export const testimonials = [
   { name: "Chloe W.",   role: "Creative Dir., Europa",quote: "A true creative partner. They pushed back when we were wrong — and every time they were right.", img: "https://images.unsplash.com/photo-1598550874175-4d0ef43ee90d?q=80&w=400&fit=crop" },
 ] as const;
 
-export const clients = ["Galileo", "Euphoria", "Europa", "GlobalBank", "Ikigai Labs", "Goodwell", "ImgCompress"];
+// Marquee: industries, not client names
+export const clients = ["Fashion", "D2C", "Tech", "Lifestyle", "Startups", "Personal Brands", "Creators"];

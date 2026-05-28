@@ -9,33 +9,33 @@ import { MagneticWrap, Tilt3D } from "./Animations";
 const faqs = [
   {
     id: "Q-01",
-    question: "What services does your agency provide for modern digital brands?",
-    answer: "We offer comprehensive digital solutions including brand strategy, UX/UI design, full-stack web development, and digital marketing to scale your brand effectively."
+    question: "What does a creative branding studio actually do?",
+    answer: "We help brands figure out who they're for, what they stand for, and what they should actually say. Sometimes that means building a whole identity from scratch. Sometimes it's just a website, a social media refresh, or someone to finally make their brand look as good as their product. It always starts with a conversation."
   },
   {
     id: "Q-02",
-    question: "How does your pricing model work for ongoing design services?",
-    answer: "We work on a value-based or retainer model depending on the scope. For ongoing services, we offer flexible monthly retainers tailored to your specific needs."
+    question: "Are you a new agency? Should I be concerned about experience?",
+    answer: "We're new, and we're not pretending otherwise. What we don't have in portfolio size, we make up for in attention — every client we take on gets our full focus, not a junior account manager or a templated deck. If you'd rather work with a small team that actually cares than a big agency that's done this a hundred times before, we'll probably get along."
   },
   {
     id: "Q-03",
-    question: "How quickly will we receive our first design delivery timeline?",
-    answer: "Typically, initial concepts are delivered within 1-2 weeks after the kickoff meeting and onboarding process are complete."
+    question: "How long does a typical brand project take?",
+    answer: "It depends on scope. A brand identity project typically takes 3–4 weeks. A website can range from 4–8 weeks depending on complexity. We'll give you a clear timeline before we start — no vague promises."
   },
   {
     id: "Q-04",
-    question: "How many revisions are included within each selected pricing plan?",
-    answer: "Most of our packages include 2-3 rounds of revisions, but we operate on a partnership model—we don't stop until you are completely satisfied."
+    question: "Do you work with startups, or only established businesses?",
+    answer: "Startups are actually our sweet spot. We understand the constraints, the urgency, and the need for branding that works from day one. But we also work with established businesses looking to rebrand or refresh their identity."
   },
   {
     id: "Q-05",
-    question: "Do you offer both design and Webflow development services together?",
-    answer: "Yes! We specialize in end-to-end delivery, designing custom interfaces and developing them in Next.js or whatever modern stack best suits the project requirements."
+    question: "How do you approach a branding project?",
+    answer: "First, we listen — really listen. To your market, your audience, your gut feeling about what you need. Then we strategise, design, and deliver. No templates. No shortcuts. And you're involved at every step, not just at the beginning and end."
   },
   {
     id: "Q-06",
-    question: "Can clients pause or cancel subscriptions anytime without penalty fees?",
-    answer: "Absolutely. Our retainer models are flexible, allowing you to pause or cancel with a standard 30-day notice without any hidden penalty fees."
+    question: "Do you work with clients outside India?",
+    answer: "Absolutely. We work with clients across India and internationally. Everything we do can be handled remotely — we're set up for collaboration no matter where you are."
   }
 ];
 
