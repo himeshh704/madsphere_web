@@ -1,8 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 export default function Mascot() {
+  const pathname = usePathname();
+  if (pathname === "/works") return null;
   return (
     <motion.div
       initial={{ y: 200, opacity: 0 }}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { TextReveal, Tilt3D, AnimatedCounter } from "@/components/Animations";
 import FAQ from "@/components/FAQ";
@@ -61,6 +61,63 @@ const services = [
     ]
   }
 ];
+
+function ValueRevealCard({ title, desc }: { title: string; desc: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 92%", "start 64%"],
+  });
+
+  const titleX = useTransform(scrollYProgress, [0, 0.85], [0, isMobile ? -12 : -32]);
+  const descOpacity = useTransform(scrollYProgress, [0.1, 0.85], [0, 1]);
+  const descX = useTransform(scrollYProgress, [0.1, 0.85], [45, 0]);
+
+  return (
+    <div
+      ref={ref}
+      className="flex items-start md:items-center gap-6 py-6 border-b border-zinc-200 dark:border-zinc-800 last:border-none overflow-hidden min-h-[110px] w-full"
+    >
+      <motion.div
+        style={{ x: titleX }}
+        className="flex items-center gap-4 shrink-0 transition-transform duration-100"
+      >
+        <div className="w-8 h-8 rounded-full bg-[#0047FF] text-white flex items-center justify-center shrink-0">
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+            <path
+              d="M13 1L1 13M13 1L13 13M13 1L1 1"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+        <h4 className="text-xl font-bold whitespace-nowrap text-zinc-900 dark:text-zinc-100">
+          {title}
+        </h4>
+      </motion.div>
+
+      <motion.div
+        style={{ opacity: descOpacity, x: descX }}
+        className="flex-1 min-w-0"
+      >
+        <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 font-serif leading-relaxed">
+          {desc}
+        </p>
+      </motion.div>
+    </div>
+  );
+}
 
 export default function ServicesPage() {
   const containerRef = useRef(null);
@@ -170,25 +227,15 @@ export default function ServicesPage() {
             </h2>
           </div>
           
-          <div className="flex flex-col gap-12 pt-8">
-            <div className="flex gap-6">
-              <div className="w-8 h-8 rounded-full bg-[#0047FF] text-white flex items-center justify-center shrink-0">
-                <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M13 1L1 13M13 1L13 13M13 1L1 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </div>
-              <div>
-                <h4 className="text-xl font-bold mb-2">Impact Through</h4>
-                <p className="text-zinc-500 font-serif">We create digital experiences that have meaning and strategy, driving engagement and business value.</p>
-              </div>
-            </div>
-            <div className="flex gap-6">
-              <div className="w-8 h-8 rounded-full bg-[#0047FF] text-white flex items-center justify-center shrink-0">
-                <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M13 1L1 13M13 1L13 13M13 1L1 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </div>
-              <div>
-                <h4 className="text-xl font-bold mb-2">Design That Moves</h4>
-                <p className="text-zinc-500 font-serif">Design shouldn&apos;t just sit there. It&apos;s designed for moving digital experiences that engage real users.</p>
-              </div>
-            </div>
+          <div className="flex flex-col gap-6 pt-8 w-full">
+            <ValueRevealCard
+              title="Impact Through"
+              desc="We create digital experiences that have meaning and strategy, driving engagement and business value."
+            />
+            <ValueRevealCard
+              title="Design That Moves"
+              desc="Design shouldn't just sit there. It's designed for moving digital experiences that engage real users."
+            />
           </div>
         </div>
       </section>

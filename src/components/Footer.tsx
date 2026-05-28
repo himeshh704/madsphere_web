@@ -1,12 +1,15 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Instagram, Linkedin, Facebook, Twitter } from "lucide-react";
 import { MagneticWrap, TextReveal } from "@/components/Animations";
 
 export default function Footer() {
   const router = useRouter();
+  const pathname = usePathname();
+
+  if (pathname === "/works") return null;
   return (
     <footer className="relative z-10 w-full overflow-hidden flex flex-col transition-colors duration-300">
       {/* Upper Footer: Adaptive Light/Dark */}
