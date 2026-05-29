@@ -9,14 +9,44 @@ import FAQ from "@/components/FAQ";
 export default function AboutPage() {
   const router = useRouter();
   const containerRef = useRef(null);
+  const introRef = useRef(null);
+
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
+  const { scrollYProgress: introProgress } = useScroll({ target: introRef, offset: ["start start", "end start"] });
+
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const circleScale = useTransform(introProgress, [0, 0.8], [1, 26]);
+  const textOpacity = useTransform(introProgress, [0, 0.45], [1, 0]);
 
   return (
-    <main className="min-h-screen bg-zinc-50 dark:bg-[#070708] pt-32 pb-20 overflow-hidden" ref={containerRef}>
+    <main className="min-h-screen bg-zinc-50 dark:bg-[#070708] pb-20 overflow-hidden" ref={containerRef}>
       
+      {/* Scroll-Triggered Circle Zoom Intro (Metaminds Style) */}
+      <div ref={introRef} className="relative h-[180vh] w-full z-20">
+        <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#070708] dark:bg-zinc-950 flex items-center justify-center">
+          <motion.div 
+            style={{ scale: circleScale }}
+            className="w-[280px] h-[280px] md:w-[360px] md:h-[360px] rounded-full bg-zinc-50 dark:bg-[#070708] border border-zinc-700/20 dark:border-zinc-800 flex items-center justify-center relative shadow-2xl"
+          >
+            <motion.div 
+              style={{ opacity: textOpacity }}
+              className="flex flex-col items-center gap-4 text-center select-none px-6"
+            >
+              <span className="text-zinc-500 dark:text-zinc-500 font-bold tracking-[0.3em] text-[10px] uppercase">
+                MADSPHERE
+              </span>
+              <h2 className="text-zinc-900 dark:text-white text-2xl md:text-3xl font-semibold leading-tight font-sans tracking-tight">
+                we discover.<br/>
+                we design.<br/>
+                we disrupt.
+              </h2>
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
+
       {/* Hero */}
-      <section className="px-6 md:px-16 max-w-[1500px] mx-auto mb-32 relative z-10 flex flex-col lg:flex-row gap-16 items-start">
+      <section className="px-6 md:px-16 max-w-[1500px] mx-auto pt-32 mb-32 relative z-10 flex flex-col lg:flex-row gap-16 items-start">
         {/* Left Sticky Sidebar */}
         <div className="lg:w-[250px] shrink-0 lg:sticky top-32 flex flex-col gap-12">
           <span className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 border-l border-zinc-300 dark:border-zinc-700 pl-4">
