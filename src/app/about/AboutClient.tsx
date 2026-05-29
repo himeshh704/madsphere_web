@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { TextReveal, Tilt3D, WordsSlideFromRight } from "@/components/Animations";
 import FAQ from "@/components/FAQ";
 
@@ -14,9 +14,12 @@ export default function AboutClient() {
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
   const { scrollYProgress: introProgress } = useScroll({ target: introRef, offset: ["start start", "end start"] });
 
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const circleScale = useTransform(introProgress, [0, 0.8], [1, 26]);
-  const textOpacity = useTransform(introProgress, [0, 0.45], [1, 0]);
+  const smoothScrollProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const smoothIntroProgress = useSpring(introProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
+  const heroY = useTransform(smoothScrollProgress, [0, 1], ["0%", "40%"]);
+  const circleScale = useTransform(smoothIntroProgress, [0, 0.8], [1, 26]);
+  const textOpacity = useTransform(smoothIntroProgress, [0, 0.45], [1, 0]);
 
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-[#070708] pb-20 overflow-x-hidden" ref={containerRef}>
