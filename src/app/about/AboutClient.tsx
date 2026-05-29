@@ -22,12 +22,17 @@ export default function AboutClient() {
     <main className="min-h-screen bg-zinc-50 dark:bg-[#070708] pb-20 overflow-hidden" ref={containerRef}>
       
       {/* Scroll-Triggered Circle Zoom Intro (Metaminds Style) */}
-      <div ref={introRef} className="hidden md:block relative h-[180vh] w-full z-20">
+      <div ref={introRef} className="relative h-[180vh] w-full z-20">
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#070708] dark:bg-zinc-950 flex items-center justify-center">
           <motion.div 
             style={{ scale: circleScale }}
-            className="w-[280px] h-[280px] md:w-[360px] md:h-[360px] rounded-full bg-zinc-50 dark:bg-[#070708] border border-zinc-700/20 dark:border-zinc-800 flex items-center justify-center relative shadow-2xl"
+            className="w-[280px] h-[280px] md:w-[360px] md:h-[360px] rounded-full bg-zinc-50 dark:bg-[#070708] flex items-center justify-center relative"
           >
+            {/* Fade-out border and shadow overlay (non-scaling for high mobile performance) */}
+            <motion.div 
+              style={{ opacity: textOpacity }}
+              className="absolute inset-0 rounded-full border border-zinc-700/20 dark:border-zinc-800 shadow-2xl pointer-events-none"
+            />
             <motion.div 
               style={{ opacity: textOpacity }}
               className="flex flex-col items-center gap-4 text-center select-none px-6"
