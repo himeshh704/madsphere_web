@@ -38,21 +38,16 @@ export default function AboutClient() {
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#070708] dark:bg-zinc-950 flex items-center justify-center">
 
           {isMobile ? (
-            /* ── MOBILE: GPU-optimised — flat circle scales, border + text stay static ── */
-            <>
-              <motion.div
-                style={{ scale: circleScaleMobile, willChange: "transform" }}
-                className="w-[280px] h-[280px] rounded-full bg-zinc-50 dark:bg-[#070708] absolute"
-              />
-              <motion.div
-                style={{ opacity: textOpacity }}
-                className="w-[280px] h-[280px] rounded-full border border-zinc-700/20 dark:border-zinc-800 shadow-2xl pointer-events-none absolute"
-              />
+            /* ── MOBILE: same unified zoom as desktop — everything scales together ── */
+            <motion.div
+              style={{ scale: circleScaleMobile, willChange: "transform" }}
+              className="w-[280px] h-[280px] rounded-full bg-zinc-50 dark:bg-[#070708] border border-zinc-700/20 dark:border-zinc-800 shadow-2xl flex items-center justify-center relative"
+            >
               <motion.div
                 style={{ opacity: textOpacity }}
-                className="flex flex-col items-center gap-4 text-center select-none px-6 z-10 pointer-events-none absolute"
+                className="flex flex-col items-center gap-4 text-center select-none px-6"
               >
-                <span className="text-zinc-500 font-bold tracking-[0.3em] text-[10px] uppercase">
+                <span className="text-zinc-500 dark:text-zinc-500 font-bold tracking-[0.3em] text-[10px] uppercase">
                   MADSPHERE
                 </span>
                 <h2 className="text-zinc-900 dark:text-white text-2xl font-semibold leading-tight font-sans tracking-tight">
@@ -61,7 +56,7 @@ export default function AboutClient() {
                   we disrupt.
                 </h2>
               </motion.div>
-            </>
+            </motion.div>
           ) : (
             /* ── DESKTOP: original — everything scales together ── */
             <motion.div
