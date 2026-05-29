@@ -18,7 +18,8 @@ export default function AboutClient() {
   const smoothIntroProgress = useSpring(introProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   const heroY = useTransform(smoothScrollProgress, [0, 1], ["0%", "40%"]);
-  const circleScale = useTransform(smoothIntroProgress, [0, 0.8], [1, 8]);
+  const circleScaleDesktop = useTransform(smoothIntroProgress, [0, 0.8], [1, 26]);
+  const circleScaleMobile = useTransform(smoothIntroProgress, [0, 0.8], [1, 8]);
   const textOpacity = useTransform(smoothIntroProgress, [0, 0.45], [1, 0]);
 
   return (
@@ -26,18 +27,41 @@ export default function AboutClient() {
       
       {/* Scroll-Triggered Circle Zoom Intro (Metaminds Style) */}
       <div ref={introRef} className="relative h-[180vh] w-full z-20">
-        <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#070708] dark:bg-zinc-950 flex items-center justify-center">
-          
+        
+        {/* DESKTOP VIEW: Traditional zooming circle with border/shadow/text scaling together */}
+        <div className="hidden md:flex sticky top-0 h-screen w-full overflow-hidden bg-[#070708] dark:bg-zinc-950 items-center justify-center">
+          <motion.div 
+            style={{ scale: circleScaleDesktop }}
+            className="w-[360px] h-[360px] rounded-full bg-zinc-50 dark:bg-[#070708] border border-zinc-700/20 dark:border-zinc-800 flex items-center justify-center relative shadow-2xl"
+          >
+            <motion.div 
+              style={{ opacity: textOpacity }}
+              className="flex flex-col items-center gap-4 text-center select-none px-6"
+            >
+              <span className="text-zinc-500 dark:text-zinc-500 font-bold tracking-[0.3em] text-[10px] uppercase">
+                MADSPHERE
+              </span>
+              <h2 className="text-zinc-900 dark:text-white text-2xl md:text-3xl font-semibold leading-tight font-sans tracking-tight">
+                we discover.<br/>
+                we design.<br/>
+                we disrupt.
+              </h2>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* MOBILE VIEW: Performance-optimized flat circle scaling with static overlay layers */}
+        <div className="flex md:hidden sticky top-0 h-screen w-full overflow-hidden bg-[#070708] dark:bg-zinc-950 items-center justify-center">
           {/* Scaling background circle (empty, flat, GPU-accelerated) */}
           <motion.div 
-            style={{ scale: circleScale, willChange: "transform" }}
-            className="w-[280px] h-[280px] md:w-[360px] md:h-[360px] rounded-full bg-zinc-50 dark:bg-[#070708] absolute"
+            style={{ scale: circleScaleMobile, willChange: "transform" }}
+            className="w-[280px] h-[280px] rounded-full bg-zinc-50 dark:bg-[#070708] absolute"
           />
 
           {/* Fade-out border and shadow overlay (non-scaling, stays centered) */}
           <motion.div 
             style={{ opacity: textOpacity }}
-            className="w-[280px] h-[280px] md:w-[360px] md:h-[360px] rounded-full border border-zinc-700/20 dark:border-zinc-800 shadow-2xl pointer-events-none absolute"
+            className="w-[280px] h-[280px] rounded-full border border-zinc-700/20 dark:border-zinc-800 shadow-2xl pointer-events-none absolute"
           />
 
           {/* Fade-out tagline text (non-scaling, stays centered) */}
@@ -48,13 +72,14 @@ export default function AboutClient() {
             <span className="text-zinc-500 dark:text-zinc-500 font-bold tracking-[0.3em] text-[10px] uppercase">
               MADSPHERE
             </span>
-            <h2 className="text-zinc-900 dark:text-white text-2xl md:text-3xl font-semibold leading-tight font-sans tracking-tight">
+            <h2 className="text-zinc-900 dark:text-white text-2xl font-semibold leading-tight font-sans tracking-tight">
               we discover.<br/>
               we design.<br/>
               we disrupt.
             </h2>
           </motion.div>
         </div>
+
       </div>
 
       {/* Hero */}
