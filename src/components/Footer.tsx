@@ -16,7 +16,7 @@ export default function Footer() {
     <footer className="relative z-10 w-full overflow-hidden flex flex-col transition-colors duration-300">
       {/* Upper Footer: Adaptive Light/Dark */}
       {!isCareers && (
-        <div className="w-full bg-zinc-100 dark:bg-[#050505] text-zinc-900 dark:text-white pt-32 pb-16 flex flex-col items-center relative z-10 transition-colors duration-300">
+        <div data-cursor-square="Say Hi !" className="w-full bg-zinc-100 dark:bg-[#050505] text-zinc-900 dark:text-white pt-32 pb-16 flex flex-col items-center relative z-10 transition-colors duration-300 lg:cursor-none">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -274,7 +274,7 @@ export default function CareersClient() {
       </section>
 
       {/* 5. Send us your CV banner Section */}
-      <section className="w-full bg-[#050505] text-white pt-24 pb-20 relative overflow-hidden">
+      <section data-cursor-square="Say Hi !" className="w-full bg-[#050505] text-white pt-24 pb-20 relative overflow-hidden lg:cursor-none">
         <div className="max-w-[1400px] mx-auto px-6 md:px-16 flex flex-col items-center text-center relative z-10">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full opacity-[0.06] pointer-events-none"
             style={{ background: "radial-gradient(circle, #0047FF 0%, transparent 70%)" }} />

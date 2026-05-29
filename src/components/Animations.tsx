@@ -6,13 +6,24 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 export function CustomCursor() {
   const x = useSpring(useMotionValue(0), { stiffness: 600, damping: 30 });
   const y = useSpring(useMotionValue(0), { stiffness: 600, damping: 30 });
-  const [hovered, setHovered] = useState(false);
+  const [hoverType, setHoverType] = useState<"pointer" | "square" | null>(null);
+  const [hoveredText, setHoveredText] = useState("");
 
   useEffect(() => {
     const move = (e: MouseEvent) => { x.set(e.clientX); y.set(e.clientY); };
     const over = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
-      setHovered(!!t.closest("a, button, [data-cursor]"));
+      const squareEl = t.closest("[data-cursor-square]") as HTMLElement;
+      if (squareEl) {
+        setHoverType("square");
+        setHoveredText(squareEl.getAttribute("data-cursor-square") || "Contact Us");
+      } else if (t.closest("a, button, [data-cursor]")) {
+        setHoverType("pointer");
+        setHoveredText("");
+      } else {
+        setHoverType(null);
+        setHoveredText("");
+      }
     };
     window.addEventListener("mousemove", move);
     window.addEventListener("mouseover", over);
@@ -26,42 +37,61 @@ export function CustomCursor() {
     >
       <motion.div
         animate={{
-          width: hovered ? 56 : 32,
-          height: hovered ? 56 : 32,
-          borderRadius: "50%",
-          rotate: hovered ? 45 : 0,
+          width: hoverType === "square" ? 96 : hoverType === "pointer" ? 56 : 32,
+          height: hoverType === "square" ? 96 : hoverType === "pointer" ? 56 : 32,
+          borderRadius: hoverType === "square" ? "12px" : "50%",
+          backgroundColor: hoverType === "square" ? "#0047FF" : "transparent",
         }}
-        transition={{ type: "spring", stiffness: 350, damping: 22 }}
-        className="relative flex items-center justify-center"
+        transition={{ type: "spring", stiffness: 320, damping: 22 }}
+        className="relative flex items-center justify-center overflow-hidden shadow-2xl"
       >
-        {/* Crosshair lines */}
-        <motion.span
-          animate={{ scaleY: hovered ? 0 : 1, opacity: hovered ? 0 : 0.6 }}
-          className="absolute w-px h-full bg-zinc-800 dark:bg-zinc-200"
-        />
-        <motion.span
-          animate={{ scaleX: hovered ? 0 : 1, opacity: hovered ? 0 : 0.6 }}
-          className="absolute h-px w-full bg-zinc-800 dark:bg-zinc-200"
-        />
-        {/* Center dot */}
-        <motion.span
-          animate={{
-            width: hovered ? 56 : 4,
-            height: hovered ? 56 : 4,
-            opacity: hovered ? 0.12 : 1,
-          }}
-          transition={{ type: "spring", stiffness: 350, damping: 22 }}
-          className="rounded-full bg-[#0047FF]"
-        />
-        {/* Hover ring */}
-        <motion.span
-          animate={{
-            scale: hovered ? 1 : 0,
-            opacity: hovered ? 1 : 0,
-          }}
-          transition={{ type: "spring", stiffness: 400, damping: 25 }}
-          className="absolute inset-0 rounded-full border-2 border-[#0047FF]"
-        />
+        {hoverType !== "square" && (
+          <>
+            {/* Crosshair lines */}
+            <motion.span
+              animate={{ scaleY: hoverType === "pointer" ? 0 : 1, opacity: hoverType === "pointer" ? 0 : 0.6 }}
+              className="absolute w-px h-full bg-zinc-800 dark:bg-zinc-200"
+            />
+            <motion.span
+              animate={{ scaleX: hoverType === "pointer" ? 0 : 1, opacity: hoverType === "pointer" ? 0 : 0.6 }}
+              className="absolute h-px w-full bg-zinc-800 dark:bg-zinc-200"
+            />
+            {/* Center dot */}
+            <motion.span
+              animate={{
+                width: hoverType === "pointer" ? 56 : 4,
+                height: hoverType === "pointer" ? 56 : 4,
+                opacity: hoverType === "pointer" ? 0.12 : 1,
+              }}
+              transition={{ type: "spring", stiffness: 350, damping: 22 }}
+              className="rounded-full bg-[#0047FF]"
+            />
+            {/* Hover ring */}
+            <motion.span
+              animate={{
+                scale: hoverType === "pointer" ? 1 : 0,
+                opacity: hoverType === "pointer" ? 1 : 0,
+              }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className="absolute inset-0 rounded-full border-2 border-[#0047FF]"
+            />
+          </>
+        )}
+
+        {hoverType === "square" && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex flex-col justify-between w-full h-full p-3.5 text-white font-sans"
+          >
+            <span className="text-[10px] font-black uppercase tracking-widest leading-normal text-left">
+              {hoveredText}
+            </span>
+            <span className="text-xl font-bold text-right leading-none self-end">
+              ↗
+            </span>
+          </motion.div>
+        )}
       </motion.div>
     </motion.div>
   );

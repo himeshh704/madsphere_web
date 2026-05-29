@@ -80,7 +80,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Mascot from "@/components/Mascot";
 import Preloader from "@/components/Preloader";
-import { FloatingOrbs } from "@/components/Animations";
+import { FloatingOrbs, CustomCursor } from "@/components/Animations";
 
 export default function RootLayout({
   children,
@@ -101,6 +101,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <CustomCursor />
           <Preloader />
           <FloatingOrbs />
           <Navbar />
