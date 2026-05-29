@@ -147,50 +147,8 @@ export default function ServicesClient() {
   
   const [openService, setOpenService] = useState<string>("Brand Strategy");
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const container = e.currentTarget;
-    const cards = container.querySelectorAll('[data-glow-card]');
-    cards.forEach((card) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      (card as HTMLElement).style.setProperty("--cursor-x", `${x}px`);
-      (card as HTMLElement).style.setProperty("--cursor-y", `${y}px`);
-    });
-  };
-
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-[#070708] pt-32 pb-20 overflow-hidden" ref={containerRef}>
-      <style dangerouslySetInnerHTML={{ __html: `
-        [data-glow-card] {
-          position: relative;
-        }
-        [data-glow-card]::before {
-          content: "";
-          pointer-events: none;
-          user-select: none;
-          position: absolute;
-          inset: 0;
-          padding: 1.5px;
-          border-radius: inherit;
-          opacity: 0;
-          will-change: background, opacity;
-          transition: opacity 400ms ease;
-          background: radial-gradient(
-            circle 180px at var(--cursor-x, 0px) var(--cursor-y, 0px),
-            rgba(0, 71, 255, 0.45),
-            transparent 80%
-          );
-          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          -webkit-mask-composite: xor;
-          mask-composite: exclude;
-          z-index: 1;
-        }
-        [data-glow-wrapper]:hover [data-glow-card]::before {
-          opacity: 1;
-        }
-      ` }} />
       
       {/* Hero */}
       <section className="px-6 md:px-16 max-w-[1400px] mx-auto text-center mb-16 relative z-10">
@@ -256,78 +214,22 @@ export default function ServicesClient() {
                       initial={{ height: 0, opacity: 0, filter: "blur(8px)" }}
                       animate={{ height: "auto", opacity: 1, filter: "blur(0px)" }}
                       exit={{ height: 0, opacity: 0, filter: "blur(8px)" }}
-                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.4 }}
                       className="overflow-hidden"
                     >
-                      <motion.div 
-                        variants={{
-                          hidden: { opacity: 0 },
-                          show: {
-                            opacity: 1,
-                            transition: {
-                              staggerChildren: 0.08
-                            }
-                          }
-                        }}
-                        initial="hidden"
-                        animate="show"
-                        exit="hidden"
-                        data-glow-wrapper
-                        onMouseMove={handleMouseMove}
-                        className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 pb-6 w-full"
-                      >
-                        {service.items.map((item, i) => {
-                          const descParts = item.desc.split("\n\n");
-                          const mainDesc = descParts[0];
-                          const outcomeText = descParts[1] ? descParts[1].replace("Outcome: ", "") : "";
-
-                          return (
-                            <motion.div
-                              key={i}
-                              variants={{
-                                hidden: { opacity: 0, y: 20 },
-                                show: {
-                                  opacity: 1,
-                                  y: 0,
-                                  transition: {
-                                    duration: 0.5,
-                                    ease: [0.16, 1, 0.3, 1]
-                                  }
-                                }
-                              }}
-                              data-glow-card
-                              className="flex flex-col justify-between p-6 md:p-8 rounded-2xl bg-white dark:bg-zinc-950/40 border border-zinc-200/50 dark:border-zinc-800/40 shadow-sm hover:shadow-md transition-shadow duration-300 relative overflow-hidden group cursor-default"
-                            >
-                              <div className="flex flex-col gap-4">
-                                <div className="flex justify-between items-center">
-                                  <span className="text-[10px] font-bold tracking-widest text-[#0047FF] dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 px-2.5 py-1 rounded-full uppercase">
-                                    Sub-service 0{i + 1}
-                                  </span>
-                                  <span className="w-2 h-2 rounded-full bg-zinc-200 dark:bg-zinc-800 group-hover:bg-[#0047FF] transition-colors duration-300" />
-                                </div>
-                                <div>
-                                  <h4 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-2 group-hover:text-[#0047FF] transition-colors duration-300">
-                                    {item.title}
-                                  </h4>
-                                  <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed font-sans">
-                                    {mainDesc}
-                                  </p>
-                                </div>
-                              </div>
-                              {outcomeText && (
-                                <div className="mt-6 pt-4 border-t border-zinc-150 dark:border-zinc-900">
-                                  <span className="text-[9px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 block mb-1">
-                                    Key Outcome
-                                  </span>
-                                  <p className="text-xs text-zinc-600 dark:text-zinc-400 font-sans font-medium">
-                                    {outcomeText}
-                                  </p>
-                                </div>
-                              )}
-                            </motion.div>
-                          );
-                        })}
-                      </motion.div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 pt-4 pb-4">
+                        {service.items.map((item, i) => (
+                          <div key={i} className="flex gap-4">
+                            <div className="w-5 h-5 rounded-full bg-[#0047FF] flex items-center justify-center shrink-0 mt-1 text-[10px] text-white font-bold">
+                              {i + 1}
+                            </div>
+                            <div>
+                              <h4 className="font-bold text-zinc-900 dark:text-zinc-100 mb-1">{item.title}</h4>
+                              <p className="text-sm text-zinc-500 leading-relaxed font-sans whitespace-pre-line">{item.desc}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>

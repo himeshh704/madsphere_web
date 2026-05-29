@@ -22,7 +22,7 @@ export default function AboutClient() {
     <main className="min-h-screen bg-zinc-50 dark:bg-[#070708] pb-20 overflow-hidden" ref={containerRef}>
       
       {/* Scroll-Triggered Circle Zoom Intro (Metaminds Style) */}
-      <div ref={introRef} className="relative h-[180vh] w-full z-20">
+      <div ref={introRef} className="hidden md:block relative h-[180vh] w-full z-20">
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#070708] dark:bg-zinc-950 flex items-center justify-center">
           <motion.div 
             style={{ scale: circleScale }}
