@@ -13,6 +13,7 @@ import ExpertiseScroll from "@/components/ExpertiseScroll";
 import { TextReveal, FloatingOrbs, MagneticWrap, Tilt3D } from "@/components/Animations";
 import { stagger } from "@/lib/motion";
 import { heroCards, socials, process, clients } from "@/data/site";
+// import TestimonialCarousel from "@/components/TestimonialCarousel";
 
 function ParallaxImg({ src, alt, className }: { src: string; alt: string; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -608,6 +609,19 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Testimonials (Hidden for launch)
+      <section className="relative z-10 py-24 px-6 md:px-16 max-w-[1400px] mx-auto border-t border-zinc-100 dark:border-zinc-800">
+        <div className="flex items-center gap-4 mb-14">
+          <h2 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">
+            <TextReveal>Client Stories</TextReveal>
+          </h2>
+          <span className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500">
+            <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> Testimonial
+          </span>
+        </div>
+        <TestimonialCarousel />
+      </section>
+      */}
 
     </div>
   );
