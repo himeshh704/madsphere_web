@@ -6,7 +6,7 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 export function CustomCursor() {
   const x = useSpring(useMotionValue(0), { stiffness: 600, damping: 30 });
   const y = useSpring(useMotionValue(0), { stiffness: 600, damping: 30 });
-  const [hoverType, setHoverType] = useState<"pointer" | "square" | null>(null);
+  const [hoverType, setHoverType] = useState<"square" | null>(null);
   const [hoveredText, setHoveredText] = useState("");
 
   useEffect(() => {
@@ -17,9 +17,6 @@ export function CustomCursor() {
       if (squareEl) {
         setHoverType("square");
         setHoveredText(squareEl.getAttribute("data-cursor-square") || "Contact Us");
-      } else if (t.closest("a, button, [data-cursor]")) {
-        setHoverType("pointer");
-        setHoveredText("");
       } else {
         setHoverType(null);
         setHoveredText("");
@@ -30,6 +27,8 @@ export function CustomCursor() {
     return () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseover", over); };
   }, [x, y]);
 
+  if (hoverType !== "square") return null;
+
   return (
     <motion.div
       style={{ x, y, translateX: "-50%", translateY: "-50%" }}
@@ -37,61 +36,26 @@ export function CustomCursor() {
     >
       <motion.div
         animate={{
-          width: hoverType === "square" ? 96 : hoverType === "pointer" ? 56 : 32,
-          height: hoverType === "square" ? 96 : hoverType === "pointer" ? 56 : 32,
-          borderRadius: hoverType === "square" ? "12px" : "50%",
-          backgroundColor: hoverType === "square" ? "#0047FF" : "transparent",
+          width: 96,
+          height: 96,
+          borderRadius: "12px",
+          backgroundColor: "#0047FF",
         }}
         transition={{ type: "spring", stiffness: 320, damping: 22 }}
         className="relative flex items-center justify-center overflow-hidden shadow-2xl"
       >
-        {hoverType !== "square" && (
-          <>
-            {/* Crosshair lines */}
-            <motion.span
-              animate={{ scaleY: hoverType === "pointer" ? 0 : 1, opacity: hoverType === "pointer" ? 0 : 0.6 }}
-              className="absolute w-px h-full bg-zinc-800 dark:bg-zinc-200"
-            />
-            <motion.span
-              animate={{ scaleX: hoverType === "pointer" ? 0 : 1, opacity: hoverType === "pointer" ? 0 : 0.6 }}
-              className="absolute h-px w-full bg-zinc-800 dark:bg-zinc-200"
-            />
-            {/* Center dot */}
-            <motion.span
-              animate={{
-                width: hoverType === "pointer" ? 56 : 4,
-                height: hoverType === "pointer" ? 56 : 4,
-                opacity: hoverType === "pointer" ? 0.12 : 1,
-              }}
-              transition={{ type: "spring", stiffness: 350, damping: 22 }}
-              className="rounded-full bg-[#0047FF]"
-            />
-            {/* Hover ring */}
-            <motion.span
-              animate={{
-                scale: hoverType === "pointer" ? 1 : 0,
-                opacity: hoverType === "pointer" ? 1 : 0,
-              }}
-              transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className="absolute inset-0 rounded-full border-2 border-[#0047FF]"
-            />
-          </>
-        )}
-
-        {hoverType === "square" && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col justify-between w-full h-full p-3.5 text-white font-sans"
-          >
-            <span className="text-[10px] font-black uppercase tracking-widest leading-normal text-left">
-              {hoveredText}
-            </span>
-            <span className="text-xl font-bold text-right leading-none self-end">
-              ↗
-            </span>
-          </motion.div>
-        )}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex flex-col justify-between w-full h-full p-3.5 text-white font-sans"
+        >
+          <span className="text-[10px] font-black uppercase tracking-widest leading-normal text-left">
+            {hoveredText}
+          </span>
+          <span className="text-xl font-bold text-right leading-none self-end">
+            ↗
+          </span>
+        </motion.div>
       </motion.div>
     </motion.div>
   );
