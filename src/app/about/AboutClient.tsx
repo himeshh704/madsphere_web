@@ -19,7 +19,7 @@ export default function AboutClient() {
   const textOpacity = useTransform(introProgress, [0, 0.45], [1, 0]);
 
   return (
-    <main className="min-h-screen bg-zinc-50 dark:bg-[#070708] pb-20 overflow-hidden" ref={containerRef}>
+    <main className="min-h-screen bg-zinc-50 dark:bg-[#070708] pb-20 overflow-x-hidden" ref={containerRef}>
       
       {/* Scroll-Triggered Circle Zoom Intro (Metaminds Style) */}
       <div ref={introRef} className="relative h-[180vh] w-full z-20">
