@@ -1,137 +1,20 @@
-"use client";
+import type { Metadata } from "next";
+import WorksClient from "./WorksClient";
 
-import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import { Play, Volume2, VolumeX, ArrowLeft } from "lucide-react";
-import ThreeWorksScene from "@/components/ThreeWorksScene";
+export const metadata: Metadata = {
+  title: "Our Works | Interactive 3D Portfolio",
+  description: "Explore the MadSphere interactive WebGL 3D design portfolio. Browse our case studies, custom Next.js web applications, e-commerce stores, and high-fidelity branding works.",
+  alternates: {
+    canonical: "/works",
+  },
+  openGraph: {
+    title: "Our Works | Interactive 3D Portfolio | MadSphere",
+    description: "Explore the MadSphere interactive WebGL 3D design portfolio. Browse our case studies, custom Next.js web applications, e-commerce stores, and high-fidelity branding works.",
+    url: "https://madsphere.in/works",
+    type: "website",
+  },
+};
 
 export default function WorksPage() {
-  const [revealed, setRevealed] = useState(false);
-  const [muted, setMuted] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
-
-  // Auto-play audio when revealed
-  const handleReveal = () => {
-    setRevealed(true);
-    const audio = audioRef.current;
-    if (audio) {
-      audio.volume = 0.5;
-      audio.muted = false;
-      audio.play().catch((err) => {
-        console.warn("Audio autoplay blocked by browser policies:", err);
-      });
-    }
-  };
-
-  const toggleMute = () => {
-    const audio = audioRef.current;
-    if (audio) {
-      audio.muted = !muted;
-      setMuted(!muted);
-    }
-  };
-
-  return (
-    <main className="relative min-h-screen w-full overflow-hidden bg-white select-none">
-      {/* Background Audio */}
-      <audio ref={audioRef} src="/audio/bg-audio.mp3" loop preload="auto" />
-
-      {/* 3D WebGL Canvas Scene */}
-      <ThreeWorksScene revealed={revealed} />
-
-      {/* Ambient Sound Controller */}
-      {revealed && (
-        <button
-          onClick={toggleMute}
-          aria-label={muted ? "Unmute background music" : "Mute background music"}
-          className="fixed bottom-6 left-6 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white border border-zinc-200 shadow-lg cursor-pointer flex items-center justify-center text-zinc-900 transition-all duration-300 hover:scale-105 active:scale-95"
-        >
-          {muted ? (
-            <VolumeX className="w-5 h-5 md:w-6 md:h-6 text-zinc-900" />
-          ) : (
-            <Volume2 className="w-5 h-5 md:w-6 md:h-6 text-zinc-900 animate-pulse" />
-          )}
-        </button>
-      )}
-
-      {/* Minimal Header & Navigation Overlay */}
-      <div
-        className="fixed top-0 inset-x-0 z-40 transition-all duration-1000 ease-out py-6 md:py-8"
-        style={{
-          transform: revealed ? "translateY(0)" : "translateY(-50px)",
-          opacity: revealed ? 1 : 0,
-          pointerEvents: revealed ? "auto" : "none",
-        }}
-      >
-        <div className="max-w-[1800px] mx-auto px-6 md:px-12 flex items-center justify-between">
-          <Link href="/" className="cursor-pointer group flex items-center gap-2">
-            <img src="/logo.png" alt="Madsphere" className="h-5 md:h-6 w-auto" />
-          </Link>
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-zinc-700 hover:text-black transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back Home</span>
-          </Link>
-        </div>
-      </div>
-
-      {/* Floating Center/Left Title Section */}
-      <div
-        className="fixed left-6 md:left-12 bottom-20 md:bottom-24 z-30 transition-all duration-1000 ease-out select-none pointer-events-none"
-        style={{
-          transform: revealed ? "translateY(0)" : "translateY(50px)",
-          opacity: revealed ? 1 : 0,
-        }}
-      >
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-zinc-900 leading-none mb-2">
-          OUR WORKS
-        </h1>
-        <p className="text-sm font-medium tracking-widest uppercase text-zinc-500">
-          Scroll to explore projects
-        </p>
-      </div>
-
-      {/* Full-Screen Enter Splash Preloader Screen */}
-      <div
-        className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 bg-white transition-opacity duration-1000 ease-in-out select-none"
-        style={{
-          opacity: revealed ? 0 : 1,
-          pointerEvents: revealed ? "none" : "auto",
-        }}
-      >
-        <span className="text-zinc-900 font-semibold tracking-[0.15em] uppercase text-center text-xs md:text-sm px-6">
-          Enter into the world of Madsphere
-        </span>
-
-        <div
-          className="group relative w-24 h-24 flex items-center justify-center cursor-pointer"
-          onClick={handleReveal}
-        >
-          {/* Animated outline stroke */}
-          <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 100 100">
-            <circle
-              cx="50"
-              cy="50"
-              r="46"
-              fill="none"
-              stroke="#111111"
-              strokeWidth="2"
-              strokeDasharray="290"
-              className="transition-all duration-1000 ease-in-out [stroke-dashoffset:290] group-hover:[stroke-dashoffset:0]"
-            />
-          </svg>
-
-          {/* Button core */}
-          <button
-            className="w-16 h-16 rounded-full border-none bg-zinc-950 text-white flex items-center justify-center cursor-pointer shadow-lg shadow-zinc-950/20 transition-all duration-300 ease-out group-hover:scale-105 group-hover:bg-zinc-900"
-            tabIndex={-1}
-          >
-            <Play className="w-5 h-5 text-white fill-white ml-1" />
-          </button>
-        </div>
-      </div>
-    </main>
-  );
+  return <WorksClient />;
 }

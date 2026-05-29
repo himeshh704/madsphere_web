@@ -16,9 +16,61 @@ const serifFont = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Madsphere | High-End Cinematic Creative Agency",
-  description: "Madsphere is a premium, high-fidelity creative agency delivering next-level digital design, interactive storytelling, and futuristic engineering.",
-  keywords: ["creative agency", "next-level web design", "cinematic UI", "Framer Motion", "high-fidelity development"],
+  metadataBase: new URL("https://madsphere.in"),
+  title: {
+    default: "Madsphere | Premium Creative Branding & Digital Agency",
+    template: "%s | Madsphere Studio",
+  },
+  description: "MadSphere is a premium digital design and branding agency delivering high-fidelity interactive websites, brand strategy, creative content, and performance marketing in Mumbai.",
+  keywords: [
+    "creative branding agency",
+    "branding studio mumbai",
+    "premium digital design studio",
+    "interactive 3D web design",
+    "UI UX design studio mumbai",
+    "Next.js web agency india",
+    "social media marketing agency",
+    "luxury web design",
+    "performance marketing agency mumbai",
+    "creative strategist",
+    "custom webflow development"
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Madsphere | Premium Creative Branding & Digital Agency",
+    description: "High-end visual branding, interactive Next.js web experiences, and results-driven digital marketing for ambitious founders.",
+    url: "https://madsphere.in",
+    siteName: "MadSphere Studio",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/mascot.png",
+        width: 800,
+        height: 600,
+        alt: "MadSphere Mascot and Visual Branding",
+      }
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Madsphere | Premium Creative Branding & Digital Agency",
+    description: "High-end visual branding, interactive Next.js web experiences, and results-driven digital marketing for ambitious founders.",
+    images: ["/mascot.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 import { ThemeProvider } from "@/components/ThemeProvider";

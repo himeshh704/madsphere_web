@@ -55,7 +55,17 @@ To protect source assets while allowing security audits (such as Vercel Preview 
 
 ---
 
-## 4. Code Integrity & Authenticity Review
+## 4. Search Engine Optimization (SEO) & Sitemap Infrastructure
+
+To establish a premier, search-optimized platform ranking highly for brand design, digital strategy, and high-fidelity web development queries:
+1. **Dynamic Sitemap Generation (`sitemap.ts`)**: Built a dynamic sitemap configuration listing all primary site pages (Home, Portfolio, Services, Careers, About, Contact, Connect) mapping exact priority weights and crawl frequency hints.
+2. **Robots Crawling Policies (`robots.ts`)**: Configured standard robots exclusions to index all public pathways, reference the XML sitemap, and disallow backend API routes.
+3. **AppRouter SEO Split Architecture**: Refactored the interactive Client Component pages (`about/page.tsx`, `services/page.tsx`, `careers/page.tsx`, `contact/page.tsx`, `works/page.tsx`, `connect/page.tsx`) into separate client files (`AboutClient.tsx`, `ServicesClient.tsx`, etc.). This enables the route entry points to run as Next.js Server Components that export static SEO `metadata` blocks without compilation errors.
+4. **Rich Metadata Configuration**: Configured global metadata Base, openGraph maps, Twitter summary cards, canonical alternates, and comprehensive industry-tailored keywords to match search intent.
+
+---
+
+## 5. Code Integrity & Authenticity Review
 The entire repository has been reviewed to ensure it aligns with standard human developer practices:
 - **Consistent Code Conventions**: Unified type imports, standard next-themes integration, and standard Next.js directory guidelines are used.
 - **Natural Git Logging**: Clean, concise commit history with professional developer messages (e.g. `fix: adjust footer...`, `feat: implement cinematic preloaders...`).

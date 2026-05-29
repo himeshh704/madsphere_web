@@ -69,38 +69,43 @@ File Path: [page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphe
 * **Founder Photos (Lines 586 & 601)**: The two vertical founder portrait photos.
 
 ### 2. About Page
-File Path: [about/page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/about/page.tsx)
-* **Scroll-Triggered Zoom Intro (Lines 35-42)**: The zoom text blocks (`we discover. we design. we disrupt.`).
-* **Hero Title & Paragraph (Lines 69-79)**: Studio introduction description.
-* **Hero Landscape Image (Lines 83-87)**: Unsplash landscape banner image.
-* **Principles Grid (Lines 103-124)**: The titles, descriptions, and image previews for the four core principles.
-* **Vision & Mission Cards (Lines 204-213)**: Heading labels and text blocks.
+* **SEO Metadata (Titles/Description)**: [about/page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/about/page.tsx)
+* **Text & Images Copy**: [AboutClient.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/about/AboutClient.tsx)
+  * *Scroll-Triggered Zoom Intro (Lines 35-42)*: The zoom text blocks (`we discover. we design. we disrupt.`).
+  * *Hero Title & Paragraph (Lines 69-79)*: Studio introduction description.
+  * *Hero Landscape Image (Lines 83-87)*: Unsplash landscape banner image.
+  * *Principles Grid (Lines 103-124)*: The titles, descriptions, and image previews for the four core principles.
+  * *Vision & Mission Cards (Lines 204-213)*: Heading labels and text blocks.
 
 ### 3. Services Page
-File Path: [services/page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/services/page.tsx)
-* **Detailed Service Breakdown (Lines 8-141)**: An array containing the names, subheadings, and bullet list item details (like Positioning, Messaging, Identity) showing titles, descriptions, and outputs.
-* **Hero Landscape Banner (Lines 168-172)**: Header image.
+* **SEO Metadata (Titles/Description)**: [services/page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/services/page.tsx)
+* **Text & Images Copy**: [ServicesClient.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/services/ServicesClient.tsx)
+  * *Detailed Service Breakdown (Lines 8-141)*: An array containing the names, subheadings, and bullet list item details (like Positioning, Messaging, Identity) showing titles, descriptions, and outputs.
+  * *Hero Landscape Banner (Lines 168-172)*: Header image.
 
 ### 4. Careers Page
-File Path: [careers/page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/careers/page.tsx)
-* **Perks list (Lines 20-57)**: Emojis, titles, and descriptions.
-* **Open Positions Grid (Lines 60-89)**: Roles, contract types, experience levels, location details, and job descriptions.
-* **Main Heading (Line 104)**: `Join the MadSphere`
-* **Vibe Section Image (Line 128)**: The 3D-angled team portrait loaded from `/images/careers_portrait.png`.
-* **CV Submission Banner (Lines 282-311)**: Large footer header text and Unsplash circular avatar pictures.
+* **SEO Metadata (Titles/Description)**: [careers/page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/careers/page.tsx)
+* **Text & Images Copy**: [CareersClient.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/careers/CareersClient.tsx)
+  * *Perks list (Lines 20-57)*: Emojis, titles, and descriptions.
+  * *Open Positions Grid (Lines 60-89)*: Roles, contract types, experience levels, location details, and job descriptions.
+  * *Main Heading (Line 104)*: `Join the MadSphere`
+  * *Vibe Section Image (Line 128)*: The 3D-angled team portrait loaded from `/images/careers_portrait.png`.
+  * *CV Submission Banner (Lines 282-311)*: Large footer header text and Unsplash circular avatar pictures.
 
 ### 5. Contact Page
-File Path: [contact/page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/contact/page.tsx)
-* **Header Text (Line 42)**: `Let's make something great`
-* **Contact Cards (Lines 57-72)**: Text details for Email (`hello@madsphere.in`), Phone, Address, and Studio Hours.
-* **Service Dropdown / Budget Options (Lines 116-130)**: Select options.
+* **SEO Metadata (Titles/Description)**: [contact/page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/contact/page.tsx)
+* **Text & Images Copy**: [ContactClient.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/contact/ContactClient.tsx)
+  * *Header Text (Line 42)*: `Let's make something great`
+  * *Contact Cards (Lines 57-72)*: Text details for Email (`hello@madsphere.in`), Phone, Address, and Studio Hours.
+  * *Service Dropdown / Budget Options (Lines 116-130)*: Select options.
 
 ### 6. Works Page (3D WebGL Portfolio)
-File Path: [works/page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/works/page.tsx)
-* **Audio Track Source (Line 37)**: Ambient track file loaded from `/audio/bg-audio.mp3`.
-* **Logo & Navigation (Line 68)**: Path to `/logo.png`.
-* **Overlay Text (Lines 88-92)**: Section title overlay copy.
-* **Preloader Overlay Splash (Line 105)**: Shutter screen intro copy (`Enter into the world of Madsphere`).
+* **SEO Metadata (Titles/Description)**: [works/page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/works/page.tsx)
+* **Text & Images Copy**: [WorksClient.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/works/WorksClient.tsx)
+  * *Audio Track Source (Line 37)*: Ambient track file loaded from `/audio/bg-audio.mp3`.
+  * *Logo & Navigation (Line 68)*: Path to `/logo.png`.
+  * *Overlay Text (Lines 88-92)*: Section title overlay copy.
+  * *Preloader Overlay Splash (Line 105)*: Shutter screen intro copy (`Enter into the world of Madsphere`).
 
 ---
 
