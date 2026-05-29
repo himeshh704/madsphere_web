@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { TextReveal, Tilt3D } from "@/components/Animations";
+import { TextReveal, Tilt3D, WordsSlideFromRight } from "@/components/Animations";
 import FAQ from "@/components/FAQ";
 
 export default function AboutPage() {
@@ -132,28 +132,20 @@ export default function AboutPage() {
               <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> Our core value
             </motion.span>
 
-            <div className="overflow-hidden">
-              <motion.h2
-                initial={{ y: 80, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-4xl md:text-5xl font-bold leading-tight relative"
-              >
-                What we<br/>
-                <span className="relative inline-block">
-                  stand for
-                  {/* Animated underline */}
-                  <motion.span
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="absolute bottom-1 left-0 right-0 h-[3px] bg-[#0047FF] origin-left block rounded-full"
-                  />
-                </span>
-              </motion.h2>
-            </div>
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight relative">
+              <WordsSlideFromRight>What we</WordsSlideFromRight>
+              <br/>
+              <span className="relative inline-block">
+                <WordsSlideFromRight delay={0.16}>stand for</WordsSlideFromRight>
+                <motion.span
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute bottom-1 left-0 right-0 h-[3px] bg-[#0047FF] origin-left block rounded-full"
+                />
+              </span>
+            </h2>
 
             {/* Animated dots decorative column */}
             <motion.div
