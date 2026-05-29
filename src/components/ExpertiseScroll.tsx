@@ -13,19 +13,22 @@ import { ease } from "@/lib/motion";
 function useTilt() {
   const rx = useSpring(useMotionValue(0), { stiffness: 280, damping: 28 });
   const ry = useSpring(useMotionValue(0), { stiffness: 280, damping: 28 });
+  const isTouch = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isTouch) return;
     const r = e.currentTarget.getBoundingClientRect();
     rx.set(((e.clientY - r.top - r.height / 2) / r.height) * -16);
     ry.set(((e.clientX - r.left - r.width / 2) / r.width) * 16);
   };
   const onLeave = () => { rx.set(0); ry.set(0); };
-  return { rx, ry, onMove, onLeave };
+  return { rx, ry, onMove, onLeave, isTouch };
 }
 
 export default function ExpertiseScroll() {
   const [active, setActive] = useState(0);
-  const { rx, ry, onMove, onLeave } = useTilt();
+  const { rx, ry, onMove, onLeave, isTouch } = useTilt();
   const item = expertise[active];
+
 
   return (
     <div className="py-24 px-6 md:px-16 max-w-[1400px] mx-auto">
@@ -69,7 +72,11 @@ export default function ExpertiseScroll() {
               style={{ transformStyle: "preserve-3d" }}
             >
               <motion.div
-                style={{ rotateX: rx, rotateY: ry, transformPerspective: 900 }}
+                style={{ 
+                  rotateX: isTouch ? undefined : rx, 
+                  rotateY: isTouch ? undefined : ry, 
+                  transformPerspective: isTouch ? undefined : 900 
+                }}
                 onMouseMove={onMove}
                 onMouseLeave={onLeave}
                 className="rounded-xl overflow-hidden shadow-2xl cursor-pointer"

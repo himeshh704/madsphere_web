@@ -32,7 +32,8 @@ Located in: [`src/app/page.tsx`](./src/app/page.tsx) and [`src/app/works/page.ts
 
 ### B. Parallax & 3D Limb Tilts (Touch-Optimized)
 - **Scroll-Linked Parallax**: Utilizes Framer Motion's `useScroll` and `useTransform` to bind image scale/position to scroll speed. Disabled on viewports width `< 768px` to bypass calculations during touch scrolling.
-- **Tilt3D Engine**: Portfolio and team cards map mouse coordinates relative to the card's bounding rectangle (`getBoundingClientRect()`), updating `rotateX` and `rotateY` springs to create physical 3D depth on hover. Omitted on touch-pointer viewports to optimize paint performance.
+- **Tilt3D Engine**: Portfolio, team cards, and service cards map mouse coordinates relative to their bounding box boundaries, updating spring rotation variables. They bypass physics calculations and style transforms on touch-pointer viewports (`(pointer: coarse)`) to ensure high scroll framerates.
+- **Expertise Card Tilt**: The main expertise detail preview card utilizes a customized 3D spring tilt model that has been aligned to bypass rendering calculations on touch device interactions.
 
 ---
 

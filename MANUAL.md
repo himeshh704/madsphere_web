@@ -111,7 +111,7 @@ These global components appear on multiple pages:
 ### 1. Global Navigation Bar
 File Path: [Navbar.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/components/Navbar.tsx)
 * **Navbar Logo Paths (Lines 38-39)**: Points to `/logo.png` and `/logo_white.png`.
-* **Talk Button Email (Line 104)**: Mobile popup email contact action (points to `mailto:hello@madsphere.xyz`).
+* **Talk Button Email (Line 104)**: Mobile popup email contact action (points to `mailto:hello@madsphere.in`).
 
 ### 2. Global Footer
 File Path: [Footer.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/components/Footer.tsx)

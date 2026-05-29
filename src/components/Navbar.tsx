@@ -101,7 +101,7 @@ export default function Navbar() {
               </Link>
             ))}
             <motion.button
-              onClick={() => { window.location.href = "mailto:hello@madsphere.xyz"; }}
+              onClick={() => { window.location.href = "mailto:hello@madsphere.in"; }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.96 }}
               transition={{ type: "spring", stiffness: 350, damping: 15 }}

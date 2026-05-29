@@ -16,6 +16,8 @@ This report documents the codebase audit, visual shortcomings resolved, animatio
 | **Decorative Image Overlaps** | Mobile (`< 640px`) | Left and right decorative footer portraits positioned using static percentages (`left-[20%]`, `right-[15%]`) converged too closely on narrow viewports, obscuring the heading text. | Added responsive placement classes (`left-0 sm:left-[5%] md:left-[10%] lg:left-[15%]`) and responsive sizing to sit outwards on mobile. | **Resolved** |
 | **Inconsistent Button Feedback** | Project-wide | Some buttons utilized static CSS hover classes (`hover:scale-105`), others had mismatched springs (`scale: 1.08`), and others had no tactile click/tap feedback. | Refactored all major CTA buttons across pages (Home, About, FAQ, Careers, Contact, Navbar) to use a unified Framer Motion spring physics model. | **Resolved** |
 | **Layout Scroll Guard** | Mobile & Desktop | Root viewport container lacked structural safety limits, allowing floating background orbs to occasionally trigger minor horizontal offsets. | Locked `overflow-x: hidden` and `max-width: 100%` on both `html` and `body` selectors globally in `globals.css`. | **Resolved** |
+| **Email Domain Discrepancy** | Project-wide | Contact page pointed to `.in`, but Navbar talk link and careers auto-responder confirmation templates referenced `.xyz` domains, causing branding mismatch and routing confusion. | Aligned all email and domain references to use the official `madsphere.in` domain consistently. | **Resolved** |
+| **Expertise Card Tilt Lag** | Mobile | Interactive 3D tilt coordinates were calculated on hover events for the Expertise Scroll component, potentially triggering frame rate drops on touch devices. | Configured an `isTouch` coarse pointer detection filter inside `ExpertiseScroll` to deactivate 3D transforms on mobile devices. | **Resolved** |
 
 ---
 
@@ -23,7 +25,7 @@ This report documents the codebase audit, visual shortcomings resolved, animatio
 
 ### A. Touch/Mobile Animation Bypass (Zero Lag)
 To guarantee buttery-smooth 60fps/120fps scrolling on low-end and high-end mobile devices:
-1. **Interactive Tilts (`TiltCard` & `Tilt3D`)**: Bypassed Framer Motion's springs on touch viewports by checking `pointer: coarse` capability. When touch is detected, the inline CSS transform properties (`rotateX`, `rotateY`, `transformPerspective`) are omitted (set to `undefined`), eliminating redraw/reflow computations during touch scrolling.
+1. **Interactive Tilts (`TiltCard`, `Tilt3D`, `ExpertiseScroll` card)**: Bypassed Framer Motion's springs on touch viewports by checking `pointer: coarse` capability. When touch is detected, the inline CSS transform properties (`rotateX`, `rotateY`, `transformPerspective`) are omitted (set to `undefined`), eliminating redraw/reflow computations during touch scrolling.
 2. **Magnetic Snaps (`MagneticWrap`)**: Disabled spring-linked movements on mobile viewports using touch detection, ensuring normal touch navigation acts without physical delay.
 3. **Parallax Image Scaling (`ParallaxImg`)**: Added window resize listeners to disable scroll-linked parallax calculations (avoiding `useTransform` coordinates binding) on mobile width viewports (`< 768px`).
 

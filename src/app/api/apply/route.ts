@@ -106,7 +106,7 @@ export async function POST(req: NextRequest) {
           <p style="font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 24px;">
             If we think there's a good fit, we'll reach out to you on this email within a week. In the meantime, feel free to check out our work.
           </p>
-          <a href="https://madsphere.xyz" style="display: inline-block; background: #0047FF; color: white; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; padding: 14px 28px; border-radius: 100px; text-decoration: none;">See Our Work →</a>
+          <a href="https://madsphere.in" style="display: inline-block; background: #0047FF; color: white; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; padding: 14px 28px; border-radius: 100px; text-decoration: none;">See Our Work →</a>
           <p style="margin-top: 40px; font-size: 12px; color: #aaa;">MadSphere Studio · Mumbai</p>
         </div>
       `,
