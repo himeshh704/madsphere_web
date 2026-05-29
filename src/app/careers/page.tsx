@@ -93,17 +93,17 @@ export default function CareersPage() {
   const [applyRole, setApplyRole] = useState<string | null>(null);
   return (
     <main className="pt-32 md:pt-40 pb-0 min-h-screen bg-white dark:bg-[#070708] overflow-hidden">
-      
+
       {/* 1. Header Hero Section */}
       <section className="px-6 md:px-16 max-w-[1400px] mx-auto text-center mb-24 md:mb-32 relative z-10">
         <div className="flex justify-center items-center mb-6">
           <SectionTag label="Career Inquiries" />
         </div>
-        
+
         <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-[7.5rem] font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 leading-none mb-8">
           <TextReveal>Join the MadSphere</TextReveal>
         </h1>
-        
+
         <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed font-sans">
           We&apos;re building something bold. Come be a part of a team that obsesses over great work, moves fast, and celebrates growth yours and ours.
         </p>
@@ -112,7 +112,7 @@ export default function CareersPage() {
       {/* 2. Work Vibe Banner Section */}
       <section className="px-6 md:px-16 max-w-[1400px] mx-auto mb-32 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
+
           {/* Left Column: Heading and Tag */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             <SectionTag label="Join The Team" />
@@ -124,9 +124,9 @@ export default function CareersPage() {
           {/* Center Column: Portrait Image in 3D frame */}
           <div className="lg:col-span-3 flex justify-center">
             <Tilt3D className="w-full max-w-[320px] aspect-square rounded-[2rem] overflow-hidden shadow-2xl relative border border-zinc-200 dark:border-zinc-800">
-              <img 
-                src="/images/careers_portrait.png" 
-                alt="Creative portrait" 
+              <img
+                src="/images/careers_portrait.png"
+                alt="Creative portrait"
                 className="w-full h-full object-cover"
                 draggable={false}
               />
@@ -191,7 +191,7 @@ export default function CareersPage() {
       {/* 4. Positions Section */}
       <section className="px-6 md:px-16 max-w-[1400px] mx-auto mb-32 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-          
+
           {/* Left Column: Heading and Tag */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             <SectionTag label="Positions" />
@@ -208,11 +208,11 @@ export default function CareersPage() {
             {positions.map((pos, idx) => {
               const isOpen = openJob === idx;
               return (
-                <div 
+                <div
                   key={idx}
                   className="border-b border-zinc-200 dark:border-zinc-800 w-full"
                 >
-                  <div 
+                  <div
                     className="flex justify-between items-center py-8 cursor-pointer group"
                     onClick={() => setOpenJob(isOpen ? null : idx)}
                   >
@@ -228,7 +228,7 @@ export default function CareersPage() {
                         <span>{pos.location}</span>
                       </div>
                     </div>
-                    
+
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 border border-zinc-200 dark:border-zinc-800 transition-colors ${isOpen ? 'bg-[#0047FF] border-[#0047FF] text-white' : 'bg-transparent text-zinc-400 group-hover:bg-[#0047FF] group-hover:border-[#0047FF] group-hover:text-white'}`}>
                       {isOpen ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
                     </div>
@@ -277,11 +277,11 @@ export default function CareersPage() {
       <section className="w-full bg-[#050505] text-white pt-24 pb-20 relative overflow-hidden">
         <div className="max-w-[1400px] mx-auto px-6 md:px-16 flex flex-col items-center text-center relative z-10">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full opacity-[0.06] pointer-events-none"
-               style={{ background: "radial-gradient(circle, #0047FF 0%, transparent 70%)" }} />
-          
+            style={{ background: "radial-gradient(circle, #0047FF 0%, transparent 70%)" }} />
+
           <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 relative z-10 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 leading-tight">
             <span>Send us</span>
-            <motion.span 
+            <motion.span
               initial={{ opacity: 0, scale: 0.8, rotate: -15, y: 30 }}
               whileInView={{ opacity: 1, scale: 1, rotate: -6, y: 0 }}
               viewport={{ once: true }}
@@ -293,7 +293,7 @@ export default function CareersPage() {
               <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&fit=crop" className="w-full h-full object-cover" alt="" />
             </motion.span>
             <span>your CV at</span>
-            <motion.span 
+            <motion.span
               initial={{ opacity: 0, scale: 0.8, rotate: 15, y: 30 }}
               whileInView={{ opacity: 1, scale: 1, rotate: 6, y: 0 }}
               viewport={{ once: true }}
@@ -321,7 +321,7 @@ export default function CareersPage() {
               Send us your CV
               <span className="w-7 h-7 bg-white text-black rounded-full flex items-center justify-center shrink-0">
                 <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </span>
             </motion.button>

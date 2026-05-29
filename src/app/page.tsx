@@ -291,12 +291,6 @@ export default function Home() {
                         alt={card.label} 
                         className="w-full h-full object-cover" 
                       />
-                      <div className="absolute inset-y-0 left-0 w-[68%] flex pointer-events-none overflow-hidden">
-                        <div className="w-[30%] h-full bg-blue-500/15 backdrop-blur-[6px] border-r border-blue-400/20 shrink-0" />
-                        <div className="w-[20%] h-full bg-purple-500/12 backdrop-blur-[5px] border-r border-purple-400/15 shrink-0" />
-                        <div className="w-[25%] h-full bg-pink-500/10 backdrop-blur-[5px] border-r border-pink-400/15 shrink-0" />
-                        <div className="w-[25%] h-full bg-amber-500/15 backdrop-blur-[4px] shrink-0" />
-                      </div>
                     </div>
                     <div className="min-w-0">
                       <p className="text-[9px] font-bold text-white/60">({card.id})</p>
