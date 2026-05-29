@@ -14,23 +14,27 @@ export default function AboutClient() {
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
   const { scrollYProgress: introProgress } = useScroll({ target: introRef, offset: ["start start", "end start"] });
 
-  const smoothScrollProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-  const smoothIntroProgress = useSpring(introProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  // Softer spring = more luxurious, cinematic feel
+  const smoothScrollProgress = useSpring(scrollYProgress, { stiffness: 50, damping: 18, restDelta: 0.0005 });
+  const smoothIntroProgress = useSpring(introProgress, { stiffness: 50, damping: 18, restDelta: 0.0005 });
 
   const heroY = useTransform(smoothScrollProgress, [0, 1], ["0%", "40%"]);
-  const circleScale = useTransform(smoothIntroProgress, [0, 0.8], [1, 26]);
-  const textOpacity = useTransform(smoothIntroProgress, [0, 0.45], [1, 0]);
+  // Scale over 85% of scroll distance so the full zoom completes before the section ends
+  const circleScale = useTransform(smoothIntroProgress, [0, 0.85], [1, 26]);
+  // Text fades out in first 35% of scroll
+  const textOpacity = useTransform(smoothIntroProgress, [0, 0.35], [1, 0]);
 
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-[#070708] pb-20 overflow-x-hidden" ref={containerRef}>
       
       {/* Scroll-Triggered Circle Zoom Intro */}
-      <div ref={introRef} className="relative h-[180vh] w-full z-20">
+      {/* Extra scroll room = slower, more cinematic zoom */}
+      <div ref={introRef} className="relative h-[250vh] w-full z-20">
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#070708] dark:bg-zinc-950 flex items-center justify-center">
 
           {/* Single unified circle — same zoom on mobile and desktop */}
           <motion.div
-            style={{ scale: circleScale }}
+            style={{ scale: circleScale, willChange: "transform" }}
             className="w-[200px] h-[200px] md:w-[360px] md:h-[360px] rounded-full bg-zinc-50 dark:bg-[#070708] border border-zinc-700/20 dark:border-zinc-800 shadow-2xl flex items-center justify-center relative"
           >
             <motion.div
