@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { TextReveal, Tilt3D, WordsSlideFromRight } from "@/components/Animations";
@@ -10,6 +10,14 @@ export default function AboutClient() {
   const router = useRouter();
   const containerRef = useRef(null);
   const introRef = useRef(null);
+
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
   const { scrollYProgress: introProgress } = useScroll({ target: introRef, offset: ["start start", "end start"] });
@@ -25,52 +33,56 @@ export default function AboutClient() {
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-[#070708] pb-20 overflow-x-hidden" ref={containerRef}>
       
-      {/* Scroll-Triggered Circle Zoom Intro — single sticky container, responsive inner variants */}
+      {/* Scroll-Triggered Circle Zoom Intro */}
       <div ref={introRef} className="relative h-[180vh] w-full z-20">
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#070708] dark:bg-zinc-950 flex items-center justify-center">
 
-          {/* ── DESKTOP (md+): original full zoom — circle, border, shadow and text all scale together ── */}
-          <motion.div
-            style={{ scale: circleScaleDesktop }}
-            className="hidden md:flex w-[360px] h-[360px] rounded-full bg-zinc-50 dark:bg-[#070708] border border-zinc-700/20 dark:border-zinc-800 shadow-2xl items-center justify-center relative"
-          >
+          {isMobile ? (
+            /* ── MOBILE: GPU-optimised — flat circle scales, border + text stay static ── */
+            <>
+              <motion.div
+                style={{ scale: circleScaleMobile, willChange: "transform" }}
+                className="w-[280px] h-[280px] rounded-full bg-zinc-50 dark:bg-[#070708] absolute"
+              />
+              <motion.div
+                style={{ opacity: textOpacity }}
+                className="w-[280px] h-[280px] rounded-full border border-zinc-700/20 dark:border-zinc-800 shadow-2xl pointer-events-none absolute"
+              />
+              <motion.div
+                style={{ opacity: textOpacity }}
+                className="flex flex-col items-center gap-4 text-center select-none px-6 z-10 pointer-events-none absolute"
+              >
+                <span className="text-zinc-500 font-bold tracking-[0.3em] text-[10px] uppercase">
+                  MADSPHERE
+                </span>
+                <h2 className="text-zinc-900 dark:text-white text-2xl font-semibold leading-tight font-sans tracking-tight">
+                  we discover.<br/>
+                  we design.<br/>
+                  we disrupt.
+                </h2>
+              </motion.div>
+            </>
+          ) : (
+            /* ── DESKTOP: original — everything scales together ── */
             <motion.div
-              style={{ opacity: textOpacity }}
-              className="flex flex-col items-center gap-4 text-center select-none px-6"
+              style={{ scale: circleScaleDesktop }}
+              className="w-[360px] h-[360px] rounded-full bg-zinc-50 dark:bg-[#070708] border border-zinc-700/20 dark:border-zinc-800 shadow-2xl flex items-center justify-center relative"
             >
-              <span className="text-zinc-500 dark:text-zinc-500 font-bold tracking-[0.3em] text-[10px] uppercase">
-                MADSPHERE
-              </span>
-              <h2 className="text-zinc-900 dark:text-white text-3xl font-semibold leading-tight font-sans tracking-tight">
-                we discover.<br/>
-                we design.<br/>
-                we disrupt.
-              </h2>
+              <motion.div
+                style={{ opacity: textOpacity }}
+                className="flex flex-col items-center gap-4 text-center select-none px-6"
+              >
+                <span className="text-zinc-500 dark:text-zinc-500 font-bold tracking-[0.3em] text-[10px] uppercase">
+                  MADSPHERE
+                </span>
+                <h2 className="text-zinc-900 dark:text-white text-3xl font-semibold leading-tight font-sans tracking-tight">
+                  we discover.<br/>
+                  we design.<br/>
+                  we disrupt.
+                </h2>
+              </motion.div>
             </motion.div>
-          </motion.div>
-
-          {/* ── MOBILE (<md): flat circle scales separately from static text/border overlays ── */}
-          <motion.div
-            style={{ scale: circleScaleMobile, willChange: "transform" }}
-            className="md:hidden w-[280px] h-[280px] rounded-full bg-zinc-50 dark:bg-[#070708] absolute"
-          />
-          <motion.div
-            style={{ opacity: textOpacity }}
-            className="md:hidden w-[280px] h-[280px] rounded-full border border-zinc-700/20 dark:border-zinc-800 shadow-2xl pointer-events-none absolute"
-          />
-          <motion.div
-            style={{ opacity: textOpacity }}
-            className="md:hidden flex flex-col items-center gap-4 text-center select-none px-6 z-10 pointer-events-none absolute"
-          >
-            <span className="text-zinc-500 dark:text-zinc-500 font-bold tracking-[0.3em] text-[10px] uppercase">
-              MADSPHERE
-            </span>
-            <h2 className="text-zinc-900 dark:text-white text-2xl font-semibold leading-tight font-sans tracking-tight">
-              we discover.<br/>
-              we design.<br/>
-              we disrupt.
-            </h2>
-          </motion.div>
+          )}
 
         </div>
       </div>
