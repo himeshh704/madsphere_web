@@ -538,7 +538,7 @@ export default function Home() {
             </svg>
 
             {/* Central Clock/Active Pill Icon Container */}
-            <div className="absolute top-[30px] z-10 w-24 h-24 rounded-full bg-[#0047FF] shadow-2xl shadow-blue-500/30 flex items-center justify-center text-white overflow-hidden">
+            <div className="absolute top-[30px] z-10 w-24 h-24 overflow-visible flex items-center justify-center">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activePill}
@@ -546,7 +546,7 @@ export default function Home() {
                   animate={{ x: 0, opacity: 1, scale: 1 }}
                   exit={{ x: -60, opacity: 0, scale: 0.9 }}
                   transition={{ type: "spring", stiffness: 300, damping: 24 }}
-                  className="w-full h-full flex items-center justify-center"
+                  className="w-24 h-24 rounded-full bg-[#0047FF] shadow-2xl shadow-blue-500/30 flex items-center justify-center text-white cursor-pointer overflow-hidden"
                 >
                   {/* Floating/bobbing hover-like animation for the active icon */}
                   <motion.div
