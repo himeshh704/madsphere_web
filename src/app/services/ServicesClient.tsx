@@ -147,6 +147,18 @@ export default function ServicesClient() {
   
   const [openService, setOpenService] = useState<string>("Brand Strategy");
 
+  const handleMouseEnter = (id: string) => {
+    if (typeof window !== "undefined" && window.matchMedia("(any-hover: hover)").matches) {
+      setOpenService(id);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (typeof window !== "undefined" && window.matchMedia("(any-hover: hover)").matches) {
+      setOpenService("");
+    }
+  };
+
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-[#070708] pt-32 pb-20 overflow-hidden" ref={containerRef}>
       
@@ -176,15 +188,15 @@ export default function ServicesClient() {
 
       {/* Services List */}
       <section className="max-w-[1200px] mx-auto px-6 md:px-12 mb-32 relative z-10">
-        <div className="flex flex-col gap-4" onMouseLeave={() => setOpenService("")}>
+        <div className="flex flex-col gap-4" onMouseLeave={handleMouseLeave}>
           {services.map((service, idx) => {
             const isOpen = openService === service.id;
             const isOtherOpen = openService !== "" && !isOpen;
             return (
               <motion.div 
                 key={service.id}
-                onMouseEnter={() => setOpenService(service.id)}
-                onMouseLeave={() => setOpenService("")}
+                onMouseEnter={() => handleMouseEnter(service.id)}
+                onMouseLeave={handleMouseLeave}
                 initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: true, margin: "-100px" }}
