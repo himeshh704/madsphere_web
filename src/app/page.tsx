@@ -18,6 +18,7 @@ import { cn } from "@/utils/cn";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ParallaxScrollFeatureSection } from "@/components/ui/parallax-scroll-feature-section";
+import { ParallaxComponent } from "@/components/ui/parallax-scrolling";
 // import TestimonialCarousel from "@/components/TestimonialCarousel";
 
 function ParallaxImg({ src, alt, className }: { src: string; alt: string; className?: string }) {
@@ -645,6 +646,9 @@ export default function Home() {
       <section id="services" className="relative z-10 border-t border-zinc-100 dark:border-zinc-800">
         <ExpertiseScroll />
       </section>
+
+      {/* Parallax Showcase */}
+      <ParallaxComponent />
 
       {/* Process Wrapper */}
       <div className="process-section-wrapper w-full relative z-10">

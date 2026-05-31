@@ -1,8 +1,7 @@
 'use client'
 
 import { useRef } from "react"
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowDown } from "lucide-react"
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { cn } from "@/utils/cn"
 
 interface ProcessStep {
@@ -15,6 +14,57 @@ interface ProcessStep {
 interface ParallaxScrollFeatureSectionProps {
   steps?: readonly ProcessStep[] | ProcessStep[];
 }
+
+const ProcessStepItem = ({ section }: { section: any }) => {
+    const ref = useRef<HTMLDivElement>(null);
+    
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ["start 90%", "center center"]
+    });
+
+    const smoothProgress = useSpring(scrollYProgress, { stiffness: 80, damping: 20, restDelta: 0.001 });
+
+    const opacityContent = useTransform(smoothProgress, [0, 0.7], [0, 1]);
+    const clipProgress = useTransform(smoothProgress, [0, 0.7], ["inset(0 100% 0 0)", "inset(0 0% 0 0)"]);
+    const translateContent = useTransform(smoothProgress, [0, 1], [-30, 0]);
+
+    return (
+        <div 
+            ref={ref} 
+            className={`min-h-[40vh] md:min-h-[60vh] py-6 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-24 ${section.reverse ? 'md:flex-row-reverse' : ''}`}
+        >
+            <motion.div 
+              style={{ y: translateContent }}
+              className="flex-1 flex flex-col gap-3 md:gap-4 text-left"
+            >
+                <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest font-sans">
+                  [Step — {section.stepNum}]
+                </span>
+                <h3 className="text-3xl md:text-5xl font-extrabold text-zinc-900 dark:text-zinc-50 font-sans tracking-tight leading-tight">
+                  {section.title}
+                </h3>
+                <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed max-w-md mt-2">
+                  {section.description}
+                </p>
+            </motion.div>
+            
+            <motion.div 
+                style={{ 
+                    opacity: opacityContent,
+                    clipPath: clipProgress,
+                }}
+                className="flex-1 w-full max-w-md md:max-w-none aspect-[4/3] rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-sm bg-white dark:bg-black"
+            >
+                <img 
+                    src={section.imageUrl} 
+                    className="w-full h-full object-cover" 
+                    alt={`Step ${section.title}`}
+                />
+            </motion.div>
+        </div>
+    );
+};
 
 export const ParallaxScrollFeatureSection = ({ steps = [] }: ParallaxScrollFeatureSectionProps) => {
     // Map process steps data if provided, or default to standard feature details
@@ -62,67 +112,11 @@ export const ParallaxScrollFeatureSection = ({ steps = [] }: ParallaxScrollFeatu
           }
       ];
 
-    // Create refs and animations for each section
-    const sectionRefs = sections.map(() => useRef<HTMLDivElement>(null));
-    
-    const scrollYProgresss = sections.map((_, index) => {
-        return useScroll({
-            target: sectionRefs[index],
-            offset: ["start end", "center start"]
-        }).scrollYProgress;
-    });
-
-    // Create animations for each section using Framer Motion hooks directly
-    const opacityContents = scrollYProgresss.map(progress => 
-        useTransform(progress, [0, 0.7], [0, 1])
-    );
-    
-    const clipProgresses = scrollYProgresss.map(progress => 
-        useTransform(progress, [0, 0.7], ["inset(0 100% 0 0)", "inset(0 0% 0 0)"])
-    );
-    
-    const translateContents = scrollYProgresss.map(progress => 
-        useTransform(progress, [0, 1], [-15, 0])
-    );
-
   return (
     <div className="w-full flex flex-col items-center">
        <div className="flex flex-col w-full max-w-[1200px] mx-auto px-6 md:px-16 gap-8 md:gap-16 py-6 md:py-12">
-            {sections.map((section, index) => (
-                <div 
-                    key={section.id}
-                    ref={sectionRefs[index]} 
-                    className={`min-h-[40vh] md:min-h-[60vh] py-6 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-24 ${section.reverse ? 'md:flex-row-reverse' : ''}`}
-                >
-                    <motion.div 
-                      style={{ y: translateContents[index] }}
-                      className="flex-1 flex flex-col gap-3 md:gap-4 text-left"
-                    >
-                        <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest font-sans">
-                          [Step — {section.stepNum}]
-                        </span>
-                        <h3 className="text-3xl md:text-5xl font-extrabold text-zinc-900 dark:text-zinc-50 font-sans tracking-tight leading-tight">
-                          {section.title}
-                        </h3>
-                        <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed max-w-md mt-2">
-                          {section.description}
-                        </p>
-                    </motion.div>
-                    
-                    <motion.div 
-                        style={{ 
-                            opacity: opacityContents[index],
-                            clipPath: clipProgresses[index],
-                        }}
-                        className="flex-1 w-full max-w-md md:max-w-none aspect-[4/3] rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-sm bg-white dark:bg-black"
-                    >
-                        <img 
-                            src={section.imageUrl} 
-                            className="w-full h-full object-cover" 
-                            alt={`Step ${section.title}`}
-                        />
-                    </motion.div>
-                </div>
+            {sections.map((section) => (
+                <ProcessStepItem key={section.id} section={section} />
             ))}
         </div>
     </div>
