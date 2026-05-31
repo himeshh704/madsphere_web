@@ -10,9 +10,12 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, Play } from "lucide-react";
 import Marquee from "@/components/Marquee";
 import ExpertiseScroll from "@/components/ExpertiseScroll";
-import { TextReveal, FloatingOrbs, MagneticWrap, Tilt3D } from "@/components/Animations";
+import { TextReveal, FloatingOrbs, Tilt3D } from "@/components/Animations";
 import { stagger } from "@/lib/motion";
 import { heroCards, socials, process, clients } from "@/data/site";
+import { cn } from "@/utils/cn";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 // import TestimonialCarousel from "@/components/TestimonialCarousel";
 
 function ParallaxImg({ src, alt, className }: { src: string; alt: string; className?: string }) {
@@ -80,46 +83,16 @@ const cardVariants = {
   }
 };
 
+
+
 export default function Home() {
   const router = useRouter();
   const heroRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [hoveredStep, setHoveredStep] = useState<number | null>(null);
   const processRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: processScrollY } = useScroll({
-    target: processRef,
-    offset: ["start end", "end start"]
-  });
 
-  // Card 0 (Step 1)
-  const card0Opacity = useTransform(processScrollY, [0.05, 0.18], [0, 1]);
-  const card0Y = useTransform(processScrollY, [0.05, 0.25], [200, 0]);
-  const card0RotateY = useTransform(processScrollY, [0.05, 0.25], [-10, 0]);
-
-  // Card 1 (Step 2)
-  const card1Opacity = useTransform(processScrollY, [0.20, 0.33], [0, 1]);
-  const card1Y = useTransform(processScrollY, [0.20, 0.45], [344, 0]);
-  const card1RotateY = useTransform(processScrollY, [0.20, 0.45], [-10, 0]);
-
-  // Card 2 (Step 3)
-  const card2Opacity = useTransform(processScrollY, [0.40, 0.53], [0, 1]);
-  const card2Y = useTransform(processScrollY, [0.40, 0.65], [536, 0]);
-  const card2RotateY = useTransform(processScrollY, [0.40, 0.65], [-10, 0]);
-
-  // Card 3 (Step 4)
-  const card3Opacity = useTransform(processScrollY, [0.60, 0.73], [0, 1]);
-  const card3Y = useTransform(processScrollY, [0.60, 0.85], [344, 0]);
-  const card3RotateY = useTransform(processScrollY, [0.60, 0.85], [-10, 0]);
-
-  // Paths
-  const path1Length = useTransform(processScrollY, [0.20, 0.40], [0, 1]);
-  const path1Opacity = useTransform(processScrollY, [0.20, 0.28], [0, 1]);
-
-  const path2Length = useTransform(processScrollY, [0.40, 0.60], [0, 1]);
-  const path2Opacity = useTransform(processScrollY, [0.40, 0.48], [0, 1]);
-
-  const path3Length = useTransform(processScrollY, [0.60, 0.80], [0, 1]);
-  const path3Opacity = useTransform(processScrollY, [0.60, 0.68], [0, 1]);
 
   useEffect(() => {
     let active = true;
@@ -132,6 +105,15 @@ export default function Home() {
       window.removeEventListener("resize", check);
     };
   }, []);
+
+  const { scrollYProgress: processScroll } = useScroll({
+    target: processRef,
+    offset: ["start end", "end start"]
+  });
+
+  const path1Length = useTransform(processScroll, [0.25, 0.45], [0, 1]);
+  const path2Length = useTransform(processScroll, [0.45, 0.65], [0, 1]);
+  const path3Length = useTransform(processScroll, [0.65, 0.85], [0, 1]);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
@@ -139,7 +121,7 @@ export default function Home() {
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
 
   return (
-    <div className="relative overflow-x-hidden">
+    <div className="relative overflow-x-clip">
       {/* Hero */}
       <section id="home" ref={heroRef} className="relative z-10 pt-28 px-4 sm:px-8 max-w-[1700px] mx-auto" style={{ perspective: "1200px" }}>
         <motion.div
@@ -169,28 +151,29 @@ export default function Home() {
               <img src="/hero_gradient_bg.png" alt="" className="w-full h-full object-cover" />
             </motion.div>
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/50" />
+            {/* Bottom gradient — softly fades text before cards cover it */}
+            <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-black/85 via-black/40 to-transparent z-[5] pointer-events-none" />
 
             <div className="absolute right-5 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-10">
               {socials.map(({ label, href }, i) => (
-                <MagneticWrap key={label}>
-                  <motion.a
-                    href={href}
-                    target="_blank"
-                    rel="noreferrer"
-                    initial={{ opacity: 0, x: isDesktop ? 40 : 0, y: isDesktop ? 0 : 20, rotateY: isDesktop ? 45 : 0 }}
-                    animate={{ opacity: 1, x: 0, y: 0, rotateY: 0 }}
-                    transition={{ delay: 1.2 + i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    whileHover={{ scale: 1.12, rotateZ: 6 }}
-                    className="w-10 h-10 bg-white/30 backdrop-blur-md border border-white/20 rounded-lg flex items-center justify-center text-white text-sm font-semibold"
-                    data-cursor
-                  >
-                    {label}
-                  </motion.a>
-                </MagneticWrap>
+                <motion.a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  initial={{ opacity: 0, x: isDesktop ? 40 : 0, y: isDesktop ? 0 : 20, rotateY: isDesktop ? 45 : 0 }}
+                  animate={{ opacity: 1, x: 0, y: 0, rotateY: 0 }}
+                  transition={{ delay: 1.2 + i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  whileHover={{ scale: 1.12, rotateZ: 6 }}
+                  className="w-10 h-10 bg-white/30 backdrop-blur-md border border-white/20 rounded-lg flex items-center justify-center text-white text-sm font-semibold"
+                  data-cursor
+                >
+                  {label}
+                </motion.a>
               ))}
             </div>
 
-            <motion.div style={{ y: mounted ? textY : undefined }} className="absolute left-8 right-8 bottom-[120px] md:bottom-[130px] md:right-auto z-10 max-w-2xl">
+            <motion.div style={{ y: mounted ? textY : undefined }} className="absolute left-8 right-8 bottom-[150px] md:bottom-[160px] md:right-auto z-20 max-w-2xl">
               <h1 className="text-3xl md:text-5xl lg:text-6xl text-white font-semibold leading-[1.1] tracking-tight mb-3">
                 <TextReveal>Brands That Can&apos;t Be Ignored.</TextReveal>
               </h1>
@@ -226,35 +209,36 @@ export default function Home() {
                       alt={card.label} 
                       className="w-full h-full object-cover" 
                     />
+                    {/* Blur strips — full width, strong blur, slide away on hover */}
                     <motion.div 
                       variants={{
                         hover: { 
                           opacity: 0,
-                          transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
+                          transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
                         }
                       }}
                       initial={{ opacity: 1 }}
-                      className="absolute inset-y-0 left-0 w-[68%] flex pointer-events-none overflow-hidden"
+                      className="absolute inset-0 flex pointer-events-none overflow-hidden"
                     >
                       <motion.div 
                         variants={{ hover: { x: "-110%" } }}
-                        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                        className="w-[30%] h-full bg-blue-500/15 backdrop-blur-[6px] border-r border-blue-400/20 shrink-0" 
+                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                        className="w-[28%] h-full bg-blue-500/40 backdrop-blur-[10px] border-r border-blue-400/20 shrink-0" 
                       />
                       <motion.div 
                         variants={{ hover: { x: "-120%" } }}
-                        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                        className="w-[20%] h-full bg-purple-500/12 backdrop-blur-[5px] border-r border-purple-400/15 shrink-0" 
+                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                        className="w-[22%] h-full bg-indigo-500/35 backdrop-blur-[10px] border-r border-indigo-400/20 shrink-0" 
                       />
                       <motion.div 
                         variants={{ hover: { x: "-130%" } }}
-                        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                        className="w-[25%] h-full bg-pink-500/10 backdrop-blur-[5px] border-r border-pink-400/15 shrink-0" 
+                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                        className="w-[26%] h-full bg-violet-500/30 backdrop-blur-[10px] border-r border-violet-400/15 shrink-0" 
                       />
                       <motion.div 
                         variants={{ hover: { x: "-140%" } }}
-                        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                        className="w-[25%] h-full bg-amber-500/15 backdrop-blur-[4px] shrink-0" 
+                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                        className="w-[24%] h-full bg-purple-500/35 backdrop-blur-[10px] shrink-0" 
                       />
                     </motion.div>
                   </div>
@@ -352,21 +336,23 @@ export default function Home() {
               ))}
             </motion.div>
 
-            <MagneticWrap>
-              <motion.button
-                onClick={() => router.push('/about')}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.96 }}
-                transition={{ type: "spring", stiffness: 350, damping: 15 }}
-                className="self-start flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full transition-colors shadow-xl shadow-blue-500/20 cursor-pointer"
-                data-cursor
+            <motion.button
+              onClick={() => router.push('/about')}
+              whileHover="hover"
+              whileTap={{ scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 350, damping: 15 }}
+              className="self-start flex items-center gap-0 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest pl-5 pr-1.5 py-1.5 rounded-full transition-colors shadow-xl shadow-blue-500/20 cursor-pointer"
+              data-cursor
+            >
+              Who we are
+              <motion.span
+                variants={{ hover: { x: 2 } }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shrink-0"
               >
-                Who we are
-                <span className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
-                  <Play className="w-3 h-3 fill-[#0047FF] text-[#0047FF] ml-0.5" />
-                </span>
-              </motion.button>
-            </MagneticWrap>
+                <Play className="w-2.5 h-2.5 fill-white text-white ml-0.5" />
+              </motion.span>
+            </motion.button>
           </div>
 
           <div className="lg:col-span-8 flex flex-col gap-10">
@@ -408,8 +394,12 @@ export default function Home() {
       </section>
 
 
-      {/* Process */}
-      <section ref={processRef} className="relative z-10 py-28 px-6 md:px-16 max-w-[1400px] mx-auto">
+      {/* Process Wrapper */}
+      <div className="process-section-wrapper w-full relative z-10">
+        <section 
+          ref={processRef} 
+          className="process-section relative w-full py-28 px-6 md:px-16 max-w-[1400px] mx-auto"
+        >
         <div className="flex items-center gap-4 mb-20">
           <h2 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50">
             <TextReveal>How We Work</TextReveal>
@@ -418,117 +408,111 @@ export default function Home() {
         </div>
 
         <div className="relative w-full">
-          {/* Dotted lines connecting process steps on desktop */}
+          {/* Dotted lines connecting process steps on desktop with drawing effect */}
           <svg className="absolute top-0 left-0 w-full h-[350px] pointer-events-none hidden lg:block z-0" viewBox="0 0 1200 350" preserveAspectRatio="none">
             {/* Step 1 -> Step 2 */}
-            <motion.path
+            <path
               d="M 270,100 C 300,100 300,196 330,196"
               fill="none"
               stroke="currentColor"
-              className="text-[#0047FF]/40 dark:text-[#0047FF]/50"
+              className="text-zinc-200 dark:text-zinc-800"
               strokeWidth="2"
               strokeDasharray="6,6"
-              style={{
-                pathLength: (mounted && isDesktop) ? path1Length : undefined,
-                opacity: (mounted && isDesktop) ? path1Opacity : undefined
-              }}
-              initial={mounted ? { pathLength: 0, opacity: 0 } : { pathLength: 1, opacity: 1 }}
-              animate={(!isDesktop && mounted) ? { pathLength: 1, opacity: 1 } : undefined}
-              transition={{
-                pathLength: { duration: 0.6, ease: "easeInOut" },
-                opacity: { duration: 0.2 }
-              }}
             />
-            {/* Step 2 -> Step 3 */}
             <motion.path
+              d="M 270,100 C 300,100 300,196 330,196"
+              fill="none"
+              stroke="#0047FF"
+              strokeWidth="2.5"
+              style={{ pathLength: path1Length }}
+            />
+
+            {/* Step 2 -> Step 3 */}
+            <path
               d="M 570,196 C 600,196 600,100 630,100"
               fill="none"
               stroke="currentColor"
-              className="text-[#0047FF]/40 dark:text-[#0047FF]/50"
+              className="text-zinc-200 dark:text-zinc-800"
               strokeWidth="2"
               strokeDasharray="6,6"
-              style={{
-                pathLength: (mounted && isDesktop) ? path2Length : undefined,
-                opacity: (mounted && isDesktop) ? path2Opacity : undefined
-              }}
-              initial={mounted ? { pathLength: 0, opacity: 0 } : { pathLength: 1, opacity: 1 }}
-              animate={(!isDesktop && mounted) ? { pathLength: 1, opacity: 1 } : undefined}
-              transition={{
-                pathLength: { duration: 0.6, ease: "easeInOut" },
-                opacity: { duration: 0.2 }
-              }}
             />
-            {/* Step 3 -> Step 4 */}
             <motion.path
+              d="M 570,196 C 600,196 600,100 630,100"
+              fill="none"
+              stroke="#0047FF"
+              strokeWidth="2.5"
+              style={{ pathLength: path2Length }}
+            />
+
+            {/* Step 3 -> Step 4 */}
+            <path
               d="M 870,100 C 900,100 900,196 930,196"
               fill="none"
               stroke="currentColor"
-              className="text-[#0047FF]/40 dark:text-[#0047FF]/50"
+              className="text-zinc-200 dark:text-zinc-800"
               strokeWidth="2"
               strokeDasharray="6,6"
-              style={{
-                pathLength: (mounted && isDesktop) ? path3Length : undefined,
-                opacity: (mounted && isDesktop) ? path3Opacity : undefined
-              }}
-              initial={mounted ? { pathLength: 0, opacity: 0 } : { pathLength: 1, opacity: 1 }}
-              animate={(!isDesktop && mounted) ? { pathLength: 1, opacity: 1 } : undefined}
-              transition={{
-                pathLength: { duration: 0.6, ease: "easeInOut" },
-                opacity: { duration: 0.2 }
-              }}
+            />
+            <motion.path
+              d="M 870,100 C 900,100 900,196 930,196"
+              fill="none"
+              stroke="#0047FF"
+              strokeWidth="2.5"
+              style={{ pathLength: path3Length }}
             />
           </svg>
 
-          <div 
-            key={isDesktop ? "desktop" : "mobile"}
+          {/* Cards with Staggered Viewport Entrance */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-120px" }}
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.18
+                }
+              }
+            }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-start relative z-10" 
             style={{ perspective: "1000px" }}
           >
-            {process.map(({ step, title, desc, img }, i) => {
-              const opacity = [card0Opacity, card1Opacity, card2Opacity, card3Opacity][i];
-              const y = [card0Y, card1Y, card2Y, card3Y][i];
-              const rotateY = [card0RotateY, card1RotateY, card2RotateY, card3RotateY][i];
-
-              return (
-                <motion.div
-                  key={step}
-                  custom={isDesktop}
-                  variants={cardVariants}
-                  initial={mounted ? "hidden" : "visible"}
-                  whileInView={(!isDesktop && mounted) ? "visible" : undefined}
-                  viewport={{ once: true, margin: "-50px" }}
-                  style={{
-                    marginTop: isDesktop && i % 2 === 1 ? "6rem" : 0,
-                    opacity: (mounted && isDesktop) ? opacity : undefined,
-                    y: (mounted && isDesktop) ? y : undefined,
-                    rotateY: (mounted && isDesktop) ? rotateY : undefined,
-                  }}
-                  transition={{ 
-                    duration: 0.8, 
-                    ease: [0.16, 1, 0.3, 1] 
-                  }}
-                  className="flex flex-col gap-4"
-                >
-                  <Tilt3D className="p-7 border border-zinc-200 dark:border-zinc-800 rounded-xl flex flex-col gap-3 cursor-pointer bg-white/80 dark:bg-black/80 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow">
-                    <span className="text-[10px] font-bold text-zinc-400">[STEP — {step}]</span>
-                    <h3 className="text-lg font-bold">{title}</h3>
-                    <p className="text-xs text-zinc-500 leading-relaxed">{desc}</p>
-                  </Tilt3D>
-                  <Tilt3D className="aspect-square rounded-xl overflow-hidden shadow-sm">
-                    <ParallaxImg src={img} alt={title} className="w-full h-full" />
-                  </Tilt3D>
-                </motion.div>
-              );
-            })}
-          </div>
+            {process.map(({ step, title, desc, img }, i) => (
+              <motion.div
+                key={step}
+                variants={{
+                  hidden: { opacity: 0, y: 60, scale: 0.96, filter: "blur(6px)" },
+                  visible: { 
+                    opacity: 1, 
+                    y: 0, 
+                    scale: 1, 
+                    filter: "blur(0px)",
+                    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } 
+                  }
+                }}
+                className={`process-card flex flex-col gap-4`}
+                style={{ marginTop: isDesktop && i % 2 === 1 ? "6rem" : 0 }}
+              >
+                <Tilt3D className="p-7 border border-zinc-200 dark:border-zinc-800 rounded-xl flex flex-col gap-3 cursor-pointer bg-white/80 dark:bg-black/80 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow">
+                  <span className="text-[10px] font-bold text-zinc-400">[STEP — {step}]</span>
+                  <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50">{title}</h3>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed font-sans font-medium">{desc}</p>
+                </Tilt3D>
+                <Tilt3D className="aspect-square rounded-xl overflow-hidden shadow-sm">
+                  <ParallaxImg src={img} alt={title} className="w-full h-full" />
+                </Tilt3D>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
+      </div>
 
-      {/* Founder / Behind the Studio — trust section */}
+      {/* FOUNDER / BEHIND THE STUDIO \u2014 moved to About page, keep code here */}
+      {/*
       <section className="relative z-10 py-28 px-6 md:px-16 bg-zinc-50 dark:bg-[#0a0a0a] border-t border-zinc-100 dark:border-zinc-800">
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
 
-          {/* Left: text */}
           <div className="lg:col-span-7 flex flex-col gap-8">
             <motion.span
               initial={{ opacity: 0, x: -20 }}
@@ -539,75 +523,49 @@ export default function Home() {
             >
               <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> Behind the studio
             </motion.span>
-
             <h2 className="text-4xl md:text-5xl font-bold leading-[1.15] text-zinc-900 dark:text-zinc-50">
               <TextReveal>We started this because we thought brands deserved more.</TextReveal>
             </h2>
-
             <div className="flex flex-col gap-5 text-sm md:text-base text-zinc-500 dark:text-zinc-400 leading-relaxed font-sans max-w-2xl">
-              <p>
-                MadSphere started with two people who were tired of seeing the same brand templates on every website. Same layouts. Same fonts. Same promise of &ldquo;we&rsquo;ll make you stand out&rdquo; — from agencies that all look the same.
-              </p>
-              <p>
-                We wanted to build something different. A studio that treats every project like it matters, because to the person building that brand, it does.
-              </p>
-              <p>
-                Are we young? Sure. But we&apos;re obsessive about the details. We&apos;re building this for founders who feel the same way about their work as we do about ours.
-              </p>
+              <p>MadSphere started with two people who were tired of seeing the same brand templates on every website. Same layouts. Same fonts. Same promise of &ldquo;we&rsquo;ll make you stand out&rdquo; &mdash; from agencies that all look the same.</p>
+              <p>We wanted to build something different. A studio that treats every project like it matters, because to the person building that brand, it does.</p>
+              <p>Are we young? Sure. But we&apos;re obsessive about the details. We&apos;re building this for founders who feel the same way about their work as we do about ours.</p>
             </div>
-
-            <MagneticWrap>
-              <motion.button
-                onClick={() => router.push('/about')}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.96 }}
-                transition={{ type: "spring", stiffness: 350, damping: 15 }}
-                className="self-start flex items-center gap-3 bg-zinc-900 dark:bg-zinc-100 hover:bg-black dark:hover:bg-white text-white dark:text-zinc-900 text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full transition-colors cursor-pointer"
-                data-cursor
+            <motion.button
+              onClick={() => router.push('/about')}
+              whileHover="hover"
+              whileTap={{ scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 350, damping: 15 }}
+              className="self-start flex items-center gap-0 bg-zinc-900 dark:bg-zinc-100 hover:bg-black dark:hover:bg-white text-white dark:text-zinc-900 rounded-full pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer shadow-lg"
+              data-cursor
+            >
+              Meet the team
+              <motion.span
+                variants={{ hover: { x: 2 } }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                className="ml-3 w-6 h-6 rounded-full bg-white/20 dark:bg-black/10 flex items-center justify-center shrink-0"
               >
-                Meet the team
-                <span className="w-5 h-5 bg-white dark:bg-zinc-900 rounded-full flex items-center justify-center">
-                  <ArrowRight className="w-3 h-3 text-zinc-900 dark:text-white" />
-                </span>
-              </motion.button>
-            </MagneticWrap>
+                <ArrowRight className="w-3 h-3 text-white dark:text-zinc-900" />
+              </motion.span>
+            </motion.button>
           </div>
 
-          {/* Right: two portrait photos */}
           <div className="lg:col-span-5 grid grid-cols-2 gap-4" style={{ perspective: "1000px" }}>
-            <motion.div
-              initial={{ opacity: 0, y: 40, rotateY: -15 }}
-              whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            >
+            <motion.div initial={{ opacity: 0, y: 40, rotateY: -15 }} whileInView={{ opacity: 1, y: 0, rotateY: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}>
               <Tilt3D className="w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-xl">
-                <img
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&fit=crop"
-                  alt="Founder"
-                  className="w-full h-full object-cover"
-                />
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&fit=crop" alt="Founder" className="w-full h-full object-cover" />
               </Tilt3D>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 60, rotateY: 15 }}
-              whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-10"
-            >
+            <motion.div initial={{ opacity: 0, y: 60, rotateY: 15 }} whileInView={{ opacity: 1, y: 0, rotateY: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }} className="mt-10">
               <Tilt3D className="w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-xl">
-                <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&fit=crop"
-                  alt="Co-Founder"
-                  className="w-full h-full object-cover"
-                />
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&fit=crop" alt="Co-Founder" className="w-full h-full object-cover" />
               </Tilt3D>
             </motion.div>
           </div>
 
         </div>
       </section>
+      */}
 
       {/* Testimonials (Hidden for launch)
       <section className="relative z-10 py-24 px-6 md:px-16 max-w-[1400px] mx-auto border-t border-zinc-100 dark:border-zinc-800">
@@ -623,6 +581,138 @@ export default function Home() {
       </section>
       */}
 
+      {/* ──── Let’s Keep in Touch ─────────────────────────────────────── */}
+      <section className="relative z-10 py-28 px-6 md:px-16 border-t border-zinc-100 dark:border-zinc-800 bg-white dark:bg-[#070708]">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+            <div className="flex flex-col gap-6 lg:sticky lg:top-32">
+              <motion.span
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500"
+              >
+                <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> Get In Touch
+              </motion.span>
+
+              <h2 className="text-4xl md:text-6xl font-bold leading-[1.1] tracking-tighter text-zinc-900 dark:text-zinc-50">
+                <TextReveal>Let&apos;s keep in touch.</TextReveal>
+              </h2>
+
+              <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed max-w-sm">
+                Tell us what you&apos;re building and where you want to take it. We&apos;ll come back to you within 24 hours.
+              </p>
+
+              <div className="flex flex-col gap-3 mt-2">
+                {["hello@madsphere.in", "Mumbai, India"].map((item, i) => (
+                  <motion.p
+                    key={i}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 + i * 0.1 }}
+                    className="text-sm font-medium text-zinc-400 dark:text-zinc-500"
+                  >
+                    {item}
+                  </motion.p>
+                ))}
+              </div>
+            </div>
+
+            <HomeContactForm />
+          </div>
+        </div>
+      </section>
+
     </div>
+  );
+}
+
+// ─── Inline Contact Form Component ────────────────────────────────────────────
+function HomeContactForm() {
+  const [hcf, setHcf] = useState({ name: "", email: "", company: "", service: "", message: "" });
+  const [hcfSubmitting, setHcfSubmitting] = useState(false);
+  const [hcfSuccess, setHcfSuccess] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setHcf(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setHcfSubmitting(true);
+    setTimeout(() => {
+      setHcfSubmitting(false);
+      setHcfSuccess(true);
+      setHcf({ name: "", email: "", company: "", service: "", message: "" });
+      setTimeout(() => setHcfSuccess(false), 5000);
+    }, 1500);
+  };
+
+  const inp = "w-full px-5 py-4 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-600 outline-none focus:border-[#0047FF] focus:bg-white dark:focus:bg-zinc-900 transition-all duration-300 text-sm font-medium";
+
+  return (
+    <motion.form
+      onSubmit={handleSubmit}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      className="flex flex-col gap-4"
+    >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <input required name="name" value={hcf.name} onChange={handleChange} type="text" placeholder="Write your name" className={inp} />
+        <input required name="email" value={hcf.email} onChange={handleChange} type="email" placeholder="Write your email" className={inp} />
+      </div>
+
+      <input name="company" value={hcf.company} onChange={handleChange} type="text" placeholder="Your company or brand name" className={inp} />
+
+      <div className="relative">
+        <select
+          required name="service" value={hcf.service} onChange={handleChange}
+          className={`${inp} appearance-none cursor-pointer pr-12 ${!hcf.service ? "text-zinc-400 dark:text-zinc-600" : ""}`}
+        >
+          <option value="" disabled>What can we help you with?</option>
+          <option value="Brand Strategy">Brand Strategy</option>
+          <option value="Creative Design">Creative Design</option>
+          <option value="Website Design">Website Design</option>
+          <option value="Social Media Marketing">Social Media Marketing</option>
+          <option value="Digital Marketing">Digital Marketing</option>
+          <option value="Video Production">Video Production</option>
+          <option value="Something Else">Something Else</option>
+        </select>
+        <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="#71717a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </div>
+      </div>
+
+      <textarea required name="message" value={hcf.message} onChange={handleChange} placeholder="Tell us a bit about your project..." rows={5} className={`${inp} resize-none`} />
+
+      <motion.button
+        type="submit"
+        disabled={hcfSubmitting || hcfSuccess}
+        whileHover="hover"
+        whileTap={{ scale: 0.97 }}
+        transition={{ type: "spring", stiffness: 350, damping: 15 }}
+        className={`self-start flex items-center gap-0 rounded-full pl-5 pr-1.5 py-1.5 text-white font-bold text-xs uppercase tracking-widest transition-colors cursor-pointer shadow-xl ${hcfSuccess ? "bg-green-500 hover:bg-green-600 shadow-green-500/20" : "bg-[#0047FF] hover:bg-blue-700 shadow-blue-500/20"} disabled:opacity-70`}
+      >
+        {hcfSubmitting ? "Sending..." : hcfSuccess ? "Message sent" : "Send Message"}
+        <motion.span
+          variants={{ hover: { x: 2 } }}
+          transition={{ type: "spring", stiffness: 400, damping: 20 }}
+          className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shrink-0"
+        >
+          {hcfSubmitting ? (
+            <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+          ) : hcfSuccess ? (
+            <ArrowRight className="w-3 h-3 text-white" />
+          ) : (
+            <ArrowRight className="w-3 h-3 text-white" />
+          )}
+        </motion.span>
+      </motion.button>
+    </motion.form>
   );
 }

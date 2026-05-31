@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus, ArrowRight } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { MagneticWrap, Tilt3D } from "./Animations";
+import { Plus, Minus } from "lucide-react";
+import { Tilt3D } from "./Animations";
 
 const faqs = [
   {
@@ -41,16 +40,15 @@ const faqs = [
 
 export default function FAQ() {
   const [openId, setOpenId] = useState<string | null>(null);
-  const router = useRouter();
 
   return (
     <section className="faq-section py-32 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10 bg-[#f5f5f5] dark:bg-[#0a0a0a] rounded-[40px] mt-24 mb-24">
       <div className="flex flex-col items-center mb-16">
-        <div className="flex items-center gap-3">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+        <div className="flex items-center gap-3 flex-nowrap">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 whitespace-nowrap">
             Have Question
           </h2>
-          <span className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 border-l border-zinc-300 dark:border-zinc-700 pl-4">
+          <span className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 border-l border-zinc-300 dark:border-zinc-700 pl-4 whitespace-nowrap">
             <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> FAQ&apos;S
           </span>
         </div>
@@ -65,6 +63,8 @@ export default function FAQ() {
               <div 
                 key={faq.id} 
                 className="border-b border-zinc-200 dark:border-zinc-800 last:border-0"
+                onMouseEnter={() => setOpenId(faq.id)}
+                onMouseLeave={() => setOpenId(null)}
               >
                 <button
                   onClick={() => setOpenId(isOpen ? null : faq.id)}
@@ -91,7 +91,7 @@ export default function FAQ() {
                       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <p className="pb-8 pl-16 md:pl-20 text-zinc-500 dark:text-zinc-400 font-serif text-lg">
+                      <p className="pb-8 pl-16 md:pl-20 text-zinc-800 dark:text-zinc-200 font-sans font-semibold text-base md:text-lg leading-relaxed">
                         {faq.answer}
                       </p>
                     </motion.div>
@@ -112,9 +112,10 @@ export default function FAQ() {
             />
           </Tilt3D>
           <div className="flex flex-col gap-4">
-            <h3 className="text-2xl font-bold text-zinc-900 dark:text-white leading-tight">
-              Still have any<br/>Question?
+            <h3 className="text-2xl font-bold text-zinc-900 dark:text-white leading-tight whitespace-nowrap">
+              Still have any Question?
             </h3>
+            {/* CONTACT US BUTTON — hidden, keep code
             <MagneticWrap>
               <motion.button
                 onClick={() => router.push('/contact')}
@@ -126,6 +127,7 @@ export default function FAQ() {
                 Contact Us <ArrowRight className="w-4 h-4" />
               </motion.button>
             </MagneticWrap>
+            */}
           </div>
         </div>
       </div>

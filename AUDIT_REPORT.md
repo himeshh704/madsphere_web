@@ -18,6 +18,7 @@ This report documents the codebase audit, visual shortcomings resolved, animatio
 | **Layout Scroll Guard** | Mobile & Desktop | Root viewport container lacked structural safety limits, allowing floating background orbs to occasionally trigger minor horizontal offsets. | Locked `overflow-x: hidden` and `max-width: 100%` on both `html` and `body` selectors globally in `globals.css`. | **Resolved** |
 | **Email Domain Discrepancy** | Project-wide | Contact page pointed to `.in`, but Navbar talk link and careers auto-responder confirmation templates referenced `.xyz` domains, causing branding mismatch and routing confusion. | Aligned all email and domain references to use the official `madsphere.in` domain consistently. | **Resolved** |
 | **Expertise Card Tilt Lag** | Mobile | Interactive 3D tilt coordinates were calculated on hover events for the Expertise Scroll component, potentially triggering frame rate drops on touch devices. | Configured an `isTouch` coarse pointer detection filter inside `ExpertiseScroll` to deactivate 3D transforms on mobile devices. | **Resolved** |
+| **Process Stacking Card Layout** | Desktop | The previous absolute-timeline layout with dotted S-curves did not scale cleanly, causing cards to stack in wrappers that scrolled away prematurely, preventing overlapping slide-over page transition effects. | Reimplemented the original 4-column horizontal grid design on desktop with a GSAP ScrollTrigger master scrubbing timeline. The section pins in place (`pin: true`) while the timeline progressively reveals cards (y: 40 ➔ 0, opacity: 0 ➔ 1) and draws connecting dotted SVG paths step-by-step as the user scrolls, creating a premium Awwwards-style progressive assembly experience. | **Resolved** |
 
 ---
 
@@ -28,13 +29,15 @@ To guarantee buttery-smooth 60fps/120fps scrolling on low-end and high-end mobil
 1. **Interactive Tilts (`TiltCard`, `Tilt3D`, `ExpertiseScroll` card)**: Bypassed Framer Motion's springs on touch viewports by checking `pointer: coarse` capability. When touch is detected, the inline CSS transform properties (`rotateX`, `rotateY`, `transformPerspective`) are omitted (set to `undefined`), eliminating redraw/reflow computations during touch scrolling.
 2. **Magnetic Snaps (`MagneticWrap`)**: Disabled spring-linked movements on mobile viewports using touch detection, ensuring normal touch navigation acts without physical delay.
 3. **Parallax Image Scaling (`ParallaxImg`)**: Added window resize listeners to disable scroll-linked parallax calculations (avoiding `useTransform` coordinates binding) on mobile width viewports (`< 768px`).
+4. **GSAP ScrollTrigger Grid Assembly**: On desktops (`>= 1024px`), the section pins and scrubs through a master GSAP timeline to progressively reveal each card and draw the connecting dotted SVG paths. On mobile (`< 1024px`), pinning is bypassed (`pin: false`), but the progressive assembly timeline is still scrubbed smoothly as the user scrolls past.
 
 ### B. Unified Button Interaction Model
-To maintain brand-wide tactile consistency, all primary action buttons have been refactored to use matching hover/tap states:
-- **Hover Scale**: `scale: 1.05`
-- **Click/Tap Scale**: `scale: 0.96`
+To maintain brand-wide tactile consistency and stability, all primary action and form buttons have been refactored to use matching hover/tap states:
+- **Hover Sizing**: Stable inline positioning (removed standard scale-up and `MagneticWrap` cursor snapping across pages to prevent buttons from moving around).
+- **Tactile Animations**: Subtle translation variants on inner icon circles (e.g. shifts by `2px` or `x: 2, y: -2`) on hover.
+- **Click/Tap Scale**: Snappy tactile feedback at `scale: 0.96` (or `scale: 0.97`).
 - **Spring Settings**: `type: "spring", stiffness: 350, damping: 15` (high-fidelity snap back, zero visual lag).
-- **Cursor Pointer**: Explicitly set `cursor-pointer` to guarantee active hover states across all viewport configurations.
+- **Alignment**: Standardized form submit buttons to inline `self-start` to match the brand style guide.
 
 ### C. Portrait Spring & Magnification
 The decorative footer images and Careers banner inline avatars now act as interactive design highlights:

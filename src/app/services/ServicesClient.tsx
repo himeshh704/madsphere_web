@@ -176,22 +176,28 @@ export default function ServicesClient() {
 
       {/* Services List */}
       <section className="max-w-[1200px] mx-auto px-6 md:px-12 mb-32 relative z-10">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4" onMouseLeave={() => setOpenService("")}>
           {services.map((service, idx) => {
             const isOpen = openService === service.id;
+            const isOtherOpen = openService !== "" && !isOpen;
             return (
               <motion.div 
                 key={service.id}
+                onMouseEnter={() => setOpenService(service.id)}
+                onMouseLeave={() => setOpenService("")}
                 initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                animate={{
+                  opacity: isOtherOpen ? 0.35 : 1,
+                  filter: isOtherOpen ? "blur(4px)" : "blur(0px)",
+                }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="border-b border-zinc-200 dark:border-zinc-800 pb-8"
               >
                 <div 
                   className="flex justify-between items-start py-6 cursor-pointer group gap-6"
                   onClick={() => setOpenService(isOpen ? "" : service.id)}
-                  onMouseEnter={() => setOpenService(service.id)}
                 >
                   <div className="flex flex-col gap-1.5">
                     <h2 className="text-3xl md:text-5xl font-bold text-zinc-900 dark:text-white transition-colors group-hover:text-[#0047FF]">

@@ -2,15 +2,15 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Plus, Minus } from "lucide-react";
-import { TextReveal, Tilt3D, MagneticWrap } from "@/components/Animations";
+import { ArrowUpRight, ArrowRight, Plus, Minus } from "lucide-react";
+import { TextReveal, Tilt3D, SectionBlurIn } from "@/components/Animations";
 import ApplyModal from "@/components/ApplyModal";
 
-// Section Tag component
+// Section Tag component — yellow dot like every other page
 function SectionTag({ label }: { label: string }) {
   return (
     <span className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] uppercase text-zinc-400">
-      <span className="w-1.5 h-1.5 bg-[#FF5C00] rounded-sm shrink-0" />
+      <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm shrink-0" />
       {label}
     </span>
   );
@@ -91,10 +91,12 @@ const positions = [
 export default function CareersClient() {
   const [openJob, setOpenJob] = useState<number | null>(null);
   const [applyRole, setApplyRole] = useState<string | null>(null);
+
   return (
     <main className="pt-32 md:pt-40 pb-0 min-h-screen bg-white dark:bg-[#070708] overflow-hidden">
 
       {/* 1. Header Hero Section */}
+      <SectionBlurIn>
       <section className="px-6 md:px-16 max-w-[1400px] mx-auto text-center mb-24 md:mb-32 relative z-10">
         <div className="flex justify-center items-center mb-6">
           <SectionTag label="Career Inquiries" />
@@ -108,8 +110,10 @@ export default function CareersClient() {
           We&apos;re building something bold. Come be a part of a team that obsesses over great work, moves fast, and celebrates growth yours and ours.
         </p>
       </section>
+      </SectionBlurIn>
 
       {/* 2. Work Vibe Banner Section */}
+      <SectionBlurIn delay={0.05}>
       <section className="px-6 md:px-16 max-w-[1400px] mx-auto mb-32 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
@@ -146,14 +150,16 @@ export default function CareersClient() {
 
         </div>
       </section>
+      </SectionBlurIn>
 
       {/* 3. Perks & Benefits Section */}
+      <SectionBlurIn delay={0.05}>
       <section className="px-6 md:px-16 py-24 bg-zinc-50/80 dark:bg-zinc-900/10 border-y border-zinc-100 dark:border-zinc-900/80 mb-32 relative z-10">
         <div className="max-w-[1400px] mx-auto">
           {/* Centered header row with Perks & Benefits title and Tag */}
           <div className="flex items-center justify-center gap-6 mb-20 flex-wrap text-center">
             <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
-              Perks & Benefits
+              Perks &amp; Benefits
             </h2>
             <SectionTag label="Why MadSphere" />
           </div>
@@ -187,8 +193,10 @@ export default function CareersClient() {
           </div>
         </div>
       </section>
+      </SectionBlurIn>
 
-      {/* 4. Positions Section */}
+      {/* 4. Positions Section — with blur effect on inactive items */}
+      <SectionBlurIn delay={0.05}>
       <section className="px-6 md:px-16 max-w-[1400px] mx-auto mb-32 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
 
@@ -203,13 +211,21 @@ export default function CareersClient() {
             </p>
           </div>
 
-          {/* Right Column: Open Positions List */}
+          {/* Right Column: Open Positions List — blur inactive when one is open */}
           <div className="lg:col-span-7 flex flex-col w-full pt-8 lg:pt-0">
             {positions.map((pos, idx) => {
               const isOpen = openJob === idx;
+              const isOtherOpen = openJob !== null && !isOpen;
               return (
-                <div
+                <motion.div
                   key={idx}
+                  onMouseEnter={() => setOpenJob(idx)}
+                  onMouseLeave={() => setOpenJob(null)}
+                  animate={{
+                    opacity: isOtherOpen ? 0.3 : 1,
+                    filter: isOtherOpen ? "blur(4px)" : "blur(0px)",
+                  }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   className="border-b border-zinc-200 dark:border-zinc-800 w-full"
                 >
                   <div
@@ -229,8 +245,8 @@ export default function CareersClient() {
                       </div>
                     </div>
 
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 border border-zinc-200 dark:border-zinc-800 transition-colors ${isOpen ? 'bg-[#0047FF] border-[#0047FF] text-white' : 'bg-transparent text-zinc-400 group-hover:bg-[#0047FF] group-hover:border-[#0047FF] group-hover:text-white'}`}>
-                      {isOpen ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 border border-zinc-200 dark:border-zinc-800 transition-all duration-300 ${isOpen ? 'bg-[#0047FF] border-[#0047FF] text-white rotate-45' : 'bg-transparent text-zinc-400 group-hover:bg-[#0047FF] group-hover:border-[#0047FF] group-hover:text-white'}`}>
+                      <Plus className="w-3.5 h-3.5" />
                     </div>
                   </div>
 
@@ -240,38 +256,40 @@ export default function CareersClient() {
                         initial={{ height: 0, opacity: 0, filter: "blur(4px)" }}
                         animate={{ height: "auto", opacity: 1, filter: "blur(0px)" }}
                         exit={{ height: 0, opacity: 0, filter: "blur(4px)" }}
-                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden w-full"
                       >
                         <div className="pb-8 flex flex-col gap-6 items-start w-full">
                           <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 leading-relaxed font-sans">
                             {pos.desc}
                           </p>
-                          <MagneticWrap>
-                            <motion.button
-                              onClick={() => setApplyRole(pos.title)}
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.96 }}
-                              transition={{ type: "spring", stiffness: 350, damping: 15 }}
-                              className="bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-5 pr-1.5 py-1.5 text-[10px] font-bold uppercase tracking-widest cursor-pointer flex items-center gap-3 shadow-lg shadow-blue-500/20"
+                          <motion.button
+                            onClick={() => setApplyRole(pos.title)}
+                            whileHover="hover"
+                            whileTap={{ scale: 0.96 }}
+                            transition={{ type: "spring", stiffness: 350, damping: 15 }}
+                            className="bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-widest cursor-pointer flex items-center gap-0 shadow-lg shadow-blue-500/20"
+                          >
+                            Apply for Role
+                            <motion.span
+                              variants={{ hover: { x: 2, y: -2 } }}
+                              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                              className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shrink-0"
                             >
-                              Apply for Role
-                              <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
-                                <ArrowUpRight className="w-3.5 h-3.5" />
-                              </span>
-                            </motion.button>
-                          </MagneticWrap>
+                              <ArrowUpRight className="w-3.5 h-3.5" />
+                            </motion.span>
+                          </motion.button>
                         </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
+                </motion.div>
               );
             })}
           </div>
-
         </div>
       </section>
+      </SectionBlurIn>
 
       {/* 5. Send us your CV banner Section */}
       <section data-cursor-square="Say Hi !" className="w-full bg-[#050505] text-white pt-24 pb-20 relative overflow-hidden lg:cursor-none">
@@ -307,32 +325,34 @@ export default function CareersClient() {
           </h2>
 
           <p className="text-sm md:text-base text-zinc-400 max-w-xl mb-12 relative z-10 font-sans">
-            Tell us your goals, and we&apos;ll help you design the <span className="text-[#FF5C00] font-semibold">perfect creative solution</span>.
+            Tell us your goals, and we&apos;ll help you design the <span className="text-yellow-400 font-semibold">perfect creative solution</span>.
           </p>
 
-          <MagneticWrap className="relative z-10">
-            <motion.button
-              onClick={() => setApplyRole("General Inquiry / CV Submission")}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.96 }}
-              transition={{ type: "spring", stiffness: 350, damping: 15 }}
-              className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold uppercase tracking-wider pl-8 pr-3 py-3 rounded-full text-xs sm:text-sm transition-colors flex items-center gap-4 cursor-pointer shadow-lg shadow-yellow-500/20"
+          <motion.button
+            onClick={() => setApplyRole("General Inquiry / CV Submission")}
+            whileHover="hover"
+            whileTap={{ scale: 0.96 }}
+            transition={{ type: "spring", stiffness: 350, damping: 15 }}
+            className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold uppercase tracking-wider pl-6 pr-1.5 py-1.5 rounded-full text-xs transition-colors flex items-center gap-0 cursor-pointer shadow-lg shadow-yellow-500/20 relative z-10"
+          >
+            Send us your CV
+            <motion.span
+              variants={{ hover: { x: 2 } }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              className="ml-3 w-6 h-6 rounded-full bg-black/10 text-black flex items-center justify-center shrink-0"
             >
-              Send us your CV
-              <span className="w-7 h-7 bg-white text-black rounded-full flex items-center justify-center shrink-0">
-                <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            </motion.button>
-          </MagneticWrap>
+              <ArrowRight className="w-3 h-3 text-black" />
+            </motion.span>
+          </motion.button>
         </div>
       </section>
 
       {/* Application Modal */}
-      {applyRole && (
-        <ApplyModal role={applyRole} onClose={() => setApplyRole(null)} />
-      )}
+      <AnimatePresence>
+        {applyRole && (
+          <ApplyModal role={applyRole} onClose={() => setApplyRole(null)} />
+        )}
+      </AnimatePresence>
 
     </main>
   );

@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Clock, Instagram, Linkedin, Facebook, Twitter, CheckCircle2 } from "lucide-react";
-import { TextReveal, Tilt3D, MagneticWrap } from "@/components/Animations";
+import { Mail, Phone, MapPin, Clock, Instagram, Linkedin, Facebook, Twitter, CheckCircle2, ArrowRight } from "lucide-react";
+import { TextReveal, Tilt3D } from "@/components/Animations";
 import FAQ from "@/components/FAQ";
 
 export default function ContactClient() {
@@ -76,11 +76,9 @@ export default function ContactClient() {
               <span className="font-bold">Follow us</span>
               <div className="flex items-center gap-3">
                 {[Instagram, Linkedin, Facebook, Twitter].map((Icon, i) => (
-                  <MagneticWrap key={i}>
-                    <a href="#" className="w-10 h-10 border border-zinc-200 dark:border-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 hover:text-[#0047FF] hover:border-[#0047FF] transition-colors bg-white dark:bg-[#0a0a0a]">
-                      <Icon className="w-4 h-4" />
-                    </a>
-                  </MagneticWrap>
+                  <a key={i} href="#" className="w-10 h-10 border border-zinc-200 dark:border-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 hover:text-[#0047FF] hover:border-[#0047FF] transition-colors bg-white dark:bg-[#0a0a0a]">
+                    <Icon className="w-4 h-4" />
+                  </a>
                 ))}
               </div>
             </div>
@@ -139,18 +137,27 @@ export default function ContactClient() {
               <motion.button 
                 type="submit"
                 disabled={isSubmitting || isSuccess}
-                whileHover={{ scale: 1.05 }}
+                whileHover="hover"
                 whileTap={{ scale: 0.96 }}
                 transition={{ type: "spring", stiffness: 350, damping: 15 }}
-                className={`w-full py-4 rounded-xl text-white font-bold transition-colors flex items-center justify-center gap-2 ${isSuccess ? 'bg-green-500' : 'bg-[#0047FF] hover:bg-blue-700'} disabled:opacity-70 cursor-pointer`}
+                className={`self-start flex items-center gap-0 text-white font-bold text-xs uppercase tracking-widest transition-colors shadow-lg shadow-blue-500/20 rounded-full pl-5 pr-1.5 py-1.5 cursor-pointer ${isSuccess ? 'bg-green-500 hover:bg-green-600 shadow-green-500/20' : 'bg-[#0047FF] hover:bg-blue-700 shadow-blue-500/20'} disabled:opacity-70`}
               >
-                {isSubmitting ? (
-                  <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                ) : isSuccess ? (
-                  <><CheckCircle2 className="w-5 h-5" /> Message Sent</>
-                ) : (
-                  "Submit"
-                )}
+                <span>
+                  {isSubmitting ? "Sending..." : isSuccess ? "Message Sent" : "Submit"}
+                </span>
+                <motion.span
+                  variants={{ hover: { x: 2 } }}
+                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                  className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shrink-0"
+                >
+                  {isSubmitting ? (
+                    <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : isSuccess ? (
+                    <ArrowRight className="w-3 h-3 text-white" />
+                  ) : (
+                    <ArrowRight className="w-3 h-3 text-white" />
+                  )}
+                </motion.span>
               </motion.button>
             </form>
           </div>

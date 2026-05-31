@@ -40,7 +40,7 @@ That's it! Next.js serves files from the `public` folder directly at the root, s
 
 ## 🛠️ The Main Content Data File
 Instead of editing pages directly, we kept most of the main marketing lists in a single config file:
-[site.ts](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/data/site.ts)
+[site.ts](./src/data/site.ts)
 
 Here's what you can update in `site.ts`:
 * **Navigation Links (Lines 1-7)**: Label and page links.
@@ -59,18 +59,18 @@ Here's what you can update in `site.ts`:
 If you want to edit page headings, paragraphs, or local layout images, open these files:
 
 ### 1. Homepage
-File Path: [page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/page.tsx)
-* **Logos (Lines 152-153)**: Points to `/logo.png` and `/logo_white.png`.
-* **Hero Background (Line 169)**: Points to `/hero_gradient_bg.png`.
-* **Hero Copy (Lines 194-200)**: Heading (`Brands That Can't Be Ignored.`) and paragraph text.
-* **About Us Teaser (Lines 325-353)**: Left-side paragraph and bullet list of services.
-* **About Us Images (Lines 386 & 397)**: Right-side Unsplash photos.
-* **Founder Section (Lines 540-557)**: Heading and three main narrative paragraphs explaining the studio launch.
-* **Founder Photos (Lines 586 & 601)**: The two vertical founder portrait photos.
+File Path: [page.tsx](./src/app/page.tsx)
+* **Logos (Lines 190-191)**: Points to `/logo.png` and `/logo_white.png`.
+* **Hero Background (Line 207)**: Points to `/hero_gradient_bg.png`.
+* **Hero Copy (Lines 233-240)**: Heading (`Brands That Can't Be Ignored.`) and paragraph text.
+* **About Us Teaser (Lines 358-394)**: Left-side paragraph and bullet list of services.
+* **About Us Images (Lines 429 & 440)**: Right-side Unsplash photos.
+* **Founder Section (Lines 484-539, Commented Out)**: Heading and three main narrative paragraphs explaining the studio launch.
+* **Founder Photos (Lines 525-535, Commented Out)**: The two vertical founder portrait photos.
 
 ### 2. About Page
-* **SEO Metadata (Titles/Description)**: [about/page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/about/page.tsx)
-* **Text & Images Copy**: [AboutClient.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/about/AboutClient.tsx)
+* **SEO Metadata (Titles/Description)**: [about/page.tsx](./src/app/about/page.tsx)
+* **Text & Images Copy**: [AboutClient.tsx](./src/app/about/AboutClient.tsx)
   * *Scroll-Triggered Zoom Intro (Lines 35-42)*: The zoom text blocks (`we discover. we design. we disrupt.`).
   * *Hero Title & Paragraph (Lines 69-79)*: Studio introduction description.
   * *Hero Landscape Image (Lines 83-87)*: Unsplash landscape banner image.
@@ -78,14 +78,14 @@ File Path: [page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphe
   * *Vision & Mission Cards (Lines 204-213)*: Heading labels and text blocks.
 
 ### 3. Services Page
-* **SEO Metadata (Titles/Description)**: [services/page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/services/page.tsx)
-* **Text & Images Copy**: [ServicesClient.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/services/ServicesClient.tsx)
+* **SEO Metadata (Titles/Description)**: [services/page.tsx](./src/app/services/page.tsx)
+* **Text & Images Copy**: [ServicesClient.tsx](./src/app/services/ServicesClient.tsx)
   * *Detailed Service Breakdown (Lines 8-141)*: An array containing the names, subheadings, and bullet list item details (like Positioning, Messaging, Identity) showing titles, descriptions, and outputs.
   * *Hero Landscape Banner (Lines 168-172)*: Header image.
 
 ### 4. Careers Page
-* **SEO Metadata (Titles/Description)**: [careers/page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/careers/page.tsx)
-* **Text & Images Copy**: [CareersClient.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/careers/CareersClient.tsx)
+* **SEO Metadata (Titles/Description)**: [careers/page.tsx](./src/app/careers/page.tsx)
+* **Text & Images Copy**: [CareersClient.tsx](./src/app/careers/CareersClient.tsx)
   * *Perks list (Lines 20-57)*: Emojis, titles, and descriptions.
   * *Open Positions Grid (Lines 60-89)*: Roles, contract types, experience levels, location details, and job descriptions.
   * *Main Heading (Line 104)*: `Join the MadSphere`
@@ -93,15 +93,15 @@ File Path: [page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphe
   * *CV Submission Banner (Lines 282-311)*: Large footer header text and Unsplash circular avatar pictures.
 
 ### 5. Contact Page
-* **SEO Metadata (Titles/Description)**: [contact/page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/contact/page.tsx)
-* **Text & Images Copy**: [ContactClient.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/contact/ContactClient.tsx)
+* **SEO Metadata (Titles/Description)**: [contact/page.tsx](./src/app/contact/page.tsx)
+* **Text & Images Copy**: [ContactClient.tsx](./src/app/contact/ContactClient.tsx)
   * *Header Text (Line 42)*: `Let's make something great`
   * *Contact Cards (Lines 57-72)*: Text details for Email (`hello@madsphere.in`), Phone, Address, and Studio Hours.
   * *Service Dropdown / Budget Options (Lines 116-130)*: Select options.
 
 ### 6. Works Page (3D WebGL Portfolio)
-* **SEO Metadata (Titles/Description)**: [works/page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/works/page.tsx)
-* **Text & Images Copy**: [WorksClient.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/app/works/WorksClient.tsx)
+* **SEO Metadata (Titles/Description)**: [works/page.tsx](./src/app/works/page.tsx)
+* **Text & Images Copy**: [WorksClient.tsx](./src/app/works/WorksClient.tsx)
   * *Audio Track Source (Line 37)*: Ambient track file loaded from `/audio/bg-audio.mp3`.
   * *Logo & Navigation (Line 68)*: Path to `/logo.png`.
   * *Overlay Text (Lines 88-92)*: Section title overlay copy.
@@ -114,12 +114,12 @@ File Path: [page.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphe
 These global components appear on multiple pages:
 
 ### 1. Global Navigation Bar
-File Path: [Navbar.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/components/Navbar.tsx)
+File Path: [Navbar.tsx](./src/components/Navbar.tsx)
 * **Navbar Logo Paths (Lines 38-39)**: Points to `/logo.png` and `/logo_white.png`.
 * **Talk Button Email (Line 104)**: Mobile popup email contact action (points to `mailto:hello@madsphere.in`).
 
 ### 2. Global Footer
-File Path: [Footer.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/components/Footer.tsx)
+File Path: [Footer.tsx](./src/components/Footer.tsx)
 * **Hero Text (Lines 29-30)**: Upper footer headline `Let's build something real.`.
 * **Floating Portraits (Lines 50 & 70)**: Left and right portrait images floating behind the text.
 * **Subtitle Description (Line 75)**: `Tell us where you are, where you want to go...`.
@@ -127,21 +127,21 @@ File Path: [Footer.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsp
 * **Copyright Label (Line 133)**: `© 2026 MadSphere Marketing Agency. All rights reserved.`.
 
 ### 3. FAQ Section Accordion
-File Path: [FAQ.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/components/FAQ.tsx)
+File Path: [FAQ.tsx](./src/components/FAQ.tsx)
 * **FAQ Q&A List (Lines 9-40)**: Questions and answers array.
 * **Side Image (Line 109)**: Unsplash VR developer preview photo.
 
 ### 4. Careers Apply Form Modal
-File Path: [ApplyModal.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/components/ApplyModal.tsx)
+File Path: [ApplyModal.tsx](./src/components/ApplyModal.tsx)
 * **API Route endpoint (Line 49)**: Points to `/api/apply`.
 * **Modal details (Lines 112-114)**: Success alert copy.
 * **Modal footer email (Line 235)**: Form footnote details (`Sent to madsphere.info@gmail.com`).
 
 ### 5. Floating Animated Mascot
-File Path: [Mascot.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/components/Mascot.tsx)
+File Path: [Mascot.tsx](./src/components/Mascot.tsx)
 * **Mascot Image (Line 18)**: Points to `/mascot.png`.
 
 ### 6. Shutter Page Preloader
-File Path: [Preloader.tsx](file:///c:/Users/choud/.gemini/antigravity/scratch/madsphere-web/src/components/Preloader.tsx)
+File Path: [Preloader.tsx](./src/components/Preloader.tsx)
 * **Logo (Line 95 & 205)**: Dark mode preloader logo path `/logo_white.png`.
 * **Loading Tag (Line 97)**: `Loading Experience`.

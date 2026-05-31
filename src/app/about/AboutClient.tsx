@@ -1,13 +1,16 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { TextReveal, Tilt3D, WordsSlideFromRight } from "@/components/Animations";
+import { ArrowUpRight } from "lucide-react";
+import { TextReveal, Tilt3D, WordsSlideFromRight, SectionBlurIn } from "@/components/Animations";
 import FAQ from "@/components/FAQ";
 
 export default function AboutClient() {
   const router = useRouter();
+  const [hoveredPrinciple, setHoveredPrinciple] = useState<number | null>(null);
+  const [hoveredValue, setHoveredValue] = useState<number | null>(null);
   const containerRef = useRef(null);
   const introRef = useRef(null);
 
@@ -19,20 +22,21 @@ export default function AboutClient() {
   const smoothIntroProgress = useSpring(introProgress, { stiffness: 50, damping: 18, restDelta: 0.0005 });
 
   const heroY = useTransform(smoothScrollProgress, [0, 1], ["0%", "40%"]);
-  // Scale over 85% of scroll distance so the full zoom completes before the section ends
+  // Sphere zoom refs \u2014 kept for when animation is re-enabled (see commented block below)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const circleScale = useTransform(smoothIntroProgress, [0, 0.85], [1, 26]);
-  // Text fades out in first 35% of scroll
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const textOpacity = useTransform(smoothIntroProgress, [0, 0.35], [1, 0]);
 
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-[#070708] pb-20 overflow-x-hidden" ref={containerRef}>
       
-      {/* Scroll-Triggered Circle Zoom Intro */}
-      {/* Extra scroll room = slower, more cinematic zoom */}
+
+      {/* SPHERE ZOOM INTRO — hidden, keep code */
+      /*
       <div ref={introRef} className="relative h-[250vh] w-full z-20">
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#070708] dark:bg-zinc-950 flex items-center justify-center">
 
-          {/* Single unified circle — same zoom on mobile and desktop */}
           <motion.div
             style={{ scale: circleScale, willChange: "transform" }}
             className="w-[200px] h-[200px] md:w-[360px] md:h-[360px] rounded-full bg-zinc-50 dark:bg-[#070708] border border-zinc-700/20 dark:border-zinc-800 shadow-2xl flex items-center justify-center relative"
@@ -54,8 +58,10 @@ export default function AboutClient() {
 
         </div>
       </div>
+      */}
 
       {/* Hero */}
+      <SectionBlurIn>
       <section className="px-6 md:px-16 max-w-[1500px] mx-auto pt-32 mb-32 relative z-10 flex flex-col lg:flex-row gap-16 items-start">
         {/* Left Sticky Sidebar */}
         <div className="lg:w-[250px] shrink-0 lg:sticky top-32 flex flex-col gap-12">
@@ -64,12 +70,19 @@ export default function AboutClient() {
           </span>
           <motion.button 
             onClick={() => router.push('/works')}
-            whileHover={{ scale: 1.05 }}
+            whileHover="hover"
             whileTap={{ scale: 0.96 }}
             transition={{ type: "spring", stiffness: 350, damping: 15 }}
-            className="self-start flex items-center gap-2 bg-[#0047FF] hover:bg-blue-700 text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest mt-4 shadow-lg shadow-blue-500/20 cursor-pointer"
+            className="self-start flex items-center gap-0 bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-widest mt-4 shadow-lg shadow-blue-500/20 cursor-pointer"
           >
-            See Our Work <span className="rotate-45">↗</span>
+            See Our Work
+            <motion.span
+              variants={{ hover: { x: 2, y: -2 } }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shrink-0"
+            >
+              <ArrowUpRight className="w-3.5 h-3.5 text-white" />
+            </motion.span>
           </motion.button>
         </div>
 
@@ -99,8 +112,10 @@ export default function AboutClient() {
           </Tilt3D>
         </div>
       </section>
+      </SectionBlurIn>
 
       {/* What drives us */}
+      <SectionBlurIn delay={0.05}>
       <section className="px-6 md:px-16 max-w-[1500px] mx-auto mb-32 relative z-10">
         <div className="flex items-center gap-4 mb-12">
           <h2 className="text-3xl font-bold">What drives us</h2>
@@ -109,7 +124,7 @@ export default function AboutClient() {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" onMouseLeave={() => setHoveredPrinciple(null)}>
           {[
             { 
               title: "Strategy before everything.", 
@@ -131,32 +146,42 @@ export default function AboutClient() {
               desc: "We keep it real. Say what we'll do, do what we said, and never pretend to be bigger than we are.",
               img: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=600&fit=crop"
             }
-          ].map((principle, idx) => (
-            <motion.div 
-              key={idx}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1, duration: 0.6 }}
-              className="flex flex-col gap-6"
-            >
-              <Tilt3D className="w-full aspect-[4/3] rounded-xl overflow-hidden cursor-pointer group">
-                <img 
-                  src={principle.img} 
-                  alt={principle.title} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-              </Tilt3D>
-              <div className="text-center">
-                <h3 className="font-bold text-lg mb-2">{principle.title}</h3>
-                <p className="text-xs text-zinc-500 font-sans leading-relaxed">{principle.desc}</p>
-              </div>
-            </motion.div>
-          ))}
+          ].map((principle, idx) => {
+            const isDimmed = hoveredPrinciple !== null && hoveredPrinciple !== idx;
+            return (
+                <motion.div 
+                  key={idx}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1, duration: 0.6 }}
+                  animate={{
+                    opacity: isDimmed ? 0.35 : 1,
+                    filter: isDimmed ? "blur(4px)" : "blur(0px)",
+                  }}
+                  onMouseEnter={() => setHoveredPrinciple(idx)}
+                  className="flex flex-col gap-6"
+                >
+                  <Tilt3D className="w-full aspect-[4/3] rounded-xl overflow-hidden cursor-pointer group">
+                    <img 
+                      src={principle.img} 
+                      alt={principle.title} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  </Tilt3D>
+                  <div className="text-center">
+                    <h3 className="font-bold text-lg mb-2">{principle.title}</h3>
+                    <p className="text-xs text-zinc-500 font-sans leading-relaxed">{principle.desc}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
         </div>
       </section>
+      </SectionBlurIn>
 
       {/* Values Section */}
+      <SectionBlurIn delay={0.05}>
       <section className="max-w-[1500px] mx-auto px-6 md:px-12 mb-32 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start border-t border-zinc-200 dark:border-zinc-800 pt-16">
 
@@ -210,7 +235,7 @@ export default function AboutClient() {
           </div>
 
           {/* Right: animated value cards */}
-          <div className="flex flex-col gap-8 pt-8">
+          <div className="flex flex-col gap-8 pt-8" onMouseLeave={() => setHoveredValue(null)}>
             {[
               {
                 label: "Our Vision",
@@ -220,16 +245,23 @@ export default function AboutClient() {
                 label: "Our Mission",
                 text: "Help emerging brands discover who they are, build something beautiful, and reach the people who need to see it.",
               },
-            ].map((item, i) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, x: 40, filter: "blur(6px)" }}
-                whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.7, delay: i * 0.18, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ x: 6 }}
-                className="flex gap-5 p-6 rounded-2xl bg-white dark:bg-zinc-900/60 border border-zinc-100 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow duration-300 group cursor-default"
-              >
+            ].map((item, i) => {
+              const isDimmed = hoveredValue !== null && hoveredValue !== i;
+              return (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, x: 40, filter: "blur(6px)" }}
+                  whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.7, delay: i * 0.18, ease: [0.16, 1, 0.3, 1] }}
+                  animate={{
+                    opacity: isDimmed ? 0.35 : 1,
+                    filter: isDimmed ? "blur(4px)" : "blur(0px)",
+                  }}
+                  onMouseEnter={() => setHoveredValue(i)}
+                  whileHover={{ x: 6 }}
+                  className="flex gap-5 p-6 rounded-2xl bg-white dark:bg-zinc-900/60 border border-zinc-100 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow duration-300 group cursor-default"
+                >
                 {/* Animated icon */}
                 <motion.div
                   whileHover={{ rotate: 45, scale: 1.1 }}
@@ -250,13 +282,17 @@ export default function AboutClient() {
                   </p>
                 </div>
               </motion.div>
-            ))}
+            )
+          })}
           </div>
 
         </div>
       </section>
+      </SectionBlurIn>
 
-      <FAQ />
+      <SectionBlurIn delay={0.05}>
+        <FAQ />
+      </SectionBlurIn>
 
     </main>
   );

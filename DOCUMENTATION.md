@@ -26,9 +26,16 @@ We implement two distinct preloader workflows depending on the client lifecycle:
 Located in: [`src/app/page.tsx`](./src/app/page.tsx) and [`src/app/works/page.tsx`](./src/app/works/page.tsx)
 
 ### A. How We Work Process Sequence
-- **Connecting Dotted Connectors (Desktop)**: On screens `>= 1024px`, absolute SVG paths connect the right edges of the process steps to the left edges of subsequent columns using S-curve cubic Bezier curves (`d="M ... C ..."`).
-- **Staggered Entrance**: The cards and paths reveal sequentially. On desktop, card $i$ delays by $i \times 0.8\text{s}$, and line $i$ delays by $(i \times 0.8 + 0.45)\text{s}$. This paces the animations in a fluid chain (Card 1 ➔ Line 1 ➔ Card 2 ➔ Line 2 ➔ Card 3 ➔ Line 3 ➔ Card 4).
-- **Responsive Fallback**: On mobile, the SVG lines are hidden and cards slide up in a rapid stagger cascade ($i \times 0.15\text{s}$ delay) to keep interactions snappy.
+- **GSAP ScrollTrigger Grid Assembly (Desktop)**: On screens `>= 1024px`, the Process section uses a custom GSAP ScrollTrigger timeline to progressively assemble the 4-column layout as the user scrolls. The section pins in place (`pin: true`) while the timeline scrubs through scroll progress.
+- **Progress-Driven Master Timeline**:
+  - Initial state: Cards start hidden with `opacity: 0` and `y: 40`. Connecting dotted SVG paths start hidden at `opacity: 0`.
+  - Timeline progress maps directly to scroll percentages:
+    - `0.00 ➔ 0.25`: Card 1 fades in and slides up.
+    - `0.25 ➔ 0.50`: Dotted line 1 appears, then Card 2 fades in and slides up.
+    - `0.50 ➔ 0.75`: Dotted line 2 appears, then Card 3 fades in and slides up.
+    - `0.75 ➔ 1.00`: Dotted line 3 appears, then Card 4 fades in and slides up.
+  - Movement is smooth, premium, and clean (no bounce, no spring, no zoom).
+- **Responsive Layout**: On mobile/tablet viewports (`< 1024px`), the section uses a standard vertical scroll grid layout without pinning, but still triggers the GSAP progressive assembly timeline as the user scrolls past.
 
 ### B. Parallax & 3D Limb Tilts (Touch-Optimized)
 - **Scroll-Linked Parallax**: Utilizes Framer Motion's `useScroll` and `useTransform` to bind image scale/position to scroll speed. Disabled on viewports width `< 768px` to bypass calculations during touch scrolling.

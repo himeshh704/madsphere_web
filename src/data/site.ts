@@ -2,7 +2,7 @@ export const nav = [
   { label: "Home",             href: "/" },
   { label: "Services",         href: "/services" },
   { label: "About",            href: "/about" },
-  { label: "Works",            href: "/works" },
+  // { label: "Works",            href: "/works" }, // Hidden — uncomment to re-enable
   { label: "Career Inquiries", href: "/careers" },
 ] as const;
 

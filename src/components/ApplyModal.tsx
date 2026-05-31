@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Upload, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { Upload, CheckCircle, AlertCircle, Loader2, ArrowRight } from "lucide-react";
 
 interface ApplyModalProps {
   role: string;
@@ -13,6 +14,11 @@ type Status = "idle" | "loading" | "success" | "error";
 
 export default function ApplyModal({ role, onClose }: ApplyModalProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const [form, setForm] = useState({ name: "", email: "", portfolio: "", message: "" });
   const [cvFile, setCvFile] = useState<File | null>(null);
@@ -56,188 +62,225 @@ export default function ApplyModal({ role, onClose }: ApplyModalProps) {
     }
   };
 
-  return (
-    <AnimatePresence>
+  const rowClass = "flex items-start gap-4 px-6 py-4 border-b border-white/[0.06] group transition-colors hover:bg-white/[0.02]";
+  const labelClass = "w-20 shrink-0 text-[11px] font-semibold tracking-wider uppercase text-white/35 pt-0.5 select-none";
+  const inputClass = "flex-1 bg-transparent text-white/90 text-sm font-medium placeholder:text-white/25 outline-none focus:placeholder:text-white/15 transition-colors";
+
+  if (!mounted) return null;
+
+  return createPortal(
+    <>
       {/* Backdrop */}
       <motion.div
         key="backdrop"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
         onClick={onClose}
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+        className="fixed inset-0 z-50"
+        style={{ background: "rgba(0,0,0,0.72)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
       />
 
-      {/* Slide-up modal */}
+      {/* macOS-style compose window */}
       <motion.div
         key="modal"
-        initial={{ y: "100%", opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: "100%", opacity: 0 }}
-        transition={{ type: "spring", stiffness: 280, damping: 32 }}
-        className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-[#0c0c0e] rounded-t-3xl shadow-2xl max-h-[92vh] overflow-y-auto md:max-w-2xl md:mx-auto md:bottom-6 md:rounded-3xl md:left-1/2 md:-translate-x-1/2"
+        initial={{ scale: 0.88, opacity: 0, y: 40 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.88, opacity: 0, y: 40 }}
+        transition={{ type: "spring", stiffness: 320, damping: 28, mass: 0.8 }}
+        className="fixed z-50 inset-0 flex items-center justify-center px-4 pointer-events-none"
       >
-        {/* Handle */}
-        <div className="flex justify-center pt-4 pb-2">
-          <div className="w-10 h-1 rounded-full bg-zinc-200 dark:bg-zinc-700" />
-        </div>
-
-        <div className="px-6 md:px-8 pb-10">
-          {/* Header */}
-          <div className="flex items-start justify-between mb-8 pt-2">
-            <div>
-              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400">Applying for</span>
-              <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mt-0.5">{role}</h2>
+        <div
+          className="pointer-events-auto w-full max-w-[600px] rounded-[18px] overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.7)] border border-white/[0.08]"
+          style={{
+            background: "linear-gradient(160deg, #111827 0%, #0d1117 60%, #090d14 100%)",
+          }}
+        >
+          {/* ── Title bar ─────────────────────────────────────── */}
+          <div className="flex items-center px-5 pt-4 pb-3 border-b border-white/[0.06]">
+            {/* Traffic lights */}
+            <div className="flex items-center gap-2 mr-4">
+              <button
+                onClick={onClose}
+                className="w-3 h-3 rounded-full bg-[#FF5F57] hover:bg-[#ff3b30] transition-colors cursor-pointer shadow-[0_0_6px_rgba(255,95,87,0.5)]"
+                aria-label="Close"
+              />
+              <div className="w-3 h-3 rounded-full bg-[#FFBD2E] shadow-[0_0_6px_rgba(255,189,46,0.4)]" />
+              <div className="w-3 h-3 rounded-full bg-[#28C840] shadow-[0_0_6px_rgba(40,200,64,0.4)]" />
             </div>
-            <button
-              onClick={onClose}
-              className="w-9 h-9 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors shrink-0 cursor-pointer"
-            >
-              <X className="w-4 h-4" />
-            </button>
+            <div className="flex-1 text-center">
+              <span className="text-[12px] font-semibold text-white/40 tracking-wide">
+                {status === "success" ? "Application Sent" : `Apply — ${role}`}
+              </span>
+            </div>
+            <div className="w-14" /> {/* spacer to center title */}
           </div>
 
-          {/* Success state */}
+          {/* ── Success state ──────────────────────────────────── */}
           {status === "success" ? (
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="flex flex-col items-center gap-5 py-12 text-center"
+              transition={{ type: "spring", stiffness: 300, damping: 24 }}
+              className="flex flex-col items-center gap-5 py-16 text-center px-8"
             >
-              <div className="w-16 h-16 rounded-full bg-green-50 dark:bg-green-950/30 flex items-center justify-center">
-                <CheckCircle className="w-8 h-8 text-green-500" />
-              </div>
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 400, damping: 20, delay: 0.1 }}
+                className="w-14 h-14 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center"
+              >
+                <CheckCircle className="w-7 h-7 text-green-400" />
+              </motion.div>
               <div>
-                <h3 className="text-xl font-bold mb-2">Application sent!</h3>
-                <p className="text-sm text-zinc-500 font-sans max-w-xs">
-                  We got it. You&apos;ll receive a confirmation at your email. We&apos;ll be in touch within a week.
+                <h3 className="text-xl font-bold text-white mb-2">Application sent!</h3>
+                <p className="text-sm text-white/40 font-sans max-w-xs leading-relaxed">
+                  We got it. You&apos;ll hear from us within a week at your email address.
                 </p>
               </div>
               <button
                 onClick={onClose}
-                className="mt-2 bg-[#0047FF] text-white text-xs font-bold uppercase tracking-widest px-8 py-3 rounded-full cursor-pointer hover:bg-blue-700 transition-colors"
+                className="mt-2 bg-[#0047FF] hover:bg-blue-600 text-white text-xs font-bold uppercase tracking-widest px-8 py-3 rounded-full cursor-pointer transition-colors shadow-lg shadow-blue-500/25"
               >
                 Done
               </button>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-              {/* Name + Email row */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Full Name *</label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="Rohan Mehta"
-                    value={form.name}
-                    onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:border-[#0047FF] focus:ring-2 focus:ring-[#0047FF]/10 transition-all"
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Email *</label>
-                  <input
-                    required
-                    type="email"
-                    placeholder="you@email.com"
-                    value={form.email}
-                    onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:border-[#0047FF] focus:ring-2 focus:ring-[#0047FF]/10 transition-all"
-                  />
+            <form onSubmit={handleSubmit}>
+
+              {/* ── To row ─── */}
+              <div className={rowClass}>
+                <span className={labelClass}>To</span>
+                <div className="flex items-center gap-2.5 flex-1">
+                  <div className="w-5 h-5 rounded-full bg-[#0047FF] flex items-center justify-center shrink-0">
+                    <span className="text-[8px] font-black text-white">M</span>
+                  </div>
+                  <span className="text-white/80 text-sm font-medium">MadSphere</span>
+                  <span className="text-white/25 text-xs ml-1">(madsphere.info@gmail.com)</span>
                 </div>
               </div>
 
-              {/* Portfolio */}
-              <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Portfolio / LinkedIn URL</label>
+              {/* ── From ─── */}
+              <div className={rowClass}>
+                <span className={labelClass}>From</span>
+                <input
+                  required
+                  type="email"
+                  placeholder="your@email.com"
+                  value={form.email}
+                  onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                  className={inputClass}
+                />
+              </div>
+
+              {/* ── Your Name ─── */}
+              <div className={rowClass}>
+                <span className={labelClass}>Name</span>
+                <input
+                  required
+                  type="text"
+                  placeholder="Write your full name"
+                  value={form.name}
+                  onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                  className={inputClass}
+                />
+              </div>
+
+              {/* ── Portfolio / LinkedIn ─── */}
+              <div className={rowClass}>
+                <span className={labelClass}>Portfolio</span>
                 <input
                   type="url"
-                  placeholder="https://yoursite.com"
+                  placeholder="https://yoursite.com or LinkedIn URL"
                   value={form.portfolio}
                   onChange={e => setForm(f => ({ ...f, portfolio: e.target.value }))}
-                  className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:border-[#0047FF] focus:ring-2 focus:ring-[#0047FF]/10 transition-all"
+                  className={inputClass}
                 />
               </div>
 
-              {/* Message */}
-              <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Why MadSphere? *</label>
+              {/* ── Subject / Role ─── */}
+              <div className={rowClass}>
+                <span className={labelClass}>Role</span>
+                <div className="flex-1 flex items-center justify-between">
+                  <span className="text-white/60 text-sm font-medium">{role}</span>
+                  {/* CV upload trigger */}
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className={`flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full transition-all cursor-pointer ${
+                      cvFile
+                        ? "bg-[#0047FF]/20 text-[#4d83ff] border border-[#0047FF]/30"
+                        : "bg-white/5 text-white/40 border border-white/10 hover:bg-white/10 hover:text-white/60"
+                    }`}
+                  >
+                    <Upload className="w-3 h-3" />
+                    {cvFile ? cvFile.name.slice(0, 16) + (cvFile.name.length > 16 ? "…" : "") : "Attach CV"}
+                  </button>
+                  <input ref={fileInputRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleFile} />
+                </div>
+              </div>
+
+              {/* ── Message textarea ─── */}
+              <div className="px-6 pt-4 pb-2 border-b border-white/[0.06]">
                 <textarea
                   required
-                  rows={4}
-                  placeholder="Tell us a little about yourself, what you've worked on, and why you think we'd be a good fit..."
+                  rows={5}
+                  placeholder="Say something about yourself and why you want to join MadSphere..."
                   value={form.message}
                   onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-                  className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:border-[#0047FF] focus:ring-2 focus:ring-[#0047FF]/10 transition-all resize-none"
+                  className="w-full bg-transparent text-white/80 text-sm font-medium placeholder:text-white/20 outline-none resize-none leading-relaxed transition-colors"
                 />
               </div>
 
-              {/* CV Upload */}
-              <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Attach CV / Resume</label>
-                <div
-                  onClick={() => fileInputRef.current?.click()}
-                  className={`w-full px-4 py-4 rounded-xl border-2 border-dashed transition-all cursor-pointer flex items-center gap-4 ${cvFile ? "border-[#0047FF] bg-blue-50/50 dark:bg-blue-950/10" : "border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 hover:border-zinc-300 dark:hover:border-zinc-600"}`}
+              {/* ── Error ─── */}
+              <AnimatePresence>
+                {(errorMsg || status === "error") && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="mx-6 mt-3 flex items-center gap-3 bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-xl text-xs overflow-hidden"
+                  >
+                    <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                    {errorMsg || "Something went wrong. Please try again."}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* ── Footer / Submit ─── */}
+              <div className="flex items-center justify-between px-6 py-4">
+                <p className="text-[10px] text-white/25 font-sans">
+                  PDF or Word · max 5MB · replies within a week
+                </p>
+                <motion.button
+                  type="submit"
+                  disabled={status === "loading"}
+                  whileHover="hover"
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: "spring", stiffness: 350, damping: 15 }}
+                  className="flex items-center gap-0 bg-[#0047FF] hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-bold uppercase tracking-widest pl-5 pr-1.5 py-1.5 rounded-full transition-colors shadow-lg shadow-blue-500/20 cursor-pointer"
                 >
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${cvFile ? "bg-[#0047FF]" : "bg-zinc-100 dark:bg-zinc-800"}`}>
-                    <Upload className={`w-4 h-4 ${cvFile ? "text-white" : "text-zinc-400"}`} />
-                  </div>
-                  <div className="min-w-0">
-                    {cvFile ? (
-                      <>
-                        <p className="text-sm font-semibold text-[#0047FF] truncate">{cvFile.name}</p>
-                        <p className="text-xs text-zinc-400">{(cvFile.size / 1024).toFixed(0)} KB</p>
-                      </>
+                  {status === "loading" ? "Sending" : "Submit"}
+                  <motion.span
+                    variants={{ hover: { x: 2 } }}
+                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                    className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shrink-0"
+                  >
+                    {status === "loading" ? (
+                      <Loader2 className="w-3 h-3 animate-spin text-white" />
                     ) : (
-                      <>
-                        <p className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Click to upload your CV</p>
-                        <p className="text-xs text-zinc-400">PDF or Word · max 5MB</p>
-                      </>
+                      <ArrowRight className="w-3 h-3 text-white" />
                     )}
-                  </div>
-                </div>
-                <input ref={fileInputRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleFile} />
+                  </motion.span>
+                </motion.button>
               </div>
 
-              {/* Error */}
-              {(errorMsg || status === "error") && (
-                <motion.div
-                  initial={{ opacity: 0, y: -6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-3 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/40 text-red-600 px-4 py-3 rounded-xl text-sm"
-                >
-                  <AlertCircle className="w-4 h-4 shrink-0" />
-                  {errorMsg || "Something went wrong. Please try again."}
-                </motion.div>
-              )}
-
-              {/* Submit */}
-              <motion.button
-                type="submit"
-                disabled={status === "loading"}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ type: "spring", stiffness: 350, damping: 15 }}
-                className="w-full bg-[#0047FF] hover:bg-blue-700 disabled:opacity-60 text-white font-bold uppercase tracking-widest text-xs py-4 rounded-2xl transition-colors cursor-pointer flex items-center justify-center gap-3 shadow-lg shadow-blue-500/20 mt-2"
-              >
-                {status === "loading" ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  "Submit Application"
-                )}
-              </motion.button>
-
-              <p className="text-center text-[11px] text-zinc-400 font-sans">
-                Sent to madsphere.info@gmail.com · We reply within a week
-              </p>
             </form>
           )}
         </div>
       </motion.div>
-    </AnimatePresence>
+    </>,
+    document.body
   );
 }
