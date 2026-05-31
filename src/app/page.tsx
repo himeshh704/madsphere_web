@@ -209,7 +209,6 @@ export default function Home() {
   const { scrollYProgress } = useScroll({ target: mounted ? heroRef : undefined, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const heroRotate = useTransform(scrollYProgress, [0, 1], [0, 3]);
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
 
   return (
@@ -222,7 +221,6 @@ export default function Home() {
           animate={{ opacity: 1, rotateX: 0, scale: 1, y: 0 }}
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
           style={{ 
-            rotateX: mounted ? heroRotate : undefined, 
             scale: mounted ? heroScale : undefined, 
             transformOrigin: "center top" 
           }}
@@ -420,7 +418,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About */}
+      {/* About Section - Hidden as requested
       <section id="about" className="relative z-10 py-28 px-6 md:px-16 max-w-[1400px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
           <div className="lg:col-span-4 flex flex-col gap-8">
@@ -510,6 +508,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
 
       {/* Why Choose Us Section */}
       <section ref={whyUsRef} className="relative z-10 py-32 px-6 md:px-16 bg-[#fcfcfc] dark:bg-[#070708] border-t border-zinc-100 dark:border-zinc-900">
