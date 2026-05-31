@@ -101,12 +101,13 @@ export default function Footer() {
 
         <div data-cursor-square="MADSPHERE" className="w-full relative px-6 md:px-16 mb-16 overflow-visible lg:cursor-none">
           <h1 
-            className="text-center text-[13vw] font-bold leading-none select-none tracking-tight"
+            className="text-center text-[13vw] font-bold leading-none select-none tracking-tight pr-4"
             style={{ 
               fontFamily: "Georgia, serif", 
               background: "linear-gradient(to bottom, #ffffff 0%, transparent 120%)",
               WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent"
+              WebkitTextFillColor: "transparent",
+              paddingRight: "0.05em"
             }}
           >
             MADSPHERE
