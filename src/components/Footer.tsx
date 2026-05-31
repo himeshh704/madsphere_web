@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Instagram, Linkedin, Facebook, Twitter } from "lucide-react";
 import { MagneticWrap, TextReveal } from "@/components/Animations";
@@ -124,11 +125,11 @@ export default function Footer() {
           </div>
           
           <div className="flex items-center flex-wrap justify-center gap-6 text-[10px] uppercase font-bold tracking-widest text-zinc-500">
-            <a href="/about" className="hover:text-white transition-colors">About</a>
-            {/* <a href="/works" className="hover:text-white transition-colors">Works</a> */}
-            <a href="/careers" className="hover:text-white transition-colors">Career Inquiries</a>
-            <a href="/contact" className="hover:text-white transition-colors">Contact Us</a>
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            <Link href="/about" className="hover:text-white transition-colors">About</Link>
+            {/* <Link href="/works" className="hover:text-white transition-colors">Works</Link> */}
+            <Link href="/careers" className="hover:text-white transition-colors">Career Inquiries</Link>
+            <Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link>
+            <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
           </div>
 
           <p className="text-[10px] uppercase font-bold tracking-widest text-zinc-600">
