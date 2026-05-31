@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus } from "lucide-react";
-import { Tilt3D } from "./Animations";
+import { Plus, Minus, ArrowRight } from "lucide-react";
+import { Tilt3D, MagneticWrap } from "./Animations";
+import { useRouter } from "next/navigation";
 
 const faqs = [
   {
@@ -39,6 +40,7 @@ const faqs = [
 ];
 
 export default function FAQ() {
+  const router = useRouter();
   const [openId, setOpenId] = useState<string | null>(null);
 
   return (
@@ -115,7 +117,6 @@ export default function FAQ() {
             <h3 className="text-2xl font-bold text-zinc-900 dark:text-white leading-tight whitespace-nowrap">
               Still have any Question?
             </h3>
-            {/* CONTACT US BUTTON — hidden, keep code
             <MagneticWrap>
               <motion.button
                 onClick={() => router.push('/contact')}
@@ -127,7 +128,6 @@ export default function FAQ() {
                 Contact Us <ArrowRight className="w-4 h-4" />
               </motion.button>
             </MagneticWrap>
-            */}
           </div>
         </div>
       </div>

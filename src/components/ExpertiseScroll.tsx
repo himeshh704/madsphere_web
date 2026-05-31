@@ -28,9 +28,11 @@ function useTilt() {
 export default function ExpertiseScroll() {
   const router = useRouter();
   const [active, setActive] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
   const { rx, ry, onMove, onLeave, isTouch } = useTilt();
   const item = expertise[active];
 
+  const displayedExpertise = isExpanded ? expertise : expertise.slice(0, 4);
 
   return (
     <div className="py-24 px-6 md:px-16 max-w-[1400px] mx-auto">
@@ -43,33 +45,83 @@ export default function ExpertiseScroll() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         <div className="flex flex-col">
-          {expertise.map((ex, i) => (
-            <motion.button
-              key={ex.label}
-              onClick={() => setActive(i)}
-              onMouseEnter={() => setActive(i)}
-              whileHover={{ x: 8 }}
-              transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className="w-full text-left py-3 focus-visible:outline-none"
-            >
-              <span className={`text-3xl md:text-[2.8rem] font-bold uppercase leading-tight transition-colors duration-300 ${
-                i === active
-                  ? "text-zinc-900 dark:text-zinc-100"
-                  : "text-zinc-300 dark:text-zinc-700 hover:text-zinc-500 dark:hover:text-zinc-500"
-              }`}>
-                {ex.label}
-              </span>
-            </motion.button>
-          ))}
+          <div className="flex flex-col">
+            <AnimatePresence initial={false}>
+              {displayedExpertise.map((ex) => {
+                const originalIndex = expertise.findIndex(e => e.label === ex.label);
+                return (
+                  <motion.div
+                    key={ex.label}
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                    className="overflow-hidden"
+                  >
+                    <motion.button
+                      onClick={() => setActive(originalIndex)}
+                      onMouseEnter={() => setActive(originalIndex)}
+                      whileHover={{ x: 8 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      className="w-full text-left py-3 focus-visible:outline-none"
+                    >
+                      <span className={`text-3xl md:text-[2.8rem] font-bold uppercase leading-tight transition-colors duration-300 ${
+                        originalIndex === active
+                          ? "text-zinc-900 dark:text-zinc-100"
+                          : "text-zinc-300 dark:text-zinc-700 hover:text-zinc-500 dark:hover:text-zinc-500"
+                      }`}>
+                        {ex.label}
+                      </span>
+                    </motion.button>
+                    
+                    {/* Inline Details for Mobile Viewports */}
+                    <div className="block lg:hidden">
+                      <AnimatePresence mode="wait">
+                        {originalIndex === active && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0, y: -8 }}
+                            animate={{ opacity: 1, height: "auto", y: 0 }}
+                            exit={{ opacity: 0, height: 0, y: -8 }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden pb-6 flex flex-col gap-4"
+                          >
+                            <div className="rounded-xl overflow-hidden shadow-md bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+                              <img src={ex.img} alt={ex.label} className="w-full aspect-[16/10] object-cover" />
+                            </div>
+                            <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans font-medium">
+                              {ex.desc}
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                              {ex.tags.map((tag) => (
+                                <span key={tag} className="text-[10px] font-semibold border border-zinc-200 dark:border-zinc-700 px-3 py-1 rounded-full text-zinc-500 dark:text-zinc-400 bg-white dark:bg-zinc-850">
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </div>
 
           <motion.button
-            onClick={() => router.push('/services')}
+            onClick={() => {
+              if (!isExpanded) {
+                setIsExpanded(true);
+              } else {
+                router.push('/services');
+              }
+            }}
             whileHover="hover"
             whileTap={{ scale: 0.96 }}
             transition={{ type: "spring", stiffness: 350, damping: 15 }}
             className="self-start flex items-center gap-0 bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-widest mt-8 shadow-lg shadow-blue-500/20 cursor-pointer"
           >
-            READ MORE
+            {isExpanded ? "VIEW ALL SERVICES" : "READ MORE"}
             <motion.span
               variants={{ hover: { x: 2 } }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
@@ -82,7 +134,7 @@ export default function ExpertiseScroll() {
           </motion.button>
         </div>
 
-        <div style={{ perspective: "1200px" }}>
+        <div style={{ perspective: "1200px" }} className="hidden lg:block">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
