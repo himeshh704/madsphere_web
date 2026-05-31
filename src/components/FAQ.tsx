@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, ArrowRight } from "lucide-react";
 import { Tilt3D, MagneticWrap } from "./Animations";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const faqs = [
   {
@@ -41,7 +41,10 @@ const faqs = [
 
 export default function FAQ() {
   const router = useRouter();
+  const pathname = usePathname();
   const [openId, setOpenId] = useState<string | null>(null);
+
+  const showContactButton = pathname !== "/contact";
 
   return (
     <section className="faq-section py-32 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10 bg-[#f5f5f5] dark:bg-[#0a0a0a] rounded-[40px] mt-24 mb-24">
@@ -117,17 +120,19 @@ export default function FAQ() {
             <h3 className="text-2xl font-bold text-zinc-900 dark:text-white leading-tight whitespace-nowrap">
               Still have any Question?
             </h3>
-            <MagneticWrap>
-              <motion.button
-                onClick={() => router.push('/contact')}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.96 }}
-                transition={{ type: "spring", stiffness: 350, damping: 15 }}
-                className="self-start flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full transition-colors shadow-lg shadow-blue-500/20 cursor-pointer"
-              >
-                Contact Us <ArrowRight className="w-4 h-4" />
-              </motion.button>
-            </MagneticWrap>
+            {showContactButton && (
+              <MagneticWrap>
+                <motion.button
+                  onClick={() => router.push('/contact')}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: "spring", stiffness: 350, damping: 15 }}
+                  className="self-start flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full transition-colors shadow-lg shadow-blue-500/20 cursor-pointer"
+                >
+                  Contact Us <ArrowRight className="w-4 h-4" />
+                </motion.button>
+              </MagneticWrap>
+            )}
           </div>
         </div>
       </div>

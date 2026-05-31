@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useScroll, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useScroll, useTransform, AnimatePresence } from "framer-motion";
 
 export function CustomCursor() {
   const x = useSpring(useMotionValue(0), { stiffness: 600, damping: 30 });
   const y = useSpring(useMotionValue(0), { stiffness: 600, damping: 30 });
-  const [hoverType, setHoverType] = useState<"square" | null>(null);
+  const [hoverType, setHoverType] = useState<"square" | "button" | null>(null);
   const [hoveredText, setHoveredText] = useState("");
 
   useEffect(() => {
@@ -14,9 +14,14 @@ export function CustomCursor() {
     const over = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
       const squareEl = t.closest("[data-cursor-square]") as HTMLElement;
+      const buttonEl = t.closest("button, a, [role='button'], .cursor-pointer") as HTMLElement;
+
       if (squareEl) {
         setHoverType("square");
         setHoveredText(squareEl.getAttribute("data-cursor-square") || "Contact Us");
+      } else if (buttonEl) {
+        setHoverType("button");
+        setHoveredText("");
       } else {
         setHoverType(null);
         setHoveredText("");
@@ -27,35 +32,56 @@ export function CustomCursor() {
     return () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseover", over); };
   }, [x, y]);
 
-  if (hoverType !== "square") return null;
-
   return (
     <motion.div
       style={{ x, y, translateX: "-50%", translateY: "-50%" }}
       className="fixed top-0 left-0 z-[9999] pointer-events-none hidden lg:block"
     >
       <motion.div
-        animate={{
-          width: 96,
-          height: 96,
-          borderRadius: "12px",
-          backgroundColor: "#0047FF",
-        }}
+        animate={
+          hoverType === "square"
+            ? {
+                width: 96,
+                height: 96,
+                borderRadius: "12px",
+                backgroundColor: "#0047FF",
+              }
+            : hoverType === "button"
+            ? {
+                width: 40,
+                height: 40,
+                borderRadius: "9999px",
+                backgroundColor: "rgba(0, 71, 255, 0.15)",
+                border: "1px solid rgba(0, 71, 255, 0.6)",
+              }
+            : {
+                width: 8,
+                height: 8,
+                borderRadius: "9999px",
+                backgroundColor: "#0047FF",
+                border: "none",
+              }
+        }
         transition={{ type: "spring", stiffness: 320, damping: 22 }}
         className="relative flex items-center justify-center overflow-hidden shadow-2xl"
       >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="flex flex-col justify-between w-full h-full p-3.5 text-white font-sans"
-        >
-          <span className="text-[10px] font-black uppercase tracking-widest leading-normal text-left">
-            {hoveredText}
-          </span>
-          <span className="text-xl font-bold text-right leading-none self-end">
-            ↗
-          </span>
-        </motion.div>
+        <AnimatePresence>
+          {hoverType === "square" && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              className="flex flex-col justify-between w-full h-full p-3.5 text-white font-sans"
+            >
+              <span className="text-[10px] font-black uppercase tracking-widest leading-normal text-left">
+                {hoveredText}
+              </span>
+              <span className="text-xl font-bold text-right leading-none self-end">
+                ↗
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </motion.div>
   );

@@ -115,3 +115,9 @@ img, video {
   background: rgba(120, 120, 120, 0.5);
 }
 
+@media (min-width: 1024px) {
+  body, button, a, [role="button"], .cursor-pointer {
+    cursor: none !important;
+  }
+}
+
