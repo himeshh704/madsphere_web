@@ -542,13 +542,24 @@ export default function Home() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activePill}
-                  initial={{ y: -60, opacity: 0, scale: 0.85 }}
-                  animate={{ y: 0, opacity: 1, scale: 1 }}
-                  exit={{ y: 60, opacity: 0, scale: 0.85 }}
-                  transition={{ type: "spring", stiffness: 320, damping: 22 }}
+                  initial={{ x: 60, opacity: 0, scale: 0.9 }}
+                  animate={{ x: 0, opacity: 1, scale: 1 }}
+                  exit={{ x: -60, opacity: 0, scale: 0.9 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 24 }}
                   className="w-full h-full flex items-center justify-center"
                 >
-                  {currentPillData.icon}
+                  {/* Floating/bobbing hover-like animation for the active icon */}
+                  <motion.div
+                    animate={{ y: [0, -5, 0] }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    className="flex items-center justify-center w-full h-full"
+                  >
+                    {currentPillData.icon}
+                  </motion.div>
                 </motion.div>
               </AnimatePresence>
             </div>
