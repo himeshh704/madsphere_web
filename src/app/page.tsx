@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, Play } from "lucide-react";
 import Marquee from "@/components/Marquee";
 import ExpertiseScroll from "@/components/ExpertiseScroll";
-import SpotlightSection from "@/components/SpotlightSection";
 import { TextReveal, FloatingOrbs, Tilt3D, ScrollBlurReveal } from "@/components/Animations";
 import { stagger } from "@/lib/motion";
 import { heroCards, socials, process, clients } from "@/data/site";
@@ -646,9 +645,6 @@ export default function Home() {
       <section id="services" className="relative z-10 border-t border-zinc-100 dark:border-zinc-800">
         <ExpertiseScroll />
       </section>
-
-      {/* Spotlight Reveal Interaction */}
-      <SpotlightSection />
 
       {/* Process Wrapper */}
       <div className="process-section-wrapper w-full relative z-10">
