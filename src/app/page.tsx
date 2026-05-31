@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, Play } from "lucide-react";
 import Marquee from "@/components/Marquee";
 import ExpertiseScroll from "@/components/ExpertiseScroll";
-import { TextReveal, FloatingOrbs, Tilt3D } from "@/components/Animations";
+import { TextReveal, FloatingOrbs, Tilt3D, ScrollBlurReveal } from "@/components/Animations";
 import { stagger } from "@/lib/motion";
 import { heroCards, socials, process, clients } from "@/data/site";
 import { cn } from "@/utils/cn";
@@ -114,6 +114,13 @@ export default function Home() {
   const path1Length = useTransform(processScroll, [0.25, 0.45], [0, 1]);
   const path2Length = useTransform(processScroll, [0.45, 0.65], [0, 1]);
   const path3Length = useTransform(processScroll, [0.65, 0.85], [0, 1]);
+
+  const whyUsRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: whyUsScroll } = useScroll({
+    target: whyUsRef,
+    offset: ["start end", "end start"]
+  });
+  const arcLength = useTransform(whyUsScroll, [0.15, 0.45], [0, 1]);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
@@ -124,16 +131,6 @@ export default function Home() {
     <div className="relative overflow-x-clip">
       {/* Hero */}
       <section id="home" ref={heroRef} className="relative z-10 pt-28 px-4 sm:px-8 max-w-[1700px] mx-auto" style={{ perspective: "1200px" }}>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          style={{ y: mounted ? textY : undefined }}
-          className="mb-5 px-1"
-        >
-          <img src="/logo.png" alt="Madsphere" className="h-16 md:h-24 w-auto dark:hidden" />
-          <img src="/logo_white.png" alt="Madsphere" className="h-16 md:h-24 w-auto hidden dark:block" />
-        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, rotateX: 12, scale: 0.88, y: 80 }}
@@ -146,7 +143,7 @@ export default function Home() {
           }}
           className="relative w-full rounded-[24px] overflow-hidden shadow-2xl"
         >
-          <div style={{ height: "78vh", minHeight: 500 }} className="relative">
+          <div style={{ height: "85vh", minHeight: 550 }} className="relative">
             <motion.div style={{ y: mounted ? bgY : undefined }} className="absolute inset-0 scale-110">
               <img src="/hero_gradient_bg.png" alt="" className="w-full h-full object-cover" />
             </motion.div>
@@ -297,6 +294,47 @@ export default function Home() {
         <Marquee items={clients} speed={50} />
       </div>
 
+      {/* Intersection Section */}
+      <section className="relative z-10 py-32 px-6 md:px-16 bg-white dark:bg-[#070708] border-b border-zinc-100 dark:border-zinc-900">
+        <div className="max-w-[1200px] mx-auto flex flex-col items-center text-center gap-8">
+          <span className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500">
+            <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> About Us
+          </span>
+          
+          <ScrollBlurReveal className="max-w-4xl">
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter leading-[1.15] text-zinc-900 dark:text-zinc-50 font-sans">
+              We Play at the intersection of creativity &amp; engineering
+            </h2>
+          </ScrollBlurReveal>
+
+          <ScrollBlurReveal className="max-w-2xl flex flex-col gap-6">
+            <p className="text-lg md:text-xl font-medium text-zinc-800 dark:text-zinc-200 font-sans leading-relaxed">
+              Our agency is a dedicated outreach to brands that aim to create stop-and-stare wonder.
+            </p>
+            <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed">
+              We bring the best of imagination and engineering in the same room to create innovative experiences for global audiences through digital and physical executions.
+            </p>
+          </ScrollBlurReveal>
+
+          <motion.button
+            onClick={() => router.push('/about')}
+            whileHover="hover"
+            whileTap={{ scale: 0.96 }}
+            transition={{ type: "spring", stiffness: 350, damping: 15 }}
+            className="flex items-center gap-0 bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-widest mt-4 shadow-lg shadow-blue-500/20 cursor-pointer"
+          >
+            READ MORE
+            <motion.span
+              variants={{ hover: { x: 2 } }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center"
+            >
+              <ArrowRight className="w-3 h-3 text-white" />
+            </motion.span>
+          </motion.button>
+        </div>
+      </section>
+
       {/* About */}
       <section id="about" className="relative z-10 py-28 px-6 md:px-16 max-w-[1400px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
@@ -385,6 +423,105 @@ export default function Home() {
               </motion.div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section ref={whyUsRef} className="relative z-10 py-32 px-6 md:px-16 bg-[#fcfcfc] dark:bg-[#070708] border-t border-zinc-100 dark:border-zinc-900">
+        <div className="max-w-[1200px] mx-auto flex flex-col items-center text-center gap-12">
+          
+          <div className="flex flex-col items-center gap-4">
+            <span className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500">
+              <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> Why Us
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 max-w-2xl leading-tight font-sans">
+              There are thousands of agencies, why choose us?
+            </h2>
+          </div>
+
+          {/* SVG Arc and Icon */}
+          <div className="relative w-full max-w-[600px] h-[160px] flex items-center justify-center overflow-visible mt-6">
+            <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible z-0" viewBox="0 0 600 200" preserveAspectRatio="none">
+              {/* Background dotted arc */}
+              <path
+                d="M 50,200 A 250,200 0 0 1 550,200"
+                fill="none"
+                stroke="currentColor"
+                className="text-zinc-200 dark:text-zinc-800"
+                strokeWidth="2.5"
+                strokeDasharray="6,6"
+              />
+              {/* Animated drawing arc */}
+              <motion.path
+                d="M 50,200 A 250,200 0 0 1 550,200"
+                fill="none"
+                stroke="#0047FF"
+                strokeWidth="3"
+                style={{ pathLength: arcLength }}
+              />
+            </svg>
+
+            {/* Central Clock Checkmark Icon */}
+            <motion.div 
+              initial={{ scale: 0.6, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ type: "spring", stiffness: 180, damping: 15, delay: 0.2 }}
+              className="absolute top-[30px] z-10 w-24 h-24 rounded-full bg-[#0047FF] shadow-2xl shadow-blue-500/30 flex items-center justify-center text-white"
+            >
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="animate-pulse">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+                <path d="M12 2a10 10 0 1 0 10 10" strokeDasharray="3,3" opacity="0.3" />
+                <path d="M9 12l2 2 4-4" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </motion.div>
+          </div>
+
+          <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed max-w-3xl mt-4">
+            We&apos;re a crew of strategists, storytellers, designers, and data nerds united by one obsession: making your brand impossible to ignore. Since 2016, we&apos;ve helped startups, scale-ups, and established brands cut through the noise. We&apos;re based in India and work with clients across the country and internationally. Everything&apos;s remote-friendly. If you&apos;re building something that matters, you don&apos;t need a big agency &mdash; you need one that pays attention.
+          </p>
+
+          {/* Staggered Numbered Pills */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.08
+                }
+              }
+            }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full mt-6"
+          >
+            {[
+              { num: 1, label: "Valuing", highlight: "your time" },
+              { num: 2, label: "Partnering in", highlight: "your success" },
+              { num: 3, label: "Delivering", highlight: "high-quality results" },
+              { num: 4, label: "Providing", highlight: "clear communication" },
+              { num: 5, label: "Using the", highlight: "latest technology" },
+              { num: 6, label: "Focusing on", highlight: "scalability" }
+            ].map((pill) => (
+              <motion.div
+                key={pill.num}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                }}
+                className="flex items-center gap-3 px-6 py-4 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#070708]/80 shadow-sm hover:shadow-md transition-shadow font-sans text-xs font-semibold text-zinc-700 dark:text-zinc-300"
+              >
+                <span className="w-6 h-6 rounded-full bg-[#0047FF] text-white flex items-center justify-center text-[10px] font-bold shrink-0">
+                  {pill.num}
+                </span>
+                <span>
+                  {pill.label} <strong className="text-zinc-950 dark:text-white font-bold">{pill.highlight}</strong>
+                </span>
+              </motion.div>
+            ))}
+          </motion.div>
+
         </div>
       </section>
 
@@ -490,8 +627,7 @@ export default function Home() {
                     transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } 
                   }
                 }}
-                className={`process-card flex flex-col gap-4`}
-                style={{ marginTop: isDesktop && i % 2 === 1 ? "6rem" : 0 }}
+                className={`process-card flex flex-col gap-4 ${isDesktop && i % 2 === 1 ? "lg:flex-col-reverse" : ""}`}
               >
                 <Tilt3D className="p-7 border border-zinc-200 dark:border-zinc-800 rounded-xl flex flex-col gap-3 cursor-pointer bg-white/80 dark:bg-black/80 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow">
                   <span className="text-[10px] font-bold text-zinc-400">[STEP — {step}]</span>

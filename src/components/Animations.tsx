@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, useScroll, useTransform } from "framer-motion";
 
 export function CustomCursor() {
   const x = useSpring(useMotionValue(0), { stiffness: 600, damping: 30 });
@@ -273,6 +273,34 @@ export function SectionBlurIn({
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.75, delay, ease: [0.16, 1, 0.3, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function ScrollBlurReveal({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 90%", "start 45%"],
+  });
+
+  const blur = useTransform(scrollYProgress, [0, 1], ["blur(14px)", "blur(0px)"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.9], [0, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [40, 0]);
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ filter: blur, opacity, y }}
       className={className}
     >
       {children}
