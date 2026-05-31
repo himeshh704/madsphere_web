@@ -182,6 +182,14 @@ export default function Home() {
     };
   }, []);
 
+  // Auto-advance pills every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActivePill((prev) => (prev >= whyChooseUsData.length ? 1 : prev + 1));
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
   const { scrollYProgress: processScroll } = useScroll({
     target: mounted ? processRef : undefined,
     offset: ["start end", "end start"]
@@ -527,13 +535,12 @@ export default function Home() {
                 strokeWidth="2.5"
                 strokeDasharray="6,6"
               />
-              {/* Animated drawing arc */}
-              <motion.path
+              {/* Static drawing arc */}
+              <path
                 d="M 50,200 A 250,200 0 0 1 550,200"
                 fill="none"
                 stroke="#0047FF"
                 strokeWidth="3"
-                style={{ pathLength: arcLength }}
               />
             </svg>
 
