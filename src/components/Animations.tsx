@@ -313,20 +313,12 @@ export function ScrollBlurReveal({
   children: React.ReactNode;
   className?: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 90%", "start 45%"],
-  });
-
-  const blur = useTransform(scrollYProgress, [0, 1], ["blur(14px)", "blur(0px)"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.9], [0, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], [40, 0]);
-
   return (
     <motion.div
-      ref={ref}
-      style={{ filter: blur, opacity, y }}
+      initial={{ filter: "blur(14px)", opacity: 0, y: 40 }}
+      whileInView={{ filter: "blur(0px)", opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className={className}
     >
       {children}

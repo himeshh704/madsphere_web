@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, Play } from "lucide-react";
 import Marquee from "@/components/Marquee";
 import ExpertiseScroll from "@/components/ExpertiseScroll";
+import Preloader from "@/components/Preloader";
 import { TextReveal, FloatingOrbs, Tilt3D, ScrollBlurReveal } from "@/components/Animations";
 import { stagger } from "@/lib/motion";
 import { heroCards, socials, process, clients } from "@/data/site";
@@ -212,7 +213,9 @@ export default function Home() {
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
 
   return (
-    <div className="relative overflow-x-clip">
+    <>
+      <Preloader />
+      <div className="relative overflow-x-clip">
       {/* Hero */}
       <section id="home" ref={heroRef} className="relative z-10 pt-28 px-4 sm:px-8 max-w-[1700px] mx-auto" style={{ perspective: "1200px" }}>
 
@@ -511,7 +514,7 @@ export default function Home() {
       */}
 
       {/* Why Choose Us Section */}
-      <section ref={whyUsRef} className="relative z-10 py-32 px-6 md:px-16 bg-[#fcfcfc] dark:bg-[#070708] border-t border-zinc-100 dark:border-zinc-900">
+      <section ref={whyUsRef} className="relative z-10 py-32 px-6 md:px-16 bg-[#fcfcfc] dark:bg-[#070708] border-t border-zinc-100 dark:border-zinc-900" style={{ contentVisibility: "auto", containIntrinsicSize: "0 1200px" }}>
         <div className="max-w-[1200px] mx-auto flex flex-col items-center text-center gap-12">
           
           <div className="flex flex-col items-center gap-4">
@@ -642,15 +645,17 @@ export default function Home() {
       </section>
 
       {/* Expertise */}
-      <section id="services" className="relative z-10 border-t border-zinc-100 dark:border-zinc-800">
+      <section id="services" className="relative z-10 border-t border-zinc-100 dark:border-zinc-800" style={{ contentVisibility: "auto", containIntrinsicSize: "0 1000px" }}>
         <ExpertiseScroll />
       </section>
 
       {/* Parallax Showcase */}
-      <ParallaxComponent />
+      <section style={{ contentVisibility: "auto", containIntrinsicSize: "0 1000px" }}>
+        <ParallaxComponent />
+      </section>
 
       {/* Process Wrapper */}
-      <div className="process-section-wrapper w-full relative z-10">
+      <div className="process-section-wrapper w-full relative z-10" style={{ contentVisibility: "auto", containIntrinsicSize: "0 1500px" }}>
         <section 
           ref={processRef} 
           className="process-section relative w-full py-28 px-6 md:px-16 max-w-[1400px] mx-auto"
@@ -787,6 +792,7 @@ export default function Home() {
       </section>
 
     </div>
+    </>
   );
 }
 
