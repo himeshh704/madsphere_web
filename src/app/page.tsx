@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, Play } from "lucide-react";
 import Marquee from "@/components/Marquee";
 import ExpertiseScroll from "@/components/ExpertiseScroll";
-import Preloader from "@/components/Preloader";
 import { TextReveal, FloatingOrbs, Tilt3D, ScrollBlurReveal } from "@/components/Animations";
 import { stagger } from "@/lib/motion";
 import { heroCards, socials, process, clients } from "@/data/site";
@@ -214,7 +213,6 @@ export default function Home() {
 
   return (
     <>
-      <Preloader />
       <div className="relative overflow-x-clip">
       {/* Hero */}
       <section id="home" ref={heroRef} className="relative z-10 pt-28 px-4 sm:px-8 max-w-[1700px] mx-auto" style={{ perspective: "1200px" }}>

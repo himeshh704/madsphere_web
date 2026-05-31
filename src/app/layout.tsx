@@ -79,7 +79,6 @@ import AntiInspect from "@/components/AntiInspect";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Mascot from "@/components/Mascot";
-import Preloader from "@/components/Preloader";
 import { FloatingOrbs, CustomCursor } from "@/components/Animations";
 
 export default function RootLayout({
@@ -102,7 +101,6 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <CustomCursor />
-          <Preloader />
           <FloatingOrbs />
           <Navbar />
           <Mascot />

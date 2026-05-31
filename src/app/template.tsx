@@ -1,16 +1,20 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Preloader from "@/components/Preloader";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, filter: "blur(12px)", y: 18 }}
-      animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-      exit={{ opacity: 0, filter: "blur(8px)", y: -12 }}
-      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-    >
-      {children}
-    </motion.div>
+    <>
+      <Preloader />
+      <motion.div
+        initial={{ opacity: 0, filter: "blur(12px)", y: 18 }}
+        animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+        exit={{ opacity: 0, filter: "blur(8px)", y: -12 }}
+        transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+      >
+        {children}
+      </motion.div>
+    </>
   );
 }
