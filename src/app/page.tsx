@@ -5,6 +5,7 @@ import {
   motion,
   useScroll,
   useTransform,
+  AnimatePresence
 } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Play } from "lucide-react";
@@ -37,7 +38,7 @@ function ParallaxImg({ src, alt, className }: { src: string; alt: string; classN
     };
   }, []);
 
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const { scrollYProgress } = useScroll({ target: mounted ? ref : undefined, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.2, 1.05, 1.2]);
 
@@ -83,7 +84,79 @@ const cardVariants = {
   }
 };
 
-
+const whyChooseUsData = [
+  {
+    num: 1,
+    label: "Valuing",
+    highlight: "your time",
+    explanation: "We respect your calendar. No bloated meetings or dragged timelines—just rapid prototyping, direct iteration, and swift launches.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
+      </svg>
+    )
+  },
+  {
+    num: 2,
+    label: "Partnering in",
+    highlight: "your success",
+    explanation: "We view ourselves as strategic partners, not external vendors. Your product metrics and actual business growth are our core indicators of success.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+      </svg>
+    )
+  },
+  {
+    num: 3,
+    label: "Delivering",
+    highlight: "high-quality results",
+    explanation: "Zero templates. Every line of code, animation transition, and visual element is custom crafted to elevate your brand to the highest premium tier.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+      </svg>
+    )
+  },
+  {
+    num: 4,
+    label: "Providing",
+    highlight: "clear communication",
+    explanation: "Direct Slack access, transparent milestone updates, and async video summaries. We cut through the standard agency fluff and keep it real.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      </svg>
+    )
+  },
+  {
+    num: 5,
+    label: "Using the",
+    highlight: "latest technology",
+    explanation: "High-performance tech stacks (Next.js, Tailwind, Framer Motion) ensuring blazing fast page speeds, custom UI transitions, and perfect responsiveness.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+      </svg>
+    )
+  },
+  {
+    num: 6,
+    label: "Focusing on",
+    highlight: "scalability",
+    explanation: "Clean architectures built to scale from day one. Your digital platforms will remain robust as your user count and product features expand.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+        <polyline points="17 6 23 6 23 12" />
+      </svg>
+    )
+  }
+];
 
 export default function Home() {
   const router = useRouter();
@@ -91,6 +164,8 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
+  const [activePill, setActivePill] = useState(1);
+  const currentPillData = whyChooseUsData.find(p => p.num === activePill) || whyChooseUsData[0];
   const processRef = useRef<HTMLDivElement>(null);
 
 
@@ -107,7 +182,7 @@ export default function Home() {
   }, []);
 
   const { scrollYProgress: processScroll } = useScroll({
-    target: processRef,
+    target: mounted ? processRef : undefined,
     offset: ["start end", "end start"]
   });
 
@@ -117,11 +192,11 @@ export default function Home() {
 
   const whyUsRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: whyUsScroll } = useScroll({
-    target: whyUsRef,
+    target: mounted ? whyUsRef : undefined,
     offset: ["start end", "end start"]
   });
   const arcLength = useTransform(whyUsScroll, [0.15, 0.45], [0, 1]);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const { scrollYProgress } = useScroll({ target: mounted ? heroRef : undefined, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const heroRotate = useTransform(scrollYProgress, [0, 1], [0, 3]);
@@ -461,28 +536,45 @@ export default function Home() {
               />
             </svg>
 
-            {/* Central Clock Checkmark Icon */}
-            <motion.div 
-              initial={{ scale: 0.6, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ type: "spring", stiffness: 180, damping: 15, delay: 0.2 }}
-              className="absolute top-[30px] z-10 w-24 h-24 rounded-full bg-[#0047FF] shadow-2xl shadow-blue-500/30 flex items-center justify-center text-white"
-            >
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="animate-pulse">
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
-                <path d="M12 2a10 10 0 1 0 10 10" strokeDasharray="3,3" opacity="0.3" />
-                <path d="M9 12l2 2 4-4" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </motion.div>
+            {/* Central Clock/Active Pill Icon Container */}
+            <div className="absolute top-[30px] z-10 w-24 h-24 rounded-full bg-[#0047FF] shadow-2xl shadow-blue-500/30 flex items-center justify-center text-white overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activePill}
+                  initial={{ y: -60, opacity: 0, scale: 0.85 }}
+                  animate={{ y: 0, opacity: 1, scale: 1 }}
+                  exit={{ y: 60, opacity: 0, scale: 0.85 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 22 }}
+                  className="w-full h-full flex items-center justify-center"
+                >
+                  {currentPillData.icon}
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
 
-          <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed max-w-3xl mt-4">
-            We&apos;re a crew of strategists, storytellers, designers, and data nerds united by one obsession: making your brand impossible to ignore. Since 2016, we&apos;ve helped startups, scale-ups, and established brands cut through the noise. We&apos;re based in India and work with clients across the country and internationally. Everything&apos;s remote-friendly. If you&apos;re building something that matters, you don&apos;t need a big agency &mdash; you need one that pays attention.
-          </p>
+          {/* Explanatory Narrative Content Wrapper */}
+          <div className="min-h-[140px] md:min-h-[100px] flex items-center justify-center w-full max-w-3xl mt-4">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activePill}
+                initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -12, filter: "blur(4px)" }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                className="flex flex-col gap-4 text-center"
+              >
+                <p className="text-base md:text-lg font-semibold text-zinc-950 dark:text-zinc-100 font-sans leading-relaxed">
+                  {currentPillData.label} <span className="text-[#0047FF] font-bold">{currentPillData.highlight}</span>
+                </p>
+                <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed">
+                  {currentPillData.explanation}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-          {/* Staggered Numbered Pills */}
+          {/* Staggered Interactive Numbered Pills */}
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -496,30 +588,35 @@ export default function Home() {
             }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full mt-6"
           >
-            {[
-              { num: 1, label: "Valuing", highlight: "your time" },
-              { num: 2, label: "Partnering in", highlight: "your success" },
-              { num: 3, label: "Delivering", highlight: "high-quality results" },
-              { num: 4, label: "Providing", highlight: "clear communication" },
-              { num: 5, label: "Using the", highlight: "latest technology" },
-              { num: 6, label: "Focusing on", highlight: "scalability" }
-            ].map((pill) => (
-              <motion.div
-                key={pill.num}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-                }}
-                className="flex items-center gap-3 px-6 py-4 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#070708]/80 shadow-sm hover:shadow-md transition-shadow font-sans text-xs font-semibold text-zinc-700 dark:text-zinc-300"
-              >
-                <span className="w-6 h-6 rounded-full bg-[#0047FF] text-white flex items-center justify-center text-[10px] font-bold shrink-0">
-                  {pill.num}
-                </span>
-                <span>
-                  {pill.label} <strong className="text-zinc-950 dark:text-white font-bold">{pill.highlight}</strong>
-                </span>
-              </motion.div>
-            ))}
+            {whyChooseUsData.map((pill) => {
+              const isActive = activePill === pill.num;
+              return (
+                <motion.div
+                  key={pill.num}
+                  onClick={() => setActivePill(pill.num)}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                  }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`flex items-center gap-3 px-6 py-4 rounded-full border transition-all duration-300 font-sans text-xs font-semibold cursor-pointer shadow-sm ${
+                    isActive 
+                      ? "border-[#0047FF] bg-[#0047FF]/5 dark:bg-[#0047FF]/10 text-[#0047FF] shadow-md shadow-blue-500/5" 
+                      : "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#070708]/80 text-zinc-700 dark:text-zinc-300 hover:border-zinc-300 hover:shadow-md"
+                  }`}
+                >
+                  <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 transition-colors ${
+                    isActive ? "bg-[#0047FF] text-white" : "bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400"
+                  }`}>
+                    {pill.num}
+                  </span>
+                  <span>
+                    {pill.label} <strong className={`font-bold transition-colors ${isActive ? "text-[#0047FF]" : "text-zinc-950 dark:text-white"}`}>{pill.highlight}</strong>
+                  </span>
+                </motion.div>
+              );
+            })}
           </motion.div>
 
         </div>
