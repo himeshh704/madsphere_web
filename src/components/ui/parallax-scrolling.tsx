@@ -3,7 +3,6 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Lenis from '@studio-freight/lenis';
 
 export function ParallaxComponent() {
   const parallaxRef = useRef<HTMLDivElement>(null);
@@ -42,30 +41,12 @@ export function ParallaxComponent() {
       });
     }
 
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-    });
-
-    lenis.on('scroll', ScrollTrigger.update);
-    
-    const tick = (time: number) => {
-      lenis.raf(time * 1000);
-    };
-    gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
-
     return () => {
       // Clean up GSAP and ScrollTrigger instances
       ScrollTrigger.getAll().forEach(st => st.kill());
       if (triggerElement) {
         gsap.killTweensOf(triggerElement.querySelectorAll('[data-parallax-layer]'));
       }
-      gsap.ticker.remove(tick);
-      lenis.destroy();
     };
   }, []);
 
@@ -161,7 +142,7 @@ export function ParallaxComponent() {
             {/* Layer 1: Background mountain or clouds */}
             <img 
               src="https://cdn.prod.website-files.com/671752cd4027f01b1b8f1c7f/6717795be09b462b2e8ebf71_osmo-parallax-layer-3.webp" 
-              loading="eager" 
+              loading="lazy" 
               width="800" 
               data-parallax-layer="1" 
               alt="" 
@@ -170,7 +151,7 @@ export function ParallaxComponent() {
             {/* Layer 2: Midground details */}
             <img 
               src="https://cdn.prod.website-files.com/671752cd4027f01b1b8f1c7f/6717795b4d5ac529e7d3a562_osmo-parallax-layer-2.webp" 
-              loading="eager" 
+              loading="lazy" 
               width="800" 
               data-parallax-layer="2" 
               alt="" 
@@ -183,7 +164,7 @@ export function ParallaxComponent() {
             {/* Layer 4: Foreground elements */}
             <img 
               src="https://cdn.prod.website-files.com/671752cd4027f01b1b8f1c7f/6717795bb5aceca85011ad83_osmo-parallax-layer-1.webp" 
-              loading="eager" 
+              loading="lazy" 
               width="800" 
               data-parallax-layer="4" 
               alt="" 
