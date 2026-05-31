@@ -17,6 +17,7 @@ import { heroCards, socials, process, clients } from "@/data/site";
 import { cn } from "@/utils/cn";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ParallaxScrollFeatureSection } from "@/components/ui/parallax-scroll-feature-section";
 // import TestimonialCarousel from "@/components/TestimonialCarousel";
 
 function ParallaxImg({ src, alt, className }: { src: string; alt: string; className?: string }) {
@@ -641,102 +642,8 @@ export default function Home() {
           <SectionTag label="Process" />
         </div>
 
-        <div className="relative w-full">
-          {/* Dotted lines connecting process steps on desktop with drawing effect */}
-          <svg className="absolute top-0 left-0 w-full h-[350px] pointer-events-none hidden lg:block z-0" viewBox="0 0 1200 350" preserveAspectRatio="none">
-            {/* Step 1 -> Step 2 */}
-            <path
-              d="M 270,100 C 300,100 300,196 330,196"
-              fill="none"
-              stroke="currentColor"
-              className="text-zinc-200 dark:text-zinc-800"
-              strokeWidth="2"
-              strokeDasharray="6,6"
-            />
-            <motion.path
-              d="M 270,100 C 300,100 300,196 330,196"
-              fill="none"
-              stroke="#0047FF"
-              strokeWidth="2.5"
-              style={{ pathLength: path1Length }}
-            />
-
-            {/* Step 2 -> Step 3 */}
-            <path
-              d="M 570,196 C 600,196 600,100 630,100"
-              fill="none"
-              stroke="currentColor"
-              className="text-zinc-200 dark:text-zinc-800"
-              strokeWidth="2"
-              strokeDasharray="6,6"
-            />
-            <motion.path
-              d="M 570,196 C 600,196 600,100 630,100"
-              fill="none"
-              stroke="#0047FF"
-              strokeWidth="2.5"
-              style={{ pathLength: path2Length }}
-            />
-
-            {/* Step 3 -> Step 4 */}
-            <path
-              d="M 870,100 C 900,100 900,196 930,196"
-              fill="none"
-              stroke="currentColor"
-              className="text-zinc-200 dark:text-zinc-800"
-              strokeWidth="2"
-              strokeDasharray="6,6"
-            />
-            <motion.path
-              d="M 870,100 C 900,100 900,196 930,196"
-              fill="none"
-              stroke="#0047FF"
-              strokeWidth="2.5"
-              style={{ pathLength: path3Length }}
-            />
-          </svg>
-
-          {/* Cards with Staggered Viewport Entrance */}
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-120px" }}
-            variants={{
-              visible: {
-                transition: {
-                  staggerChildren: 0.18
-                }
-              }
-            }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-start relative z-10" 
-            style={{ perspective: "1000px" }}
-          >
-            {process.map(({ step, title, desc, img }, i) => (
-              <motion.div
-                key={step}
-                variants={{
-                  hidden: { opacity: 0, y: 60, scale: 0.96, filter: "blur(6px)" },
-                  visible: { 
-                    opacity: 1, 
-                    y: 0, 
-                    scale: 1, 
-                    filter: "blur(0px)",
-                    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } 
-                  }
-                }}
-                className={`process-card flex flex-col gap-4 ${isDesktop && i % 2 === 1 ? "lg:flex-col-reverse" : ""}`}
-              >
-                <Tilt3D className="p-7 border border-zinc-200 dark:border-zinc-800 rounded-xl flex flex-col gap-3 cursor-pointer bg-white/80 dark:bg-black/80 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow">
-                  <span className="text-[10px] font-bold text-zinc-400">[STEP — {step}]</span>
-                  <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50">{title}</h3>
-                  <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed font-sans font-medium">{desc}</p>
-                </Tilt3D>
-                <Tilt3D className="aspect-square rounded-xl overflow-hidden shadow-sm">
-                  <ParallaxImg src={img} alt={title} className="w-full h-full" />
-                </Tilt3D>
-              </motion.div>
-            ))}
-          </motion.div>
+        <div className="w-full mt-10">
+          <ParallaxScrollFeatureSection steps={process} />
         </div>
       </section>
       </div>
