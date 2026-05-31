@@ -1,16 +1,17 @@
 'use client'
 
-import React, { useRef } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 
 interface ProcessStep {
-  step: string;
+  step?: string;
   title: string;
-  desc: string;
-  img: string;
+  desc?: string;
+  img?: string;
   reverse?: boolean;
   stepNum?: string | number;
   description?: string;
+  imageUrl?: string;
 }
 
 interface ParallaxScrollFeatureSectionProps {
@@ -19,9 +20,14 @@ interface ParallaxScrollFeatureSectionProps {
 
 const ProcessStepItem = ({ section }: { section: ProcessStep }) => {
     const ref = useRef<HTMLDivElement>(null);
+    const [mounted, setMounted] = useState(false);
+    
+    useEffect(() => {
+        setMounted(true);
+    }, []);
     
     const { scrollYProgress } = useScroll({
-        target: ref,
+        target: mounted ? ref : undefined,
         offset: ["start 90%", "center center"]
     });
 

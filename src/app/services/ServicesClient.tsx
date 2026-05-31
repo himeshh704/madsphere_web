@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { TextReveal, Tilt3D, WordsSlideFromRight } from "@/components/Animations";
 import FAQ from "@/components/FAQ";
@@ -141,8 +141,10 @@ const services = [
 ];
 
 export default function ServicesClient() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const { scrollYProgress } = useScroll({ target: mounted ? containerRef : undefined, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   
   const [openService, setOpenService] = useState<string>("Brand Strategy");

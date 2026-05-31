@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
@@ -11,11 +11,16 @@ export default function AboutClient() {
   const router = useRouter();
   const [hoveredPrinciple, setHoveredPrinciple] = useState<number | null>(null);
   const [hoveredValue, setHoveredValue] = useState<number | null>(null);
-  const containerRef = useRef(null);
-  const introRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const introRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
 
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
-  const { scrollYProgress: introProgress } = useScroll({ target: introRef, offset: ["start start", "end start"] });
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const { scrollYProgress } = useScroll({ target: mounted ? containerRef : undefined, offset: ["start start", "end start"] });
+  const { scrollYProgress: introProgress } = useScroll({ target: mounted ? introRef : undefined, offset: ["start start", "end start"] });
 
   // Softer spring = more luxurious, cinematic feel
   const smoothScrollProgress = useSpring(scrollYProgress, { stiffness: 50, damping: 18, restDelta: 0.0005 });
