@@ -806,15 +806,27 @@ function HomeContactForm() {
     setHcf(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setHcfSubmitting(true);
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(hcf),
+      });
+      if (res.ok) {
+        setHcfSuccess(true);
+        setHcf({ name: "", email: "", company: "", service: "", message: "" });
+        setTimeout(() => setHcfSuccess(false), 5000);
+      } else {
+        alert("Failed to send message. Please try again.");
+      }
+    } catch (err) {
+      alert("An error occurred. Please try again.");
+    } finally {
       setHcfSubmitting(false);
-      setHcfSuccess(true);
-      setHcf({ name: "", email: "", company: "", service: "", message: "" });
-      setTimeout(() => setHcfSuccess(false), 5000);
-    }, 1500);
+    }
   };
 
   const inp = "w-full px-5 py-4 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-600 outline-none focus:border-[#0047FF] focus:bg-white dark:focus:bg-zinc-900 transition-all duration-300 text-sm font-medium";

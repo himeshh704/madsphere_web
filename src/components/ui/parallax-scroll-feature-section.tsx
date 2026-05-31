@@ -1,21 +1,23 @@
 'use client'
 
-import { useRef } from "react"
+import React, { useRef } from "react"
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
-import { cn } from "@/utils/cn"
 
 interface ProcessStep {
   step: string;
   title: string;
   desc: string;
   img: string;
+  reverse?: boolean;
+  stepNum?: string | number;
+  description?: string;
 }
 
 interface ParallaxScrollFeatureSectionProps {
   steps?: readonly ProcessStep[] | ProcessStep[];
 }
 
-const ProcessStepItem = ({ section }: { section: any }) => {
+const ProcessStepItem = ({ section }: { section: ProcessStep }) => {
     const ref = useRef<HTMLDivElement>(null);
     
     const { scrollYProgress } = useScroll({

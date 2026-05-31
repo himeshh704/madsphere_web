@@ -22,10 +22,10 @@ function ParticleSnow() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let parent = canvas.parentElement;
+    const parent = canvas.parentElement;
     let w = parent?.clientWidth || window.innerWidth;
     let h = parent?.clientHeight || window.innerHeight;
-    let dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const resize = () => {
       w = parent?.clientWidth || window.innerWidth;
