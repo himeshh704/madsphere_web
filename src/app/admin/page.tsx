@@ -151,9 +151,9 @@ export default function AdminPortal() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white font-sans selection:bg-[#0047FF] selection:text-white pb-24">
       {/* Topbar */}
-      <div className="sticky top-0 z-50 bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-zinc-800 px-6 py-4 flex items-center justify-between">
-        <h1 className="text-xl font-bold tracking-tight">MadSphere <span className="text-zinc-500 font-normal">Content Manager</span></h1>
-        <div className="flex items-center gap-4">
+      <div className="sticky top-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-zinc-800 px-4 md:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+        <h1 className="text-lg md:text-xl font-bold tracking-tight truncate">MadSphere <span className="text-zinc-500 font-normal hidden sm:inline">Content Manager</span></h1>
+        <div className="flex items-center gap-2 md:gap-4 ml-auto">
           <button onClick={logout} className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-sm font-medium">
             <LogOut className="w-4 h-4" /> Logout
           </button>
