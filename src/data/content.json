@@ -574,5 +574,10 @@
     "text": "Tell us your goals, and we'll help you design the perfect creative solution.",
     "img1": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&fit=crop",
     "img2": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&fit=crop"
+  },
+  "worksHero": {
+    "title": "OUR WORKS",
+    "subtitle": "Scroll to explore projects",
+    "splashText": "Enter into the world of Madsphere"
   }
 }

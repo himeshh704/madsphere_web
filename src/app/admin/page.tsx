@@ -598,9 +598,55 @@ export default function AdminPortal() {
           </div>
         </section>
 
-        {/* Editor Section: Works / Portfolio */}
+        {/* Editor Section: Works / Portfolio Intro */}
         <section>
-          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Portfolio / Works</h2>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Works Page: Splash & Intro</h2>
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Title</label>
+              <input
+                type="text"
+                value={content.worksHero.title}
+                onChange={(e) => {
+                  const newContent = { ...content };
+                  newContent.worksHero.title = e.target.value;
+                  setContent(newContent);
+                }}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm font-bold text-white focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Subtitle</label>
+              <input
+                type="text"
+                value={content.worksHero.subtitle}
+                onChange={(e) => {
+                  const newContent = { ...content };
+                  newContent.worksHero.subtitle = e.target.value;
+                  setContent(newContent);
+                }}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Splash Text</label>
+              <input
+                type="text"
+                value={content.worksHero.splashText}
+                onChange={(e) => {
+                  const newContent = { ...content };
+                  newContent.worksHero.splashText = e.target.value;
+                  setContent(newContent);
+                }}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Editor Section: Works / Portfolio Projects */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Portfolio Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {content.works.map((item: any, i: number) => (
               <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">

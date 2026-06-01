@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import { Play, Volume2, VolumeX, ArrowLeft } from "lucide-react";
 import ThreeWorksScene from "@/components/ThreeWorksScene";
+import { worksHero } from "@/data/site";
 
 export default function WorksClient() {
   const [revealed, setRevealed] = useState(false);
@@ -86,10 +87,10 @@ export default function WorksClient() {
         }}
       >
         <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-zinc-900 leading-none mb-2">
-          OUR WORKS
+          {worksHero.title}
         </h1>
         <p className="text-sm font-medium tracking-widest uppercase text-zinc-500">
-          Scroll to explore projects
+          {worksHero.subtitle}
         </p>
       </div>
 
@@ -102,7 +103,7 @@ export default function WorksClient() {
         }}
       >
         <span className="text-zinc-900 font-semibold tracking-[0.15em] uppercase text-center text-xs md:text-sm px-6">
-          Enter into the world of Madsphere
+          {worksHero.splashText}
         </span>
 
         <div

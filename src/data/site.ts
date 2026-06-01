@@ -20,3 +20,4 @@ export const process = content.process;
 export const testimonials = content.testimonials;
 export const clients = content.clients;
 export const careerEnquiry = content.careerEnquiry;
+export const worksHero = content.worksHero;
