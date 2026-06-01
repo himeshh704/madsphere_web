@@ -103,6 +103,19 @@ export default function AdminPortal() {
     setContent(newContent);
   };
 
+  const handleAddItem = (section: string, defaultItem: any) => {
+    const newContent = { ...content };
+    if (!newContent[section]) newContent[section] = [];
+    newContent[section].push(defaultItem);
+    setContent(newContent);
+  };
+
+  const handleRemoveItem = (section: string, index: number) => {
+    const newContent = { ...content };
+    newContent[section].splice(index, 1);
+    setContent(newContent);
+  };
+
   if (!loggedIn) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center p-4">
@@ -641,6 +654,104 @@ export default function AdminPortal() {
                 className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
               />
             </div>
+          </div>
+        </section>
+
+        {/* Editor Section: Blog / Insights */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Blog / Insights: Intro</h2>
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4 mb-6">
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Title</label>
+              <input
+                type="text"
+                value={content.blogHero?.title || ""}
+                onChange={(e) => {
+                  const newContent = { ...content };
+                  if (!newContent.blogHero) newContent.blogHero = { title: "", subtitle: "", splashText: "" };
+                  newContent.blogHero.title = e.target.value;
+                  setContent(newContent);
+                }}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm font-bold text-white focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Subtitle</label>
+              <input
+                type="text"
+                value={content.blogHero?.subtitle || ""}
+                onChange={(e) => {
+                  const newContent = { ...content };
+                  if (!newContent.blogHero) newContent.blogHero = { title: "", subtitle: "", splashText: "" };
+                  newContent.blogHero.subtitle = e.target.value;
+                  setContent(newContent);
+                }}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Splash Text</label>
+              <input
+                type="text"
+                value={content.blogHero?.splashText || ""}
+                onChange={(e) => {
+                  const newContent = { ...content };
+                  if (!newContent.blogHero) newContent.blogHero = { title: "", subtitle: "", splashText: "" };
+                  newContent.blogHero.splashText = e.target.value;
+                  setContent(newContent);
+                }}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+          </div>
+
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Blog Posts</h2>
+          <div className="space-y-6">
+            {(content.blogPosts || []).map((post: any, i: number) => (
+              <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="font-bold text-white text-lg">Post {i + 1}</h3>
+                  <button onClick={() => handleRemoveItem("blogPosts", i)} className="text-red-500 text-sm hover:underline">Remove</button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Title</label>
+                    <input type="text" value={post.title} onChange={(e) => handleTextChange("blogPosts", i, "title", e.target.value)} className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">URL Slug</label>
+                    <input type="text" value={post.slug} onChange={(e) => handleTextChange("blogPosts", i, "slug", e.target.value)} className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Author</label>
+                    <input type="text" value={post.author} onChange={(e) => handleTextChange("blogPosts", i, "author", e.target.value)} className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Date</label>
+                    <input type="text" value={post.date} onChange={(e) => handleTextChange("blogPosts", i, "date", e.target.value)} className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300" />
+                  </div>
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Cover Image URL</label>
+                  <input type="text" value={post.coverImg} onChange={(e) => handleTextChange("blogPosts", i, "coverImg", e.target.value)} className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300 mb-2" />
+                  {post.coverImg && <img src={post.coverImg} className="h-24 w-auto rounded border border-zinc-800" />}
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Excerpt</label>
+                  <textarea value={post.excerpt} onChange={(e) => handleTextChange("blogPosts", i, "excerpt", e.target.value)} className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300 h-20" />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Content (HTML)</label>
+                  <textarea value={post.content} onChange={(e) => handleTextChange("blogPosts", i, "content", e.target.value)} className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300 h-64 font-mono" />
+                </div>
+              </div>
+            ))}
+            <button
+              onClick={() => handleAddItem("blogPosts", { slug: "new-post", title: "New Post", excerpt: "Excerpt...", author: "Author", date: "Jan 1, 2026", coverImg: "", tags: [], content: "<p>Content...</p>" })}
+              className="w-full py-4 border-2 border-dashed border-zinc-800 text-zinc-400 rounded-xl hover:border-zinc-600 hover:text-white transition-colors"
+            >
+              + Add New Blog Post
+            </button>
           </div>
         </section>
 

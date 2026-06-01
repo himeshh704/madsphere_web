@@ -21,3 +21,5 @@ export const testimonials = content.testimonials;
 export const clients = content.clients;
 export const careerEnquiry = content.careerEnquiry;
 export const worksHero = content.worksHero;
+export const blogHero = content.blogHero;
+export const blogPosts = content.blogPosts;
