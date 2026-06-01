@@ -114,6 +114,11 @@ export default function Preloader() {
     let start: number | null = null;
     const duration = 2000; // 2 seconds minimum to ensure assets buffer
 
+    if (sessionStorage.getItem("madsphere_preloader_done")) {
+      setIsLoading(false);
+      return;
+    }
+
     const update = (timestamp: number) => {
       if (!start) start = timestamp;
       const elapsed = timestamp - start;
@@ -129,12 +134,17 @@ export default function Preloader() {
         frame = requestAnimationFrame(update);
       } else {
         // At 100%, check if window is actually loaded
+        const finishPreloader = () => {
+          setTimeout(() => {
+            sessionStorage.setItem("madsphere_preloader_done", "true");
+            setIsLoading(false);
+          }, 300);
+        };
+        
         if (document.readyState === "complete") {
-          setTimeout(() => setIsLoading(false), 300);
+          finishPreloader();
         } else {
-          window.addEventListener('load', () => {
-            setTimeout(() => setIsLoading(false), 300);
-          });
+          window.addEventListener('load', finishPreloader);
         }
       }
     };

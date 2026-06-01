@@ -11,10 +11,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
     <>
       {pathname === "/" && <Preloader />}
       <motion.div
-        initial={{ opacity: 0, filter: "blur(12px)", y: 40 }}
+        initial={{ opacity: 0, filter: pathname === "/" ? "blur(12px)" : "blur(4px)", y: pathname === "/" ? 40 : 10 }}
         animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-        exit={{ opacity: 0, filter: "blur(8px)", y: -20 }}
-        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        exit={{ opacity: 0, filter: pathname === "/" ? "blur(8px)" : "blur(4px)", y: pathname === "/" ? -20 : -10 }}
+        transition={{ duration: pathname === "/" ? 1.2 : 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
         {children}
       </motion.div>
