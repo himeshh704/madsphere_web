@@ -117,8 +117,13 @@ export default function Footer() {
 
         <div className="w-full max-w-[1500px] px-6 md:px-16 flex flex-col md:flex-row items-center justify-between gap-8 pt-8 border-t border-zinc-900">
           <div className="flex items-center gap-3">
-            {[Instagram, Linkedin, Facebook, Twitter].map((Icon, i) => (
-              <a key={i} href="#" className="w-8 h-8 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-800/80 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
+            {[
+              { Icon: Instagram, href: "https://www.instagram.com/madsphere.co?igsh=d2xldzdtb3VweW51" },
+              { Icon: Linkedin, href: "https://www.linkedin.com/company/madsphere/" },
+              { Icon: Facebook, href: "#" },
+              { Icon: Twitter, href: "#" }
+            ].map(({ Icon, href }, i) => (
+              <a key={i} href={href} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-800/80 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
                 <Icon className="w-3.5 h-3.5" />
               </a>
             ))}

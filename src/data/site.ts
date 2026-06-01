@@ -15,8 +15,8 @@ export const heroCards = [
 ] as const;
 
 export const socials = [
-  { label: "Ig", href: "https://instagram.com" },
-  { label: "in", href: "https://linkedin.com" },
+  { label: "Ig", href: "https://www.instagram.com/madsphere.co?igsh=d2xldzdtb3VweW51" },
+  { label: "in", href: "https://www.linkedin.com/company/madsphere/" },
   { label: "f",  href: "https://facebook.com" },
   { label: "𝕏",  href: "https://x.com" },
 ] as const;

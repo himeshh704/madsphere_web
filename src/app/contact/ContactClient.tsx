@@ -86,8 +86,13 @@ export default function ContactClient() {
             <div className="flex items-center justify-between border-t border-zinc-200 dark:border-zinc-800 pt-8 mt-2">
               <span className="font-bold">Follow us</span>
               <div className="flex items-center gap-3">
-                {[Instagram, Linkedin, Facebook, Twitter].map((Icon, i) => (
-                  <a key={i} href="#" className="w-10 h-10 border border-zinc-200 dark:border-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 hover:text-[#0047FF] hover:border-[#0047FF] transition-colors bg-white dark:bg-[#0a0a0a]">
+                {[
+                  { Icon: Instagram, href: "https://www.instagram.com/madsphere.co?igsh=d2xldzdtb3VweW51" },
+                  { Icon: Linkedin, href: "https://www.linkedin.com/company/madsphere/" },
+                  { Icon: Facebook, href: "#" },
+                  { Icon: Twitter, href: "#" }
+                ].map(({ Icon, href }, i) => (
+                  <a key={i} href={href} target="_blank" rel="noreferrer" className="w-10 h-10 border border-zinc-200 dark:border-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 hover:text-[#0047FF] hover:border-[#0047FF] transition-colors bg-white dark:bg-[#0a0a0a]">
                     <Icon className="w-4 h-4" />
                   </a>
                 ))}
