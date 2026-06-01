@@ -1,11 +1,19 @@
 import content from "./content.json";
 
 export const hero = content.hero;
+export const aboutHero = content.aboutHero;
+export const aboutPrinciples = content.aboutPrinciples;
+export const aboutValues = content.aboutValues;
+export const servicesHero = content.servicesHero;
+export const servicesList = content.servicesList;
+export const expertise = content.expertise;
+export const faqs = content.faqs;
+export const contactInfo = content.contactInfo;
+export const connectLinks = content.connectLinks;
 export const nav = content.nav;
 export const heroCards = content.heroCards;
 export const socials = content.socials;
 export const stats = content.stats;
-export const expertise = content.expertise;
 export const works = content.works;
 export const process = content.process;
 export const testimonials = content.testimonials;

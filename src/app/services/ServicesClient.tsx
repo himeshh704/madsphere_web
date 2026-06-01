@@ -3,142 +3,10 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { TextReveal, Tilt3D, WordsSlideFromRight } from "@/components/Animations";
+import { servicesHero, servicesList, aboutValues } from "@/data/site";
 import FAQ from "@/components/FAQ";
 
-const services = [
-  {
-    id: "Brand Strategy",
-    subtext: "The strategy that makes everything else work.",
-    items: [
-      {
-        title: "Brand Positioning",
-        desc: "Where do you fit in the market? Who are you actually for, and why should they care about you over everyone else? We build positioning that goes beyond a clever tagline — it becomes the reason every decision you make points in the same direction.\n\nOutcome: Clear positioning statement + competitive market map."
-      },
-      {
-        title: "Brand Messaging & Voice",
-        desc: "How you speak is as important as how you look. We craft messaging systems, tone of voice guidelines, and the key messages that make your brand feel like a real person with something worth saying.\n\nOutcome: Messaging framework + tone of voice guide."
-      },
-      {
-        title: "Identity Systems",
-        desc: "Logo, typography, colour palette, visual language — designed together as a system, not assembled as a pile of separate assets. Everything should feel like it belongs.\n\nOutcome: Complete visual identity system + brand guidelines."
-      },
-      {
-        title: "Brand Rollout Strategy",
-        desc: "A plan for how your brand actually comes to life — across your website, social, packaging, and every touchpoint your customer encounters. No orphaned assets. No inconsistency.\n\nOutcome: Brand application guide + rollout roadmap."
-      }
-    ]
-  },
-  {
-    id: "Creative Design",
-    subtext: "Visual systems, brand collateral, and design direction that turns strategy into something you can see and feel.",
-    items: [
-      {
-        title: "Logo & Visual Identity",
-        desc: "More than a mark — a complete visual language that works across digital, print, and everything in between.\n\nOutcome: Logo suite + visual identity system."
-      },
-      {
-        title: "Brand Collateral",
-        desc: "Business cards, stationery, pitch decks, brochures — every touchpoint designed with the same attention to detail.\n\nOutcome: Print-ready collateral templates."
-      },
-      {
-        title: "Packaging Design",
-        desc: "For D2C brands, product labels, and luxury goods. Packaging that looks as good on a shelf as it does on Instagram.\n\nOutcome: Packaging design system + print files."
-      },
-      {
-        title: "Art Direction",
-        desc: "We plan the look and feel of your photoshoots, campaigns, and content — so everything you put out feels intentional, not random.\n\nOutcome: Art direction deck + visual guidelines."
-      }
-    ]
-  },
-  {
-    id: "Website Design",
-    subtext: "Sites that feel premium, load fast, and actually convert. Built for brands that care about how they show up online.",
-    items: [
-      {
-        title: "Brand Websites",
-        desc: "Custom-built sites for brands that want to make a strong first impression and keep it.\n\nOutcome: Fully designed brand website."
-      },
-      {
-        title: "E-Commerce Design",
-        desc: "Online stores that don't just look good — they make it easy for people to buy.\n\nOutcome: E-commerce store design + development."
-      },
-      {
-        title: "UI/UX Design",
-        desc: "User interface and experience design for web apps, dashboards, and digital products. Functionality that doesn't sacrifice beauty.\n\nOutcome: UI/UX wireframes + high-fidelity prototypes."
-      },
-      {
-        title: "Landing Pages & Campaign Sites",
-        desc: "High-converting single pages for product launches, lead generation, and campaign microsites. Built to perform, not just look good.\n\nOutcome: Designed and developed landing page, optimised for conversion."
-      }
-    ]
-  },
-  {
-    id: "Digital Marketing",
-    subtext: "Marketing that actually moves the needle — paid, organic, or both.",
-    items: [
-      {
-        title: "Performance Ads",
-        desc: "Meta and Google ads that don't just spend your budget — they bring in leads, sales, and actual awareness.\n\nOutcome: Campaign setup + ongoing optimisation + reporting."
-      },
-      {
-        title: "Search Engine Marketing (SEM)",
-        desc: "Google Ads that show up when people are actually searching for what you do.\n\nOutcome: Campaign structure + ad copy + bid management."
-      },
-      {
-        title: "Growth Strategy",
-        desc: "We figure out which channels actually work for your brand, build a funnel that converts, and run experiments to keep growing.\n\nOutcome: Growth roadmap + channel mix recommendation."
-      },
-      {
-        title: "Analytics & Reporting",
-        desc: "Reports that actually tell you something useful. What worked, what didn't, and what to do next.\n\nOutcome: Monthly dashboards + strategic recommendations."
-      }
-    ]
-  },
-  {
-    id: "Social Media Marketing",
-    subtext: "Content that stops the scroll and starts a conversation.",
-    items: [
-      {
-        title: "Content Creation",
-        desc: "Visuals, videos, and copy designed for each platform. Not repurposed — tailored for where your audience lives.\n\nOutcome: Monthly content calendar + asset library."
-      },
-      {
-        title: "Instagram & Meta Strategy",
-        desc: "A proper Instagram strategy — Reels, Stories, feed, the whole thing. We plan it so your brand actually gets seen.\n\nOutcome: Platform strategy + content system."
-      },
-      {
-        title: "Social Media Management",
-        desc: "We handle the day-to-day posting, replying, keeping your brand alive on social without you having to think about it.\n\nOutcome: Managed social presence + monthly reports."
-      },
-      {
-        title: "Influencer & Brand Collaborations",
-        desc: "Finding the right people to partner with so your brand reaches new audiences without feeling forced.\n\nOutcome: Collaboration framework + outreach templates."
-      }
-    ]
-  },
-  {
-    id: "Video Production",
-    subtext: "From 15-second Reels to full brand films, we make video people actually watch.",
-    items: [
-      {
-        title: "Short-Form Content",
-        desc: "Reels, TikToks, and shorts designed for social platforms. Fast-paced, engaging, and optimised for algorithm reach.\n\nOutcome: Edited short-form video content."
-      },
-      {
-        title: "Brand Films",
-        desc: "The kind of films that make people say 'wait, who made this?' — about us videos, launches, campaign films that feel like cinema.\n\nOutcome: Edited brand film + direction."
-      },
-      {
-        title: "Product & Explainer Videos",
-        desc: "Clear, visual explanations of your product, service, or value proposition. Great for websites and ads.\n\nOutcome: Scripted and produced explainer video."
-      },
-      {
-        title: "Video Strategy & Direction",
-        desc: "End-to-end planning — concept, scripting, storyboarding, and direction for any video project.\n\nOutcome: Video strategy deck + production plan."
-      }
-    ]
-  }
-];
+// Replaced by data/site
 
 export default function ServicesClient() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -174,13 +42,13 @@ export default function ServicesClient() {
         </div>
         
         <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 mb-12">
-          <TextReveal>Services for brands that give a damn.</TextReveal>
+          <TextReveal>{servicesHero.title}</TextReveal>
         </h1>
         
         <Tilt3D className="w-full h-[30vh] md:h-[60vh] rounded-3xl overflow-hidden relative">
           <motion.div style={{ y }} className="w-full h-[150%] absolute -top-1/4">
             <img 
-              src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&fit=crop" 
+              src={servicesHero.img} 
               alt="Services Hero" 
               className="w-full h-full object-cover"
             />
@@ -191,7 +59,7 @@ export default function ServicesClient() {
       {/* Services List */}
       <section className="max-w-[1200px] mx-auto px-6 md:px-12 mb-32 relative z-10">
         <div className="flex flex-col gap-4" onMouseLeave={handleMouseLeave}>
-          {services.map((service, idx) => {
+          {servicesList.map((service, idx) => {
             const isOpen = openService === service.id;
             const isOtherOpen = openService !== "" && !isOpen;
             return (
@@ -313,16 +181,7 @@ export default function ServicesClient() {
 
           {/* Right: animated value cards */}
           <div className="flex flex-col gap-8 pt-8 w-full">
-            {[
-              {
-                label: "Our Vision",
-                text: "A studio where every brand gets treated like the only one that matters. Because for the person building it, it is.",
-              },
-              {
-                label: "Our Mission",
-                text: "Help emerging brands discover who they are, build something beautiful, and reach the people who need to see it.",
-              },
-            ].map((item, i) => (
+            {aboutValues.map((item, i) => (
               <motion.div
                 key={item.label}
                 initial={{ opacity: 0, x: 40, filter: "blur(6px)" }}

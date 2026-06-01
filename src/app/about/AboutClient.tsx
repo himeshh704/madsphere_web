@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { TextReveal, Tilt3D, WordsSlideFromRight, SectionBlurIn } from "@/components/Animations";
+import { aboutHero, aboutPrinciples, aboutValues } from "@/data/site";
 import FAQ from "@/components/FAQ";
 
 export default function AboutClient() {
@@ -95,21 +96,21 @@ export default function AboutClient() {
         <div className="flex-1 flex flex-col gap-8 w-full min-w-0">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-4">
             <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 max-w-3xl leading-tight">
-              <TextReveal>We started this because we thought brands deserved more.</TextReveal>
+              <TextReveal>{aboutHero.title}</TextReveal>
             </h1>
           </div>
           <p className="text-sm md:text-base text-zinc-500 font-sans max-w-2xl leading-relaxed mb-6">
-            MadSphere is a branding studio — for founders, startups, and anyone building something they actually believe in.
+            {aboutHero.desc1}
             <br /><br />
-            Every project starts with one question: what does this brand need to say, and who needs to hear it? From there, we build.
+            {aboutHero.desc2}
             <br /><br />
-            We&apos;re young, we&apos;re hungry, and we think the best work happens when ego stays out of the room.
+            {aboutHero.desc3}
           </p>
           
           <Tilt3D className="w-full h-[40vh] md:h-[50vh] rounded-2xl overflow-hidden relative">
             <motion.div style={{ y: heroY }} className="w-full h-[140%] absolute -top-[20%]">
               <img 
-                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1600&fit=crop" 
+                src={aboutHero.img} 
                 alt="About Hero" 
                 className="w-full h-full object-cover"
               />
@@ -130,28 +131,7 @@ export default function AboutClient() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" onMouseLeave={() => setHoveredPrinciple(null)}>
-          {[
-            { 
-              title: "Strategy before everything.", 
-              desc: "Design without a reason is just decoration. Every colour, font, and image we use has a job to do.",
-              img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600&fit=crop"
-            },
-            { 
-              title: "Craft over template.", 
-              desc: "We don't do templates. Every project — identity, website, campaign — starts from zero and gets the attention it deserves.",
-              img: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=600&fit=crop"
-            },
-            { 
-              title: "Culture drives creativity.", 
-              desc: "The best brands understand the culture they live in. We help brands stay relevant without losing their identity.",
-              img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=600&fit=crop"
-            },
-            { 
-              title: "Honest partnership.", 
-              desc: "We keep it real. Say what we'll do, do what we said, and never pretend to be bigger than we are.",
-              img: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=600&fit=crop"
-            }
-          ].map((principle, idx) => {
+          {aboutPrinciples.map((principle, idx) => {
             const isDimmed = hoveredPrinciple !== null && hoveredPrinciple !== idx;
             return (
                 <motion.div 
@@ -241,16 +221,7 @@ export default function AboutClient() {
 
           {/* Right: animated value cards */}
           <div className="flex flex-col gap-8 pt-8" onMouseLeave={() => setHoveredValue(null)}>
-            {[
-              {
-                label: "Our Vision",
-                text: "A studio where every brand gets treated like the only one that matters. Because for the person building it, it is.",
-              },
-              {
-                label: "Our Mission",
-                text: "Help emerging brands discover who they are, build something beautiful, and reach the people who need to see it.",
-              },
-            ].map((item, i) => {
+            {aboutValues.map((item, i) => {
               const isDimmed = hoveredValue !== null && hoveredValue !== i;
               return (
                 <motion.div

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Clock, Instagram, Linkedin, Facebook, Twitter, CheckCircle2, ArrowRight, ChevronDown } from "lucide-react";
 import { TextReveal, Tilt3D } from "@/components/Animations";
+import { contactInfo } from "@/data/site";
 import FAQ from "@/components/FAQ";
 
 export default function ContactClient() {
@@ -65,22 +66,20 @@ export default function ContactClient() {
             </div>
 
             <div className="flex flex-col gap-4">
-              {[
-                { icon: Mail, label: "EMAIL", value: "hello@madsphere.in" },
-                { icon: Phone, label: "PHONE", value: "+91 98765 43210" },
-                { icon: MapPin, label: "STUDIO", value: "Lower Parel, Mumbai 400013" },
-                { icon: Clock, label: "HOURS", value: "Mon-Fri, 10am - 7pm IST" }
-              ].map((item, i) => (
-                <Tilt3D key={i} className="flex items-center gap-6 p-6 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-white dark:bg-[#0a0a0a]">
-                  <div className="w-12 h-12 bg-zinc-100 dark:bg-zinc-900 rounded-full flex items-center justify-center shrink-0">
-                    <item.icon className="w-5 h-5 text-zinc-500" />
+              {contactInfo.map((item, i) => {
+                const Icon = item.label === "EMAIL" ? Mail : item.label === "PHONE" ? Phone : item.label === "STUDIO" ? MapPin : Clock;
+                return (
+                  <Tilt3D key={i} className="flex items-center gap-6 p-6 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-white dark:bg-[#0a0a0a]">
+                    <div className="w-12 h-12 bg-zinc-100 dark:bg-zinc-900 rounded-full flex items-center justify-center shrink-0">
+                      <Icon className="w-5 h-5 text-zinc-500" />
                   </div>
                   <div>
                     <p className="text-[10px] font-bold tracking-widest text-zinc-400 uppercase mb-1">{item.label}</p>
                     <p className="font-bold text-zinc-900 dark:text-zinc-100">{item.value}</p>
                   </div>
                 </Tilt3D>
-              ))}
+                );
+              })}
             </div>
 
             <div className="flex items-center justify-between border-t border-zinc-200 dark:border-zinc-800 pt-8 mt-2">

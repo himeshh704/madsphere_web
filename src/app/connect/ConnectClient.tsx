@@ -11,53 +11,19 @@ import {
   MessageCircle, 
   FileText 
 } from "lucide-react";
+import { connectLinks } from "@/data/site";
+
+const iconMap: Record<string, any> = {
+  Globe,
+  FolderOpen,
+  Briefcase,
+  Instagram,
+  Linkedin,
+  MessageCircle,
+  FileText
+};
 
 export default function ConnectClient() {
-  const links = [
-    {
-      label: "Visit our Website",
-      href: "/",
-      icon: Globe,
-      external: false
-    },
-    {
-      label: "Our Portfolio",
-      href: "/works",
-      icon: FolderOpen,
-      external: false
-    },
-    {
-      label: "Career Opportunities",
-      href: "/careers",
-      icon: Briefcase,
-      external: false
-    },
-    {
-      label: "Follow on Instagram",
-      href: "https://www.instagram.com/madsphere.co?igsh=d2xldzdtb3VweW51",
-      icon: Instagram,
-      external: true
-    },
-    {
-      label: "Connect on LinkedIn",
-      href: "https://www.linkedin.com/company/madsphere/",
-      icon: Linkedin,
-      external: true
-    },
-    {
-      label: "Join Whatsapp Channel",
-      href: "#",
-      icon: MessageCircle,
-      external: true
-    },
-    {
-      label: "Submit Inquiry Form",
-      href: "/contact",
-      icon: FileText,
-      external: false
-    }
-  ];
-
   return (
     <div className="relative min-h-screen bg-black text-white font-sans flex flex-col items-center justify-center p-6 overflow-hidden select-none">
       
@@ -121,31 +87,35 @@ export default function ConnectClient() {
             CONNECT WITH US
           </h2>
 
-          <div className="flex flex-col gap-3.5">
-            {links.map((link, index) => {
-              const Icon = link.icon;
-              const LinkContent = (
+          <div className="flex flex-col gap-4">
+            {connectLinks.map((link, i) => {
+              const IconComponent = iconMap[link.icon] || Globe;
+              return (
                 <motion.div
-                  initial={{ opacity: 0, y: 15 }}
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  whileHover={{ scale: 1.025, y: -1 }}
-                  whileTap={{ scale: 0.985 }}
-                  className="flex items-center w-full px-6 py-4.5 bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-white/20 rounded-2xl backdrop-blur-xl transition-colors cursor-pointer select-none text-zinc-100 hover:text-white"
+                  transition={{ duration: 0.5, delay: 0.1 * i, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <Icon className="w-5 h-5 mr-4 shrink-0 text-white/80" />
-                  <span className="text-sm font-semibold tracking-wide">{link.label}</span>
+                  <Link
+                    href={link.href}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener noreferrer" : undefined}
+                    className="group relative flex items-center gap-5 p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#0047FF]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    <div className="relative w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/10 group-hover:bg-[#0047FF] group-hover:border-[#0047FF] transition-colors duration-300">
+                      <IconComponent className="w-5 h-5 text-zinc-300 group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    
+                    <div className="relative flex-1">
+                      <h2 className="text-lg font-bold text-zinc-200 group-hover:text-white transition-colors duration-300">
+                        {link.label}
+                      </h2>
+                    </div>
+                  </Link>
                 </motion.div>
-              );
-
-              return link.external ? (
-                <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="w-full outline-none">
-                  {LinkContent}
-                </a>
-              ) : (
-                <Link key={link.label} href={link.href} className="w-full outline-none">
-                  {LinkContent}
-                </Link>
               );
             })}
           </div>

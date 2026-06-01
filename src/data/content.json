@@ -4,6 +4,230 @@
     "subtitle": "We help emerging brands build identity systems, digital experiences, and marketing that actually feels like them.",
     "img": "/hero_gradient_bg.png"
   },
+  "aboutHero": {
+    "title": "We started this because we thought brands deserved more.",
+    "desc1": "MadSphere is a branding studio — for founders, startups, and anyone building something they actually believe in.",
+    "desc2": "Every project starts with one question: what does this brand need to say, and who needs to hear it? From there, we build.",
+    "desc3": "We're young, we're hungry, and we think the best work happens when ego stays out of the room.",
+    "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1600&fit=crop"
+  },
+  "aboutPrinciples": [
+    { 
+      "title": "Strategy before everything.", 
+      "desc": "Design without a reason is just decoration. Every colour, font, and image we use has a job to do.",
+      "img": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600&fit=crop"
+    },
+    { 
+      "title": "Craft over template.", 
+      "desc": "We don't do templates. Every project — identity, website, campaign — starts from zero and gets the attention it deserves.",
+      "img": "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=600&fit=crop"
+    },
+    { 
+      "title": "Culture drives creativity.", 
+      "desc": "The best brands understand the culture they live in. We help brands stay relevant without losing their identity.",
+      "img": "https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=600&fit=crop"
+    },
+    { 
+      "title": "Honest partnership.", 
+      "desc": "We keep it real. Say what we'll do, do what we said, and never pretend to be bigger than we are.",
+      "img": "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=600&fit=crop"
+    }
+  ],
+  "aboutValues": [
+    {
+      "label": "Our Vision",
+      "text": "A studio where every brand gets treated like the only one that matters. Because for the person building it, it is."
+    },
+    {
+      "label": "Our Mission",
+      "text": "Help emerging brands discover who they are, build something beautiful, and reach the people who need to see it."
+    }
+  ],
+  "servicesHero": {
+    "title": "Services for brands that give a damn.",
+    "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&fit=crop"
+  },
+  "servicesList": [
+    {
+      "id": "Brand Strategy",
+      "subtext": "The strategy that makes everything else work.",
+      "items": [
+        {
+          "title": "Brand Positioning",
+          "desc": "Where do you fit in the market? Who are you actually for, and why should they care about you over everyone else? We build positioning that goes beyond a clever tagline — it becomes the reason every decision you make points in the same direction.\n\nOutcome: Clear positioning statement + competitive market map."
+        },
+        {
+          "title": "Brand Messaging & Voice",
+          "desc": "How you speak is as important as how you look. We craft messaging systems, tone of voice guidelines, and the key messages that make your brand feel like a real person with something worth saying.\n\nOutcome: Messaging framework + tone of voice guide."
+        },
+        {
+          "title": "Identity Systems",
+          "desc": "Logo, typography, colour palette, visual language — designed together as a system, not assembled as a pile of separate assets. Everything should feel like it belongs.\n\nOutcome: Complete visual identity system + brand guidelines."
+        },
+        {
+          "title": "Brand Rollout Strategy",
+          "desc": "A plan for how your brand actually comes to life — across your website, social, packaging, and every touchpoint your customer encounters. No orphaned assets. No inconsistency.\n\nOutcome: Brand application guide + rollout roadmap."
+        }
+      ]
+    },
+    {
+      "id": "Creative Design",
+      "subtext": "Visual systems, brand collateral, and design direction that turns strategy into something you can see and feel.",
+      "items": [
+        {
+          "title": "Logo & Visual Identity",
+          "desc": "More than a mark — a complete visual language that works across digital, print, and everything in between.\n\nOutcome: Logo suite + visual identity system."
+        },
+        {
+          "title": "Brand Collateral",
+          "desc": "Business cards, stationery, pitch decks, brochures — every touchpoint designed with the same attention to detail.\n\nOutcome: Print-ready collateral templates."
+        },
+        {
+          "title": "Packaging Design",
+          "desc": "For D2C brands, product labels, and luxury goods. Packaging that looks as good on a shelf as it does on Instagram.\n\nOutcome: Packaging design system + print files."
+        },
+        {
+          "title": "Art Direction",
+          "desc": "We plan the look and feel of your photoshoots, campaigns, and content — so everything you put out feels intentional, not random.\n\nOutcome: Art direction deck + visual guidelines."
+        }
+      ]
+    },
+    {
+      "id": "Website Design",
+      "subtext": "Sites that feel premium, load fast, and actually convert. Built for brands that care about how they show up online.",
+      "items": [
+        {
+          "title": "Brand Websites",
+          "desc": "Custom-built sites for brands that want to make a strong first impression and keep it.\n\nOutcome: Fully designed brand website."
+        },
+        {
+          "title": "E-Commerce Design",
+          "desc": "Online stores that don't just look good — they make it easy for people to buy.\n\nOutcome: E-commerce store design + development."
+        },
+        {
+          "title": "UI/UX Design",
+          "desc": "User interface and experience design for web apps, dashboards, and digital products. Functionality that doesn't sacrifice beauty.\n\nOutcome: UI/UX wireframes + high-fidelity prototypes."
+        },
+        {
+          "title": "Landing Pages & Campaign Sites",
+          "desc": "High-converting single pages for product launches, lead generation, and campaign microsites. Built to perform, not just look good.\n\nOutcome: Designed and developed landing page, optimised for conversion."
+        }
+      ]
+    },
+    {
+      "id": "Digital Marketing",
+      "subtext": "Marketing that actually moves the needle — paid, organic, or both.",
+      "items": [
+        {
+          "title": "Performance Ads",
+          "desc": "Meta and Google ads that don't just spend your budget — they bring in leads, sales, and actual awareness.\n\nOutcome: Campaign setup + ongoing optimisation + reporting."
+        },
+        {
+          "title": "Search Engine Marketing (SEM)",
+          "desc": "Google Ads that show up when people are actually searching for what you do.\n\nOutcome: Campaign structure + ad copy + bid management."
+        },
+        {
+          "title": "Growth Strategy",
+          "desc": "We figure out which channels actually work for your brand, build a funnel that converts, and run experiments to keep growing.\n\nOutcome: Growth roadmap + channel mix recommendation."
+        },
+        {
+          "title": "Analytics & Reporting",
+          "desc": "Reports that actually tell you something useful. What worked, what didn't, and what to do next.\n\nOutcome: Monthly dashboards + strategic recommendations."
+        }
+      ]
+    },
+    {
+      "id": "Social Media Marketing",
+      "subtext": "Content that stops the scroll and starts a conversation.",
+      "items": [
+        {
+          "title": "Content Creation",
+          "desc": "Visuals, videos, and copy designed for each platform. Not repurposed — tailored for where your audience lives.\n\nOutcome: Monthly content calendar + asset library."
+        },
+        {
+          "title": "Instagram & Meta Strategy",
+          "desc": "A proper Instagram strategy — Reels, Stories, feed, the whole thing. We plan it so your brand actually gets seen.\n\nOutcome: Platform strategy + content system."
+        },
+        {
+          "title": "Social Media Management",
+          "desc": "We handle the day-to-day posting, replying, keeping your brand alive on social without you having to think about it.\n\nOutcome: Managed social presence + monthly reports."
+        },
+        {
+          "title": "Influencer & Brand Collaborations",
+          "desc": "Finding the right people to partner with so your brand reaches new audiences without feeling forced.\n\nOutcome: Collaboration framework + outreach templates."
+        }
+      ]
+    },
+    {
+      "id": "Video Production",
+      "subtext": "From 15-second Reels to full brand films, we make video people actually watch.",
+      "items": [
+        {
+          "title": "Short-Form Content",
+          "desc": "Reels, TikToks, and shorts designed for social platforms. Fast-paced, engaging, and optimised for algorithm reach.\n\nOutcome: Edited short-form video content."
+        },
+        {
+          "title": "Brand Films",
+          "desc": "The kind of films that make people say 'wait, who made this?' — about us videos, launches, campaign films that feel like cinema.\n\nOutcome: Edited brand film + direction."
+        },
+        {
+          "title": "Product & Explainer Videos",
+          "desc": "Clear, visual explanations of your product, service, or value proposition. Great for websites and ads.\n\nOutcome: Scripted and produced explainer video."
+        },
+        {
+          "title": "Video Strategy & Direction",
+          "desc": "End-to-end planning — concept, scripting, storyboarding, and direction for any video project.\n\nOutcome: Video strategy deck + production plan."
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "id": "Q-01",
+      "question": "What does a creative branding studio actually do?",
+      "answer": "We help brands figure out who they're for, what they stand for, and what they should actually say. Sometimes that means building a whole identity from scratch. Sometimes it's just a website, a social media refresh, or someone to finally make their brand look as good as their product. It always starts with a conversation."
+    },
+    {
+      "id": "Q-02",
+      "question": "Are you a new agency? Should I be concerned about experience?",
+      "answer": "We're new, and we're not pretending otherwise. What we don't have in portfolio size, we make up for in attention — every client we take on gets our full focus, not a junior account manager or a templated deck. If you'd rather work with a small team that actually cares than a big agency that's done this a hundred times before, we'll probably get along."
+    },
+    {
+      "id": "Q-03",
+      "question": "How long does a typical brand project take?",
+      "answer": "It depends on scope. A brand identity project typically takes 3–4 weeks. A website can range from 4–8 weeks depending on complexity. We'll give you a clear timeline before we start — no vague promises."
+    },
+    {
+      "id": "Q-04",
+      "question": "Do you work with startups, or only established businesses?",
+      "answer": "Startups are actually our sweet spot. We understand the constraints, the urgency, and the need for branding that works from day one. But we also work with established businesses looking to rebrand or refresh their identity."
+    },
+    {
+      "id": "Q-05",
+      "question": "How do you approach a branding project?",
+      "answer": "First, we listen — really listen. To your market, your audience, your gut feeling about what you need. Then we strategise, design, and deliver. No templates. No shortcuts. And you're involved at every step, not just at the beginning and end."
+    },
+    {
+      "id": "Q-06",
+      "question": "Do you work with clients outside India?",
+      "answer": "Absolutely. We work with clients across India and internationally. Everything we do can be handled remotely — we're set up for collaboration no matter where you are."
+    }
+  ],
+  "contactInfo": [
+    { "label": "EMAIL", "value": "hello@madsphere.in" },
+    { "label": "PHONE", "value": "+91 98765 43210" },
+    { "label": "STUDIO", "value": "Lower Parel, Mumbai 400013" },
+    { "label": "HOURS", "value": "Mon-Fri, 10am - 7pm IST" }
+  ],
+  "connectLinks": [
+    { "label": "Visit our Website", "href": "/", "icon": "Globe", "external": false },
+    { "label": "Our Portfolio", "href": "/works", "icon": "FolderOpen", "external": false },
+    { "label": "Career Opportunities", "href": "/careers", "icon": "Briefcase", "external": false },
+    { "label": "Follow on Instagram", "href": "https://www.instagram.com/madsphere.co?igsh=d2xldzdtb3VweW51", "icon": "Instagram", "external": true },
+    { "label": "Connect on LinkedIn", "href": "https://www.linkedin.com/company/madsphere/", "icon": "Linkedin", "external": true },
+    { "label": "Join Whatsapp Channel", "href": "#", "icon": "MessageCircle", "external": true },
+    { "label": "Submit Inquiry Form", "href": "/contact", "icon": "FileText", "external": false }
+  ],
   "nav": [
     { "label": "Home", "href": "/" },
     { "label": "Services", "href": "/services" },

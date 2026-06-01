@@ -89,7 +89,17 @@ export default function AdminPortal() {
 
   const handleTextChange = (section: string, index: number, field: string, value: string) => {
     const newContent = { ...content };
-    newContent[section][index][field] = value;
+    if (index === -1) {
+      newContent[section][field] = value;
+    } else {
+      newContent[section][index][field] = value;
+    }
+    setContent(newContent);
+  };
+
+  const handleNestedArrayChange = (section: string, index1: number, nestedField: string, index2: number, field: string, value: string) => {
+    const newContent = { ...content };
+    newContent[section][index1][nestedField][index2][field] = value;
     setContent(newContent);
   };
 
@@ -156,7 +166,7 @@ export default function AdminPortal() {
         
         {/* Editor Section: Hero Section */}
         <section>
-          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Hero Section</h2>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Home Page: Hero Section</h2>
           <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
             <div>
               <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Headline</label>
@@ -197,6 +207,312 @@ export default function AdminPortal() {
               />
             </div>
             {content.hero.img && <img src={content.hero.img} alt="" className="w-full h-40 object-cover rounded-lg border border-zinc-800" />}
+          </div>
+        </section>
+
+        {/* Editor Section: About Page Hero */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">About Page: Hero Section</h2>
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Headline</label>
+              <input
+                type="text"
+                value={content.aboutHero.title}
+                onChange={(e) => handleTextChange("aboutHero", -1, "title", e.target.value)}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-lg font-bold text-white focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Paragraph 1</label>
+              <textarea
+                value={content.aboutHero.desc1}
+                onChange={(e) => handleTextChange("aboutHero", -1, "desc1", e.target.value)}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300 focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Paragraph 2</label>
+              <textarea
+                value={content.aboutHero.desc2}
+                onChange={(e) => handleTextChange("aboutHero", -1, "desc2", e.target.value)}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300 focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Paragraph 3</label>
+              <textarea
+                value={content.aboutHero.desc3}
+                onChange={(e) => handleTextChange("aboutHero", -1, "desc3", e.target.value)}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300 focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Hero Image URL</label>
+              <input
+                type="text"
+                value={content.aboutHero.img}
+                onChange={(e) => handleTextChange("aboutHero", -1, "img", e.target.value)}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+            {content.aboutHero.img && <img src={content.aboutHero.img} alt="" className="w-full h-40 object-cover rounded-lg border border-zinc-800" />}
+          </div>
+        </section>
+
+        {/* Editor Section: About Principles */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">About Page: Principles</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {content.aboutPrinciples.map((item: any, i: number) => (
+              <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Title</label>
+                  <input
+                    type="text"
+                    value={item.title}
+                    onChange={(e) => handleTextChange("aboutPrinciples", i, "title", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#0047FF]"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Description</label>
+                  <textarea
+                    value={item.desc}
+                    onChange={(e) => handleTextChange("aboutPrinciples", i, "desc", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF] min-h-[80px]"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Image URL</label>
+                  <input
+                    type="text"
+                    value={item.img}
+                    onChange={(e) => handleTextChange("aboutPrinciples", i, "img", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Editor Section: About Values */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">About Page: Vision & Mission</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {content.aboutValues.map((item: any, i: number) => (
+              <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Label</label>
+                  <input
+                    type="text"
+                    value={item.label}
+                    onChange={(e) => handleTextChange("aboutValues", i, "label", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#0047FF]"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Text</label>
+                  <textarea
+                    value={item.text}
+                    onChange={(e) => handleTextChange("aboutValues", i, "text", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF] min-h-[80px]"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Editor Section: Services Hero */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Services Page: Hero</h2>
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Headline</label>
+              <input
+                type="text"
+                value={content.servicesHero.title}
+                onChange={(e) => handleTextChange("servicesHero", -1, "title", e.target.value)}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-lg font-bold text-white focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Hero Image URL</label>
+              <input
+                type="text"
+                value={content.servicesHero.img}
+                onChange={(e) => handleTextChange("servicesHero", -1, "img", e.target.value)}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+            {content.servicesHero.img && <img src={content.servicesHero.img} alt="" className="w-full h-40 object-cover rounded-lg border border-zinc-800" />}
+          </div>
+        </section>
+
+        {/* Editor Section: Expertise (Services List) */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Services Page: Expertise Categories</h2>
+          <div className="space-y-8">
+            {content.servicesList.map((cat: any, cIdx: number) => (
+              <div key={cIdx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Category Title</label>
+                    <input
+                      type="text"
+                      value={cat.id}
+                      onChange={(e) => handleTextChange("servicesList", cIdx, "id", e.target.value)}
+                      className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm font-bold text-white focus:outline-none focus:border-[#0047FF]"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Category Subtext</label>
+                    <textarea
+                      value={cat.subtext}
+                      onChange={(e) => handleTextChange("servicesList", cIdx, "subtext", e.target.value)}
+                      className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF] min-h-[40px]"
+                    />
+                  </div>
+                </div>
+
+                <div className="pl-4 border-l-2 border-zinc-800 space-y-4 mt-4">
+                  <h4 className="text-sm font-bold text-zinc-500 uppercase">Items</h4>
+                  {cat.items.map((item: any, iIdx: number) => (
+                    <div key={iIdx} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Item Title</label>
+                        <input
+                          type="text"
+                          value={item.title}
+                          onChange={(e) => handleNestedArrayChange("servicesList", cIdx, "items", iIdx, "title", e.target.value)}
+                          className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-200 focus:outline-none focus:border-[#0047FF]"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Item Description</label>
+                        <textarea
+                          value={item.desc}
+                          onChange={(e) => handleNestedArrayChange("servicesList", cIdx, "items", iIdx, "desc", e.target.value)}
+                          className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF] min-h-[80px]"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Editor Section: FAQ */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Global: Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {content.faqs.map((faq: any, i: number) => (
+              <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+                <div className="flex gap-4">
+                  <div className="w-24 shrink-0">
+                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">ID</label>
+                    <input
+                      type="text"
+                      value={faq.id}
+                      onChange={(e) => handleTextChange("faqs", i, "id", e.target.value)}
+                      className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Question</label>
+                    <input
+                      type="text"
+                      value={faq.question}
+                      onChange={(e) => handleTextChange("faqs", i, "question", e.target.value)}
+                      className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white font-bold focus:outline-none focus:border-[#0047FF]"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Answer</label>
+                  <textarea
+                    value={faq.answer}
+                    onChange={(e) => handleTextChange("faqs", i, "answer", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300 focus:outline-none focus:border-[#0047FF] min-h-[80px]"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Editor Section: Contact Info */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Global: Contact Information</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {content.contactInfo.map((item: any, i: number) => (
+              <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">{item.label}</label>
+                  <input
+                    type="text"
+                    value={item.value}
+                    onChange={(e) => handleTextChange("contactInfo", i, "value", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm font-bold text-white focus:outline-none focus:border-[#0047FF]"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Editor Section: Connect Links */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Connect Page: Links</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {content.connectLinks.map((item: any, i: number) => (
+              <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Label</label>
+                  <input
+                    type="text"
+                    value={item.label}
+                    onChange={(e) => handleTextChange("connectLinks", i, "label", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm font-bold text-white focus:outline-none focus:border-[#0047FF]"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">URL (href)</label>
+                  <input
+                    type="text"
+                    value={item.href}
+                    onChange={(e) => handleTextChange("connectLinks", i, "href", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Icon Name (Lucide)</label>
+                  <input
+                    type="text"
+                    value={item.icon}
+                    onChange={(e) => handleTextChange("connectLinks", i, "icon", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block">Open in New Tab (External)</label>
+                  <input
+                    type="checkbox"
+                    checked={item.external}
+                    onChange={(e) => {
+                      const newContent = { ...content };
+                      newContent.connectLinks[i].external = e.target.checked;
+                      setContent(newContent);
+                    }}
+                    className="w-4 h-4 cursor-pointer"
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
