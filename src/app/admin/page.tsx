@@ -292,6 +292,7 @@ export default function AdminPortal() {
                     className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
                   />
                 </div>
+                {item.img && <img src={item.img} alt="" className="w-full h-32 object-cover rounded-lg border border-zinc-800" />}
               </div>
             ))}
           </div>
@@ -630,6 +631,117 @@ export default function AdminPortal() {
                 />
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Editor Section: Expertise (Landing Page) */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Landing Page: Expertise</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {content.expertise.map((item: any, i: number) => (
+              <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Label</label>
+                  <input
+                    type="text"
+                    value={item.label}
+                    onChange={(e) => handleTextChange("expertise", i, "label", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#0047FF]"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Description</label>
+                  <textarea
+                    value={item.desc}
+                    onChange={(e) => handleTextChange("expertise", i, "desc", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300 focus:outline-none focus:border-[#0047FF] min-h-[80px]"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Image URL</label>
+                  <input
+                    type="text"
+                    value={item.img}
+                    onChange={(e) => handleTextChange("expertise", i, "img", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+                  />
+                </div>
+                {item.img && <img src={item.img} alt="" className="w-full h-32 object-cover rounded-lg border border-zinc-800" />}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Editor Section: Testimonials */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Testimonials</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {content.testimonials.map((item: any, i: number) => (
+              <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+                <div className="flex gap-4">
+                  <div className="flex-1">
+                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Name</label>
+                    <input
+                      type="text"
+                      value={item.name}
+                      onChange={(e) => handleTextChange("testimonials", i, "name", e.target.value)}
+                      className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm font-bold text-white focus:outline-none focus:border-[#0047FF]"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Role</label>
+                    <input
+                      type="text"
+                      value={item.role}
+                      onChange={(e) => handleTextChange("testimonials", i, "role", e.target.value)}
+                      className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Quote</label>
+                  <textarea
+                    value={item.quote}
+                    onChange={(e) => handleTextChange("testimonials", i, "quote", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300 focus:outline-none focus:border-[#0047FF] min-h-[80px]"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Profile Image URL</label>
+                  <input
+                    type="text"
+                    value={item.img}
+                    onChange={(e) => handleTextChange("testimonials", i, "img", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+                  />
+                </div>
+                {item.img && <img src={item.img} alt="" className="w-16 h-16 rounded-full object-cover border border-zinc-800" />}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Editor Section: Clients (Marquee) */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Clients Marquee</h2>
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+            <div className="flex flex-wrap gap-2">
+              {content.clients.map((client: string, i: number) => (
+                <div key={i} className="flex items-center gap-2 bg-black border border-zinc-800 rounded-lg px-3 py-1 text-sm text-zinc-300">
+                  <input
+                    type="text"
+                    value={client}
+                    onChange={(e) => {
+                      const newContent = { ...content };
+                      newContent.clients[i] = e.target.value;
+                      setContent(newContent);
+                    }}
+                    className="bg-transparent focus:outline-none focus:text-white"
+                  />
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-zinc-500 mt-2">These are the words scrolling horizontally at the bottom of the Landing page.</p>
           </div>
         </section>
 
