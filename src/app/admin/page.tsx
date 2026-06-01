@@ -50,7 +50,7 @@ export default function AdminPortal() {
       const res = await fetch(`https://raw.githubusercontent.com/himeshh704/madsphere_web/main/src/data/content.json?t=${Date.now()}`);
       if (res.ok) {
         const fresh = await res.json();
-        setContent(fresh);
+        setContent({ ...defaultContent, ...fresh });
       } else {
         setContent(defaultContent);
       }
