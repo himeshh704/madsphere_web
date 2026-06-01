@@ -25,7 +25,7 @@ export default function Navbar() {
     setOpen(false);
   };
 
-  if (pathname === "/works") return null;
+  if (pathname === "/works" || pathname.startsWith("/admin") || pathname.startsWith("/blog")) return null;
 
   return (
     <header className={cn(

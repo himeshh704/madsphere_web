@@ -10,7 +10,7 @@ export default function Footer() {
   const router = useRouter();
   const pathname = usePathname();
 
-  if (pathname === "/works") return null;
+  if (pathname === "/works" || pathname.startsWith("/admin") || pathname.startsWith("/blog")) return null;
   const showSayHi = pathname !== "/contact"; // Hide CTA section on contact page to avoid redundant contact buttons
 
   return (
