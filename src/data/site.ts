@@ -1,5 +1,6 @@
 import content from "./content.json";
 
+export const hero = content.hero;
 export const nav = content.nav;
 export const heroCards = content.heroCards;
 export const socials = content.socials;

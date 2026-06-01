@@ -154,6 +154,52 @@ export default function AdminPortal() {
 
       <div className="max-w-5xl mx-auto p-6 space-y-12 mt-8">
         
+        {/* Editor Section: Hero Section */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Hero Section</h2>
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Headline</label>
+              <input
+                type="text"
+                value={content.hero.title}
+                onChange={(e) => {
+                  const newContent = { ...content };
+                  newContent.hero.title = e.target.value;
+                  setContent(newContent);
+                }}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-lg font-bold text-white focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Subheadline</label>
+              <textarea
+                value={content.hero.subtitle}
+                onChange={(e) => {
+                  const newContent = { ...content };
+                  newContent.hero.subtitle = e.target.value;
+                  setContent(newContent);
+                }}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300 focus:outline-none focus:border-[#0047FF] min-h-[80px]"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Background Image URL</label>
+              <input
+                type="text"
+                value={content.hero.img}
+                onChange={(e) => {
+                  const newContent = { ...content };
+                  newContent.hero.img = e.target.value;
+                  setContent(newContent);
+                }}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+            {content.hero.img && <img src={content.hero.img} alt="" className="w-full h-40 object-cover rounded-lg border border-zinc-800" />}
+          </div>
+        </section>
+
         {/* Editor Section: Hero Cards */}
         <section>
           <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Hero Section Images</h2>

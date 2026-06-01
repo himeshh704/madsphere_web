@@ -13,7 +13,7 @@ import Marquee from "@/components/Marquee";
 import ExpertiseScroll from "@/components/ExpertiseScroll";
 import { TextReveal, FloatingOrbs, Tilt3D, ScrollBlurReveal } from "@/components/Animations";
 import { stagger } from "@/lib/motion";
-import { heroCards, socials, process, clients } from "@/data/site";
+import { heroCards, socials, process, clients, hero } from "@/data/site";
 import { cn } from "@/utils/cn";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -229,7 +229,7 @@ export default function Home() {
         >
           <div style={{ height: "85vh", minHeight: 550 }} className="relative">
             <motion.div style={{ y: mounted ? bgY : undefined }} className="absolute inset-0 scale-110">
-              <img src="/hero_gradient_bg.png" alt="" className="w-full h-full object-cover" />
+              <img src={hero.img} alt="" className="w-full h-full object-cover" />
             </motion.div>
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/50" />
             {/* Bottom gradient — softly fades text before cards cover it */}
@@ -256,10 +256,10 @@ export default function Home() {
 
             <motion.div style={{ y: mounted ? textY : undefined }} className="absolute left-8 right-8 bottom-[150px] md:bottom-[160px] md:right-auto z-20 max-w-2xl">
               <h1 className="text-3xl md:text-5xl lg:text-6xl text-white font-semibold leading-[1.1] tracking-tight mb-3">
-                <TextReveal>Brands That Can&apos;t Be Ignored.</TextReveal>
+                <TextReveal>{hero.title}</TextReveal>
               </h1>
               <p className="text-sm md:text-base text-white/70 max-w-lg leading-relaxed font-sans hidden md:block">
-                We help emerging brands build identity systems, digital experiences, and marketing that actually feels like them.
+                {hero.subtitle}
               </p>
             </motion.div>
 

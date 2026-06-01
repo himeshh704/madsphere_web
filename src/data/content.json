@@ -1,4 +1,9 @@
 {
+  "hero": {
+    "title": "Brands That Can't Be Ignored.",
+    "subtitle": "We help emerging brands build identity systems, digital experiences, and marketing that actually feels like them.",
+    "img": "/hero_gradient_bg.png"
+  },
   "nav": [
     { "label": "Home", "href": "/" },
     { "label": "Services", "href": "/services" },
