@@ -6,7 +6,7 @@ import { Plus, Minus, ArrowRight } from "lucide-react";
 import { Tilt3D, MagneticWrap } from "./Animations";
 import { useRouter, usePathname } from "next/navigation";
 
-import { faqs } from "@/data/site";
+import { faqs, faqContactImg } from "@/data/site";
 
 export default function FAQ() {
   const router = useRouter();
@@ -80,7 +80,7 @@ export default function FAQ() {
         <div className="w-full lg:w-[380px] flex flex-col shrink-0 gap-8">
           <Tilt3D className="w-full rounded-2xl overflow-hidden aspect-[4/3] bg-zinc-200 dark:bg-zinc-800 relative">
             <img 
-              src="https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?q=80&w=800&fit=crop" 
+              src={faqContactImg} 
               alt="VR Developer" 
               className="w-full h-full object-cover"
             />

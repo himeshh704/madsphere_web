@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, ArrowRight, Plus, Minus } from "lucide-react";
 import { TextReveal, Tilt3D, SectionBlurIn } from "@/components/Animations";
 import ApplyModal from "@/components/ApplyModal";
+import { careerEnquiry } from "@/data/site";
 
 // Section Tag component — yellow dot like every other page
 function SectionTag({ label }: { label: string }) {
@@ -308,7 +309,7 @@ export default function CareersClient() {
               transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.1 }}
               className="inline-flex w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-white/20 align-middle shadow-md shrink-0 cursor-pointer"
             >
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&fit=crop" className="w-full h-full object-cover" alt="" />
+              <img src={careerEnquiry.img1} className="w-full h-full object-cover" alt="" />
             </motion.span>
             <span>your CV at</span>
             <motion.span
@@ -320,13 +321,14 @@ export default function CareersClient() {
               transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.25 }}
               className="inline-flex w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-white/20 align-middle shadow-md shrink-0 cursor-pointer"
             >
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&fit=crop" className="w-full h-full object-cover" alt="" />
+              <img src={careerEnquiry.img2} className="w-full h-full object-cover" alt="" />
             </motion.span>
           </h2>
 
-          <p className="text-sm md:text-base text-zinc-400 max-w-xl mb-12 relative z-10 font-sans">
-            Tell us your goals, and we&apos;ll help you design the <span className="text-yellow-400 font-semibold">perfect creative solution</span>.
-          </p>
+          <p 
+            className="text-sm md:text-base text-zinc-400 max-w-xl mb-12 relative z-10 font-sans"
+            dangerouslySetInnerHTML={{ __html: careerEnquiry.text }}
+          />
 
           <motion.button
             onClick={() => setApplyRole("General Inquiry / CV Submission")}

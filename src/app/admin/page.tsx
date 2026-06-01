@@ -466,6 +466,27 @@ export default function AdminPortal() {
           </div>
         </section>
 
+        {/* Editor Section: FAQ Contact Image */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">FAQ Contact Image</h2>
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Image URL</label>
+              <input
+                type="text"
+                value={content.faqContactImg}
+                onChange={(e) => {
+                  const newContent = { ...content };
+                  newContent.faqContactImg = e.target.value;
+                  setContent(newContent);
+                }}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+              />
+            </div>
+            {content.faqContactImg && <img src={content.faqContactImg} alt="" className="w-full h-40 object-cover rounded-lg border border-zinc-800" />}
+          </div>
+        </section>
+
         {/* Editor Section: Connect Links */}
         <section>
           <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Connect Page: Links</h2>
@@ -616,7 +637,7 @@ export default function AdminPortal() {
           </div>
         </section>
 
-        {/* Editor Section: Social Links */}
+        {/* Editor Section: Social Media Links */}
         <section>
           <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Social Media Links</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -631,6 +652,55 @@ export default function AdminPortal() {
                 />
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Editor Section: Career Enquiry */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Careers Page: Enquiry</h2>
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+            <div>
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Text content</label>
+              <textarea
+                value={content.careerEnquiry.text}
+                onChange={(e) => {
+                  const newContent = { ...content };
+                  newContent.careerEnquiry.text = e.target.value;
+                  setContent(newContent);
+                }}
+                className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300 focus:outline-none focus:border-[#0047FF] min-h-[80px]"
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Image URL 1</label>
+                <input
+                  type="text"
+                  value={content.careerEnquiry.img1}
+                  onChange={(e) => {
+                    const newContent = { ...content };
+                    newContent.careerEnquiry.img1 = e.target.value;
+                    setContent(newContent);
+                  }}
+                  className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF] mb-3"
+                />
+                {content.careerEnquiry.img1 && <img src={content.careerEnquiry.img1} alt="" className="w-20 h-20 rounded-full object-cover border border-zinc-800 mx-auto" />}
+              </div>
+              <div>
+                <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Image URL 2</label>
+                <input
+                  type="text"
+                  value={content.careerEnquiry.img2}
+                  onChange={(e) => {
+                    const newContent = { ...content };
+                    newContent.careerEnquiry.img2 = e.target.value;
+                    setContent(newContent);
+                  }}
+                  className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF] mb-3"
+                />
+                {content.careerEnquiry.img2 && <img src={content.careerEnquiry.img2} alt="" className="w-20 h-20 rounded-full object-cover border border-zinc-800 mx-auto" />}
+              </div>
+            </div>
           </div>
         </section>
 

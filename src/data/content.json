@@ -213,6 +213,7 @@
       "answer": "Absolutely. We work with clients across India and internationally. Everything we do can be handled remotely — we're set up for collaboration no matter where you are."
     }
   ],
+  "faqContactImg": "https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?q=80&w=800&fit=crop",
   "contactInfo": [
     { "label": "EMAIL", "value": "hello@madsphere.in" },
     { "label": "PHONE", "value": "+91 98765 43210" },
@@ -391,5 +392,10 @@
     { "name": "David O.", "role": "CTO, Galileo", "quote": "Flawless engineering married with luxury aesthetics. Performance scores are perfect.", "img": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&fit=crop" },
     { "name": "Chloe W.", "role": "Creative Dir., Europa", "quote": "A true creative partner. They pushed back when we were wrong — and every time they were right.", "img": "https://images.unsplash.com/photo-1598550874175-4d0ef43ee90d?q=80&w=400&fit=crop" }
   ],
-  "clients": ["Fashion", "D2C", "Tech", "Lifestyle", "Startups", "Personal Brands", "Creators"]
+  "clients": ["Fashion", "D2C", "Tech", "Lifestyle", "Startups", "Personal Brands", "Creators"],
+  "careerEnquiry": {
+    "text": "Tell us your goals, and we'll help you design the perfect creative solution.",
+    "img1": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&fit=crop",
+    "img2": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&fit=crop"
+  }
 }
