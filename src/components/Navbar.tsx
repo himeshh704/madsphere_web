@@ -64,15 +64,15 @@ export default function Navbar() {
             whileHover="hover"
             whileTap={{ scale: 0.96 }}
             transition={{ type: "spring", stiffness: 350, damping: 15 }}
-            className="flex items-center gap-0 bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-widest transition-colors shadow-lg shadow-blue-500/20 cursor-pointer"
+            className="h-12 flex items-center bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-6 pr-2 text-xs font-bold uppercase tracking-widest transition-colors shadow-lg shadow-blue-500/20 cursor-pointer shrink-0"
           >
             Let's talk
             <motion.span
               variants={{ hover: { x: 2 } }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center"
+              className="ml-3 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0"
             >
-              <ArrowRight className="w-3 h-3" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </motion.span>
           </motion.button>
         </div>
@@ -113,15 +113,15 @@ export default function Navbar() {
               whileHover="hover"
               whileTap={{ scale: 0.96 }}
               transition={{ type: "spring", stiffness: 350, damping: 15 }}
-              className="mt-3 flex items-center justify-between bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-widest transition-colors shadow-lg shadow-blue-500/20 cursor-pointer w-full"
+              className="h-12 mt-3 flex items-center justify-between bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-6 pr-2 text-xs font-bold uppercase tracking-widest transition-colors shadow-lg shadow-blue-500/20 cursor-pointer w-full"
             >
               Let's talk
               <motion.span
                 variants={{ hover: { x: 2 } }}
                 transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center"
+                className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0"
               >
-                <ArrowRight className="w-3 h-3" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </motion.span>
             </motion.button>
           </div>

@@ -269,13 +269,13 @@ export default function CareersClient() {
                             whileHover="hover"
                             whileTap={{ scale: 0.96 }}
                             transition={{ type: "spring", stiffness: 350, damping: 15 }}
-                            className="bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-widest cursor-pointer flex items-center gap-0 shadow-lg shadow-blue-500/20"
+                            className="h-12 bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-6 pr-2 text-xs font-bold uppercase tracking-widest cursor-pointer flex items-center gap-0 shadow-lg shadow-blue-500/20 shrink-0"
                           >
                             Apply for Role
                             <motion.span
                               variants={{ hover: { x: 2, y: -2 } }}
                               transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                              className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shrink-0"
+                              className="ml-3 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0"
                             >
                               <ArrowUpRight className="w-3.5 h-3.5" />
                             </motion.span>
@@ -335,15 +335,15 @@ export default function CareersClient() {
             whileHover="hover"
             whileTap={{ scale: 0.96 }}
             transition={{ type: "spring", stiffness: 350, damping: 15 }}
-            className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold uppercase tracking-wider pl-6 pr-1.5 py-1.5 rounded-full text-xs transition-colors flex items-center gap-0 cursor-pointer shadow-lg shadow-yellow-500/20 relative z-10"
+            className="h-12 bg-yellow-400 hover:bg-yellow-500 text-black font-bold uppercase tracking-wider pl-6 pr-2 rounded-full text-xs transition-colors flex items-center gap-0 cursor-pointer shadow-lg shadow-yellow-500/20 relative z-10 shrink-0"
           >
             Send us your CV
             <motion.span
               variants={{ hover: { x: 2 } }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="ml-3 w-6 h-6 rounded-full bg-black/10 text-black flex items-center justify-center shrink-0"
+              className="ml-3 w-8 h-8 rounded-full bg-black/10 text-black flex items-center justify-center shrink-0"
             >
-              <ArrowRight className="w-3 h-3 text-black" />
+              <ArrowRight className="w-3.5 h-3.5 text-black" />
             </motion.span>
           </motion.button>
         </div>

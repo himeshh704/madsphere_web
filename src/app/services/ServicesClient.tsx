@@ -16,6 +16,7 @@ export default function ServicesClient() {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   
   const [openService, setOpenService] = useState<string>("Brand Strategy");
+  const [hoveredValue, setHoveredValue] = useState<number | null>(null);
 
   const handleMouseEnter = (id: string) => {
     if (typeof window !== "undefined" && window.matchMedia("(any-hover: hover)").matches) {
@@ -30,7 +31,7 @@ export default function ServicesClient() {
   };
 
   return (
-    <main className="min-h-screen bg-zinc-50 dark:bg-[#070708] pt-32 pb-20 overflow-hidden" ref={containerRef}>
+    <main className="min-h-screen bg-zinc-50 dark:bg-[#070708] pt-32 pb-8 md:pb-20 overflow-hidden" ref={containerRef}>
       
       {/* Hero */}
       <section className="px-6 md:px-16 max-w-[1400px] mx-auto text-center mb-16 relative z-10">
@@ -129,7 +130,7 @@ export default function ServicesClient() {
 
       {/* Values Section */}
       <section className="max-w-[1400px] mx-auto px-6 md:px-12 mb-32 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start border-t border-zinc-200 dark:border-zinc-800 pt-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start pt-8">
 
           {/* Left: animated heading */}
           <div className="flex flex-col gap-6">
@@ -143,73 +144,63 @@ export default function ServicesClient() {
               <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> Our core value
             </motion.span>
 
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight relative">
-              <WordsSlideFromRight>What we</WordsSlideFromRight>
-              <br/>
-              <span className="relative inline-block">
-                <WordsSlideFromRight delay={0.16}>stand for</WordsSlideFromRight>
-                <motion.span
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute bottom-1 left-0 right-0 h-[3px] bg-[#0047FF] origin-left block rounded-full"
-                />
-              </span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-zinc-900 dark:text-zinc-50 max-w-md">
+              <WordsSlideFromRight>Creating the</WordsSlideFromRight>
+              <br />
+              <WordsSlideFromRight delay={0.1}>Future Together</WordsSlideFromRight>
+              <br />
+              <WordsSlideFromRight delay={0.2}>Forward</WordsSlideFromRight>
             </h2>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, delay: 0.6 }}
-              className="hidden lg:flex flex-col gap-3 mt-4"
-            >
-              {[...Array(5)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.7 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}
-                  className="h-px bg-zinc-200 dark:bg-zinc-800 origin-left"
-                  style={{ width: `${60 - i * 10}%` }}
-                />
-              ))}
-            </motion.div>
           </div>
 
-          {/* Right: animated value cards */}
-          <div className="flex flex-col gap-8 pt-8 w-full">
-            {aboutValues.map((item, i) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, x: 40, filter: "blur(6px)" }}
-                whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.7, delay: i * 0.18, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ x: 6 }}
-                className="flex gap-5 p-6 rounded-2xl bg-white dark:bg-zinc-900/60 border border-zinc-100 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow duration-300 group cursor-default"
-              >
+          {/* Right: animated value rows */}
+          <div className="flex flex-col w-full divide-y divide-zinc-200/60 dark:divide-zinc-800/60 pt-8 lg:pt-0" onMouseLeave={() => setHoveredValue(null)}>
+            {aboutValues.map((item, i) => {
+              const isDimmed = hoveredValue !== null && hoveredValue !== i;
+              return (
                 <motion.div
-                  whileHover={{ rotate: 45, scale: 1.1 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 12 }}
-                  className="w-9 h-9 rounded-full bg-[#0047FF] text-white flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/25"
+                  key={item.label}
+                  initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
+                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.7, delay: i * 0.18, ease: [0.16, 1, 0.3, 1] }}
+                  animate={{
+                    opacity: isDimmed ? 0.35 : 1,
+                    filter: isDimmed ? "blur(4px)" : "blur(0px)",
+                  }}
+                  onMouseEnter={() => setHoveredValue(i)}
+                  className="flex flex-col md:flex-row gap-6 md:gap-12 items-start py-8 first:pt-0 last:pb-0 group cursor-default transition-all duration-300"
                 >
-                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                    <path d="M13 1L1 13M13 1L13 13M13 1L1 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  {/* Left Column: Icon + label (Mission / Vision) */}
+                  <div className="flex items-center gap-4 w-full md:w-56 shrink-0">
+                    <motion.div
+                      whileHover={{ rotate: 180, scale: 1.15 }}
+                      transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                      className="w-10 h-10 rounded-full bg-[#0047FF] text-white flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/25"
+                    >
+                      {/* White 4-pointed sparkle icon */}
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 0C12 6.62742 17.3726 12 24 12C17.3726 12 12 17.3726 12 24C12 17.3726 6.62742 12 0 12C6.62742 12 12 6.62742 12 0Z" fill="currentColor"/>
+                      </svg>
+                    </motion.div>
+                    
+                    <span className="text-base md:text-lg font-bold tracking-wide text-zinc-900 dark:text-zinc-100 group-hover:text-[#0047FF] transition-colors duration-300">
+                      {item.label}
+                    </span>
+                  </div>
+
+                  {/* Right Column: Title + Text description */}
+                  <div className="flex-1 flex flex-col gap-2">
+                    <h3 className="text-xl md:text-2xl font-extrabold text-zinc-950 dark:text-zinc-50 leading-tight">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed">
+                      {item.text}
+                    </p>
+                  </div>
                 </motion.div>
-                <div>
-                  <h4 className="text-lg font-bold mb-2 text-zinc-900 dark:text-zinc-100 group-hover:text-[#0047FF] transition-colors duration-300">
-                    {item.label}
-                  </h4>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed">
-                    {item.text}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+              );
+            })}
           </div>
 
         </div>

@@ -16,7 +16,7 @@ export default function FAQ() {
   const showContactButton = pathname !== "/contact";
 
   return (
-    <section className="faq-section py-32 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10 bg-[#f5f5f5] dark:bg-[#0a0a0a] rounded-[40px] mt-24 mb-24">
+    <section className="faq-section py-16 md:py-32 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10 bg-[#f5f5f5] dark:bg-[#0a0a0a] rounded-3xl md:rounded-[40px] mt-12 md:mt-24 mb-12 md:mb-24">
       <div className="flex flex-col items-center mb-16">
         <div className="flex items-center gap-3 flex-nowrap">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 whitespace-nowrap">
@@ -95,7 +95,7 @@ export default function FAQ() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.96 }}
                 transition={{ type: "spring", stiffness: 350, damping: 15 }}
-                className="self-start flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full transition-colors shadow-lg shadow-blue-500/20 cursor-pointer"
+                className="h-12 self-start flex items-center gap-3 bg-[#0047FF] hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-widest px-8 rounded-full transition-colors shadow-lg shadow-blue-500/20 cursor-pointer shrink-0"
               >
                 Contact Us <ArrowRight className="w-4 h-4" />
               </motion.button>

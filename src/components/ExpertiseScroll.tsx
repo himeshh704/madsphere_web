@@ -119,13 +119,13 @@ export default function ExpertiseScroll() {
             whileHover="hover"
             whileTap={{ scale: 0.96 }}
             transition={{ type: "spring", stiffness: 350, damping: 15 }}
-            className="self-start flex items-center gap-0 bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-widest mt-8 shadow-lg shadow-blue-500/20 cursor-pointer"
+            className="h-12 self-start flex items-center bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-6 pr-2 text-xs font-bold uppercase tracking-widest mt-8 shadow-lg shadow-blue-500/20 cursor-pointer"
           >
             {isExpanded ? "VIEW ALL SERVICES" : "READ MORE"}
             <motion.span
               variants={{ hover: { x: 2 } }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center"
+              className="ml-3 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0"
             >
               <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

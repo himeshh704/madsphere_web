@@ -327,6 +327,15 @@ export default function AdminPortal() {
                   />
                 </div>
                 <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Title</label>
+                  <input
+                    type="text"
+                    value={item.title || ""}
+                    onChange={(e) => handleTextChange("aboutValues", i, "title", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#0047FF]"
+                  />
+                </div>
+                <div>
                   <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Text</label>
                   <textarea
                     value={item.text}

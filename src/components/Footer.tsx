@@ -11,7 +11,7 @@ export default function Footer() {
   const pathname = usePathname();
 
   if (pathname === "/works" || pathname.startsWith("/admin") || pathname.startsWith("/blog")) return null;
-  const showSayHi = pathname !== "/contact"; // Hide CTA section on contact page to avoid redundant contact buttons
+  const showSayHi = pathname !== "/contact" && pathname !== "/"; // Hide CTA section on contact and home pages to avoid redundant contact sections
 
   return (
     <footer className="relative z-10 w-full overflow-hidden flex flex-col transition-colors duration-300">
@@ -84,13 +84,13 @@ export default function Footer() {
               whileHover="hover"
               whileTap={{ scale: 0.96 }}
               transition={{ type: "spring", stiffness: 350, damping: 15 }}
-              className="flex items-center gap-0 bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-widest transition-colors shadow-lg shadow-blue-500/20 relative z-10 cursor-pointer"
+              className="h-12 flex items-center bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-6 pr-2 text-xs font-bold uppercase tracking-widest transition-colors shadow-lg shadow-blue-500/20 relative z-10 cursor-pointer"
             >
               CONTACT US
               <motion.span
                 variants={{ hover: { x: 2 } }}
                 transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center"
+                className="ml-3 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0"
               >
                 <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -123,9 +123,11 @@ export default function Footer() {
               { Icon: Facebook, href: "#" },
               { Icon: Twitter, href: "#" }
             ].map(({ Icon, href }, i) => (
-              <a key={i} href={href} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-800/80 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
-                <Icon className="w-3.5 h-3.5" />
-              </a>
+              <MagneticWrap key={i}>
+                <a href={href} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-800/80 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
+                  <Icon className="w-3.5 h-3.5" />
+                </a>
+              </MagneticWrap>
             ))}
           </div>
           

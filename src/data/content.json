@@ -35,12 +35,14 @@
   ],
   "aboutValues": [
     {
-      "label": "Our Vision",
-      "text": "A studio where every brand gets treated like the only one that matters. Because for the person building it, it is."
+      "label": "Our Mission",
+      "title": "Impact Through",
+      "text": "We design digital experiences that blend creativity and technology, driving engagement and business results."
     },
     {
-      "label": "Our Mission",
-      "text": "Help emerging brands discover who they are, build something beautiful, and reach the people who need to see it."
+      "label": "Our Vision",
+      "title": "Design That Moves",
+      "text": "Recognised worldwide as the trusted partner for meaningful digital experiences that engage and convert."
     }
   ],
   "servicesHero": {
@@ -282,12 +284,12 @@
       "href": "/"
     },
     {
-      "label": "Services",
-      "href": "/services"
+      "label": "About Us",
+      "href": "/about"
     },
     {
-      "label": "About",
-      "href": "/about"
+      "label": "Services",
+      "href": "/services"
     },
     {
       "label": "Career Inquiries",

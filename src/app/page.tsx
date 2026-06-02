@@ -40,7 +40,7 @@ function ParallaxImg({ src, alt, className }: { src: string; alt: string; classN
     };
   }, []);
 
-  const { scrollYProgress } = useScroll({ target: mounted ? ref : undefined, offset: ["start end", "end start"] });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.2, 1.05, 1.2]);
 
@@ -192,7 +192,7 @@ export default function Home() {
   }, []);
 
   const { scrollYProgress: processScroll } = useScroll({
-    target: mounted ? processRef : undefined,
+    target: processRef,
     offset: ["start end", "end start"]
   });
 
@@ -202,11 +202,11 @@ export default function Home() {
 
   const whyUsRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: whyUsScroll } = useScroll({
-    target: mounted ? whyUsRef : undefined,
+    target: whyUsRef,
     offset: ["start end", "end start"]
   });
   const arcLength = useTransform(whyUsScroll, [0.15, 0.45], [0, 1]);
-  const { scrollYProgress } = useScroll({ target: mounted ? heroRef : undefined, offset: ["start start", "end start"] });
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
@@ -245,7 +245,7 @@ export default function Home() {
                   initial={{ opacity: 0, x: isDesktop ? 40 : 0, y: isDesktop ? 0 : 20, rotateY: isDesktop ? 45 : 0 }}
                   animate={{ opacity: 1, x: 0, y: 0, rotateY: 0 }}
                   transition={{ delay: 1.2 + i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  whileHover={{ scale: 1.12, rotateZ: 6 }}
+                  whileHover={{ scale: 1.1 }}
                   className="w-10 h-10 bg-white/30 backdrop-blur-md border border-white/20 rounded-lg flex items-center justify-center text-white text-sm font-semibold"
                   data-cursor
                 >
@@ -268,7 +268,7 @@ export default function Home() {
               variants={stagger(0.06)}
               initial="hidden"
               animate="show"
-              className="absolute bottom-5 left-5 right-16 hidden md:flex gap-3 overflow-x-auto scrollbar-none z-10"
+              className="absolute bottom-5 left-5 right-5 hidden md:flex justify-between gap-3 z-10"
             >
               {heroCards.map((card) => (
                 <motion.div
@@ -280,8 +280,7 @@ export default function Home() {
                   }}
                   whileHover="hover"
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="shrink-0 flex items-center gap-3 bg-white/35 backdrop-blur-xl border border-white/25 rounded-xl px-3 py-2 cursor-pointer"
-                  style={{ minWidth: 200 }}
+                  className="flex-1 flex items-center gap-3 bg-white/35 backdrop-blur-xl border border-white/25 rounded-xl px-3 py-2 cursor-pointer"
                   data-cursor
                 >
                   <div className="relative w-14 h-14 rounded-lg overflow-hidden shrink-0 bg-zinc-800">
@@ -371,15 +370,15 @@ export default function Home() {
       </section>
 
       {/* Marquee */}
-      <div className="relative z-10 mt-16 border-y border-zinc-200 dark:border-zinc-800 overflow-hidden">
-        <div className="flex items-center justify-center py-3 border-b border-zinc-100 dark:border-zinc-900">
+      <div className="relative z-10 mt-16 overflow-hidden">
+        <div className="flex items-center justify-center py-3">
           <span className="text-[9px] font-bold tracking-[0.25em] uppercase text-zinc-400">Industries We Explore</span>
         </div>
         <Marquee items={clients} speed={50} />
       </div>
 
       {/* Intersection Section */}
-      <section className="relative z-10 py-32 px-6 md:px-16 bg-white dark:bg-[#070708] border-b border-zinc-100 dark:border-zinc-900">
+      <section className="relative z-10 py-32 px-6 md:px-16 bg-white dark:bg-[#070708]">
         <div className="max-w-[1200px] mx-auto flex flex-col items-center text-center gap-8">
           <span className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500">
             <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> About Us
@@ -405,15 +404,15 @@ export default function Home() {
             whileHover="hover"
             whileTap={{ scale: 0.96 }}
             transition={{ type: "spring", stiffness: 350, damping: 15 }}
-            className="flex items-center gap-0 bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-widest mt-4 shadow-lg shadow-blue-500/20 cursor-pointer"
+            className="h-12 flex items-center bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-6 pr-2 text-xs font-bold uppercase tracking-widest mt-4 shadow-lg shadow-blue-500/20 cursor-pointer shrink-0"
           >
             READ MORE
             <motion.span
               variants={{ hover: { x: 2 } }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center"
+              className="ml-3 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0"
             >
-              <ArrowRight className="w-3 h-3 text-white" />
+              <ArrowRight className="w-3.5 h-3.5 text-white" />
             </motion.span>
           </motion.button>
         </div>
@@ -512,7 +511,7 @@ export default function Home() {
       */}
 
       {/* Why Choose Us Section */}
-      <section ref={whyUsRef} className="relative z-10 py-32 px-6 md:px-16 bg-[#fcfcfc] dark:bg-[#070708] border-t border-zinc-100 dark:border-zinc-900" style={{ contentVisibility: "auto", containIntrinsicSize: "0 1200px" }}>
+      <section ref={whyUsRef} className="relative z-10 py-32 px-6 md:px-16 bg-[#fcfcfc] dark:bg-[#070708]" style={{ contentVisibility: "auto", containIntrinsicSize: "0 1200px" }}>
         <div className="max-w-[1200px] mx-auto flex flex-col items-center text-center gap-12">
           
           <div className="flex flex-col items-center gap-4">
@@ -525,28 +524,19 @@ export default function Home() {
           </div>
 
           {/* SVG Arc and Icon */}
-          <div className="relative w-full max-w-[600px] h-[160px] flex items-center justify-center overflow-visible mt-6">
-            <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible z-0" viewBox="0 0 600 200" preserveAspectRatio="none">
-              {/* Background dotted arc */}
+          <div className="relative w-full max-w-[500px] aspect-[2/1] flex items-end justify-center overflow-visible mt-12 mb-6">
+            <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible z-0" viewBox="0 0 500 250">
+              {/* Sleek static solid blue arc line */}
               <path
-                d="M 50,200 A 250,200 0 0 1 550,200"
-                fill="none"
-                stroke="currentColor"
-                className="text-zinc-200 dark:text-zinc-800"
-                strokeWidth="2.5"
-                strokeDasharray="6,6"
-              />
-              {/* Static drawing arc */}
-              <path
-                d="M 50,200 A 250,200 0 0 1 550,200"
+                d="M 0,250 A 250,250 0 0 1 500,250"
                 fill="none"
                 stroke="#0047FF"
-                strokeWidth="3"
+                strokeWidth="1.5"
               />
             </svg>
 
             {/* Central Clock/Active Pill Icon Container */}
-            <div className="absolute top-[30px] z-10 w-24 h-24 overflow-visible flex items-center justify-center">
+            <div className="absolute top-0 -translate-y-1/2 z-10 w-24 h-24 overflow-visible flex items-center justify-center">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activePill}
@@ -643,32 +633,20 @@ export default function Home() {
       </section>
 
       {/* Expertise */}
-      <section id="services" className="relative z-10 border-t border-zinc-100 dark:border-zinc-800" style={{ contentVisibility: "auto", containIntrinsicSize: "0 1000px" }}>
+      <section id="services" className="relative z-10" style={{ contentVisibility: "auto", containIntrinsicSize: "0 1000px" }}>
         <ExpertiseScroll />
       </section>
 
-      {/* Parallax Showcase */}
+      {/* Parallax Showcase - commented out to hide the mountain parallax */}
+      {/*
       <section style={{ contentVisibility: "auto", containIntrinsicSize: "0 1000px" }}>
         <ParallaxComponent />
       </section>
+      */}
 
-      {/* Process Wrapper */}
-      <div className="process-section-wrapper w-full relative z-10" style={{ contentVisibility: "auto", containIntrinsicSize: "0 1500px" }}>
-        <section 
-          ref={processRef} 
-          className="process-section relative w-full py-28 px-6 md:px-16 max-w-[1400px] mx-auto"
-        >
-        <div className="flex items-center gap-4 mb-20">
-          <h2 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50">
-            <TextReveal>How We Work</TextReveal>
-          </h2>
-          <SectionTag label="Process" />
-        </div>
-
-        <div className="w-full mt-10">
-          <ParallaxScrollFeatureSection steps={process} />
-        </div>
-      </section>
+      {/* Process Section */}
+      <div className="process-section-wrapper w-full relative z-10">
+        <ParallaxScrollFeatureSection steps={process} />
       </div>
 
       {/* FOUNDER / BEHIND THE STUDIO \u2014 moved to About page, keep code here */}
@@ -745,7 +723,7 @@ export default function Home() {
       */}
 
       {/* ──── Let’s Keep in Touch ─────────────────────────────────────── */}
-      <section className="relative z-10 py-28 px-6 md:px-16 border-t border-zinc-100 dark:border-zinc-800 bg-white dark:bg-[#070708]">
+      <section className="relative z-10 py-16 md:py-28 px-6 md:px-16 bg-white dark:bg-[#070708]">
         <div className="max-w-[1400px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
@@ -872,20 +850,18 @@ function HomeContactForm() {
         whileHover="hover"
         whileTap={{ scale: 0.97 }}
         transition={{ type: "spring", stiffness: 350, damping: 15 }}
-        className={`self-start flex items-center gap-0 rounded-full pl-5 pr-1.5 py-1.5 text-white font-bold text-xs uppercase tracking-widest transition-colors cursor-pointer shadow-xl ${hcfSuccess ? "bg-green-500 hover:bg-green-600 shadow-green-500/20" : "bg-[#0047FF] hover:bg-blue-700 shadow-blue-500/20"} disabled:opacity-70`}
+        className={`h-12 self-start flex items-center rounded-full pl-6 pr-2 text-white font-bold text-xs uppercase tracking-widest transition-colors cursor-pointer shadow-xl ${hcfSuccess ? "bg-green-500 hover:bg-green-600 shadow-green-500/20" : "bg-[#0047FF] hover:bg-blue-700 shadow-blue-500/20"} disabled:opacity-70`}
       >
         {hcfSubmitting ? "Sending..." : hcfSuccess ? "Message sent" : "Send Message"}
         <motion.span
           variants={{ hover: { x: 2 } }}
           transition={{ type: "spring", stiffness: 400, damping: 20 }}
-          className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shrink-0"
+          className="ml-3 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0"
         >
           {hcfSubmitting ? (
-            <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-          ) : hcfSuccess ? (
-            <ArrowRight className="w-3 h-3 text-white" />
+            <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
           ) : (
-            <ArrowRight className="w-3 h-3 text-white" />
+            <ArrowRight className="w-3.5 h-3.5 text-white" />
           )}
         </motion.span>
       </motion.button>

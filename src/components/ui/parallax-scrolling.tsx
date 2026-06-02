@@ -175,6 +175,7 @@ export function ParallaxComponent() {
         </div>
       </section>
       
+      {/*
       <section className="parallax__content text-center">
         <div className="max-w-xl flex flex-col items-center gap-6">
           <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 160 160" fill="none" className="osmo-icon-svg">
@@ -188,6 +189,7 @@ export function ParallaxComponent() {
           </p>
         </div>
       </section>
+      */}
     </div>
   );
 }

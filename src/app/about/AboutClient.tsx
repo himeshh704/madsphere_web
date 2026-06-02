@@ -68,54 +68,41 @@ export default function AboutClient() {
 
       {/* Hero */}
       <SectionBlurIn>
-      <section className="px-6 md:px-16 max-w-[1500px] mx-auto pt-32 mb-32 relative z-10 flex flex-col lg:flex-row gap-16 items-start">
-        {/* Left Sticky Sidebar */}
-        <div className="lg:w-[250px] shrink-0 lg:sticky top-32 flex flex-col gap-12">
-          <span className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 border-l border-zinc-300 dark:border-zinc-700 pl-4">
-            <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> Who we are
+      <section className="px-6 md:px-16 max-w-[1200px] mx-auto pt-32 mb-20 text-center relative z-10">
+        <div className="flex justify-center items-center gap-2 mb-6">
+          <span className="text-xl md:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">Who We Are</span>
+          <span className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 border-l border-zinc-300 dark:border-zinc-700 pl-4 ml-4">
+            <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> About Us
           </span>
+        </div>
+        
+        <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 max-w-4xl mx-auto leading-tight mb-12">
+          <TextReveal>{aboutHero.title}</TextReveal>
+        </h1>
+
+        <div className="max-w-2xl mx-auto text-sm md:text-base text-zinc-500 font-sans leading-relaxed text-center">
+          <p>{aboutHero.desc1}</p>
+          <p className="mt-4">{aboutHero.desc2}</p>
+          <p className="mt-4">{aboutHero.desc3}</p>
+        </div>
+
+        <div className="flex justify-center mt-10">
           <motion.button 
             onClick={() => router.push('/works')}
             whileHover="hover"
             whileTap={{ scale: 0.96 }}
             transition={{ type: "spring", stiffness: 350, damping: 15 }}
-            className="hidden lg:flex self-start items-center gap-0 bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-widest mt-4 shadow-lg shadow-blue-500/20 cursor-pointer"
+            className="h-12 flex items-center bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-6 pr-2 text-xs font-bold uppercase tracking-widest shadow-lg shadow-blue-500/20 cursor-pointer"
           >
             See Our Work
             <motion.span
               variants={{ hover: { x: 2, y: -2 } }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shrink-0"
+              className="ml-3 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0"
             >
               <ArrowUpRight className="w-3.5 h-3.5 text-white" />
             </motion.span>
           </motion.button>
-        </div>
-
-        {/* Right Hero Content */}
-        <div className="flex-1 flex flex-col gap-8 w-full min-w-0">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-4">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 max-w-3xl leading-tight">
-              <TextReveal>{aboutHero.title}</TextReveal>
-            </h1>
-          </div>
-          <p className="text-sm md:text-base text-zinc-500 font-sans max-w-2xl leading-relaxed mb-6">
-            {aboutHero.desc1}
-            <br /><br />
-            {aboutHero.desc2}
-            <br /><br />
-            {aboutHero.desc3}
-          </p>
-          
-          <Tilt3D className="w-full h-[40vh] md:h-[50vh] rounded-2xl overflow-hidden relative">
-            <motion.div style={{ y: heroY }} className="w-full h-[140%] absolute -top-[20%]">
-              <img 
-                src={aboutHero.img} 
-                alt="About Hero" 
-                className="w-full h-full object-cover"
-              />
-            </motion.div>
-          </Tilt3D>
         </div>
       </section>
       </SectionBlurIn>
@@ -168,7 +155,7 @@ export default function AboutClient() {
       {/* Values Section */}
       <SectionBlurIn delay={0.05}>
       <section className="max-w-[1500px] mx-auto px-6 md:px-12 mb-32 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start border-t border-zinc-200 dark:border-zinc-800 pt-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start pt-8">
 
           {/* Left: animated heading */}
           <div className="flex flex-col gap-6">
@@ -182,52 +169,24 @@ export default function AboutClient() {
               <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" /> Our core value
             </motion.span>
 
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight relative">
-              <WordsSlideFromRight>What we</WordsSlideFromRight>
-              <br/>
-              <span className="relative inline-block">
-                <WordsSlideFromRight delay={0.16}>stand for</WordsSlideFromRight>
-                <motion.span
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute bottom-1 left-0 right-0 h-[3px] bg-[#0047FF] origin-left block rounded-full"
-                />
-              </span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-zinc-900 dark:text-zinc-50 max-w-md">
+              <WordsSlideFromRight>Creating the</WordsSlideFromRight>
+              <br />
+              <WordsSlideFromRight delay={0.1}>Future Together</WordsSlideFromRight>
+              <br />
+              <WordsSlideFromRight delay={0.2}>Forward</WordsSlideFromRight>
             </h2>
-
-            {/* Animated dots decorative column */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, delay: 0.6 }}
-              className="hidden lg:flex flex-col gap-3 mt-4"
-            >
-              {[...Array(5)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.7 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}
-                  className="h-px bg-zinc-200 dark:bg-zinc-800 origin-left"
-                  style={{ width: `${60 - i * 10}%` }}
-                />
-              ))}
-            </motion.div>
           </div>
 
-          {/* Right: animated value cards */}
-          <div className="flex flex-col gap-8 pt-8" onMouseLeave={() => setHoveredValue(null)}>
+          {/* Right: animated value rows */}
+          <div className="flex flex-col w-full divide-y divide-zinc-200/60 dark:divide-zinc-800/60 pt-8 lg:pt-0" onMouseLeave={() => setHoveredValue(null)}>
             {aboutValues.map((item, i) => {
               const isDimmed = hoveredValue !== null && hoveredValue !== i;
               return (
                 <motion.div
                   key={item.label}
-                  initial={{ opacity: 0, x: 40, filter: "blur(6px)" }}
-                  whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
+                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.7, delay: i * 0.18, ease: [0.16, 1, 0.3, 1] }}
                   animate={{
@@ -235,31 +194,38 @@ export default function AboutClient() {
                     filter: isDimmed ? "blur(4px)" : "blur(0px)",
                   }}
                   onMouseEnter={() => setHoveredValue(i)}
-                  whileHover={{ x: 6 }}
-                  className="flex gap-5 p-6 rounded-2xl bg-white dark:bg-zinc-900/60 border border-zinc-100 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow duration-300 group cursor-default"
+                  className="flex flex-col md:flex-row gap-6 md:gap-12 items-start py-8 first:pt-0 last:pb-0 group cursor-default transition-all duration-300"
                 >
-                {/* Animated icon */}
-                <motion.div
-                  whileHover={{ rotate: 45, scale: 1.1 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 12 }}
-                  className="w-9 h-9 rounded-full bg-[#0047FF] text-white flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/25"
-                >
-                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                    <path d="M13 1L1 13M13 1L13 13M13 1L1 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </motion.div>
+                  {/* Left Column: Icon + label (Mission / Vision) */}
+                  <div className="flex items-center gap-4 w-full md:w-56 shrink-0">
+                    <motion.div
+                      whileHover={{ rotate: 180, scale: 1.15 }}
+                      transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                      className="w-10 h-10 rounded-full bg-[#0047FF] text-white flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/25"
+                    >
+                      {/* White 4-pointed sparkle icon */}
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 0C12 6.62742 17.3726 12 24 12C17.3726 12 12 17.3726 12 24C12 17.3726 6.62742 12 0 12C6.62742 12 12 6.62742 12 0Z" fill="currentColor"/>
+                      </svg>
+                    </motion.div>
+                    
+                    <span className="text-base md:text-lg font-bold tracking-wide text-zinc-900 dark:text-zinc-100 group-hover:text-[#0047FF] transition-colors duration-300">
+                      {item.label}
+                    </span>
+                  </div>
 
-                <div>
-                  <h4 className="text-lg font-bold mb-2 text-zinc-900 dark:text-zinc-100 group-hover:text-[#0047FF] transition-colors duration-300">
-                    {item.label}
-                  </h4>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed">
-                    {item.text}
-                  </p>
-                </div>
-              </motion.div>
-            )
-          })}
+                  {/* Right Column: Title + Text description */}
+                  <div className="flex-1 flex flex-col gap-2">
+                    <h3 className="text-xl md:text-2xl font-extrabold text-zinc-950 dark:text-zinc-50 leading-tight">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed">
+                      {item.text}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
         </div>

@@ -62,9 +62,9 @@ export default function ApplyModal({ role, onClose }: ApplyModalProps) {
     }
   };
 
-  const rowClass = "flex items-start gap-4 px-6 py-4 border-b border-white/[0.06] group transition-colors hover:bg-white/[0.02]";
-  const labelClass = "w-20 shrink-0 text-[11px] font-semibold tracking-wider uppercase text-white/35 pt-0.5 select-none";
-  const inputClass = "flex-1 bg-transparent text-white/90 text-sm font-medium placeholder:text-white/25 outline-none focus:placeholder:text-white/15 transition-colors";
+  const rowClass = "flex items-start gap-4 px-6 py-4 border-b border-zinc-200/50 group transition-colors hover:bg-zinc-500/5";
+  const labelClass = "w-20 shrink-0 text-[11px] font-bold tracking-wider uppercase text-zinc-400 pt-0.5 select-none";
+  const inputClass = "flex-1 bg-transparent text-zinc-805 text-sm font-semibold placeholder:text-zinc-400 outline-none transition-colors";
 
   if (!mounted) return null;
 
@@ -79,7 +79,7 @@ export default function ApplyModal({ role, onClose }: ApplyModalProps) {
         transition={{ duration: 0.25 }}
         onClick={onClose}
         className="fixed inset-0 z-50"
-        style={{ background: "rgba(0,0,0,0.72)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
+        style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
       />
 
       {/* macOS-style compose window */}
@@ -92,29 +92,25 @@ export default function ApplyModal({ role, onClose }: ApplyModalProps) {
         className="fixed z-50 inset-0 flex items-center justify-center px-4 pointer-events-none"
       >
         <div
-          className="pointer-events-auto w-full max-w-[600px] rounded-[18px] overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.7)] border border-white/[0.08]"
+          className="pointer-events-auto w-full max-w-[600px] rounded-2xl overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.15)] border border-white/60"
           style={{
-            background: "linear-gradient(160deg, #111827 0%, #0d1117 60%, #090d14 100%)",
+            background: "rgba(255, 255, 255, 0.85)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
           }}
         >
           {/* ── Title bar ─────────────────────────────────────── */}
-          <div className="flex items-center px-5 pt-4 pb-3 border-b border-white/[0.06]">
-            {/* Traffic lights */}
-            <div className="flex items-center gap-2 mr-4">
-              <button
-                onClick={onClose}
-                className="w-3 h-3 rounded-full bg-[#FF5F57] hover:bg-[#ff3b30] transition-colors cursor-pointer shadow-[0_0_6px_rgba(255,95,87,0.5)]"
-                aria-label="Close"
-              />
-              <div className="w-3 h-3 rounded-full bg-[#FFBD2E] shadow-[0_0_6px_rgba(255,189,46,0.4)]" />
-              <div className="w-3 h-3 rounded-full bg-[#28C840] shadow-[0_0_6px_rgba(40,200,64,0.4)]" />
-            </div>
-            <div className="flex-1 text-center">
-              <span className="text-[12px] font-semibold text-white/40 tracking-wide">
-                {status === "success" ? "Application Sent" : `Apply — ${role}`}
-              </span>
-            </div>
-            <div className="w-14" /> {/* spacer to center title */}
+          <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-zinc-200/50">
+            <span className="text-[12px] font-bold text-zinc-800 tracking-wide">
+              {status === "success" ? "Application Sent" : `Apply — ${role}`}
+            </span>
+            <button
+              type="button"
+              onClick={onClose}
+              className="text-xs font-bold text-zinc-500 hover:text-zinc-950 transition-colors cursor-pointer"
+            >
+              Cancel
+            </button>
           </div>
 
           {/* ── Success state ──────────────────────────────────── */}
@@ -131,17 +127,17 @@ export default function ApplyModal({ role, onClose }: ApplyModalProps) {
                 transition={{ type: "spring", stiffness: 400, damping: 20, delay: 0.1 }}
                 className="w-14 h-14 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center"
               >
-                <CheckCircle className="w-7 h-7 text-green-400" />
+                <CheckCircle className="w-7 h-7 text-green-550" />
               </motion.div>
               <div>
-                <h3 className="text-xl font-bold text-white mb-2">Application sent!</h3>
-                <p className="text-sm text-white/40 font-sans max-w-xs leading-relaxed">
+                <h3 className="text-xl font-bold text-zinc-900 mb-2">Application sent!</h3>
+                <p className="text-sm text-zinc-500 font-sans max-w-xs leading-relaxed">
                   We got it. You&apos;ll hear from us within a week at your email address.
                 </p>
               </div>
               <button
                 onClick={onClose}
-                className="mt-2 bg-[#0047FF] hover:bg-blue-600 text-white text-xs font-bold uppercase tracking-widest px-8 py-3 rounded-full cursor-pointer transition-colors shadow-lg shadow-blue-500/25"
+                className="mt-2 h-12 bg-[#0047FF] hover:bg-blue-600 text-white text-xs font-bold uppercase tracking-widest px-8 rounded-full cursor-pointer transition-colors shadow-lg shadow-blue-500/25 flex items-center justify-center shrink-0"
               >
                 Done
               </button>
@@ -156,8 +152,8 @@ export default function ApplyModal({ role, onClose }: ApplyModalProps) {
                   <div className="w-5 h-5 rounded-full bg-[#0047FF] flex items-center justify-center shrink-0">
                     <span className="text-[8px] font-black text-white">M</span>
                   </div>
-                  <span className="text-white/80 text-sm font-medium">MadSphere</span>
-                  <span className="text-white/25 text-xs ml-1">(madsphere.info@gmail.com)</span>
+                  <span className="text-zinc-800 text-sm font-semibold">MadSphere</span>
+                  <span className="text-zinc-400 text-xs ml-1">(madsphere.info@gmail.com)</span>
                 </div>
               </div>
 
@@ -203,15 +199,15 @@ export default function ApplyModal({ role, onClose }: ApplyModalProps) {
               <div className={rowClass}>
                 <span className={labelClass}>Role</span>
                 <div className="flex-1 flex items-center justify-between">
-                  <span className="text-white/60 text-sm font-medium">{role}</span>
+                  <span className="text-zinc-600 text-sm font-semibold">{role}</span>
                   {/* CV upload trigger */}
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className={`flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full transition-all cursor-pointer ${
+                    className={`flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full transition-all cursor-pointer ${
                       cvFile
-                        ? "bg-[#0047FF]/20 text-[#4d83ff] border border-[#0047FF]/30"
-                        : "bg-white/5 text-white/40 border border-white/10 hover:bg-white/10 hover:text-white/60"
+                        ? "bg-[#0047FF]/15 text-[#0047FF] border border-[#0047FF]/25"
+                        : "bg-zinc-100 text-zinc-500 border border-zinc-200 hover:bg-zinc-200 hover:text-zinc-800"
                     }`}
                   >
                     <Upload className="w-3 h-3" />
@@ -222,14 +218,14 @@ export default function ApplyModal({ role, onClose }: ApplyModalProps) {
               </div>
 
               {/* ── Message textarea ─── */}
-              <div className="px-6 pt-4 pb-2 border-b border-white/[0.06]">
+              <div className="px-6 pt-4 pb-2 border-b border-zinc-200/50">
                 <textarea
                   required
                   rows={5}
                   placeholder="Say something about yourself and why you want to join MadSphere..."
                   value={form.message}
                   onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-                  className="w-full bg-transparent text-white/80 text-sm font-medium placeholder:text-white/20 outline-none resize-none leading-relaxed transition-colors"
+                  className="w-full bg-transparent text-zinc-850 text-sm font-semibold placeholder:text-zinc-400 outline-none resize-none leading-relaxed transition-colors"
                 />
               </div>
 
@@ -249,8 +245,8 @@ export default function ApplyModal({ role, onClose }: ApplyModalProps) {
               </AnimatePresence>
 
               {/* ── Footer / Submit ─── */}
-              <div className="flex items-center justify-between px-6 py-4">
-                <p className="text-[10px] text-white/25 font-sans">
+              <div className="flex items-center justify-between px-6 py-4 bg-zinc-50/50">
+                <p className="text-[10px] text-zinc-400 font-bold font-sans">
                   PDF or Word · max 5MB · replies within a week
                 </p>
                 <motion.button
@@ -259,18 +255,18 @@ export default function ApplyModal({ role, onClose }: ApplyModalProps) {
                   whileHover="hover"
                   whileTap={{ scale: 0.96 }}
                   transition={{ type: "spring", stiffness: 350, damping: 15 }}
-                  className="flex items-center gap-0 bg-[#0047FF] hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-bold uppercase tracking-widest pl-5 pr-1.5 py-1.5 rounded-full transition-colors shadow-lg shadow-blue-500/20 cursor-pointer"
+                  className="h-12 flex items-center bg-[#0047FF] hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-bold uppercase tracking-widest pl-6 pr-2 rounded-full transition-colors shadow-lg shadow-blue-500/20 cursor-pointer shrink-0"
                 >
                   {status === "loading" ? "Sending" : "Submit"}
                   <motion.span
                     variants={{ hover: { x: 2 } }}
                     transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                    className="ml-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shrink-0"
+                    className="ml-3 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0"
                   >
                     {status === "loading" ? (
-                      <Loader2 className="w-3 h-3 animate-spin text-white" />
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-white" />
                     ) : (
-                      <ArrowRight className="w-3 h-3 text-white" />
+                      <ArrowRight className="w-3.5 h-3.5 text-white" />
                     )}
                   </motion.span>
                 </motion.button>
