@@ -376,8 +376,8 @@ export const ParallaxScrollFeatureSection = ({
               className="absolute cursor-grab active:cursor-grabbing w-[310px] sm:w-[340px] md:w-[860px]"
               initial={{ x: 0, rotate: 0, scale: 1 }}
               animate={{
-                x: isHovered ? xOffset : 0,
-                rotate: isHovered ? rotation : 0,
+                x: isHovered ? xOffset : xOffset * 0.5,
+                rotate: isHovered ? rotation : rotation * 0.5,
                 scale: isHovered ? scale : (isCurrent ? 1 : 1 - (index - currentIndex + sections.length) % sections.length * 0.04),
                 opacity: opacity,
               }}
@@ -687,8 +687,8 @@ export const ParallaxScrollFeatureSection = ({
       {/* Navigation Indicators & Counters */}
       {layout === "vertical" && sections.length > 1 && (
         <>
-          {/* Navigation Indicators on the Right (Vertical stack) */}
-          <div className="absolute right-4 md:right-12 top-1/2 flex -translate-y-1/2 flex-col gap-2.5 z-20">
+          {/* Navigation Indicators on the Right (Vertical stack) - Desktop only */}
+          <div className="hidden md:flex absolute right-12 top-1/2 flex -translate-y-1/2 flex-col gap-2.5 z-20">
             {sections.map((_, index) => (
               <button
                 key={index}
@@ -696,6 +696,21 @@ export const ParallaxScrollFeatureSection = ({
                 className={cn(
                   "w-1.5 rounded-full transition-all duration-300 cursor-pointer",
                   index === currentIndex ? "h-5 bg-[#0047FF]" : "h-1.5 bg-zinc-300 dark:bg-zinc-700 hover:bg-zinc-400"
+                )}
+                aria-label={`Go to step ${index + 1}`}
+              />
+            ))}
+          </div>
+
+          {/* Navigation Indicators at the Bottom - Mobile only */}
+          <div className="flex md:hidden justify-center gap-2 mt-8 z-20">
+            {sections.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={cn(
+                  "h-1.5 rounded-full transition-all duration-300 cursor-pointer",
+                  index === currentIndex ? "w-5 bg-[#0047FF]" : "w-1.5 bg-zinc-300 dark:bg-zinc-700 hover:bg-zinc-400"
                 )}
                 aria-label={`Go to step ${index + 1}`}
               />
