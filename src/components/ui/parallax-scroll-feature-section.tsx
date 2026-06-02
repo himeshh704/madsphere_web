@@ -684,18 +684,18 @@ export const ParallaxScrollFeatureSection = ({
         </AnimatePresence>
       </div>
 
-      {/* Navigation Indicators & Indicators */}
-      {layout !== "grid" && sections.length > 1 && (
+      {/* Navigation Indicators & Counters */}
+      {layout === "vertical" && sections.length > 1 && (
         <>
-          {/* Navigation Indicators on the Right */}
+          {/* Navigation Indicators on the Right (Vertical stack) */}
           <div className="absolute right-4 md:right-12 top-1/2 flex -translate-y-1/2 flex-col gap-2.5 z-20">
             {sections.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={cn(
-                  "h-1.5 w-1.5 rounded-full transition-all duration-300 cursor-pointer",
-                  index === currentIndex ? "h-5 bg-[#0047FF]" : "bg-zinc-300 dark:bg-zinc-700 hover:bg-zinc-400"
+                  "w-1.5 rounded-full transition-all duration-300 cursor-pointer",
+                  index === currentIndex ? "h-5 bg-[#0047FF]" : "h-1.5 bg-zinc-300 dark:bg-zinc-700 hover:bg-zinc-400"
                 )}
                 aria-label={`Go to step ${index + 1}`}
               />
@@ -713,6 +713,22 @@ export const ParallaxScrollFeatureSection = ({
             </span>
           </div>
         </>
+      )}
+
+      {layout === "stack" && sections.length > 1 && (
+        <div className="flex justify-center gap-2 mt-8 z-20">
+          {sections.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={cn(
+                "h-1.5 rounded-full transition-all duration-300 cursor-pointer",
+                index === currentIndex ? "w-5 bg-[#0047FF]" : "w-1.5 bg-zinc-300 dark:bg-zinc-700 hover:bg-zinc-400"
+              )}
+              aria-label={`Go to step ${index + 1}`}
+            />
+          ))}
+        </div>
       )}
 
       {/* Scroll/Drag Guide Tag at Bottom */}
