@@ -623,6 +623,27 @@ export const ParallaxScrollFeatureSection = ({
               </motion.div>
             );
           })}
+          </div>
+        </div>
+
+        {/* Swipe instruction helper on mobile */}
+        <div className="mt-6 md:hidden text-center pointer-events-none select-none text-zinc-400 dark:text-zinc-500 flex flex-col items-center gap-1 z-20">
+          <motion.div
+            animate={{ y: [-6, 6, -6] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <path d="M12 19V5M5 12l7-7 7 7" />
+            </svg>
+          </motion.div>
+          <span className="text-[9px] font-bold tracking-widest uppercase font-sans">Swipe card up / down</span>
         </div>
       </div>
     );
