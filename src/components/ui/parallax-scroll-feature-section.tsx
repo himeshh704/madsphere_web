@@ -301,13 +301,13 @@ export const ParallaxScrollFeatureSection = ({
     if (diff === 0) {
       return { y: 0, scale: 1, opacity: 1, zIndex: 5, rotateX: 0 };
     } else if (diff === -1) {
-      return { y: isDesktop ? -160 : -95, scale: 0.85, opacity: 0.6, zIndex: 4, rotateX: 8 };
+      return { y: isDesktop ? -160 : -80, scale: 0.85, opacity: 0.6, zIndex: 4, rotateX: 8 };
     } else if (diff === -2) {
-      return { y: isDesktop ? -280 : -170, scale: 0.7, opacity: 0.3, zIndex: 3, rotateX: 15 };
+      return { y: isDesktop ? -280 : -150, scale: 0.7, opacity: 0.3, zIndex: 3, rotateX: 15 };
     } else if (diff === 1) {
-      return { y: isDesktop ? 160 : 95, scale: 0.85, opacity: 0.6, zIndex: 4, rotateX: -8 };
+      return { y: isDesktop ? 160 : 80, scale: 0.85, opacity: 0.6, zIndex: 4, rotateX: -8 };
     } else if (diff === 2) {
-      return { y: isDesktop ? 280 : 170, scale: 0.7, opacity: 0.3, zIndex: 3, rotateX: -15 };
+      return { y: isDesktop ? 280 : 150, scale: 0.7, opacity: 0.3, zIndex: 3, rotateX: -15 };
     } else {
       return {
         y: diff > 0 ? 400 : -400,
@@ -330,127 +330,149 @@ export const ParallaxScrollFeatureSection = ({
   // 1. Render Spread Stack Layout
   const renderStackLayout = () => {
     const isDesktop = windowWidth >= 768;
-    const spread = isDesktop ? 80 : 40;
+    const spread = isDesktop ? 80 : 35;
     const rot = isDesktop ? 6 : 4;
 
     return (
-      <div className="relative flex h-[480px] md:h-[600px] w-full max-w-[360px] md:max-w-[900px] items-center justify-center mx-auto mt-2">
-        {sections.map((item, index) => {
-          const isCurrent = index === currentIndex;
-          
-          let xOffset = 0;
-          let rotation = 0;
-          let zIndex = sections.length - 1;
-          let opacity = 1;
-          let scale = 1;
+      <div className="relative flex flex-col items-center w-full">
+        <div className="relative flex h-[480px] md:h-[600px] w-full max-w-[340px] md:max-w-[900px] items-center justify-center mx-auto mt-2">
+          {sections.map((item, index) => {
+            const isCurrent = index === currentIndex;
+            
+            let xOffset = 0;
+            let rotation = 0;
+            let zIndex = sections.length - 1;
+            let opacity = 1;
+            let scale = 1;
 
-          if (isCurrent) {
-            xOffset = 0;
-            rotation = 0;
-            zIndex = 10;
-            scale = 1;
-          } else {
-            const relIndex = (index - currentIndex + sections.length) % sections.length;
-            if (relIndex === 1) {
-              xOffset = -spread;
-              rotation = -rot;
-              zIndex = 8;
-              scale = 0.96;
-            } else if (relIndex === 2) {
-              xOffset = spread;
-              rotation = rot;
-              zIndex = 8;
-              scale = 0.96;
-            } else {
+            if (isCurrent) {
               xOffset = 0;
               rotation = 0;
-              zIndex = 6;
-              scale = 0.92;
-              opacity = 0.7;
+              zIndex = 10;
+              scale = 1;
+            } else {
+              const relIndex = (index - currentIndex + sections.length) % sections.length;
+              if (relIndex === 1) {
+                xOffset = -spread;
+                rotation = -rot;
+                zIndex = 8;
+                scale = 0.95;
+              } else if (relIndex === 2) {
+                xOffset = spread;
+                rotation = rot;
+                zIndex = 8;
+                scale = 0.95;
+              } else {
+                xOffset = 0;
+                rotation = 0;
+                zIndex = 6;
+                scale = 0.90;
+                opacity = 0.65;
+              }
             }
-          }
 
-          return (
-            <motion.div
-              key={item.id}
-              className="absolute cursor-grab active:cursor-grabbing w-[310px] sm:w-[340px] md:w-[860px]"
-              initial={{ x: 0, rotate: 0, scale: 1 }}
-              animate={{
-                x: isHovered ? xOffset : xOffset * 0.5,
-                rotate: isHovered ? rotation : rotation * 0.5,
-                scale: isHovered ? scale : (isCurrent ? 1 : 1 - (index - currentIndex + sections.length) % sections.length * 0.04),
-                opacity: opacity,
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 25,
-              }}
-              drag={isCurrent ? "x" : false}
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.6}
-              onDragStart={() => setIsDragging(true)}
-              onDragEnd={handleDragEnd}
-              style={{
-                zIndex: zIndex,
-                willChange: "transform, opacity",
-                transformStyle: "preserve-3d",
-                backfaceVisibility: "hidden",
-              }}
-            >
-              <Card
-                className="h-[430px] md:h-[500px] p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-8 justify-between"
+            return (
+              <motion.div
+                key={item.id}
+                className="absolute cursor-grab active:cursor-grabbing w-[270px] sm:w-[320px] md:w-[860px]"
+                initial={{ x: 0, rotate: 0, scale: 1 }}
+                animate={{
+                  x: isHovered ? xOffset : xOffset * 0.6,
+                  rotate: isHovered ? rotation : rotation * 0.6,
+                  scale: isHovered ? scale : (isCurrent ? 1 : 1 - (index - currentIndex + sections.length) % sections.length * 0.04),
+                  opacity: opacity,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 25,
+                }}
+                drag={isCurrent ? "x" : false}
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.6}
+                onDragStart={() => setIsDragging(true)}
+                onDragEnd={handleDragEnd}
                 style={{
-                  boxShadow: isCurrent
-                    ? "0 25px 50px -12px rgba(0, 71, 255, 0.12), 0 0 0 1px rgba(0, 71, 255, 0.04)"
-                    : "0 10px 30px -10px rgba(0, 0, 0, 0.08)",
+                  zIndex: zIndex,
+                  willChange: "transform, opacity",
+                  transformStyle: "preserve-3d",
+                  backfaceVisibility: "hidden",
                 }}
               >
-                {/* Left side: Image */}
-                <div className="w-full md:w-[42%] h-36 md:h-full rounded-2xl overflow-hidden relative group bg-zinc-100 dark:bg-zinc-800 flex-shrink-0">
-                  <img 
-                    src={item.imageUrl} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                    draggable={false}
-                  />
-                  <div className="absolute top-3 left-3 px-2.5 py-0.5 bg-black/60 backdrop-blur-md rounded-lg border border-white/10">
-                    <span className="text-[10px] font-bold text-white uppercase tracking-wider font-sans">
-                      Step {item.stepNum}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Right side: Content */}
-                <div className="flex flex-col justify-between flex-grow md:py-2">
-                  <div className="flex flex-col gap-4">
-                    {/* Header Title */}
-                    <Card.Header className="p-0">
-                      <Card.Title className="text-xl md:text-3xl font-extrabold font-sans tracking-tight text-zinc-900 dark:text-zinc-50">
-                        {item.title}
-                      </Card.Title>
-                    </Card.Header>
-
-                    {/* Body Content Description */}
-                    <Card.Content className="p-0 text-xs sm:text-sm md:text-base lg:text-lg text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed">
-                      {item.description}
-                    </Card.Content>
+                <Card
+                  className="h-[430px] md:h-[500px] p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-8 justify-between"
+                  style={{
+                    boxShadow: isCurrent
+                      ? "0 25px 50px -12px rgba(0, 71, 255, 0.12), 0 0 0 1px rgba(0, 71, 255, 0.04)"
+                      : "0 10px 30px -10px rgba(0, 0, 0, 0.08)",
+                  }}
+                >
+                  {/* Left side: Image */}
+                  <div className="w-full md:w-[42%] h-36 md:h-full rounded-2xl overflow-hidden relative group bg-zinc-100 dark:bg-zinc-800 flex-shrink-0">
+                    <img 
+                      src={item.imageUrl} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                      draggable={false}
+                    />
+                    <div className="absolute top-3 left-3 px-2.5 py-0.5 bg-black/60 backdrop-blur-md rounded-lg border border-white/10">
+                      <span className="text-[10px] font-bold text-white uppercase tracking-wider font-sans">
+                        Step {item.stepNum}
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Card Footer info */}
-                  <Card.Footer className="pt-4 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-[10px] md:text-xs text-zinc-400 mt-4 md:mt-0">
-                    <span className="font-bold tracking-wider font-sans uppercase text-[#0047FF]">
-                      MadSphere Process
-                    </span>
-                    <span className="font-medium font-sans">
-                      {index + 1} / {sections.length}
-                    </span>
-                  </Card.Footer>
-                </div>
-              </Card>
-            </motion.div>
-          );
-        })}
+                  {/* Right side: Content */}
+                  <div className="flex flex-col justify-between flex-grow md:py-2">
+                    <div className="flex flex-col gap-4">
+                      {/* Header Title */}
+                      <Card.Header className="p-0">
+                        <Card.Title className="text-xl md:text-3xl font-extrabold font-sans tracking-tight text-zinc-900 dark:text-zinc-50">
+                          {item.title}
+                        </Card.Title>
+                      </Card.Header>
+
+                      {/* Body Content Description */}
+                      <Card.Content className="p-0 text-xs sm:text-sm md:text-base lg:text-lg text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed">
+                        {item.description}
+                      </Card.Content>
+                    </div>
+
+                    {/* Card Footer info */}
+                    <Card.Footer className="pt-4 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-[10px] md:text-xs text-zinc-400 mt-4 md:mt-0">
+                      <span className="font-bold tracking-wider font-sans uppercase text-[#0047FF]">
+                        MadSphere Process
+                      </span>
+                      <span className="font-medium font-sans">
+                        {index + 1} / {sections.length}
+                      </span>
+                    </Card.Footer>
+                  </div>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Swipe instruction helper on mobile */}
+        <div className="mt-6 md:hidden text-center pointer-events-none select-none text-zinc-400 dark:text-zinc-500 flex flex-col items-center gap-1 z-20">
+          <motion.div
+            animate={{ x: [-6, 6, -6] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <path d="M19 12H5M12 5l-7 7 7 7" />
+            </svg>
+          </motion.div>
+          <span className="text-[9px] font-bold tracking-widest uppercase font-sans">Swipe card left / right</span>
+        </div>
       </div>
     );
   };
@@ -514,45 +536,46 @@ export const ParallaxScrollFeatureSection = ({
   // 3. Render Vertical 3D Layout
   const renderVerticalLayout = () => {
     return (
-      <div
-        className="relative flex h-[480px] md:h-[600px] w-full max-w-[360px] md:max-w-[900px] items-center justify-center mx-auto mt-2"
-        style={{ perspective: "1200px" }}
-      >
-        <div className="relative flex w-full flex-col items-center justify-center">
-          {sections.map((item, index) => {
-            if (!isVisible(index)) return null;
-            const style = getVerticalCardStyle(index);
-            const isCurrent = index === currentIndex;
+      <div className="relative flex flex-col items-center w-full">
+        <div
+          className="relative flex h-[500px] md:h-[600px] w-full max-w-[320px] md:max-w-[900px] items-center justify-center mx-auto mt-2"
+          style={{ perspective: "1200px" }}
+        >
+          <div className="relative flex w-full flex-col items-center justify-center">
+            {sections.map((item, index) => {
+              if (!isVisible(index)) return null;
+              const style = getVerticalCardStyle(index);
+              const isCurrent = index === currentIndex;
 
-            return (
-              <motion.div
-                key={item.id}
-                className="absolute cursor-grab active:cursor-grabbing w-[290px] sm:w-[320px] md:w-[380px]"
-                animate={{
-                  y: style.y,
-                  scale: style.scale,
-                  opacity: style.opacity,
-                  rotateX: style.rotateX,
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 30,
-                  mass: 1,
-                }}
-                drag={isCurrent ? "y" : false}
-                dragConstraints={{ top: 0, bottom: 0 }}
-                dragElastic={0.2}
-                onDragEnd={handleDragEnd}
-                style={{
-                  transformStyle: "preserve-3d",
-                  zIndex: style.zIndex,
-                  willChange: "transform, opacity",
-                  backfaceVisibility: "hidden",
-                }}
-              >
-                <div
-                  className="relative h-[400px] sm:h-[420px] md:h-[460px] w-full overflow-hidden rounded-[28px] border border-zinc-200 dark:border-zinc-800/80 bg-zinc-900 shadow-2xl"
+              return (
+                <motion.div
+                  key={item.id}
+                  className="absolute cursor-grab active:cursor-grabbing w-[260px] sm:w-[320px] md:w-[380px]"
+                  animate={{
+                    y: style.y,
+                    scale: style.scale,
+                    opacity: style.opacity,
+                    rotateX: style.rotateX,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 30,
+                    mass: 1,
+                  }}
+                  drag={isCurrent ? "y" : false}
+                  dragConstraints={{ top: 0, bottom: 0 }}
+                  dragElastic={0.2}
+                  onDragEnd={handleDragEnd}
+                  style={{
+                    transformStyle: "preserve-3d",
+                    zIndex: style.zIndex,
+                    willChange: "transform, opacity",
+                    backfaceVisibility: "hidden",
+                  }}
+                >
+                  <div
+                    className="relative h-[350px] sm:h-[420px] md:h-[460px] w-full overflow-hidden rounded-[28px] border border-zinc-200 dark:border-zinc-800/80 bg-zinc-900 shadow-2xl"
                   style={{
                     boxShadow: isCurrent
                       ? "0 25px 50px -12px rgba(0, 71, 255, 0.2)"
@@ -626,7 +649,7 @@ export const ParallaxScrollFeatureSection = ({
       ref={containerRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative w-full flex flex-col justify-center items-center overflow-hidden bg-zinc-50/50 dark:bg-zinc-950/20 px-6 md:px-16 py-12 md:py-24 border border-zinc-200/60 dark:border-zinc-800/40 rounded-[32px] min-h-[620px] md:min-h-[860px] transition-colors duration-300"
+      className="relative w-full flex flex-col justify-center items-center overflow-hidden bg-zinc-50/50 dark:bg-zinc-950/20 px-4 md:px-16 py-12 md:py-24 border border-zinc-200/60 dark:border-zinc-800/40 rounded-[32px] min-h-[620px] md:min-h-[860px] transition-colors duration-300"
     >
       {/* Title header inside normal page flow */}
       <div className="max-w-[1200px] w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-8 md:mb-16">
@@ -746,15 +769,14 @@ export const ParallaxScrollFeatureSection = ({
         </div>
       )}
 
-      {/* Scroll/Drag Guide Tag at Bottom */}
+      {/* Scroll/Drag Guide Tag at Bottom (Desktop only) */}
       <motion.div
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none select-none"
+        className="hidden md:flex absolute bottom-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none select-none"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 0.85, y: 0 }}
         transition={{ delay: 0.8, duration: 0.6 }}
       >
-        {/* Desktop: Scroll to reveal */}
-        <div className="hidden md:flex flex-col items-center gap-1 text-zinc-400 dark:text-zinc-500">
+        <div className="flex flex-col items-center gap-1 text-zinc-400 dark:text-zinc-500">
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
@@ -774,34 +796,6 @@ export const ParallaxScrollFeatureSection = ({
             {layout === "grid" ? "" : "Scroll to reveal"}
           </span>
         </div>
-
-        {/* Mobile: Swipe to navigate */}
-        {layout !== "grid" && (
-          <div className="flex md:hidden flex-col items-center gap-1 text-zinc-400 dark:text-zinc-500">
-            <motion.div
-              animate={layout === "stack" ? { x: [-6, 6, -6] } : { y: [0, -6, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                {layout === "stack" ? (
-                  <path d="M19 12H5M12 5l-7 7 7 7" />
-                ) : (
-                  <path d="M12 19V5M5 12l7-7 7 7" />
-                )}
-              </svg>
-            </motion.div>
-            <span className="text-[9px] font-bold tracking-widest uppercase font-sans">
-              {layout === "stack" ? "Swipe card left / right" : "Swipe card up / down"}
-            </span>
-          </div>
-        )}
       </motion.div>
     </div>
   );
