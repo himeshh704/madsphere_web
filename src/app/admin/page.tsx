@@ -12,16 +12,6 @@ export default function AdminPortal() {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
-
-  useEffect(() => {
-    // Check if we have a saved session
-    const savedPw = localStorage.getItem("madsphere_admin_pw");
-    if (savedPw) {
-      setPassword(savedPw);
-      handleLogin(savedPw);
-    }
-  }, []);
-
   const handleLogin = async (pwToUse = password) => {
     setLoading(true);
     try {
@@ -58,6 +48,15 @@ export default function AdminPortal() {
       setContent(defaultContent);
     }
   };
+
+  useEffect(() => {
+    // Check if we have a saved session
+    const savedPw = localStorage.getItem("madsphere_admin_pw");
+    if (savedPw) {
+      setPassword(savedPw);
+      handleLogin(savedPw);
+    }
+  }, []);
 
   const handleSave = async () => {
     setSaving(true);
