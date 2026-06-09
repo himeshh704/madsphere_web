@@ -169,9 +169,9 @@ export default function Preloader() {
       {isLoading && isHome && (
         <motion.div
           key="preloader"
-          initial={{ y: "0%" }}
-          exit={{ y: "-100%", transition: { duration: 0.9, ease: [0.76, 0, 0.24, 1] } }}
-          className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#070708] text-white"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { duration: 0.9, ease: [0.76, 0, 0.24, 1] } }}
+          className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#070708] text-white overflow-hidden"
         >
           {/* Constellation Background */}
           <Constellation />
@@ -179,26 +179,36 @@ export default function Preloader() {
           {/* Subtle background glow */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,71,255,0.08)_0%,transparent_50%)] z-0" />
 
-          <div className="flex flex-col items-center gap-8 z-10">
+          <div className="flex flex-col items-center gap-8 z-10 w-full">
             <motion.div
                initial={{ opacity: 0, scale: 0.9 }}
                animate={{ opacity: 1, scale: 1 }}
-               transition={{ duration: 0.5 }}
+               exit={{ 
+                 scale: 60, 
+                 opacity: [1, 1, 0],
+                 transition: { duration: 0.95, ease: [0.76, 0, 0.24, 1] }
+               }}
+               style={{ transformOrigin: "19.5% 52%" }}
             >
               <img src="/logo_white.png" alt="Madsphere Logo" className="h-12 md:h-16 w-auto object-contain" />
             </motion.div>
             
-            <div className="w-64 h-[3px] bg-white/10 rounded-full overflow-hidden relative">
-              <motion.div 
-                className="absolute inset-y-0 left-0 bg-[#0047FF]"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
+            <motion.div 
+              className="flex flex-col items-center gap-8 w-full"
+              exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.25, ease: "easeOut" } }}
+            >
+              <div className="w-64 h-[3px] bg-white/10 rounded-full overflow-hidden relative">
+                <motion.div 
+                  className="absolute inset-y-0 left-0 bg-[#0047FF]"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
 
-            <div className="text-xs font-bold tracking-[0.3em] text-white/50 w-full flex justify-between px-1">
-              <span>LOADING</span>
-              <span>{progress.toString().padStart(3, '0')}%</span>
-            </div>
+              <div className="text-xs font-bold tracking-[0.3em] text-white/50 w-64 flex justify-between px-1">
+                <span>LOADING</span>
+                <span>{progress.toString().padStart(3, '0')}%</span>
+              </div>
+            </motion.div>
           </div>
         </motion.div>
       )}
