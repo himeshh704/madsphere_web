@@ -17,58 +17,10 @@ import { heroCards, socials, process, clients, hero } from "@/data/site";
 import { cn } from "@/utils/cn";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ParallaxImg from "@/components/ParallaxImg";
+import SectionTag from "@/components/SectionTag";
 import { ParallaxScrollFeatureSection } from "@/components/ui/parallax-scroll-feature-section";
 import { ParallaxComponent } from "@/components/ui/parallax-scrolling";
-// import TestimonialCarousel from "@/components/TestimonialCarousel";
-
-function ParallaxImg({ src, alt, className }: { src: string; alt: string; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [mounted, setMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(true);
-
-  useEffect(() => {
-    let active = true;
-    setIsMobile(window.innerWidth < 768);
-    setTimeout(() => { if (active) setMounted(true); }, 0);
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      active = false;
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.2, 1.05, 1.2]);
-
-  return (
-    <div ref={ref} className={`overflow-hidden ${className ?? ""}`}>
-      <motion.img 
-        src={src} 
-        alt={alt} 
-        style={{ 
-          y: (mounted && !isMobile) ? y : undefined, 
-          scale: (mounted && !isMobile) ? scale : undefined 
-        }} 
-        className="w-full h-full object-cover" 
-      />
-    </div>
-  );
-}
-
-
-
-function SectionTag({ label }: { label: string }) {
-  return (
-    <span className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 border-l border-zinc-300 dark:border-zinc-700 pl-4">
-      <span className="w-1.5 h-1.5 bg-yellow-400 rounded-sm" />
-      {label}
-    </span>
-  );
-}
 
 
 const cardVariants = {
