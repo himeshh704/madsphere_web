@@ -14,7 +14,7 @@ export default function Footer() {
   const showSayHi = pathname !== "/contact" && pathname !== "/"; // Hide CTA section on contact and home pages to avoid redundant contact sections
 
   return (
-    <footer className="relative z-10 w-full overflow-hidden flex flex-col transition-colors duration-300">
+    <footer className="relative z-10 w-screen left-1/2 -translate-x-1/2 overflow-hidden flex flex-col transition-colors duration-300">
       {/* Lower Footer: Solid Black Block (Always dark for high contrast) */}
       <div className="w-full bg-[#050505] text-white pt-24 pb-8 flex flex-col items-center relative z-10 border-t border-zinc-900">
         

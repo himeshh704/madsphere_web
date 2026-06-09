@@ -54,7 +54,7 @@ function CardRoot({
   return (
     <div
       className={cn(
-        "relative overflow-visible text-zinc-900 dark:text-zinc-50 rounded-[32px]",
+        "relative overflow-visible text-zinc-900 dark:text-zinc-50 rounded-[32px] select-none",
         variantClasses[variant],
         className
       )}
@@ -248,46 +248,6 @@ export const ParallaxScrollFeatureSection = ({
     setIsDragging(false);
   };
 
-  const handleWheel = useCallback(
-    (e: WheelEvent) => {
-      if (!isHovered) return;
-      if (layout === "grid") return;
-
-      const direction = e.deltaY > 0 ? 1 : -1;
-
-      // Lock conditions: scroll down and not yet at the last card, or scroll up and not yet at the first card
-      let shouldLock = false;
-      if (direction > 0 && currentIndex < sections.length - 1) {
-        shouldLock = true;
-      } else if (direction < 0 && currentIndex > 0) {
-        shouldLock = true;
-      }
-
-      if (shouldLock) {
-        if (e.cancelable) {
-          e.preventDefault();
-        }
-        const now = Date.now();
-        if (now - lastScrollTime.current > scrollCooldown) {
-          lastScrollTime.current = now;
-          setCurrentIndex((prev) => {
-            const nextIndex = prev + direction;
-            if (nextIndex < 0 || nextIndex >= sections.length) return prev;
-            return nextIndex;
-          });
-        }
-      }
-    },
-    [currentIndex, sections.length, isHovered, layout]
-  );
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (el) {
-      el.addEventListener("wheel", handleWheel, { passive: false });
-      return () => el.removeEventListener("wheel", handleWheel);
-    }
-  }, [handleWheel]);
 
   // Vertical layout helper
   const getVerticalCardStyle = (index: number) => {
@@ -799,7 +759,7 @@ export const ParallaxScrollFeatureSection = ({
       >
         <div className="flex flex-col items-center gap-1 text-zinc-400 dark:text-zinc-500">
           <motion.div
-            animate={{ y: [0, 8, 0] }}
+            animate={layout === "stack" ? { x: [-6, 6, -6] } : { y: [-6, 6, -6] }}
             transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
           >
             <svg
@@ -810,11 +770,15 @@ export const ParallaxScrollFeatureSection = ({
               stroke="currentColor"
               strokeWidth="1.5"
             >
-              <path d="M12 5v14M19 12l-7 7-7-7" />
+              {layout === "stack" ? (
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+              ) : (
+                <path d="M12 19V5M5 12l7-7 7 7" />
+              )}
             </svg>
           </motion.div>
           <span className="text-[9px] font-bold tracking-widest uppercase font-sans">
-            {layout === "grid" ? "" : "Scroll to reveal"}
+            {layout === "grid" ? "" : (layout === "stack" ? "Drag card left / right" : "Drag card up / down")}
           </span>
         </div>
       </motion.div>
