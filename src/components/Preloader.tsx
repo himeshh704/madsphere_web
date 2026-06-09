@@ -88,15 +88,20 @@ function Constellation() {
   return <canvas ref={canvasRef} className="absolute inset-0 z-0 opacity-40 pointer-events-none" />;
 }
 
+import { usePathname } from "next/navigation";
+
 export default function Preloader() {
+  const pathname = usePathname();
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+
+  const isHome = pathname === "/";
 
   // Prevent scrolling while preloader is active
   useEffect(() => {
     if (typeof window === "undefined") return;
     
-    if (isLoading) {
+    if (isLoading && isHome) {
       document.body.style.overflow = "hidden";
       // Force scroll to top on reload so they don't start midway
       window.scrollTo(0, 0);
@@ -107,17 +112,23 @@ export default function Preloader() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isLoading]);
+  }, [isLoading, isHome]);
 
   useEffect(() => {
-    let frame: number;
-    let start: number | null = null;
-    const duration = 2000; // 2 seconds minimum to ensure assets buffer
+    if (!isHome) {
+      sessionStorage.setItem("madsphere_preloader_done", "true");
+      setIsLoading(false);
+      return;
+    }
 
     if (sessionStorage.getItem("madsphere_preloader_done")) {
       setIsLoading(false);
       return;
     }
+
+    let frame: number;
+    let start: number | null = null;
+    const duration = 2000; // 2 seconds minimum to ensure assets buffer
 
     const update = (timestamp: number) => {
       if (!start) start = timestamp;
@@ -151,11 +162,11 @@ export default function Preloader() {
 
     frame = requestAnimationFrame(update);
     return () => cancelAnimationFrame(frame);
-  }, []);
+  }, [isHome]);
 
   return (
     <AnimatePresence>
-      {isLoading && (
+      {isLoading && isHome && (
         <motion.div
           key="preloader"
           initial={{ y: "0%" }}
@@ -174,9 +185,7 @@ export default function Preloader() {
                animate={{ opacity: 1, scale: 1 }}
                transition={{ duration: 0.5 }}
             >
-              <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase font-sans">
-                Madsphere
-              </h2>
+              <img src="/logo_white.png" alt="Madsphere Logo" className="h-12 md:h-16 w-auto object-contain" />
             </motion.div>
             
             <div className="w-64 h-[3px] bg-white/10 rounded-full overflow-hidden relative">
