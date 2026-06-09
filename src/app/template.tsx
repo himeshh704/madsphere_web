@@ -11,8 +11,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
       initial={{ 
         opacity: 0, 
         filter: pathname === "/" ? "blur(16px)" : "blur(4px)", 
-        y: pathname === "/" ? 50 : 10,
-        scale: pathname === "/" ? 0.95 : 1
+        y: pathname === "/" ? 60 : 10,
+        scale: pathname === "/" ? 0.94 : 1
       }}
       animate={{ 
         opacity: 1, 
@@ -27,7 +27,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         scale: pathname === "/" ? 0.98 : 1
       }}
       transition={{ 
-        duration: pathname === "/" ? 1.8 : 0.45, 
+        duration: pathname === "/" ? 2.2 : 0.45, 
         ease: [0.16, 1, 0.3, 1] 
       }}
     >

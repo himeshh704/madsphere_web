@@ -179,35 +179,28 @@ export default function Preloader() {
           {/* Subtle background glow */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,71,255,0.08)_0%,transparent_50%)] z-0" />
 
-          <div className="flex flex-col items-center gap-8 z-10 w-full">
+          <div className="flex flex-col items-center justify-center z-10 w-full">
             <motion.div
-               initial={{ opacity: 0, scale: 0.9 }}
-               animate={{ opacity: 1, scale: 1 }}
+               initial={{ opacity: 0, scale: 0.85 }}
+               animate={{ 
+                 opacity: 1, 
+                 scale: 1,
+                 y: [0, -8, 0],
+               }}
                exit={{ 
-                 scale: 60, 
-                 opacity: [1, 1, 0],
-                 transition: { duration: 0.95, ease: [0.76, 0, 0.24, 1] }
+                 scale: 90, 
+                 x: "30.5%", // Centers the stick-man 'A' (19.5% from left) to the middle of the screen
+                 opacity: [1, 1, 1, 0],
+                 transition: { duration: 2.2, ease: [0.76, 0, 0.24, 1] }
+               }}
+               transition={{
+                 opacity: { duration: 0.8 },
+                 scale: { duration: 0.8 },
+                 y: { duration: 3.5, repeat: Infinity, ease: "easeInOut" }
                }}
                style={{ transformOrigin: "19.5% 52%" }}
             >
               <img src="/logo_white.png" alt="Madsphere Logo" className="h-12 md:h-16 w-auto object-contain" />
-            </motion.div>
-            
-            <motion.div 
-              className="flex flex-col items-center gap-8 w-full"
-              exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.25, ease: "easeOut" } }}
-            >
-              <div className="w-64 h-[3px] bg-white/10 rounded-full overflow-hidden relative">
-                <motion.div 
-                  className="absolute inset-y-0 left-0 bg-[#0047FF]"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-
-              <div className="text-xs font-bold tracking-[0.3em] text-white/50 w-64 flex justify-between px-1">
-                <span>LOADING</span>
-                <span>{progress.toString().padStart(3, '0')}%</span>
-              </div>
             </motion.div>
           </div>
         </motion.div>
