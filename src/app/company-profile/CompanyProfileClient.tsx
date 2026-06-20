@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Download, ChevronLeft, ChevronRight, FileText, ArrowLeft, Mail, Phone, MapPin, Globe } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { aboutHero, aboutPrinciples, aboutValues, servicesList, contactInfo } from "@/data/site";
+import { aboutHero, aboutPrinciples, aboutValues, servicesList, contactInfo, works } from "@/data/site";
 
 export default function CompanyProfileClient() {
   const router = useRouter();
@@ -144,6 +144,33 @@ export default function CompanyProfileClient() {
                     </div>
                   ))}
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    },
+    {
+      title: "Selected Case Studies",
+      subtitle: "OUR PORTFOLIO",
+      content: (
+        <div className="flex flex-col justify-center h-full gap-5">
+          <div className="flex justify-between items-end">
+            <div>
+              <span className="text-xs font-bold text-[#0047FF] uppercase tracking-widest">Case Studies</span>
+              <h2 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mt-1">Featured Creative Work</h2>
+            </div>
+            <span className="text-xs text-zinc-400 font-mono">Selected Projects</span>
+          </div>
+          <div className="h-0.5 w-full bg-zinc-200 dark:bg-zinc-800" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {works.slice(0, 4).map((work: any, idx: number) => (
+              <div key={idx} className="group p-3 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-white dark:bg-[#0c0c0e]">
+                <div className="aspect-[4/3] w-full overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-900 relative">
+                  <img src={work.img} alt={work.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300" />
+                </div>
+                <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-50 mt-3">{work.title}</h4>
+                <p className="text-[10px] text-zinc-450 mt-0.5 tracking-wide">{work.tags}</p>
               </div>
             ))}
           </div>
