@@ -75,7 +75,7 @@ export default function ArticleClient({ post }: { post: any }) {
             <div className="flex flex-col gap-2 text-center md:text-left">
               <span className="text-xs font-bold tracking-widest text-zinc-400 uppercase">Share this article</span>
               <div className="flex items-center justify-center md:justify-start gap-4">
-                <button className="text-zinc-900 dark:text-white font-semibold hover:text-[#0047FF] transition-colors">Twitter</button>
+                <button className="text-zinc-900 dark:text-white font-semibold hover:text-[#0047FF] transition-colors">X (Twitter)</button>
                 <button className="text-zinc-900 dark:text-white font-semibold hover:text-[#0047FF] transition-colors">LinkedIn</button>
                 <button className="text-zinc-900 dark:text-white font-semibold hover:text-[#0047FF] transition-colors">Facebook</button>
               </div>

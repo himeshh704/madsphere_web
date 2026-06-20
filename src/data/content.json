@@ -292,6 +292,14 @@
       "href": "/services"
     },
     {
+      "label": "Works",
+      "href": "/works"
+    },
+    {
+      "label": "Insights",
+      "href": "/blog"
+    },
+    {
       "label": "Career Inquiries",
       "href": "/careers"
     }

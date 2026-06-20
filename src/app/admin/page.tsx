@@ -431,9 +431,13 @@ export default function AdminPortal() {
         {/* Editor Section: FAQ */}
         <section>
           <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Global: Frequently Asked Questions</h2>
-          <div className="space-y-4">
+          <div className="space-y-4 mb-6">
             {content.faqs.map((faq: any, i: number) => (
               <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-bold text-zinc-500 uppercase text-xs">FAQ #{i + 1}</span>
+                  <button onClick={() => handleRemoveItem("faqs", i)} className="text-red-500 text-sm hover:underline font-medium">Remove</button>
+                </div>
                 <div className="flex gap-4">
                   <div className="w-24 shrink-0">
                     <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">ID</label>
@@ -465,6 +469,12 @@ export default function AdminPortal() {
               </div>
             ))}
           </div>
+          <button
+            onClick={() => handleAddItem("faqs", { id: `Q-${String(content.faqs.length + 1).padStart(2, "0")}`, question: "New Question?", answer: "Answer details..." })}
+            className="w-full py-4 border-2 border-dashed border-zinc-800 text-zinc-400 rounded-xl hover:border-zinc-600 hover:text-white transition-colors"
+          >
+            + Add New FAQ
+          </button>
         </section>
 
         {/* Editor Section: Contact Info */}
@@ -766,9 +776,13 @@ export default function AdminPortal() {
         {/* Editor Section: Works / Portfolio Projects */}
         <section>
           <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Portfolio Projects</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             {content.works.map((item: any, i: number) => (
               <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-bold text-zinc-500 uppercase text-xs">Project #{i + 1}</span>
+                  <button onClick={() => handleRemoveItem("works", i)} className="text-red-500 text-sm hover:underline font-medium">Remove</button>
+                </div>
                 <div>
                   <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Project Title</label>
                   <input
@@ -779,11 +793,24 @@ export default function AdminPortal() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Tags</label>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Tags (e.g. Design • Development)</label>
                   <input
                     type="text"
                     value={item.tags}
                     onChange={(e) => handleTextChange("works", i, "tags", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Categories (comma-separated, e.g. Design, Development)</label>
+                  <input
+                    type="text"
+                    value={item.categories?.join(", ") || ""}
+                    onChange={(e) => {
+                      const newContent = { ...content };
+                      newContent.works[i].categories = e.target.value.split(",").map((c: string) => c.trim());
+                      setContent(newContent);
+                    }}
                     className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-400 focus:outline-none focus:border-[#0047FF]"
                   />
                 </div>
@@ -800,6 +827,12 @@ export default function AdminPortal() {
               </div>
             ))}
           </div>
+          <button
+            onClick={() => handleAddItem("works", { id: String(content.works.length + 1).padStart(2, "0"), title: "New Project", tags: "Branding • Design", img: "", categories: ["Design"] })}
+            className="w-full py-4 border-2 border-dashed border-zinc-800 text-zinc-400 rounded-xl hover:border-zinc-600 hover:text-white transition-colors"
+          >
+            + Add New Project
+          </button>
         </section>
 
         {/* Editor Section: Social Media Links */}
@@ -910,9 +943,13 @@ export default function AdminPortal() {
         {/* Editor Section: Testimonials */}
         <section>
           <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Testimonials</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             {content.testimonials.map((item: any, i: number) => (
               <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-bold text-zinc-500 uppercase text-xs">Testimonial #{i + 1}</span>
+                  <button onClick={() => handleRemoveItem("testimonials", i)} className="text-red-500 text-sm hover:underline font-medium">Remove</button>
+                </div>
                 <div className="flex gap-4">
                   <div className="flex-1">
                     <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Name</label>
@@ -954,6 +991,12 @@ export default function AdminPortal() {
               </div>
             ))}
           </div>
+          <button
+            onClick={() => handleAddItem("testimonials", { name: "Client Name", role: "CEO, Company", quote: "Praise message...", img: "" })}
+            className="w-full py-4 border-2 border-dashed border-zinc-800 text-zinc-400 rounded-xl hover:border-zinc-600 hover:text-white transition-colors"
+          >
+            + Add New Testimonial
+          </button>
         </section>
 
         {/* Editor Section: Clients (Marquee) */}
@@ -978,6 +1021,47 @@ export default function AdminPortal() {
             </div>
             <p className="text-xs text-zinc-500 mt-2">These are the words scrolling horizontally at the bottom of the Landing page.</p>
           </div>
+        </section>
+
+        {/* Editor Section: Navigation Links */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b border-zinc-800 pb-2">Navigation Links (Header Menu)</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            {(content.nav || []).map((item: any, i: number) => (
+              <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col gap-3">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="font-bold text-zinc-500 uppercase text-xs">Link #{i + 1}</span>
+                  <button onClick={() => handleRemoveItem("nav", i)} className="text-red-500 text-sm hover:underline font-medium">Remove</button>
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Label</label>
+                  <input
+                    type="text"
+                    value={item.label}
+                    onChange={(e) => handleTextChange("nav", i, "label", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300 focus:outline-none focus:border-[#0047FF]"
+                    placeholder="e.g. Home"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">URL (href)</label>
+                  <input
+                    type="text"
+                    value={item.href}
+                    onChange={(e) => handleTextChange("nav", i, "href", e.target.value)}
+                    className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300 focus:outline-none focus:border-[#0047FF]"
+                    placeholder="e.g. /"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          <button
+            onClick={() => handleAddItem("nav", { label: "New Link", href: "#" })}
+            className="w-full py-4 border-2 border-dashed border-zinc-800 text-zinc-400 rounded-xl hover:border-zinc-600 hover:text-white transition-colors"
+          >
+            + Add New Navigation Link
+          </button>
         </section>
 
       </div>

@@ -2,8 +2,14 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Clock, Instagram, Linkedin, Facebook, Twitter, CheckCircle2, ArrowRight, ChevronDown } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Instagram, Linkedin, Facebook, CheckCircle2, ArrowRight, ChevronDown } from "lucide-react";
 import { TextReveal, Tilt3D } from "@/components/Animations";
+
+const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+  </svg>
+);
 import { contactInfo } from "@/data/site";
 import FAQ from "@/components/FAQ";
 
@@ -89,7 +95,7 @@ export default function ContactClient() {
                   { Icon: Instagram, href: "https://www.instagram.com/madsphere.co?igsh=d2xldzdtb3VweW51" },
                   { Icon: Linkedin, href: "https://www.linkedin.com/company/madsphere/" },
                   { Icon: Facebook, href: "#" },
-                  { Icon: Twitter, href: "#" }
+                  { Icon: XIcon, href: "#" }
                 ].map(({ Icon, href }, i) => (
                   <a key={i} href={href} target="_blank" rel="noreferrer" className="w-10 h-10 border border-zinc-200 dark:border-zinc-800 rounded-lg flex items-center justify-center text-zinc-600 hover:text-[#0047FF] hover:border-[#0047FF] transition-colors bg-white dark:bg-[#0a0a0a]">
                     <Icon className="w-4 h-4" />

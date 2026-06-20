@@ -13,7 +13,7 @@ import Marquee from "@/components/Marquee";
 import ExpertiseScroll from "@/components/ExpertiseScroll";
 import { TextReveal, FloatingOrbs, Tilt3D, ScrollBlurReveal } from "@/components/Animations";
 import { stagger } from "@/lib/motion";
-import { heroCards, socials, process, clients, hero } from "@/data/site";
+import { heroCards, socials, process, clients, hero, blogPosts } from "@/data/site";
 import { cn } from "@/utils/cn";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -673,6 +673,88 @@ export default function Home() {
         <TestimonialCarousel />
       </section>
       */}
+
+      {/* ──── Latest Trends & Insights ─────────────────────────────────── */}
+      <section className="relative z-10 py-24 px-6 md:px-16 bg-zinc-50 dark:bg-[#070708] border-t border-zinc-100 dark:border-zinc-900/50">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+            <div className="flex flex-col gap-4">
+              <SectionTag label="Trends & Insights" />
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 leading-none">
+                <TextReveal>The MadSphere Journal.</TextReveal>
+              </h2>
+              <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400 max-w-md leading-relaxed font-sans mt-2">
+                Stay ahead of the curve with our thoughts, strategies, and industry trends on branding and design.
+              </p>
+            </div>
+            
+            <motion.button
+              onClick={() => router.push('/blog')}
+              whileHover="hover"
+              whileTap={{ scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 350, damping: 15 }}
+              className="h-12 self-start md:self-end flex items-center bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-6 pr-2 text-xs font-bold uppercase tracking-widest transition-colors shadow-lg shadow-blue-500/20 cursor-pointer shrink-0"
+            >
+              View All Insights
+              <motion.span
+                variants={{ hover: { x: 2 } }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                className="ml-3 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0"
+              >
+                <ArrowRight className="w-3.5 h-3.5" />
+              </motion.span>
+            </motion.button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+            {(blogPosts || []).slice(0, 3).map((post: any, idx: number) => (
+              <motion.div
+                key={post.slug}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                onClick={() => router.push(`/blog/${post.slug}`)}
+                className="group cursor-pointer flex flex-col gap-6"
+              >
+                <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 relative">
+                  <img
+                    src={post.coverImg || "/hero_gradient_bg.png"}
+                    alt={post.title}
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (target.src.includes('hero_gradient_bg.png')) return;
+                      target.src = "/hero_gradient_bg.png";
+                    }}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-3 text-xs font-semibold tracking-wider text-zinc-400 uppercase">
+                    <span>{post.date}</span>
+                    <span className="w-1 h-1 rounded-full bg-zinc-300 dark:bg-zinc-700" />
+                    <span>{post.author}</span>
+                  </div>
+
+                  <h3 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 group-hover:text-[#0047FF] transition-colors leading-tight">
+                    {post.title}
+                  </h3>
+
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400 font-sans leading-relaxed line-clamp-3">
+                    {post.excerpt}
+                  </p>
+
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-zinc-900 dark:text-white mt-2 group-hover:text-[#0047FF] transition-colors">
+                    Read Article <ArrowRight className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ──── Let’s Keep in Touch ─────────────────────────────────────── */}
       <section className="relative z-10 py-16 md:py-28 px-6 md:px-16 bg-white dark:bg-[#070708]">
