@@ -292,14 +292,6 @@
       "href": "/services"
     },
     {
-      "label": "Works",
-      "href": "/works"
-    },
-    {
-      "label": "Insights",
-      "href": "/blog"
-    },
-    {
       "label": "Career Inquiries",
       "href": "/careers"
     }
@@ -602,12 +594,77 @@
       "excerpt": "Why aesthetic alone is no longer enough to build a resilient brand in the digital age.",
       "author": "himesh choudhary",
       "date": "June 1, 2026",
-      "coverImg": "https://unsplash.com/photos/crescent-earth-visible-in-the-dark-expanse-of-space-juDC81LZlBI",
+      "coverImg": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1600&fit=crop",
       "tags": [
         "Strategy",
         "Branding"
       ],
-      "content": "<p>gaju and kartikeyaa bklllll messageeee dhekloo naaa!!!!!</p>"
+      "content": "<h2>Beyond the Aesthetic Layer</h2><p>In 2026, design without strategy is simply decoration. As digital touchpoints expand across VR, mobile sheets, and WebGL interfaces, visual consistency is only the first step. True brand strategy aligns product logic, content tone, and interactive behavior into a single, unified experience.</p><h2>The Core Pillars of Modern Branding</h2><p>1. <strong>Intentional Interactive Design:</strong> Micro-interactions and motion curves should reflect the brand's character — whether it is smooth and premium, or snappy and energetic.</p><p>2. <strong>Decentralized Storytelling:</strong> A brand is no longer defined solely by its website. It lives across WhatsApp channels, social reels, packaging, and community spaces. The message must adapt without losing its core identity.</p>"
+    },
+    {
+      "slug": "rise-of-minimalist-motion",
+      "title": "The Rise of Minimalist Motion in Brand Identity",
+      "excerpt": "How interactive movement and micro-interactions are replacing static logos as the cornerstone of digital-first brands.",
+      "author": "himesh choudhary",
+      "date": "June 10, 2026",
+      "coverImg": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1600&fit=crop",
+      "tags": [
+        "Design",
+        "Identity"
+      ],
+      "content": "<h2>Movement is the New Mark</h2><p>For decades, a brand's visual identity was built on a static foundation: the logo mark, the color palette, and corporate typography. But in today's screen-dominated world, how a brand moves is just as important as how it looks.</p><h2>Why Motion Matters</h2><p>When user interactions are fluid, they create an emotional response. A premium spring transition on a mobile menu feels elegant; a quick bounce feels playful. Designers must build motion systems into the brand guidelines from day one to ensure consistency across all digital interfaces.</p>"
+    },
+    {
+      "slug": "rebranding-astra-co",
+      "title": "Rebranding Astra Co: An E-Commerce Case Study",
+      "excerpt": "A deep dive into how we rebuilt Astra Co's digital shopping experience, achieving a 3x increase in conversion rate in month one.",
+      "author": "MadSphere Studio",
+      "date": "May 25, 2026",
+      "coverImg": "https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1600&fit=crop",
+      "tags": [
+        "Case Study",
+        "E-Commerce"
+      ],
+      "content": "<h2>The Challenge</h2><p>Astra Co came to us with a sluggish checkout flow, templated page structures, and an identity that felt disconnected from their high-end product line. The bounce rate was high, and visual trust was low.</p><h2>The MadSphere Blueprint</h2><p>We began by stripping away standard templates and building a custom Next.js frontend with tailored product displays. Next, we established a luxury brand positioning — shifting from commodity marketing to a lifestyle narrative. Finally, we optimized core web vitals, resulting in load times under 1 second.</p><h2>The Outcome</h2><p>In the first month post-launch, Astra Co recorded a 210% increase in checkout completions and 3x conversion gains across all channels.</p>"
+    },
+    {
+      "slug": "d2c-custom-nextjs-stacks",
+      "title": "Why D2C Brands are Moving to Custom Next.js Stacks",
+      "excerpt": "Standard templates are slowing you down. Explore why modern consumer brands are leaving generic platforms for custom frontends.",
+      "author": "Dev Team",
+      "date": "May 12, 2026",
+      "coverImg": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&fit=crop",
+      "tags": [
+        "Tech",
+        "E-Commerce"
+      ],
+      "content": "<h2>The Performance Bottleneck</h2><p>Generic template systems insert extensive unused scripts and database lookups, resulting in slow page loading times. For every 100ms delay, e-commerce brands lose up to 1% of sales. Custom Next.js architectures solve this by generating static product pages (SSG) and serving assets instantly via edge networks.</p><h2>Why Frontends Matter</h2><p>A custom headless frontend gives design teams complete freedom. They can create unique interactive product builders, immersive 3D showcases, and bespoke typography layouts without breaking the underlying database structure.</p>"
+    },
+    {
+      "slug": "decentered-media-social-campaigns",
+      "title": "Decentered Media: Reimagining Social Campaign Performance",
+      "excerpt": "How a scroll-stopping short-form video strategy drove a 180% surge in organic traffic for a luxury fashion brand.",
+      "author": "Social Team",
+      "date": "April 28, 2026",
+      "coverImg": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1600&fit=crop",
+      "tags": [
+        "Marketing",
+        "Social"
+      ],
+      "content": "<h2>Shattering the Algorithm</h2><p>Audiences ignore corporate advertisements. To succeed, campaigns must adopt platform-native aesthetics. When rebranding Decentered Media, we designed content structures specifically for TikTok and Instagram Reels algorithms, focusing on high-quality visuals, rapid narrative hooks, and custom background music.</p><h2>Key Metrics</h2><p>Over a 60-day period, the campaign reached 4.2 million unique viewers organically and generated a 180% surge in direct digital traffic to the online storefront.</p>"
+    },
+    {
+      "slug": "anatomy-of-world-class-design-system",
+      "title": "The Anatomy of a World-Class Design System",
+      "excerpt": "Beyond design guides: building shared component structures that bridge the gap between creative designers and frontend engineers.",
+      "author": "himesh choudhary",
+      "date": "April 15, 2026",
+      "coverImg": "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=1600&fit=crop",
+      "tags": [
+        "Design",
+        "Tech"
+      ],
+      "content": "<h2>Bridges, Not Barriers</h2><p>A design system is not a PDF guide showing logo sizes. It is a living, version-controlled library of components built in Figma and mirrored in code (e.g. React/Tailwind). It ensures that color tokens, typography sizes, spacing grids, and card designs remain completely unified from mockup to production deployment.</p><h2>Best Practices</h2><p>1. Define spacing using mathematical ratios rather than arbitrary pixel sizes. 2. Build flexible layout grids. 3. Document hover states and active animations within code components to avoid inconsistent UX behaviors.</p>"
     }
   ]
 }
