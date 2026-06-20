@@ -13,7 +13,8 @@ export default function Mascot() {
     pathname === "/works" ||
     pathname === "/careers" ||
     pathname === "/contact" ||
-    pathname === "/connect"
+    pathname === "/connect" ||
+    pathname === "/company-profile"
   ) {
     return null;
   }
