@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, ArrowRight } from "lucide-react";
-import { Tilt3D, MagneticWrap } from "./Animations";
+import { Tilt3D } from "./Animations";
 import { useRouter, usePathname } from "next/navigation";
 
 import { faqs, faqContactImg } from "@/data/site";

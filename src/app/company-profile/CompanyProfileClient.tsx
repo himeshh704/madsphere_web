@@ -2,13 +2,11 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Download, ChevronLeft, ChevronRight, FileText, ArrowLeft, Mail, Phone, MapPin, Globe } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Download, ChevronLeft, ChevronRight, ArrowLeft, Mail, Phone, MapPin } from "lucide-react";
 import Link from "next/link";
 import { aboutHero, aboutPrinciples, aboutValues, servicesList, contactInfo, works } from "@/data/site";
 
 export default function CompanyProfileClient() {
-  const router = useRouter();
   const [activeSlide, setActiveSlide] = useState(0);
 
   const slides = [

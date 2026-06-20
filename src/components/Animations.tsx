@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 
 export function CustomCursor() {
   const x = useSpring(useMotionValue(0), { stiffness: 600, damping: 30 });

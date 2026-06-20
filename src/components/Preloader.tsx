@@ -92,7 +92,6 @@ import { usePathname } from "next/navigation";
 
 export default function Preloader() {
   const pathname = usePathname();
-  const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   const isHome = pathname === "/";
@@ -135,12 +134,6 @@ export default function Preloader() {
       const elapsed = timestamp - start;
       const rawProgress = Math.min(elapsed / duration, 1);
       
-      // Easing function (starts fast, slows down near 100%)
-      const easedProgress = 1 - Math.pow(1 - rawProgress, 3);
-      const currentVal = Math.floor(easedProgress * 100);
-      
-      setProgress(currentVal);
-
       if (rawProgress < 1) {
         frame = requestAnimationFrame(update);
       } else {

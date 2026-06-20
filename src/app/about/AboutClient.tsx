@@ -23,12 +23,9 @@ export default function AboutClient() {
   const { scrollYProgress } = useScroll({ target: mounted ? containerRef : undefined, offset: ["start start", "end start"] });
   const { scrollYProgress: introProgress } = useScroll({ target: mounted ? introRef : undefined, offset: ["start start", "end start"] });
 
-  // Softer spring = more luxurious, cinematic feel
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const smoothScrollProgress = useSpring(scrollYProgress, { stiffness: 50, damping: 18, restDelta: 0.0005 });
   const smoothIntroProgress = useSpring(introProgress, { stiffness: 50, damping: 18, restDelta: 0.0005 });
-
-  const heroY = useTransform(smoothScrollProgress, [0, 1], ["0%", "40%"]);
-  // Sphere zoom refs \u2014 kept for when animation is re-enabled (see commented block below)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const circleScale = useTransform(smoothIntroProgress, [0, 0.85], [1, 26]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, ArrowRight, Plus, Minus } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Plus } from "lucide-react";
 import { TextReveal, Tilt3D, SectionBlurIn } from "@/components/Animations";
 import ApplyModal from "@/components/ApplyModal";
 import { careerEnquiry } from "@/data/site";

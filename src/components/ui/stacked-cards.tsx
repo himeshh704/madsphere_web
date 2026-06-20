@@ -70,7 +70,6 @@ export const StackedCards = ({
   const [layout, setLayout] = useState<LayoutMode>(defaultLayout);
   const [isHovering, setIsHovering] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
   const [isDark, setIsDark] = useState(true);
   const lastNavigationTime = useRef(0);
   const navigationCooldown = 400;
@@ -111,7 +110,6 @@ export const StackedCards = ({
         navigate(-1);
       }
     }
-    setIsDragging(false);
   };
 
   const handleWheel = useCallback(
@@ -222,7 +220,6 @@ export const StackedCards = ({
                 drag={isFirst ? "x" : false}
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.7}
-                onDragStart={() => setIsDragging(true)}
                 onDragEnd={handleDragEnd}
               >
                 <div

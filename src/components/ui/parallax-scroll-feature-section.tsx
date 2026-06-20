@@ -156,7 +156,6 @@ export const ParallaxScrollFeatureSection = ({
   const [layout, setLayout] = useState<LayoutMode>(defaultLayout);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
   const [mounted, setMounted] = useState(false);
   const lastScrollTime = useRef(0);
@@ -245,7 +244,6 @@ export const ParallaxScrollFeatureSection = ({
         navigate(-1);
       }
     }
-    setIsDragging(false);
   };
 
 
@@ -350,7 +348,6 @@ export const ParallaxScrollFeatureSection = ({
                 drag={isCurrent ? "x" : false}
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.6}
-                onDragStart={() => setIsDragging(true)}
                 onDragEnd={handleDragEnd}
                 style={{
                   zIndex: zIndex,

@@ -8,35 +8,16 @@ import {
   AnimatePresence
 } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Marquee from "@/components/Marquee";
 import ExpertiseScroll from "@/components/ExpertiseScroll";
-import { TextReveal, FloatingOrbs, Tilt3D, ScrollBlurReveal } from "@/components/Animations";
+import { TextReveal, ScrollBlurReveal } from "@/components/Animations";
 import { stagger } from "@/lib/motion";
 import { heroCards, socials, process, clients, hero, blogPosts } from "@/data/site";
-import { cn } from "@/utils/cn";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ParallaxImg from "@/components/ParallaxImg";
 import SectionTag from "@/components/SectionTag";
 import { ParallaxScrollFeatureSection } from "@/components/ui/parallax-scroll-feature-section";
-import { ParallaxComponent } from "@/components/ui/parallax-scrolling";
 
 
-const cardVariants = {
-  hidden: (isDesktop: boolean) => ({
-    opacity: 0,
-    x: 0,
-    y: isDesktop ? 120 : 50,
-    rotateY: isDesktop ? -10 : 0
-  }),
-  visible: {
-    opacity: 1,
-    x: 0,
-    y: 0,
-    rotateY: 0
-  }
-};
 
 const whyChooseUsData = [
   {
@@ -117,10 +98,8 @@ export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
-  const [hoveredStep, setHoveredStep] = useState<number | null>(null);
   const [activePill, setActivePill] = useState(1);
   const currentPillData = whyChooseUsData.find(p => p.num === activePill) || whyChooseUsData[0];
-  const processRef = useRef<HTMLDivElement>(null);
 
 
   useEffect(() => {
@@ -143,21 +122,8 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  const { scrollYProgress: processScroll } = useScroll({
-    target: processRef,
-    offset: ["start end", "end start"]
-  });
-
-  const path1Length = useTransform(processScroll, [0.25, 0.45], [0, 1]);
-  const path2Length = useTransform(processScroll, [0.45, 0.65], [0, 1]);
-  const path3Length = useTransform(processScroll, [0.65, 0.85], [0, 1]);
 
   const whyUsRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: whyUsScroll } = useScroll({
-    target: whyUsRef,
-    offset: ["start end", "end start"]
-  });
-  const arcLength = useTransform(whyUsScroll, [0.15, 0.45], [0, 1]);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
@@ -832,7 +798,7 @@ function HomeContactForm() {
       } else {
         alert("Failed to send message. Please try again.");
       }
-    } catch (err) {
+    } catch {
       alert("An error occurred. Please try again.");
     } finally {
       setHcfSubmitting(false);

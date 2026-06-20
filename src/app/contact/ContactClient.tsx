@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Clock, Instagram, Linkedin, Facebook, CheckCircle2, ArrowRight, ChevronDown } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Instagram, Linkedin, Facebook, ArrowRight, ChevronDown } from "lucide-react";
 import { TextReveal, Tilt3D } from "@/components/Animations";
 
 const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -36,7 +36,7 @@ export default function ContactClient() {
       } else {
         alert("Failed to send message. Please try again.");
       }
-    } catch (err) {
+    } catch {
       alert("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Save, LogOut, CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
 import defaultContent from "@/data/content.json";
@@ -12,7 +12,22 @@ export default function AdminPortal() {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
-  const handleLogin = async (pwToUse = password) => {
+  const fetchFreshContent = useCallback(async () => {
+    try {
+      // Try to get the absolute freshest from Github to avoid build cache
+      const res = await fetch(`https://raw.githubusercontent.com/himeshh704/madsphere_web/main/src/data/content.json?t=${Date.now()}`);
+      if (res.ok) {
+        const fresh = await res.json();
+        setContent({ ...defaultContent, ...fresh });
+      } else {
+        setContent(defaultContent);
+      }
+    } catch {
+      setContent(defaultContent);
+    }
+  }, []);
+
+  const handleLogin = useCallback(async (pwToUse = password) => {
     setLoading(true);
     try {
       const res = await fetch("/api/admin/login", {
@@ -28,26 +43,11 @@ export default function AdminPortal() {
         setMessage({ type: "error", text: "Invalid password" });
         localStorage.removeItem("madsphere_admin_pw");
       }
-    } catch (e) {
+    } catch {
       setMessage({ type: "error", text: "Login failed" });
     }
     setLoading(false);
-  };
-
-  const fetchFreshContent = async () => {
-    try {
-      // Try to get the absolute freshest from Github to avoid build cache
-      const res = await fetch(`https://raw.githubusercontent.com/himeshh704/madsphere_web/main/src/data/content.json?t=${Date.now()}`);
-      if (res.ok) {
-        const fresh = await res.json();
-        setContent({ ...defaultContent, ...fresh });
-      } else {
-        setContent(defaultContent);
-      }
-    } catch (e) {
-      setContent(defaultContent);
-    }
-  };
+  }, [password, fetchFreshContent]);
 
   useEffect(() => {
     // Check if we have a saved session
@@ -56,7 +56,7 @@ export default function AdminPortal() {
       setPassword(savedPw);
       handleLogin(savedPw);
     }
-  }, []);
+  }, [handleLogin]);
 
   const handleSave = async () => {
     setSaving(true);
@@ -73,7 +73,7 @@ export default function AdminPortal() {
       } else {
         setMessage({ type: "error", text: data.error || "Failed to save" });
       }
-    } catch (e: any) {
+    } catch {
       setMessage({ type: "error", text: "Network error saving changes" });
     }
     setSaving(false);
@@ -752,7 +752,7 @@ export default function AdminPortal() {
                 <div>
                   <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Cover Image URL</label>
                   <input type="text" value={post.coverImg} onChange={(e) => handleTextChange("blogPosts", i, "coverImg", e.target.value)} className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300 mb-2" />
-                  {post.coverImg && <img src={post.coverImg} className="h-24 w-auto rounded border border-zinc-800" />}
+                  {post.coverImg && <img src={post.coverImg} alt="Blog cover preview" className="h-24 w-auto rounded border border-zinc-800" />}
                 </div>
                 <div>
                   <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider block mb-1">Excerpt</label>

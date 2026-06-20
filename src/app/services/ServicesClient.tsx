@@ -60,7 +60,7 @@ export default function ServicesClient() {
       {/* Services List */}
       <section className="max-w-[1200px] mx-auto px-6 md:px-12 mb-32 relative z-10">
         <div className="flex flex-col gap-4" onMouseLeave={handleMouseLeave}>
-          {servicesList.map((service, idx) => {
+          {servicesList.map((service) => {
             const isOpen = openService === service.id;
             const isOtherOpen = openService !== "" && !isOpen;
             return (
