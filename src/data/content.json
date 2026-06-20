@@ -248,12 +248,6 @@
       "external": false
     },
     {
-      "label": "Company Profile (PDF)",
-      "href": "/company-profile",
-      "icon": "FileText",
-      "external": false
-    },
-    {
       "label": "Career Opportunities",
       "href": "/careers",
       "icon": "Briefcase",
@@ -296,10 +290,6 @@
     {
       "label": "Services",
       "href": "/services"
-    },
-    {
-      "label": "Company Profile",
-      "href": "/company-profile"
     },
     {
       "label": "Career Inquiries",
