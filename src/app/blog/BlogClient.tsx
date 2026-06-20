@@ -30,7 +30,7 @@ export default function BlogClient() {
   }, [selectedPost]);
 
   return (
-    <main className="pt-32 md:pt-40 pb-32 min-h-screen bg-white dark:bg-[#070708] overflow-hidden relative">
+    <main className="pt-32 md:pt-40 pb-32 min-h-screen bg-white dark:bg-[#070708] overflow-x-clip relative">
       {/* Minimal Header & Navigation Overlay */}
       <div className="absolute top-0 inset-x-0 z-40 py-6 md:py-8">
         <div className="max-w-[1400px] mx-auto px-6 md:px-16 flex items-center justify-between">
