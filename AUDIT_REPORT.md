@@ -19,6 +19,10 @@ This report documents the codebase audit, visual shortcomings resolved, animatio
 | **Email Domain Discrepancy** | Project-wide | Contact page pointed to `.in`, but Navbar talk link and careers auto-responder confirmation templates referenced `.xyz` domains, causing branding mismatch and routing confusion. | Aligned all email and domain references to use the official `madsphere.in` domain consistently. | **Resolved** |
 | **Expertise Card Tilt Lag** | Mobile | Interactive 3D tilt coordinates were calculated on hover events for the Expertise Scroll component, potentially triggering frame rate drops on touch devices. | Configured an `isTouch` coarse pointer detection filter inside `ExpertiseScroll` to deactivate 3D transforms on mobile devices. | **Resolved** |
 | **Process Stacking Card Layout** | Desktop | The previous absolute-timeline layout with dotted S-curves did not scale cleanly, causing cards to stack in wrappers that scrolled away prematurely, preventing overlapping slide-over page transition effects. | Reimplemented the original 4-column horizontal grid design on desktop with a GSAP ScrollTrigger master scrubbing timeline. The section pins in place (`pin: true`) while the timeline progressively reveals cards (y: 40 ➔ 0, opacity: 0 ➔ 1) and draws connecting dotted SVG paths step-by-step as the user scrolls, creating a premium Awwwards-style progressive assembly experience. | **Resolved** |
+| **QR Landing Page Placeholder Hrefs** | Project-wide | The prior QR code landing page (`madsphere-qr-landing`) had placeholder `#` links for buttons like Website, Portfolio, Careers, and Contact. | Configured exact live web app routing target links and added `target="_blank"` attributes. | **Resolved** |
+| **Mascot Character Upgrade** | Project-wide | The mascot image needed replacement with the new custom stickman design while maintaining the hover/bobbing animation layers. | Replaced `public/mascot.png` with the new stickman artwork. | **Resolved** |
+| **Contact Phone Alignment** | Project-wide | Contact lists, connect pages, and QR channel cards used the temporary placeholder "+91 98765 43210". | Updated the official contact phone and WhatsApp API links to point to the correct number (+91 93702 64247). | **Resolved** |
+| **Developer Inspection Blocker** | Project-wide | The `AntiInspect` system intercepted right-clicks, keyboard shortcuts (F12, Inspect), and debugger loops, blocking access to the raw website source. | Completely removed the `AntiInspect` module from the application layout to allow open, raw code inspection. | **Resolved** |
 
 ---
 
@@ -46,15 +50,11 @@ The decorative footer images and Careers banner inline avatars now act as intera
 
 ---
 
-## 3. Developer & Security Audit Bypass
+## 3. Developer & Security Audit Raw Code Inspection
 
-To protect source assets while allowing security audits (such as Vercel Preview inspects, Lighthouse scans, or manual code auditing):
-1. **Audit Mode Parameter**: Appending `?audit=true` to the URL sets a secure session parameter:
-   ```js
-   const isAudit = new URLSearchParams(window.location.search).get("audit") === "true";
-   ```
-2. **Tab Session Persistence**: The flag is cached in `sessionStorage.setItem("audit_bypass", "true")`. As long as the tab remains open, the auditor can browse all subpages, view source code, right-click, and use inspect tools without triggers.
-3. **Structured Notice Screen**: For non-auditors, opening developer tools does not perform destructive page writes. It mounts a structured full-screen notice overlay that maintains `<head>` accessibility and page title tags, showing a clean security warning instead.
+To enable complete developer access, raw code audits, and transparent inspection:
+1. **Removed Anti-Inspect Restrictions**: The security overlay (`AntiInspect.tsx`) has been completely removed from the main layout (`src/app/layout.tsx`).
+2. **Standard Browsing Restored**: Users and security auditors can now open Chrome DevTools (F12, Ctrl+Shift+I), right-click to open context menus, inspect elements, copy page assets, view raw source files, and save the page without any interception or blocking.
 
 ---
 

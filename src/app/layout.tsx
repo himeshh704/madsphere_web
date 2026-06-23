@@ -74,7 +74,6 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/components/ThemeProvider";
-import AntiInspect from "@/components/AntiInspect";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -94,7 +93,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 dark:bg-[#070708] dark:text-zinc-100 transition-colors duration-300">
-        <AntiInspect />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

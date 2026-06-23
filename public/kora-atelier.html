@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KORA Atelier — Handcrafted Luxury Gifts</title>
+  <meta name="description" content="KORA Atelier crafts bespoke pipe-cleaner florals, curated hampers, and personalized keepsakes. Every gift tells a story." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Outfit:wght@300;400;600;700&family=Italiana&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --blush:#f5dde4; --blush-deep:#e8bec9; --blush-light:#fdf0f3;
+      --cream:#fdf6ee; --cream-warm:#f9ede0; --cream-dark:#f2e0cc;
+      --gold:#c9a96e; --gold-light:#e8d5b0; --gold-pale:#f5edd8;
+      --rose-gold:#c77c6e; --rose-gold-light:#e8a89c;
+      --white:#fffcf9; --dark:#0f0e0d; --dark2:#1a1714;
+      --wine:#3d1a1a; --forest:#0d1f18; --navy:#0a0e1a;
+      --text-dark:#2d1f1f; --text-mid:#6b4a4a; --text-soft:#a07878;
+      --radius-xl:28px; --radius-pill:9999px;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:auto;}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden;}
+    ::-webkit-scrollbar{width:5px;}
+    ::-webkit-scrollbar-track{background:#111;}
+    ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px;}
+    .serif{font-family:'Cormorant Garamond',serif;}
+    .brand-font{font-family:'Italiana',Georgia,serif;}
+    .outfit{font-family:'Outfit',sans-serif;}
+
+    /* ── KEYFRAMES ── */
+    @keyframes floatA{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-18px) rotate(-2deg);}}
+    @keyframes floatB{0%,100%{transform:translateY(0) rotate(5deg);}50%{transform:translateY(-24px) rotate(3deg);}}
+    @keyframes floatD{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(32px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+    @keyframes sparkle{0%,100%{opacity:.4;transform:scale(.8);}50%{opacity:1;transform:scale(1.2);}}
+    @keyframes pulseGlow{0%,100%{box-shadow:0 0 30px rgba(201,169,110,.4);}50%{box-shadow:0 0 60px rgba(201,169,110,.7);}}
+    @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+    @keyframes marqueeRev{from{transform:translateX(-50%);}to{transform:translateX(0);}}
+    @keyframes slideInLeft{from{opacity:0;transform:translateX(-60px);}to{opacity:1;transform:translateX(0);}}
+    @keyframes slideInRight{from{opacity:0;transform:translateX(60px);}to{opacity:1;transform:translateX(0);}}
+    @keyframes rotateIn{from{opacity:0;transform:rotate(-8deg) scale(.9);}to{opacity:1;transform:rotate(0) scale(1);}}
+    @keyframes lineGrow{from{width:0;}to{width:100%;}}
+    @keyframes numberCount{from{opacity:0;}to{opacity:1;}}
+    @keyframes borderSpin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+
+    /* ── NAV ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;transition:all .4s ease;}
+    nav.scrolled{background:rgba(15,14,13,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,169,110,.15);padding:12px 32px;}
+    .nav-logo{font-family:'Italiana',Georgia,serif;font-size:24px;font-weight:400;letter-spacing:.25em;text-transform:uppercase;color:var(--text-dark);text-decoration:none;line-height:1;transition:color .4s ease;}
+    .nav-logo span{color:var(--rose-gold);transition:color .4s ease;}
+    nav.scrolled .nav-logo{color:#fff;}
+    nav.scrolled .nav-logo span{color:var(--gold);}
+    .nav-links{display:flex;align-items:center;gap:32px;list-style:none;}
+    .nav-links a{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;font-weight:500;transition:color .25s;}
+    nav.scrolled .nav-links a{color:rgba(255,255,255,.7);}
+    .nav-links a:hover{color:var(--gold);}
+    nav.scrolled .nav-links a:hover{color:var(--gold);}
+    .nav-cta{background:linear-gradient(135deg,var(--gold),#e8c98a) !important;color:#fff !important;padding:9px 20px;border-radius:var(--radius-pill);font-size:11px !important;white-space:nowrap;}
+    /* Hamburger */
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;z-index:210;}
+    .hamburger span{display:block;width:24px;height:2px;background:var(--text-dark);border-radius:2px;transition:all .3s ease;}
+    nav.scrolled .hamburger span{background:#fff;}
+    .hamburger.open span{background:#fff;}
+    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+    /* Mobile drawer */
+    .mobile-menu{display:none;position:fixed;inset:0;background:rgba(10,9,8,.97);z-index:205;flex-direction:column;align-items:center;justify-content:center;gap:36px;}
+    .mobile-menu.open{display:flex;animation:fadeIn .3s ease;}
+    .mobile-menu a{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:rgba(255,255,255,.85);text-decoration:none;letter-spacing:.08em;transition:color .2s;}
+    .mobile-menu a:hover{color:var(--gold);}
+    .mobile-menu .mob-cta{background:linear-gradient(135deg,var(--gold),#e8c98a);color:#fff !important;padding:14px 36px;border-radius:var(--radius-pill);font-size:16px !important;}
+
+    /* ── SECTION 1: HERO (Blush Luxury) ── */
+    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+      background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(245,221,228,.7) 0%,transparent 70%),
+                 radial-gradient(ellipse 60% 50% at 80% 80%,rgba(249,237,224,.6) 0%,transparent 60%),var(--cream);}
+    .hero::before{content:'';position:absolute;inset:0;
+      background-image:radial-gradient(circle at 1px 1px,rgba(201,169,110,.07) 1px,transparent 0);
+      background-size:48px 48px;pointer-events:none;}
+    .hero-orb{position:absolute;border-radius:50%;pointer-events:none;}
+    .hero-orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(245,221,228,.6) 0%,transparent 70%);top:-100px;left:-150px;animation:floatD 8s ease-in-out infinite;}
+    .hero-orb-2{width:400px;height:400px;background:radial-gradient(circle,rgba(249,237,224,.7) 0%,transparent 70%);bottom:-80px;right:-100px;animation:floatD 10s ease-in-out infinite reverse;}
+    .hero-orb-3{width:250px;height:250px;background:radial-gradient(circle,rgba(232,190,201,.5) 0%,transparent 70%);top:40%;right:5%;animation:floatD 7s ease-in-out infinite 2s;}
+    .sparkle{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--gold-light);pointer-events:none;}
+    .sparkle-1{top:20%;left:15%;animation:sparkle 3s ease-in-out infinite;}
+    .sparkle-2{top:70%;left:8%;animation:sparkle 4s ease-in-out infinite 1s;width:5px;height:5px;}
+    .sparkle-3{top:35%;right:12%;animation:sparkle 3.5s ease-in-out infinite .5s;}
+    .sparkle-4{top:75%;right:20%;animation:sparkle 2.8s ease-in-out infinite 2s;width:6px;height:6px;background:var(--rose-gold-light);}
+    .star-sparkle{position:absolute;font-size:14px;pointer-events:none;animation:sparkle 4s ease-in-out infinite;color:var(--gold-light);opacity:.6;}
+    .star-1{top:18%;left:22%;animation-delay:.3s;}
+    .star-2{top:65%;right:15%;animation-delay:1.2s;font-size:10px;}
+    .star-3{top:42%;left:5%;animation-delay:2s;font-size:18px;}
+    .star-4{top:28%;right:28%;animation-delay:.8s;font-size:12px;}
+    .float-img{position:absolute;object-fit:contain;pointer-events:none;filter:drop-shadow(0 20px 50px rgba(180,100,120,.25));}
+    .float-img-1{width:280px;top:8%;left:2%;animation:floatA 6s ease-in-out infinite;}
+    .float-img-2{width:240px;bottom:10%;right:3%;animation:floatB 7s ease-in-out infinite;animation-delay:-2s;}
+    .float-img-3{width:200px;top:55%;left:5%;animation:floatD 5.5s ease-in-out infinite;animation-delay:-4s;}
+    .hero-content{position:relative;z-index:10;text-align:center;max-width:700px;padding:0 24px;animation:fadeUp 1s ease both .3s;}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;font-weight:500;}
+    .hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:40px;height:1px;background:linear-gradient(to right,transparent,var(--gold));}
+    .hero-eyebrow::after{background:linear-gradient(to left,transparent,var(--gold));}
+    .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,8vw,96px);font-weight:300;line-height:1.05;color:var(--text-dark);margin-bottom:16px;}
+    .hero-h1 em{font-style:italic;color:var(--rose-gold);}
+    .hero-subtitle{font-size:clamp(15px,2vw,17px);color:var(--text-soft);line-height:1.7;max-width:480px;margin:0 auto 44px;font-weight:300;}
+    .cta-group{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;}
+    .btn-primary{display:inline-flex;align-items:center;gap:10px;padding:16px 38px;border-radius:var(--radius-pill);background:linear-gradient(135deg,#c9a96e,#e8c98a 45%,#b8885a);background-size:200% auto;color:var(--white);font-size:14px;font-weight:500;letter-spacing:.08em;text-decoration:none;border:none;cursor:pointer;transition:background-position .4s,transform .25s;box-shadow:0 8px 35px rgba(201,169,110,.45);animation:pulseGlow 3s ease-in-out infinite;}
+    .btn-primary:hover{background-position:right center;transform:translateY(-3px) scale(1.02);}
+    .btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:15px 32px;border-radius:var(--radius-pill);background:transparent;color:var(--text-mid);font-size:13px;letter-spacing:.06em;text-decoration:none;border:1.5px solid var(--blush-deep);cursor:pointer;transition:all .25s;}
+    .btn-secondary:hover{background:var(--blush-light);border-color:var(--gold-light);color:var(--gold);transform:translateY(-2px);}
+    .hero-scroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-soft);font-size:11px;letter-spacing:.2em;text-transform:uppercase;animation:fadeIn 1.5s ease both 1.5s;}
+    .scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--gold-light),transparent);animation:floatD 2s ease-in-out infinite;}
+
+    /* ── SECTION 2: MARQUEE (Dark Dramatic) ── */
+    .marquee-wrap{overflow:hidden;background:var(--dark);border-top:1px solid rgba(201,169,110,.15);border-bottom:1px solid rgba(201,169,110,.15);padding:18px 0;position:relative;}
+    .marquee-wrap::before,.marquee-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;}
+    .marquee-wrap::before{left:0;background:linear-gradient(to right,var(--dark),transparent);}
+    .marquee-wrap::after{right:0;background:linear-gradient(to left,var(--dark),transparent);}
+    .marquee-track{display:flex;white-space:nowrap;animation:marquee 22s linear infinite;}
+    .marquee-item{display:inline-flex;align-items:center;gap:20px;padding:0 32px;font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:rgba(201,169,110,.8);letter-spacing:.05em;}
+    .marquee-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+
+    /* ── SECTION 3: COLLECTIONS (Editorial Asymmetric Dark) ── */
+    .collections{padding:0;background:var(--dark2);position:relative;overflow:hidden;}
+    .collections-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:clamp(80px,15vw,220px);font-weight:600;color:rgba(255,255,255,.025);white-space:nowrap;pointer-events:none;letter-spacing:.1em;z-index:0;}
+    .collections-inner{max-width:1300px;margin:0 auto;padding:100px 48px;}
+    .collections-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:80px;}
+    .coll-label{font-size:11px;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-weight:500;}
+    .coll-title{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,6vw,80px);font-weight:300;color:#fff;line-height:1.1;}
+    .coll-title em{font-style:italic;color:var(--gold);}
+    .coll-sub{font-size:15px;color:rgba(255,255,255,.4);max-width:300px;line-height:1.7;font-weight:300;}
+    .coll-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2px;position:relative;z-index:1;}
+    .coll-card{position:relative;overflow:hidden;cursor:pointer;aspect-ratio:3/4;}
+    .coll-card:first-child{aspect-ratio:3/5;}
+    .coll-card-bg{position:absolute;inset:0;transition:transform .7s cubic-bezier(.16,1,.3,1);}
+    .coll-card:hover .coll-card-bg{transform:scale(1.08);}
+    .coll-card-1 .coll-card-bg{background:linear-gradient(160deg,#2a1520 0%,#1a0d0d 40%,#0f0a0a 100%);}
+    .coll-card-2 .coll-card-bg{background:linear-gradient(160deg,#1a1520 0%,#0f0d1a 100%);}
+    .coll-card-3 .coll-card-bg{background:linear-gradient(160deg,#0d1520 0%,#0a0f1a 100%);}
+    .coll-card-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:72px;opacity:.35;pointer-events:none;transition:opacity .4s,transform .4s;filter:drop-shadow(0 4px 20px rgba(201,169,110,.3));}
+    .coll-card:hover .coll-card-icon{opacity:.55;transform:translate(-50%,-60%) scale(1.12);}
+    .coll-card-content{position:absolute;bottom:0;left:0;right:0;padding:36px 32px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);}
+    .coll-card-num{font-size:10px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;font-family:'Outfit',sans-serif;}
+    .coll-card-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:#fff;line-height:1.2;margin-bottom:8px;}
+    .coll-card-desc{font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;font-weight:300;margin-bottom:20px;}
+    .coll-card-link{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-weight:500;border-bottom:1px solid rgba(201,169,110,.3);padding-bottom:3px;transition:gap .25s,border-color .25s;}
+    .coll-card-link:hover{gap:14px;border-color:var(--gold);}
+    .coll-card-overlay{position:absolute;inset:0;border:1px solid rgba(201,169,110,0);transition:border-color .4s;}
+    .coll-card:hover .coll-card-overlay{border-color:rgba(201,169,110,.25);}
+
+    /* ── SECTION 4: PRODUCTS — WORKS-STYLE CANVAS SCROLL ── */
+    .works-section{position:relative;background:#000;}
+    .works-sticky-wrap{position:sticky;top:0;height:100vh;overflow:hidden;}
+    .works-bg-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;}
+    .works-arch-bg{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+    /* CSS arch corridor illusion */
+    .arch{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.06);border-radius:50% 50% 0 0/80% 80% 0 0;}
+    .arch-1{width:70vw;height:85vh;}
+    .arch-2{width:55vw;height:70vh;border-color:rgba(255,255,255,.05);}
+    .arch-3{width:42vw;height:57vh;border-color:rgba(255,255,255,.04);}
+    .arch-4{width:30vw;height:44vh;border-color:rgba(255,255,255,.03);}
+    .arch-5{width:20vw;height:32vh;border-color:rgba(255,255,255,.025);}
+    .arch-floor{position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to top,rgba(255,255,255,.03) 0%,transparent 100%);pointer-events:none;}
+    .works-header{position:absolute;top:0;left:0;right:0;z-index:10;padding:90px 40px 20px;pointer-events:none;}
+    .works-label{font-size:11px;letter-spacing:.45em;text-transform:uppercase;color:rgba(201,169,110,.8);font-weight:500;font-family:'Outfit',sans-serif;display:block;margin-bottom:12px;}
+    .works-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,64px);font-weight:300;color:#fff;line-height:1.1;}
+    .works-title em{font-style:italic;color:var(--gold);}
+    .works-scroll-hint{position:absolute;bottom:24px;right:32px;z-index:10;display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.3);font-size:10px;letter-spacing:.2em;text-transform:uppercase;pointer-events:none;}
+    .works-scroll-line{width:32px;height:1px;background:rgba(201,169,110,.4);}
+    /* cards container */
+    .works-cards-viewport{position:absolute;inset:0;z-index:5;overflow:hidden;perspective:1200px;perspective-origin:50% 40%;}
+    .work-card-wrap{position:absolute;left:50%;transform-origin:top center;will-change:transform,opacity;}
+    .work-card{width:100%;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.8);cursor:pointer;transition:box-shadow .3s;}
+    .work-card:hover{box-shadow:0 32px 100px rgba(201,169,110,.25);}
+    .work-card-img{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,var(--blush-light) 0%,var(--cream-warm) 100%);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+    .work-card-img img{width:50%;height:80%;object-fit:contain;transition:transform .5s cubic-bezier(.16,1,.3,1);}
+    .work-card:hover .work-card-img img{transform:scale(1.06) translateY(-4px);}
+    .work-card-badge{position:absolute;top:12px;left:12px;background:linear-gradient(135deg,var(--gold),#e8c98a);color:#fff;font-size:9px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;padding:4px 12px;border-radius:var(--radius-pill);}
+    .work-card-info{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid rgba(0,0,0,.06);flex-wrap:wrap;}
+    .work-card-meta{min-width:0;flex:1;}
+    .work-card-cat{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .work-card-name{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.5vw,22px);font-weight:500;color:var(--text-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .work-card-right{display:flex;align-items:center;gap:12px;flex-shrink:0;}
+    .work-card-price{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,24px);font-weight:500;color:var(--text-dark);white-space:nowrap;}
+    .work-card-price .cur{font-size:12px;color:var(--gold);vertical-align:super;}
+    .wa-buy-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:var(--radius-pill);background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;font-size:11px;font-weight:600;letter-spacing:.05em;text-decoration:none;border:none;cursor:pointer;transition:transform .25s,box-shadow .25s;box-shadow:0 4px 16px rgba(37,211,102,.3);white-space:nowrap;}
+    .wa-buy-btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 8px 24px rgba(37,211,102,.45);}
+    .wa-buy-btn svg{width:14px;height:14px;fill:#fff;flex-shrink:0;}
+
+    /* ── SECTION 5: STORY (Split Screen Editorial) ── */
+    .story{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;}
+    .story-left{background:var(--wine);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:80px 64px;}
+    .story-left-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 30% 50%,rgba(199,124,110,.15) 0%,transparent 70%);pointer-events:none;}
+    .story-img-frame{width:100%;max-width:400px;aspect-ratio:4/5;border-radius:24px;background:linear-gradient(135deg,rgba(245,221,228,.1) 0%,rgba(232,190,201,.05) 100%);border:1px solid rgba(201,169,110,.2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+    .story-img-frame img{width:75%;height:75%;object-fit:contain;animation:floatD 5s ease-in-out infinite;}
+    .story-stat-pill{position:absolute;background:rgba(255,255,255,.08);backdrop-filter:blur(12px);border:1px solid rgba(201,169,110,.25);border-radius:var(--radius-pill);padding:14px 22px;display:flex;align-items:center;gap:12px;}
+    .story-stat-pill-1{bottom:32px;right:-20px;}
+    .story-stat-pill-2{top:40px;left:-20px;animation-delay:-2s;}
+    .story-stat-pill{animation:floatB 6s ease-in-out infinite;}
+    .pill-icon{font-size:22px;}
+    .pill-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#fff;line-height:1;}
+    .pill-lbl{font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase;}
+    .story-right{background:var(--cream);display:flex;align-items:center;padding:80px 72px;}
+    .story-right-inner{max-width:520px;}
+    .story-eyebrow{display:block;font-size:11px;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;font-weight:500;}
+    .story-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,5vw,70px);font-weight:300;line-height:1.1;color:var(--text-dark);margin-bottom:24px;}
+    .story-h2 em{font-style:italic;color:var(--rose-gold);}
+    .story-quote{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--gold);margin-bottom:28px;padding-left:20px;border-left:2px solid var(--gold-light);line-height:1.6;}
+    .story-body{font-size:15px;color:var(--text-soft);line-height:1.85;font-weight:300;margin-bottom:16px;}
+    .story-stats{display:flex;gap:36px;margin-top:40px;padding-top:36px;border-top:1px solid rgba(201,169,110,.2);}
+    .s-val{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text-dark);line-height:1;margin-bottom:4px;}
+    .s-val sup{font-size:20px;color:var(--gold);}
+    .s-lbl{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-soft);}
+
+    /* ── SECTION 6: PROCESS (Dark Forest Vertical Timeline) ── */
+    .process{background:var(--forest);padding:120px 0;position:relative;overflow:hidden;}
+    .process::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(201,169,110,.06) 0%,transparent 70%);pointer-events:none;}
+    .process-inner{max-width:1100px;margin:0 auto;padding:0 48px;}
+    .process-hdr{text-align:center;margin-bottom:90px;}
+    .process-label{font-size:11px;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:16px;display:block;}
+    .process-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,5vw,68px);font-weight:300;color:#fff;line-height:1.1;}
+    .process-h2 em{font-style:italic;color:rgba(201,169,110,.8);}
+    .process-timeline{position:relative;display:grid;grid-template-columns:1fr 80px 1fr;gap:0;}
+    .process-timeline-line{width:1px;background:linear-gradient(to bottom,transparent,var(--gold) 20%,var(--gold) 80%,transparent);margin:0 auto;position:relative;}
+    .process-step-left,.process-step-right{padding:0 48px 80px;}
+    .process-step-left:last-of-type,.process-step-right:last-of-type{padding-bottom:0;}
+    .process-step-left{text-align:right;}
+    .process-step-right{text-align:left;}
+    .process-step-dot{width:14px;height:14px;border-radius:50%;background:var(--gold);position:absolute;left:50%;transform:translateX(-50%);box-shadow:0 0 20px rgba(201,169,110,.5);}
+    .process-dot-wrap{position:relative;display:flex;justify-content:center;padding-top:0;}
+    .p-step-num{font-size:11px;letter-spacing:.3em;color:rgba(201,169,110,.6);text-transform:uppercase;font-family:'Outfit',sans-serif;margin-bottom:10px;display:block;}
+    .p-step-icon{font-size:36px;margin-bottom:14px;display:block;}
+    .p-step-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;color:#fff;margin-bottom:10px;}
+    .p-step-desc{font-size:13px;color:rgba(255,255,255,.45);line-height:1.7;font-weight:300;}
+    /* Dot placement */
+    .pdot-1{top:8px;}
+    .pdot-2{top:208px;}
+    .pdot-3{top:408px;}
+    .pdot-4{top:608px;}
+
+    /* ── SECTION 7: TESTIMONIALS (Magazine Pull Quotes) ── */
+    .testimonials{background:var(--white);padding:120px 0;overflow:hidden;position:relative;}
+    .testimonials::before{content:'"';position:absolute;top:-40px;left:40px;font-family:'Cormorant Garamond',serif;font-size:400px;color:rgba(201,169,110,.05);line-height:1;pointer-events:none;}
+    .testi-inner{max-width:1200px;margin:0 auto;padding:0 48px;}
+    .testi-hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:72px;}
+    .testi-label{font-size:11px;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:14px;display:block;}
+    .testi-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,5vw,64px);font-weight:300;color:var(--text-dark);line-height:1.1;}
+    .testi-h2 em{font-style:italic;color:var(--rose-gold);}
+    .testi-count{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;color:rgba(201,169,110,.25);line-height:1;}
+    .testi-scroll{display:flex;gap:28px;overflow-x:auto;padding-bottom:24px;scrollbar-width:none;-ms-overflow-style:none;cursor:grab;}
+    .testi-scroll::-webkit-scrollbar{display:none;}
+    .testi-card{flex:0 0 400px;background:var(--cream);border-radius:24px;padding:40px;border:1px solid rgba(201,169,110,.12);position:relative;transition:transform .3s,box-shadow .3s;}
+    .testi-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(180,100,100,.1);}
+    .testi-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:20px;}
+    .testi-quote-text{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--text-dark);line-height:1.5;margin-bottom:28px;}
+    .testi-author{display:flex;align-items:center;gap:14px;}
+    .testi-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--blush),var(--blush-deep));display:flex;align-items:center;justify-content:center;font-size:20px;border:2px solid var(--gold-light);}
+    .testi-name{font-size:14px;font-weight:500;color:var(--text-dark);margin-bottom:2px;}
+    .testi-loc{font-size:11px;color:var(--text-soft);letter-spacing:.05em;}
+    .testi-num{position:absolute;top:32px;right:32px;font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:rgba(201,169,110,.15);}
+
+    /* ── FAQ ── */
+    .faq{background:var(--cream);padding:100px 0;}
+    .faq-inner{max-width:800px;margin:0 auto;padding:0 48px;}
+    .faq-hdr{text-align:center;margin-bottom:64px;}
+    .faq-label{font-size:11px;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:14px;display:block;}
+    .faq-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,60px);font-weight:300;color:var(--text-dark);line-height:1.1;}
+    .faq-h2 em{font-style:italic;color:var(--rose-gold);}
+    .faq-list{display:flex;flex-direction:column;gap:0;}
+    .faq-item{border-bottom:1px solid rgba(201,169,110,.2);overflow:hidden;}
+    .faq-item:first-of-type{border-top:1px solid rgba(201,169,110,.2);}
+    .faq-q{display:flex;align-items:center;justify-content:space-between;padding:22px 0;cursor:pointer;gap:16px;transition:color .25s;}
+    .faq-q:hover{color:var(--gold);}
+    .faq-q-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--text-dark);line-height:1.3;transition:color .25s;}
+    .faq-q:hover .faq-q-text{color:var(--gold);}
+    .faq-icon{width:32px;height:32px;border-radius:50%;border:1px solid rgba(201,169,110,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold);font-size:18px;transition:transform .35s ease,background .25s;}
+    .faq-item.open .faq-icon{transform:rotate(45deg);background:var(--gold);color:#fff;}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height .45s ease,padding .35s ease;padding:0;}
+    .faq-item.open .faq-a{max-height:300px;padding-bottom:20px;}
+    .faq-a p{font-size:15px;color:var(--text-soft);line-height:1.8;font-weight:300;}
+    /* ── TRUST STRIP ── */
+    .trust-strip{background:var(--dark2);padding:52px 0;border-top:1px solid rgba(201,169,110,.1);border-bottom:1px solid rgba(201,169,110,.1);}
+    .trust-strip-inner{max-width:1100px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+    .trust-item{display:flex;align-items:center;gap:16px;}
+    .trust-icon{width:48px;height:48px;border-radius:50%;background:rgba(201,169,110,.12);border:1px solid rgba(201,169,110,.25);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+    .trust-text-top{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;color:#fff;line-height:1;margin-bottom:3px;}
+    .trust-text-bot{font-size:12px;color:rgba(255,255,255,.4);letter-spacing:.08em;}
+    /* ── SECTION 8: FINAL CTA (Rich Wine/Dark) ── */
+    .final-cta{background:var(--dark);position:relative;overflow:hidden;padding:160px 0;}
+    .final-cta-bg1{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(199,124,110,.12) 0%,transparent 70%);top:-200px;left:-200px;pointer-events:none;}
+    .final-cta-bg2{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,169,110,.08) 0%,transparent 70%);bottom:-150px;right:-150px;pointer-events:none;}
+    .final-cta-grid{position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(201,169,110,.04) 1px,transparent 0);background-size:40px 40px;pointer-events:none;}
+    .final-cta-inner{max-width:800px;margin:0 auto;padding:0 48px;text-align:center;position:relative;z-index:2;}
+    .fca-label{font-size:11px;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:20px;display:block;}
+    .fca-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,7vw,90px);font-weight:300;color:#fff;line-height:1.08;margin-bottom:24px;}
+    .fca-h2 em{font-style:italic;color:var(--gold);}
+    .fca-sub{font-size:16px;color:rgba(255,255,255,.45);line-height:1.75;max-width:500px;margin:0 auto 52px;font-weight:300;}
+    .fca-btns{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;}
+    .btn-gold{display:inline-flex;align-items:center;gap:10px;padding:18px 44px;border-radius:var(--radius-pill);background:linear-gradient(135deg,var(--gold),#e8c98a 45%,var(--gold));background-size:200% auto;color:#fff;font-size:14px;font-weight:600;letter-spacing:.08em;text-decoration:none;border:none;cursor:pointer;transition:background-position .4s,transform .25s;box-shadow:0 8px 40px rgba(201,169,110,.4);}
+    .btn-gold:hover{background-position:right center;transform:translateY(-3px);}
+    .btn-outline-white{display:inline-flex;align-items:center;gap:8px;padding:17px 36px;border-radius:var(--radius-pill);background:transparent;color:rgba(255,255,255,.7);font-size:13px;letter-spacing:.06em;text-decoration:none;border:1.5px solid rgba(255,255,255,.2);cursor:pointer;transition:all .25s;}
+    .btn-outline-white:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,169,110,.08);}
+    .fca-badges{display:flex;align-items:center;justify-content:center;gap:40px;margin-top:56px;flex-wrap:wrap;}
+    .fca-badge{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.35);letter-spacing:.08em;}
+    .fca-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.6;}
+
+    /* ── FOOTER (Deep Navy) ── */
+    footer{background:var(--navy);padding:72px 0 40px;position:relative;overflow:hidden;}
+    footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(201,169,110,.3),transparent);}
+    .footer-inner{max-width:1200px;margin:0 auto;padding:0 48px;}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:64px;}
+    .footer-brand-logo{font-family:'Italiana',Georgia,serif;font-size:26px;font-weight:400;letter-spacing:.25em;text-transform:uppercase;color:#fff;text-decoration:none;display:block;margin-bottom:18px;line-height:1;}
+    .footer-brand-logo span{color:var(--gold);}
+    .footer-brand p{font-size:13px;line-height:1.75;color:rgba(255,255,255,.35);max-width:250px;font-weight:300;}
+    .footer-social{display:flex;gap:10px;margin-top:24px;}
+    .social-btn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(201,169,110,.2);display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;transition:all .25s;text-decoration:none;color:rgba(255,255,255,.4);}
+    .social-btn:hover{border-color:var(--gold);background:rgba(201,169,110,.1);color:var(--gold);transform:translateY(-2px);}
+    .footer-col h4{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;color:#fff;margin-bottom:20px;letter-spacing:.05em;}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+    .footer-col a{font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .25s;font-weight:300;}
+    .footer-col a:hover{color:var(--gold);}
+    .footer-bottom{padding-top:28px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;}
+    .footer-bottom p{font-size:12px;color:rgba(255,255,255,.2);letter-spacing:.05em;}
+    .footer-made{font-size:12px;color:rgba(255,255,255,.2);display:flex;align-items:center;gap:6px;}
+    .footer-made span{color:var(--rose-gold-light);}
+
+    /* ── REVEAL ── */
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+    .reveal-delay-1{transition-delay:.1s;}
+    .reveal-delay-2{transition-delay:.2s;}
+    .reveal-delay-3{transition-delay:.3s;}
+    .reveal-delay-4{transition-delay:.4s;}
+    .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s ease,transform .8s ease;}
+    .reveal-left.visible{opacity:1;transform:translateX(0);}
+    .reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s ease,transform .8s ease;}
+    .reveal-right.visible{opacity:1;transform:translateX(0);}
+
+    /* ══ RESPONSIVE — MOBILE FIRST ══ */
+
+    /* Tablet & below */
+    @media(max-width:960px){
+      nav{padding:16px 20px;}
+      nav.scrolled{padding:12px 20px;}
+      .nav-links{display:none;}
+      .hamburger{display:flex;}
+      /* Collections */
+      .collections-inner{padding:60px 20px;}
+      .collections-header{flex-direction:column;gap:20px;align-items:flex-start;margin-bottom:40px;}
+      .coll-grid{grid-template-columns:1fr;gap:3px;}
+      .coll-card,.coll-card:first-child{aspect-ratio:5/3;}
+      /* Story */
+      .story{grid-template-columns:1fr;}
+      .story-left{padding:60px 24px;min-height:auto;}
+      .story-right{padding:56px 24px;}
+      .story-right-inner{max-width:100%;}
+      .story-stats{gap:24px;}
+      /* Process */
+      .process{padding:80px 0;}
+      .process-inner{padding:0 20px;}
+      .process-timeline{grid-template-columns:1fr;}
+      .process-timeline-line{display:none;}
+      .process-step-left,.process-step-right{text-align:left !important;padding:0 0 48px !important;}
+      .process-hdr{margin-bottom:56px;}
+      /* Testimonials */
+      .testi-inner{padding:0 20px;}
+      .testi-hdr{flex-direction:column;gap:8px;align-items:flex-start;margin-bottom:40px;}
+      .testi-count{font-size:48px;}
+      /* Final CTA */
+      .final-cta{padding:100px 0;}
+      .final-cta-inner{padding:0 24px;}
+      /* Footer */
+      .footer-inner{padding:0 20px;}
+      .footer-grid{grid-template-columns:1fr 1fr;gap:32px;}
+      /* Hero decorations */
+      .float-img-3{display:none;}
+      .float-img-1{width:140px;top:10%;left:1%;}
+      .float-img-2{width:120px;bottom:12%;right:2%;}
+      .hero-orb-1{width:300px;height:300px;}
+      .hero-orb-2{width:250px;height:250px;}
+      /* Works */
+      .works-header{padding:80px 20px 16px;}
+      .works-scroll-hint{right:16px;bottom:16px;}
+    }
+
+    @media(max-width:960px){
+      .faq-inner{padding:0 20px;}
+      .trust-strip-inner{padding:0 20px;justify-content:center;}
+      .trust-item{flex:0 0 calc(50% - 16px);}
+    }
+    /* Mobile */
+    @media(max-width:640px){
+      nav{padding:14px 16px;}
+      nav.scrolled{padding:10px 16px;}
+      .nav-logo{font-size:20px;letter-spacing:.18em;}
+      /* Hero */
+      .hero-content{padding:0 16px;}
+      .hero-eyebrow{font-size:10px;letter-spacing:.25em;}
+      .hero-eyebrow::before,.hero-eyebrow::after{width:24px;}
+      .hero-subtitle{font-size:14px;margin-bottom:32px;}
+      .cta-group{gap:10px;}
+      .btn-primary{padding:14px 26px;font-size:13px;}
+      .btn-secondary{padding:13px 22px;font-size:12px;}
+      .float-img-1,.float-img-2{display:none;}
+      /* Marquee */
+      .marquee-item{font-size:15px;padding:0 20px;}
+      /* Collections */
+      .collections-inner{padding:48px 16px;}
+      .coll-title{font-size:clamp(36px,9vw,54px);}
+      .coll-card,.coll-card:first-child{aspect-ratio:4/3;}
+      .coll-card-content{padding:24px 20px;}
+      .coll-card-name{font-size:22px;}
+      /* Works */
+      .works-header{padding:72px 16px 12px;}
+      .works-title{font-size:clamp(24px,7vw,40px);}
+      .works-scroll-hint{display:none;}
+      /* Story */
+      .story-left{padding:48px 16px;}
+      .story-right{padding:48px 16px;}
+      .story-quote{font-size:17px;}
+      .story-body{font-size:14px;}
+      .story-stat-pill-1,.story-stat-pill-2{display:none;}
+      .story-stats{flex-wrap:wrap;gap:20px;}
+      /* Process */
+      .process{padding:64px 0;}
+      .process-inner{padding:0 16px;}
+      .process-hdr{margin-bottom:40px;}
+      .p-step-icon{font-size:28px;margin-bottom:10px;}
+      .p-step-title{font-size:22px;}
+      /* Testimonials */
+      .testimonials{padding:72px 0;}
+      .testi-inner{padding:0 16px;}
+      .testi-card{flex:0 0 calc(100vw - 48px);padding:28px 24px;}
+      .testi-quote-text{font-size:18px;}
+      /* Final CTA */
+      .final-cta{padding:80px 0;}
+      .final-cta-inner{padding:0 16px;}
+      .fca-sub{font-size:14px;margin-bottom:36px;}
+      .fca-btns{flex-direction:column;align-items:center;gap:12px;}
+      .btn-gold,.btn-outline-white{width:100%;justify-content:center;}
+      .fca-badges{gap:20px;margin-top:36px;}
+      /* Footer */
+      .footer-inner{padding:0 16px;}
+      .footer-grid{grid-template-columns:1fr;gap:36px;margin-bottom:40px;}
+      .footer-bottom{flex-direction:column;gap:10px;text-align:center;}
+      footer{padding:56px 0 32px;}
+    }
+
+    @media(max-width:640px){
+      .faq{padding:64px 0;}
+      .faq-inner{padding:0 16px;}
+      .faq-q-text{font-size:17px;}
+      .trust-strip{padding:36px 0;}
+      .trust-strip-inner{padding:0 16px;gap:20px;}
+      .trust-item{flex:0 0 calc(50% - 10px);}
+    }
+    /* Very small phones */
+    @media(max-width:380px){
+      .nav-logo{font-size:18px;}
+      .work-card-info{padding:12px 14px;}
+      .work-card-name{font-size:15px;}
+      .wa-buy-btn{padding:8px 12px;font-size:10px;}
+      .wa-buy-btn svg{display:none;}
+      .trust-item{flex:0 0 100%;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav id="main-nav">
+    <a href="#" class="nav-logo">KORA <span>Atelier</span></a>
+    <ul class="nav-links">
+      <li><a href="#collections">Collections</a></li>
+      <li><a href="#products">Shop</a></li>
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="https://wa.me/9982890789?text=Hi%21+I%27d+love+to+design+a+custom+gift+with+KORA+Atelier+%F0%9F%8C%B8" target="_blank" class="nav-cta" id="nav-cta-btn">Design Yours ❖</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu Drawer -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#collections" class="mob-link">Collections</a>
+    <a href="#products" class="mob-link">Shop</a>
+    <a href="#story" class="mob-link">Our Story</a>
+    <a href="#process" class="mob-link">Process</a>
+    <a href="https://wa.me/9982890789?text=Hi%21+I%27d+love+to+design+a+custom+gift+with+KORA+Atelier+%F0%9F%8C%B8" target="_blank" class="mob-cta">Design Yours ✨</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 1 — HERO: Blush Luxury
+  ══════════════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+    <div class="sparkle sparkle-1"></div>
+    <div class="sparkle sparkle-2"></div>
+    <div class="sparkle sparkle-3"></div>
+    <div class="sparkle sparkle-4"></div>
+    <div class="star-sparkle star-1">✦</div>
+    <div class="star-sparkle star-2">✦</div>
+    <div class="star-sparkle star-3">✧</div>
+    <div class="star-sparkle star-4">✦</div>
+    <img class="float-img float-img-1" src="/kora_daisy.png" alt="Handmade pipe-cleaner daisy bouquet" />
+    <img class="float-img float-img-2" src="/kora_giftbox.png" alt="Luxury blush gift box" />
+    <img class="float-img float-img-3" src="/kora_rose.png" alt="Pipe-cleaner rose bouquet" />
+    <div class="hero-content">
+      <div class="hero-eyebrow">Handcrafted with love</div>
+      <h1 class="hero-h1 serif">Where Every Gift<br><em>Tells a Story</em></h1>
+      <p class="hero-subtitle">Bespoke pipe-cleaner florals, curated hampers, and personalized keepsakes — crafted to make every moment unforgettable.</p>
+      <div class="cta-group">
+        <a href="https://wa.me/9982890789?text=Hi%21+I%27d+love+to+design+a+custom+gift+%F0%9F%8C%B8" target="_blank" class="btn-primary" id="hero-cta-btn">
+          <span>✨</span> Design Your Surprise
+        </a>
+        <a href="#collections" class="btn-secondary" id="hero-explore-btn">Explore Collections →</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 2 — MARQUEE: Dark Dramatic
+  ══════════════════════════════════════════════ -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item"><span class="marquee-dot"></span>Curated Hampers</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Eternal Bouquets</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Custom Keepsakes</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Handcrafted Gifts</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Made with Heart</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Luxury Gifting</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Free Personalisation</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>48hr Turnaround</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Curated Hampers</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Eternal Bouquets</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Custom Keepsakes</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Handcrafted Gifts</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Made with Heart</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Luxury Gifting</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Free Personalisation</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>48hr Turnaround</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 3 — COLLECTIONS: Dark Editorial Grid
+  ══════════════════════════════════════════════ -->
+  <section class="collections" id="collections">
+    <div class="collections-bg-text">KORA</div>
+    <div class="collections-inner">
+      <div class="collections-header reveal">
+        <div>
+          <div class="coll-label">Our Collections</div>
+          <h2 class="coll-title">Gifting,<br><em>Reimagined</em></h2>
+        </div>
+        <p class="coll-sub">Three signature ways to give something truly meaningful — each handcrafted to order.</p>
+      </div>
+      <div class="coll-grid">
+        <div class="coll-card coll-card-1 reveal reveal-delay-1" id="card-hampers">
+          <div class="coll-card-bg"></div>
+          <div class="coll-card-icon">🧺</div>
+          <div class="coll-card-overlay"></div>
+          <div class="coll-card-content">
+            <div class="coll-card-num">01 — Collection</div>
+            <h3 class="coll-card-name serif">Curated Hampers</h3>
+            <p class="coll-card-desc">Thoughtfully assembled collections of artisan treats, blooms, and personal touches, wrapped in our signature blush packaging.</p>
+            <a href="#products" class="coll-card-link">Explore Hampers <span>→</span></a>
+          </div>
+        </div>
+        <div class="coll-card coll-card-2 reveal reveal-delay-2" id="card-bouquets">
+          <div class="coll-card-bg"></div>
+          <div class="coll-card-icon">🌸</div>
+          <div class="coll-card-overlay"></div>
+          <div class="coll-card-content">
+            <div class="coll-card-num">02 — Collection</div>
+            <h3 class="coll-card-name serif">Eternal Bouquets</h3>
+            <p class="coll-card-desc">Handmade pipe-cleaner florals that never wilt. Custom colors, arrangements, and blooms — a gift that lasts forever.</p>
+            <a href="#products" class="coll-card-link">View Bouquets <span>→</span></a>
+          </div>
+        </div>
+        <div class="coll-card coll-card-3 reveal reveal-delay-3" id="card-keepsakes">
+          <div class="coll-card-bg"></div>
+          <div class="coll-card-icon">💌</div>
+          <div class="coll-card-overlay"></div>
+          <div class="coll-card-content">
+            <div class="coll-card-num">03 — Collection</div>
+            <h3 class="coll-card-name serif">Custom Keepsakes</h3>
+            <p class="coll-card-desc">Personalized charms, miniature frames, and hand-lettered cards — each piece designed to hold a memory close.</p>
+            <a href="#products" class="coll-card-link">See Keepsakes <span>→</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 4 — PRODUCTS: Madsphere Works-Style
+       Full-screen sticky canvas scroll with 3D card curl
+  ══════════════════════════════════════════════ -->
+  <div id="products" style="position:relative;">
+    <!-- Scroll driver: height controls how many "pages" of scroll -->
+    <div id="works-scroll-driver" style="height:500vh;position:relative;">
+      <div class="works-section works-sticky-wrap" id="works-sticky">
+        <!-- Particle canvas BG -->
+        <canvas class="works-bg-canvas" id="works-particle-canvas"></canvas>
+        <!-- Arch corridor -->
+        <div class="works-arch-bg">
+          <div class="arch arch-1"></div>
+          <div class="arch arch-2"></div>
+          <div class="arch arch-3"></div>
+          <div class="arch arch-4"></div>
+          <div class="arch arch-5"></div>
+          <div class="arch-floor"></div>
+        </div>
+        <!-- Header -->
+        <div class="works-header">
+          <span class="works-label">Featured</span>
+          <h2 class="works-title serif">Our <em>Bestsellers</em></h2>
+        </div>
+        <!-- Scroll hint -->
+        <div class="works-scroll-hint">
+          <div class="works-scroll-line"></div>
+          <span>Scroll to explore</span>
+        </div>
+        <!-- Cards viewport -->
+        <div class="works-cards-viewport" id="works-cards-viewport">
+          <!-- Cards injected by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 5 — STORY: Split Screen Editorial
+  ══════════════════════════════════════════════ -->
+  <section class="story" id="story">
+    <div class="story-left">
+      <div class="story-left-bg"></div>
+      <div class="story-img-frame reveal-left">
+        <img src="/kora_rose.png" alt="KORA Atelier studio" />
+        <div class="story-stat-pill story-stat-pill-1">
+          <div class="pill-icon">🌸</div>
+          <div><div class="pill-val">500+</div><div class="pill-lbl">Happy gifters</div></div>
+        </div>
+        <div class="story-stat-pill story-stat-pill-2">
+          <div class="pill-icon">✦</div>
+          <div><div class="pill-val">100%</div><div class="pill-lbl">Handmade</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="story-right">
+      <div class="story-right-inner reveal-right">
+        <span class="story-eyebrow">Our Story</span>
+        <h2 class="story-h2 serif">Made with<br><em>Every Petal</em></h2>
+        <div class="story-quote">"I started KORA to prove that handmade can be luxurious — and luxury can be personal."</div>
+        <p class="story-body">KORA Atelier was born from a quiet weekend, a handful of pipe cleaners, and an obsession with making something truly beautiful. What started as gifts for friends quickly grew into a studio beloved by hundreds of thoughtful givers.</p>
+        <p class="story-body">Every bouquet, every hamper, every keepsake is assembled by hand — petal by petal, ribbon by ribbon — with the singular goal of making your recipient feel seen, loved, and celebrated.</p>
+        <a href="https://wa.me/9982890789?text=Hi%21+I%27d+love+to+know+more+about+KORA+Atelier+%F0%9F%8C%B8" target="_blank" class="btn-secondary" id="story-btn" style="margin-top:32px;display:inline-flex;">Meet the Maker →</a>
+        <div class="story-stats">
+          <div><div class="s-val serif">500<sup>+</sup></div><div class="s-lbl">Orders Fulfilled</div></div>
+          <div><div class="s-val serif">48</div><div class="s-lbl">Hour Turnaround</div></div>
+          <div><div class="s-val serif">4.9<sup>★</sup></div><div class="s-lbl">Average Rating</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 6 — PROCESS: Dark Forest Vertical Timeline
+  ══════════════════════════════════════════════ -->
+  <section class="process" id="process">
+    <div class="process-inner">
+      <div class="process-hdr reveal">
+        <span class="process-label">How it Works</span>
+        <h2 class="process-h2 serif">Your Gift,<br><em>From Idea to Door</em></h2>
+      </div>
+      <div class="process-timeline">
+        <!-- Left column steps -->
+        <div>
+          <div class="process-step-left reveal reveal-delay-1" style="padding-top:0;padding-bottom:160px;">
+            <span class="p-step-num">Step 01</span>
+            <span class="p-step-icon">🎨</span>
+            <h4 class="p-step-title serif">Choose & Customise</h4>
+            <p class="p-step-desc">Pick a collection, select your colors, and add your personal message or dedication.</p>
+          </div>
+          <div class="process-step-left reveal reveal-delay-3" style="padding-bottom:160px;">
+            <span class="p-step-num">Step 03</span>
+            <span class="p-step-icon">🌸</span>
+            <h4 class="p-step-title serif">Handcrafted</h4>
+            <p class="p-step-desc">Your gift is lovingly assembled by hand in our studio, wrapped in signature blush tissue.</p>
+          </div>
+        </div>
+        <!-- Center line with dots -->
+        <div class="process-timeline-line" style="position:relative;">
+          <div class="process-step-dot" style="top:4px;"></div>
+          <div class="process-step-dot" style="top:204px;"></div>
+          <div class="process-step-dot" style="top:404px;"></div>
+          <div class="process-step-dot" style="top:604px;"></div>
+        </div>
+        <!-- Right column steps -->
+        <div>
+          <div class="process-step-right reveal reveal-delay-2" style="padding-top:80px;padding-bottom:160px;">
+            <span class="p-step-num">Step 02</span>
+            <span class="p-step-icon">🤝</span>
+            <h4 class="p-step-title serif">We Confirm</h4>
+            <p class="p-step-desc">You'll hear from us within hours to finalise every detail and confirm your design.</p>
+          </div>
+          <div class="process-step-right reveal reveal-delay-4" style="padding-top:80px;">
+            <span class="p-step-num">Step 04</span>
+            <span class="p-step-icon">🎁</span>
+            <h4 class="p-step-title serif">Delivered</h4>
+            <p class="p-step-desc">Safely packed and shipped to your recipient — ready to make someone's day truly special.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 7 — TESTIMONIALS: Magazine Pull Quotes
+  ══════════════════════════════════════════════ -->
+  <section class="testimonials" id="testimonials">
+    <div class="testi-inner">
+      <div class="testi-hdr reveal">
+        <div>
+          <span class="testi-label">Love Notes</span>
+          <h2 class="testi-h2 serif">What Our Gifters <em>Say</em></h2>
+        </div>
+        <div class="testi-count">500+</div>
+      </div>
+      <div class="testi-scroll" id="testi-scroll">
+        <div class="testi-card" id="testi-1">
+          <div class="testi-num">01</div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote-text serif">"The daisy bouquet made my best friend cry happy tears. It's the most thoughtful, beautiful gift I've ever given."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">🌸</div>
+            <div><div class="testi-name">Priya M.</div><div class="testi-loc">Mumbai, India</div></div>
+          </div>
+        </div>
+        <div class="testi-card" id="testi-2">
+          <div class="testi-num">02</div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote-text serif">"I ordered the custom hamper for my mum's birthday — the packaging alone had her speechless. Absolutely worth every rupee."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">💐</div>
+            <div><div class="testi-name">Shreya K.</div><div class="testi-loc">Bangalore, India</div></div>
+          </div>
+        </div>
+        <div class="testi-card" id="testi-3">
+          <div class="testi-num">03</div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote-text serif">"Fast turnaround, stunning craftsmanship, and the most adorable packaging. KORA is the only place I'll shop for gifts now."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">✨</div>
+            <div><div class="testi-name">Ananya R.</div><div class="testi-loc">Delhi, India</div></div>
+          </div>
+        </div>
+        <div class="testi-card" id="testi-4">
+          <div class="testi-num">04</div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote-text serif">"Ordered the Rose Garden Keepsake for our anniversary — she cried the moment she saw it. Pure magic in a box."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">🎁</div>
+            <div><div class="testi-name">Rohan S.</div><div class="testi-loc">Pune, India</div></div>
+          </div>
+        </div>
+        <div class="testi-card" id="testi-5">
+          <div class="testi-num">05</div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote-text serif">"The attention to detail is extraordinary. Every single petal was perfect. KORA truly pours love into their work."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">🌷</div>
+            <div><div class="testi-name">Meera T.</div><div class="testi-loc">Chennai, India</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ TRUST STRIP ══ -->
+  <div class="trust-strip">
+    <div class="trust-strip-inner">
+      <div class="trust-item reveal">
+        <div class="trust-icon">🌸</div>
+        <div><div class="trust-text-top">100% Handmade</div><div class="trust-text-bot">Every petal crafted by hand</div></div>
+      </div>
+      <div class="trust-item reveal reveal-delay-1">
+        <div class="trust-icon">⚡</div>
+        <div><div class="trust-text-top">48hr Turnaround</div><div class="trust-text-bot">Fast without cutting corners</div></div>
+      </div>
+      <div class="trust-item reveal reveal-delay-2">
+        <div class="trust-icon">🎨</div>
+        <div><div class="trust-text-top">Fully Custom</div><div class="trust-text-bot">Your colors, your story</div></div>
+      </div>
+      <div class="trust-item reveal reveal-delay-3">
+        <div class="trust-icon">📦</div>
+        <div><div class="trust-text-top">Pan-India Shipping</div><div class="trust-text-bot">Delivered to your door</div></div>
+      </div>
+      <div class="trust-item reveal reveal-delay-4">
+        <div class="trust-icon">💬</div>
+        <div><div class="trust-text-top">WhatsApp Support</div><div class="trust-text-bot">Chat with us anytime</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FAQ ══ -->
+  <section class="faq" id="faq">
+    <div class="faq-inner">
+      <div class="faq-hdr reveal">
+        <span class="faq-label">Got Questions?</span>
+        <h2 class="faq-h2 serif">Frequently <em>Asked</em></h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item" id="faq-1">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text serif">How do I place an order?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a"><p>Simply click any "Buy Now" or "Design Your Surprise" button — it opens a WhatsApp chat with us directly. Tell us what you'd like, and we'll guide you through every step. No complicated forms, just a conversation.</p></div>
+        </div>
+        <div class="faq-item" id="faq-2">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text serif">Can I customize colors and design?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a"><p>Absolutely! Every KORA piece is made to order. You can choose your color palette, flower types, arrangement style, and add a personalized message card. We love bringing your exact vision to life.</p></div>
+        </div>
+        <div class="faq-item" id="faq-3">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text serif">How long does delivery take?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a"><p>Most orders are crafted and dispatched within 48 hours. Delivery timelines depend on your location — typically 2-5 business days pan-India. We also offer express options for urgent gifting needs.</p></div>
+        </div>
+        <div class="faq-item" id="faq-4">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text serif">Are the flowers real or artificial?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a"><p>Our signature florals are handcrafted from premium pipe cleaners — meaning they last forever and never wilt! They're not artificial plastic flowers; they're artisanal, hand-bent sculptures that look incredibly lifelike and luxurious.</p></div>
+        </div>
+        <div class="faq-item" id="faq-5">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text serif">Do you offer bulk or corporate gifting?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a"><p>Yes! We love working with companies on branded gifting, employee appreciation, and event giveaways. We offer special pricing for orders of 10+ pieces. Reach out to us on WhatsApp and we'll create a custom proposal.</p></div>
+        </div>
+        <div class="faq-item" id="faq-6">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text serif">What if I'm not happy with my order?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a"><p>Your happiness is our top priority. If anything is not perfect, chat with us on WhatsApp and we'll make it right — whether that's a replacement, a refund, or a redo. We stand behind every piece we make.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 8 — FINAL CTA: Rich Dark
+  ══════════════════════════════════════════════ -->
+  <section class="final-cta" id="design-yours">
+    <div class="final-cta-bg1"></div>
+    <div class="final-cta-bg2"></div>
+    <div class="final-cta-grid"></div>
+    <div class="final-cta-inner reveal">
+      <span class="fca-label">Design Yours</span>
+      <h2 class="fca-h2 serif">Ready to make<br><em>someone smile?</em></h2>
+      <p class="fca-sub">Tell us who it's for, what they love, and we'll craft something they'll treasure forever. No order is too small — no love story too niche.</p>
+      <div class="fca-btns">
+        <a href="https://wa.me/9982890789?text=Hi%21+I%27d+love+to+design+a+custom+gift+with+KORA+Atelier+%F0%9F%8C%B8+Please+help+me+get+started!" target="_blank" class="btn-gold" id="final-cta-btn">
+          <span>✨</span> Design Your Surprise
+        </a>
+        <a href="https://wa.me/9982890789?text=Hi%21+I+have+a+question+about+KORA+Atelier+%F0%9F%8C%B8" target="_blank" class="btn-outline-white" id="final-contact-btn">
+          Chat with Us 💬
+        </a>
+      </div>
+      <div class="fca-badges">
+        <div class="fca-badge"><span class="fca-badge-dot"></span> 100% Handmade</div>
+        <div class="fca-badge"><span class="fca-badge-dot"></span> 48hr Turnaround</div>
+        <div class="fca-badge"><span class="fca-badge-dot"></span> Free Personalisation</div>
+        <div class="fca-badge"><span class="fca-badge-dot"></span> Loved 500+ times</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       FOOTER — Deep Navy
+  ══════════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="footer-brand-logo">KORA <span>Atelier</span></a>
+          <p>Handcrafted luxury gifts made petal by petal, ribbon by ribbon — because the best things in life are made with love.</p>
+          <div class="footer-social">
+            <a href="#" class="social-btn" id="footer-instagram" aria-label="Instagram">📷</a>
+            <a href="#" class="social-btn" id="footer-pinterest" aria-label="Pinterest">📌</a>
+            <a href="https://wa.me/9982890789" target="_blank" class="social-btn" id="footer-whatsapp" aria-label="WhatsApp">💬</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Collections</h4>
+          <ul>
+            <li><a href="#collections">Curated Hampers</a></li>
+            <li><a href="#collections">Eternal Bouquets</a></li>
+            <li><a href="#collections">Custom Keepsakes</a></li>
+            <li><a href="#products">New Arrivals</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <ul>
+            <li><a href="#story">Our Story</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#testimonials">Gallery</a></li>
+            <li><a href="https://wa.me/9982890789" target="_blank">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Help</h4>
+          <ul>
+            <li><a href="https://wa.me/9982890789?text=Hi%21+Can+you+guide+me+on+how+to+order?" target="_blank">Ordering Guide</a></li>
+            <li><a href="https://wa.me/9982890789?text=Hi%21+What+are+the+shipping+details?" target="_blank">Shipping Info</a></li>
+            <li><a href="https://wa.me/9982890789?text=Hi%21+I+have+a+question+about+KORA." target="_blank">FAQs</a></li>
+            <li><a href="https://wa.me/9982890789?text=Hi%21+I+need+help+with+a+return." target="_blank">Returns</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 KORA Atelier. All rights reserved.</p>
+        <div class="footer-made">Made with <span>♥</span> in India</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════  SCRIPTS  ══ -->
+  <script>
+  // ── 1. Nav scroll ──
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ── Smooth anchor scroll (replaces html scroll-behavior:smooth) ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  // ── Hamburger ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  document.querySelectorAll('.mob-link,.mob-cta').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // ── FAQ accordion ──
+  function toggleFaq(qEl) {
+    const item = qEl.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+  window.toggleFaq = toggleFaq;
+
+  // ── 2. Scroll reveal ──
+  const allReveal = document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
+  const revObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  allReveal.forEach(el => revObs.observe(el));
+
+  // ── 3. Hero float img parallax ──
+  const floatImgs = document.querySelectorAll('.float-img');
+  window.addEventListener('scroll', () => {
+    const sy = window.scrollY;
+    floatImgs.forEach((img, i) => {
+      const s = 0.12 + i * 0.06;
+      const d = i % 2 === 0 ? -1 : 1;
+      img.style.transform = `translateY(${sy * s * d}px)`;
+    });
+  }, { passive: true });
+
+  document.addEventListener('mousemove', e => {
+    const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    const dx = (e.clientX - cx) / cx, dy = (e.clientY - cy) / cy;
+    floatImgs.forEach((img, i) => {
+      const depth = 12 + i * 8;
+      img.style.marginLeft = `${dx * depth}px`;
+      img.style.marginTop = `${dy * depth}px`;
+    });
+  }, { passive: true });
+
+  // ── 4. Testimonials drag scroll ──
+  const teScroll = document.getElementById('testi-scroll');
+  let isDown = false, startX, scrollLeft;
+  teScroll.addEventListener('mousedown', e => { isDown = true; teScroll.style.cursor = 'grabbing'; startX = e.pageX - teScroll.offsetLeft; scrollLeft = teScroll.scrollLeft; });
+  teScroll.addEventListener('mouseleave', () => { isDown = false; teScroll.style.cursor = 'grab'; });
+  teScroll.addEventListener('mouseup', () => { isDown = false; teScroll.style.cursor = 'grab'; });
+  teScroll.addEventListener('mousemove', e => { if (!isDown) return; e.preventDefault(); const x = e.pageX - teScroll.offsetLeft; teScroll.scrollLeft = scrollLeft - (x - startX) * 1.5; });
+
+  // ── 5. Particle canvas (works bg) ──
+  (function initParticles() {
+    const canvas = document.getElementById('works-particle-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let w = canvas.offsetWidth, h = canvas.offsetHeight;
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    function resize() {
+      w = canvas.parentElement.clientWidth;
+      h = canvas.parentElement.clientHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.scale(dpr, dpr);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const particles = Array.from({ length: 100 }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 1.5 + 0.3,
+      speed: Math.random() * 0.25 + 0.08,
+      wind: Math.random() * 0.4 - 0.2,
+    }));
+
+    function tick() {
+      ctx.clearRect(0, 0, w, h);
+      particles.forEach(p => {
+        p.y += p.speed;
+        p.x += p.wind;
+        if (p.y > h + 5) { p.y = -5; p.x = Math.random() * w; }
+        if (p.x > w + 5) p.x = -5;
+        if (p.x < -5) p.x = w + 5;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.18)';
+        ctx.fill();
+      });
+      requestAnimationFrame(tick);
+    }
+    tick();
+  })();
+
+  // ── 6. Works / Products: Madsphere-Style Scroll Animation ──
+  (function initWorks() {
+    const WHATSAPP_NUM = '9982890789';
+    const products = [
+      {
+        id: 'daisy-bloom',
+        cat: 'Eternal Bouquets',
+        name: 'Daisy Bloom Bouquet',
+        desc: 'Soft pink & white pipe-cleaner daisies, arranged in a linen-wrapped bundle. Fully customisable.',
+        price: '849',
+        badge: 'Bestseller',
+        img: '/kora_daisy.png',
+        bg: 'linear-gradient(135deg,#fdf0f3 0%,#f9ede0 100%)',
+      },
+      {
+        id: 'blush-luxe',
+        cat: 'Curated Hampers',
+        name: 'Blush Luxe Hamper',
+        desc: 'Our signature blush gift box filled with premium treats, a handcrafted bloom, and a personalized note.',
+        price: '1,599',
+        badge: 'New Arrival',
+        img: '/kora_giftbox.png',
+        bg: 'linear-gradient(135deg,#f5dde4 0%,#fdf0f3 100%)',
+      },
+      {
+        id: 'rose-garden',
+        cat: 'Custom Keepsakes',
+        name: 'Rose Garden Keepsake',
+        desc: 'A tiny handmade rose bouquet in a miniature frame — perfect as a memory, a milestone, or just because.',
+        price: '649',
+        badge: 'Fan Favourite',
+        img: '/kora_rose.png',
+        bg: 'linear-gradient(135deg,#f9ede0 0%,#f5dde4 100%)',
+      },
+      {
+        id: 'blush-mini',
+        cat: 'Eternal Bouquets',
+        name: 'Blush Mini Trio',
+        desc: 'A delightful trio of mini pipe-cleaner bouquets — roses, daisies, and wildflowers. Perfect desk gift.',
+        price: '549',
+        badge: 'Limited Edition',
+        img: '/kora_daisy.png',
+        bg: 'linear-gradient(135deg,#fdf6ee 0%,#f5dde4 100%)',
+      },
+      {
+        id: 'sunset-lily',
+        cat: 'Eternal Bouquets',
+        name: 'Sunset Lily Bunch',
+        desc: 'Warm orange & coral pipe-cleaner lilies, evoking a golden-hour feeling. A bold, romantic statement piece.',
+        price: '799',
+        badge: 'Hot Pick',
+        img: '/kora_rose.png',
+        bg: 'linear-gradient(135deg,#f9ede0 0%,#f2d5b8 100%)',
+      },
+      {
+        id: 'birthday-bliss',
+        cat: 'Curated Hampers',
+        name: 'Birthday Bliss Bundle',
+        desc: 'A curated celebration box — confetti florals, mini balloon toppers, a handcrafted bloom, and a custom birthday card.',
+        price: '1,299',
+        badge: 'Popular',
+        img: '/kora_giftbox.png',
+        bg: 'linear-gradient(135deg,#fdf0f3 0%,#e8d5f0 100%)',
+      },
+      {
+        id: 'wildflower-wreath',
+        cat: 'Custom Keepsakes',
+        name: 'Wildflower Wall Wreath',
+        desc: 'A stunning wall-hanging wreath of mixed pipe-cleaner wildflowers. A timeless decor piece for any space.',
+        price: '1,149',
+        badge: 'Trending',
+        img: '/kora_rose.png',
+        bg: 'linear-gradient(135deg,#e8f0dc 0%,#f5f0e0 100%)',
+      },
+      {
+        id: 'love-letter',
+        cat: 'Custom Keepsakes',
+        name: 'Love Letter Set',
+        desc: 'Three miniature blooms + a hand-lettered calligraphy card, sealed in a blush gift envelope. The perfect heartfelt note.',
+        price: '449',
+        badge: 'Sweet & Simple',
+        img: '/kora_daisy.png',
+        bg: 'linear-gradient(135deg,#fdf0f3 0%,#f5dde4 100%)',
+      },
+    ];
+
+    function waLink(product) {
+      const msg = encodeURIComponent(
+        `Hi! I'd love to buy the *${product.name}* (₹${product.price}) from KORA Atelier 🌸\nPlease let me know the next steps!`
+      );
+      return `https://wa.me/${WHATSAPP_NUM}?text=${msg}`;
+    }
+
+    // Set scroll driver height dynamically based on product count
+    const driver = document.getElementById('works-scroll-driver');
+    if (driver) {
+      const isMobile = window.innerWidth < 640;
+      const vhPerCard = isMobile ? 55 : 65;
+      driver.style.height = (products.length * vhPerCard + 60) + 'vh';
+    }
+
+    const viewport = document.getElementById('works-cards-viewport');
+    if (!viewport) return;
+
+    // Build card DOM
+    products.forEach((p, idx) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'work-card-wrap';
+      wrap.id = `wcard-${p.id}`;
+      const isMob = window.innerWidth < 640;
+      const cardW = isMob ? Math.min(window.innerWidth * 0.92, 420) : Math.min(window.innerWidth * 0.72, 680);
+      wrap.style.cssText = `width:${cardW}px;margin-left:-${cardW/2}px;`;
+
+      wrap.innerHTML = `
+        <div class="work-card" id="product-${idx+1}">
+          <div class="work-card-img" style="background:${p.bg};">
+            <img src="${p.img}" alt="${p.name}" />
+            <span class="work-card-badge">${p.badge}</span>
+          </div>
+          <div class="work-card-info">
+            <div class="work-card-meta">
+              <div class="work-card-cat">${p.cat}</div>
+              <div class="work-card-name serif">${p.name}</div>
+            </div>
+            <div class="work-card-right">
+              <div class="work-card-price"><span class="cur">₹</span>${p.price}</div>
+              <a href="${waLink(p)}" target="_blank" class="wa-buy-btn" id="buy-${p.id}" aria-label="Buy ${p.name} via WhatsApp">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                Buy Now
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+      viewport.appendChild(wrap);
+    });
+
+    // Animation state
+    const BEND_THRESHOLD_FACTOR = 0.28; // fraction of vh from top
+    const N = products.length;
+    let scrollC = 0;
+    let raf;
+
+    function getCardW() {
+      return Math.min(window.innerWidth * 0.72, 680);
+    }
+
+    function getLayout() {
+      const vh = window.innerHeight;
+      const cardW = getCardW();
+      const cardH = document.querySelector('.work-card') ? document.querySelector('.work-card').offsetHeight : 280;
+      const gap = 0.18 * vh;
+      const startY = vh * 0.6; // first card center from bottom
+      const bendThreshold = vh * BEND_THRESHOLD_FACTOR; // Y from center where curl starts
+      return { vh, cardW, cardH, gap, startY, bendThreshold };
+    }
+
+    function animate() {
+      const driver = document.getElementById('works-scroll-driver');
+      const sticky = document.getElementById('works-sticky');
+      if (!driver || !sticky) { raf = requestAnimationFrame(animate); return; }
+
+      const driverRect = driver.getBoundingClientRect();
+      const driverH = driver.offsetHeight;
+      const stickyH = sticky.offsetHeight;
+      const scrollable = driverH - stickyH;
+      // How far we've scrolled into the driver
+      const scrolledIn = Math.max(0, Math.min(-driverRect.top, scrollable));
+      const rawT = scrolledIn;
+      // Lerp: snappy but smooth — 0.14 gives ~93% accuracy in 16 frames
+      const diff = rawT - scrollC;
+      if (Math.abs(diff) < 0.5) { scrollC = rawT; } // snap to final to stop jitter
+      else { scrollC += diff * 0.14; }
+
+      const { vh, cardW, cardH, gap, startY, bendThreshold } = getLayout();
+      const wrapEls = document.querySelectorAll('.work-card-wrap');
+
+      wrapEls.forEach((wrap, idx) => {
+        const baseY = startY - idx * (cardH + gap); // position from center (positive = below center)
+        const curY = baseY + scrollC; // after scroll
+
+        // curY is distance from screen center to card center (positive = below center)
+        // We want card center to move from bottom to top as scroll increases
+
+        // Card position in screen coords: center of viewport + curY
+        const screenCenterY = vh / 2;
+        const cardTop = screenCenterY - curY - cardH / 2;
+
+        // Compute curl: if card top edge goes above bendThreshold from top
+        const cardTopEdge = cardTop; // in px from top of viewport
+        const triggerY = bendThreshold;
+
+        let rotX = 0;
+        let translateZ = 0;
+        let opacityVal = 1;
+        let scaleY = 1;
+
+        if (cardTopEdge < triggerY) {
+          const dist = triggerY - cardTopEdge;
+          const maxDist = vh * 0.55;
+          const progress = Math.min(dist / maxDist, 1);
+
+          // Ease
+          const eased = progress * progress;
+          rotX = -eased * 90; // rotate backward 0→-90deg
+          translateZ = -eased * 350;
+          opacityVal = Math.max(0, 1 - eased * 1.8);
+          scaleY = 1 - eased * 0.12;
+        }
+
+        // Hide if completely off bottom
+        const offBottom = cardTop > vh + 60;
+        const offTop = opacityVal < 0.01;
+
+        wrap.style.cssText = `
+          width:${cardW}px;
+          margin-left:-${cardW/2}px;
+          position:absolute;
+          left:50%;
+          top:0;
+          opacity:${offBottom ? 0 : opacityVal};
+          transform:translate3d(-50%,${cardTop}px,0) perspective(1000px) rotateX(${rotX}deg) translateZ(${translateZ}px) scaleY(${scaleY});
+          transform-origin:top center;
+          pointer-events:${(offBottom || offTop) ? 'none' : 'auto'};
+          will-change:transform,opacity;
+        `;
+      });
+
+      raf = requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Update card width on resize
+    window.addEventListener('resize', () => {
+      const cardW = getCardW();
+      document.querySelectorAll('.work-card-wrap').forEach(wrap => {
+        wrap.style.width = `${cardW}px`;
+        wrap.style.marginLeft = `-${cardW/2}px`;
+      });
+    });
+  })();
+  </script>
+
+</body>
+</html>

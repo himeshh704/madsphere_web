@@ -109,7 +109,7 @@ File Path: [page.tsx](./src/app/page.tsx)
 
 ---
 
-## 🎨 Global & Shared Layout Components
+##  Global & Shared Layout Components
 
 These global components appear on multiple pages:
 

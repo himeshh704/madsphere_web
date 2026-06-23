@@ -875,7 +875,9 @@ export default function ThreeWorksScene({ revealed }: { revealed: boolean }) {
           {works.map((work, idx) => (
             <a
               key={work.id}
-              href={(work.categories as readonly string[]).includes("Development") ? "https://madsphere.in" : "#"}
+              href={(work as any).website ?? "#"}
+              target={(work as any).website ? "_blank" : undefined}
+              rel={(work as any).website ? "noopener noreferrer" : undefined}
               ref={(el) => {
                 linksRef.current[idx] = el;
               }}
