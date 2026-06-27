@@ -4,12 +4,17 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import { Play, Volume2, VolumeX, ArrowLeft } from "lucide-react";
 import ThreeWorksScene from "@/components/ThreeWorksScene";
-import { worksHero } from "@/data/site";
+import { worksHero, works } from "@/data/site";
 
 export default function WorksClient() {
   const [revealed, setRevealed] = useState(false);
   const [muted, setMuted] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  const selectedProject = works.find((w) => w.id === selectedProjectId);
+  const titleText = selectedProject ? selectedProject.title : worksHero.title;
+  const subtitleText = selectedProject ? selectedProject.tags : worksHero.subtitle;
 
   // Auto-play audio when revealed
   const handleReveal = () => {
@@ -38,7 +43,11 @@ export default function WorksClient() {
       <audio ref={audioRef} src="/audio/bg-audio.mp3" loop preload="auto" />
 
       {/* 3D WebGL Canvas Scene */}
-      <ThreeWorksScene revealed={revealed} />
+      <ThreeWorksScene
+        revealed={revealed}
+        selectedProjectId={selectedProjectId}
+        onSelectProject={setSelectedProjectId}
+      />
 
       {/* Ambient Sound Controller */}
       {revealed && (
@@ -68,13 +77,23 @@ export default function WorksClient() {
           <Link href="/" className="cursor-pointer group flex items-center gap-2">
             <img src="/logo.png" alt="Madsphere" className="h-5 md:h-6 w-auto" />
           </Link>
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-zinc-700 hover:text-black transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back Home</span>
-          </Link>
+          {selectedProjectId ? (
+            <button
+              onClick={() => setSelectedProjectId(null)}
+              className="flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-zinc-700 hover:text-black transition-colors bg-transparent border-none cursor-pointer"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>Back to Projects</span>
+            </button>
+          ) : (
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-zinc-700 hover:text-black transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>Back Home</span>
+            </Link>
+          )}
         </div>
       </div>
 
@@ -87,10 +106,10 @@ export default function WorksClient() {
         }}
       >
         <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-zinc-900 leading-none mb-2">
-          {worksHero.title}
+          {titleText}
         </h1>
         <p className="text-sm font-medium tracking-widest uppercase text-zinc-500">
-          {worksHero.subtitle}
+          {subtitleText}
         </p>
       </div>
 

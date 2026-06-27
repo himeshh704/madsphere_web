@@ -413,98 +413,88 @@
   "works": [
     {
       "id": "01",
-      "title": "Astra Co",
-      "tags": "E-Commerce • Next.js • Design System",
-      "img": "https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1600&fit=crop",
-      "website": "https://madsphere-web.vercel.app",
-      "categories": [
-        "Design",
-        "Development"
+      "title": "Theatre Treats",
+      "tags": "Branding • Product Design • Web Design",
+      "img": "/works/theatre-treats/cover.jpeg",
+      "categories": ["Branding", "Design", "Development"],
+      "items": [
+        { "title": "Logo Design", "img": "/works/theatre-treats/logo.jpeg" },
+        { "title": "Product Design 01", "img": "/works/theatre-treats/product-design-1.jpeg" },
+        { "title": "Product Design 02", "img": "/works/theatre-treats/product-design-2.jpeg" },
+        { "title": "Product Design 03", "img": "/works/theatre-treats/product-design-3.jpeg" },
+        { "title": "Product Design 04", "img": "/works/theatre-treats/product-design-4.jpeg" },
+        { "title": "Product Design 05", "img": "/works/theatre-treats/product-design-5.jpeg" },
+        { "title": "Product Design 06", "img": "/works/theatre-treats/product-design-6.jpeg" },
+        { "title": "Product Design 07", "img": "/works/theatre-treats/product-design-7.jpeg" },
+        { "title": "Website Page 1", "img": "/works/theatre-treats/website-page-1.jpeg" },
+        { "title": "Website Page 2", "img": "/works/theatre-treats/website-page-2.jpeg" },
+        { "title": "Website Page 3", "img": "/works/theatre-treats/website-page-3.jpeg" },
+        { "title": "Website Page 4", "img": "/works/theatre-treats/website-page-4.jpeg" }
       ]
     },
     {
       "id": "02",
-      "title": "Hyper",
-      "tags": "Product Launch • Creative • 3D Design",
-      "img": "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1600&fit=crop",
-      "website": "https://madsphere-web.vercel.app",
-      "categories": [
-        "Design",
-        "Branding"
+      "title": "Shipnexa",
+      "tags": "Identity • Branding • Guidelines",
+      "img": "/works/shipnexa/cover.jpeg",
+      "categories": ["Branding", "Design"],
+      "items": [
+        { "title": "Logo Design", "img": "/works/shipnexa/logo.jpeg" },
+        { "title": "Visiting Card Front", "img": "/works/shipnexa/visiting-card-front.jpeg" },
+        { "title": "Visiting Card Back", "img": "/works/shipnexa/visiting-card-back.jpeg" },
+        { "title": "Brand Guidelines 01", "img": "/works/shipnexa/guidelines-1.jpeg" },
+        { "title": "Brand Guidelines 02", "img": "/works/shipnexa/guidelines-2.jpeg" },
+        { "title": "Brand Guidelines 03", "img": "/works/shipnexa/guidelines-3.jpeg" },
+        { "title": "Brand Guidelines 04", "img": "/works/shipnexa/guidelines-4.jpeg" },
+        { "title": "Brand Guidelines 05", "img": "/works/shipnexa/guidelines-5.jpeg" },
+        { "title": "Brand Guidelines 06", "img": "/works/shipnexa/guidelines-6.jpeg" },
+        { "title": "Brand Guidelines 07", "img": "/works/shipnexa/guidelines-7.jpeg" },
+        { "title": "Brand Guidelines 08", "img": "/works/shipnexa/guidelines-8.jpeg" },
+        { "title": "Brand Guidelines 09", "img": "/works/shipnexa/guidelines-9.jpeg" }
       ]
     },
     {
       "id": "03",
-      "title": "Yooma Billing",
-      "tags": "Campaign • Advertising • Print",
-      "img": "https://images.unsplash.com/photo-1509281373149-e957c6296406?q=80&w=1600&fit=crop",
-      "website": "https://madsphere-web.vercel.app",
-      "categories": [
-        "Branding",
-        "Design"
+      "title": "Cross Road",
+      "tags": "Branding • Logo Design • Menu Design",
+      "img": "/works/cross-road/cover.jpeg",
+      "categories": ["Branding", "Design"],
+      "items": [
+        { "title": "Logo Design", "img": "/works/cross-road/logo.jpeg" },
+        { "title": "Menu Design 01", "img": "/works/cross-road/menu-design-1.jpeg" },
+        { "title": "Menu Design 02", "img": "/works/cross-road/menu-design-2.jpeg" }
       ]
     },
     {
       "id": "04",
-      "title": "N Logo",
-      "tags": "Identity • Logo Design • Guidelines",
-      "img": "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1600&fit=crop",
-      "website": "https://madsphere-web.vercel.app",
-      "categories": [
-        "Branding"
+      "title": "Ferro Infracon",
+      "tags": "Social Media • Branding",
+      "img": "/works/ferro-infracon/cover.jpeg",
+      "categories": ["Branding", "Design"],
+      "items": [
+        { "title": "Social Post 01", "img": "/works/ferro-infracon/post-1.jpeg" },
+        { "title": "Social Post 02", "img": "/works/ferro-infracon/post-2.jpeg" }
       ]
     },
     {
       "id": "05",
-      "title": "style moment",
-      "tags": "UI/UX • Fashion Editorial • Webflow",
-      "img": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1600&fit=crop",
-      "website": "https://madsphere-web.vercel.app",
-      "categories": [
-        "Design"
-      ]
-    },
-    {
-      "id": "06",
-      "title": "Habitly App",
-      "tags": "Mobile App • React Native • UI/UX",
-      "img": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1600&fit=crop",
-      "website": "https://madsphere-web.vercel.app",
-      "categories": [
-        "Development",
-        "Design"
-      ]
-    },
-    {
-      "id": "07",
-      "title": "Skincare Packaging",
-      "tags": "Packaging • Art Direction • Identity",
-      "img": "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?q=80&w=1600&fit=crop",
-      "website": "https://madsphere-web.vercel.app",
-      "categories": [
-        "Branding"
-      ]
-    },
-    {
-      "id": "08",
-      "title": "Finance Dashboard",
-      "tags": "Fintech • Web App • Dashboard",
-      "img": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&fit=crop",
-      "website": "https://madsphere-web.vercel.app",
-      "categories": [
-        "Development",
-        "Design"
-      ]
-    },
-    {
-      "id": "09",
-      "title": "Social Campaign",
-      "tags": "Social Media • Marketing • Web",
-      "img": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1600&fit=crop",
-      "website": "https://madsphere-web.vercel.app",
-      "categories": [
-        "Branding",
-        "Development"
+      "title": "Other Projects",
+      "tags": "Web Design • Social Media • Product Design",
+      "img": "/works/other-projects/cover.jpeg",
+      "categories": ["Branding", "Design", "Development"],
+      "items": [
+        { "title": "Website Design 01", "img": "/works/other-projects/website-1.jpeg" },
+        { "title": "Website Design 02", "img": "/works/other-projects/website-2.jpeg" },
+        { "title": "Website Design 03", "img": "/works/other-projects/website-3.jpeg" },
+        { "title": "Social Post 01", "img": "/works/other-projects/sm-1.jpeg" },
+        { "title": "Social Post 02", "img": "/works/other-projects/sm-2.jpeg" },
+        { "title": "Social Post 03", "img": "/works/other-projects/sm-3.jpeg" },
+        { "title": "Product Design 01", "img": "/works/other-projects/pd-1.jpeg" },
+        { "title": "Product Design 02", "img": "/works/other-projects/pd-2.jpeg" },
+        { "title": "Product Design 03", "img": "/works/other-projects/pd-3.jpeg" },
+        { "title": "Product Design 04", "img": "/works/other-projects/pd-4.jpeg" },
+        { "title": "Product Design 05", "img": "/works/other-projects/pd-5.jpeg" },
+        { "title": "Product Design 06", "img": "/works/other-projects/pd-6.jpeg" }
       ]
     }
   ],

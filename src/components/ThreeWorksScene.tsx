@@ -212,12 +212,13 @@ const cardVertexShader = `
 
 const cardFragmentShader = `
   uniform sampler2D uTexture;
+  uniform float uTransitionOpacity;
   varying vec2 vUv;
   varying float vFade;
 
   void main() {
     vec4 tex = texture2D(uTexture, vUv);
-    float a = tex.a * vFade;
+    float a = tex.a * vFade * uTransitionOpacity;
     if (a < 0.005) discard;
     gl_FragColor = vec4(tex.rgb, a);
   }
@@ -417,28 +418,40 @@ interface SceneState {
   raf: number;
 }
 
-export default function ThreeWorksScene({ revealed }: { revealed: boolean }) {
+interface ThreeWorksSceneProps {
+  revealed: boolean;
+  selectedProjectId: string | null;
+  onSelectProject: (id: string | null) => void;
+}
+
+export default function ThreeWorksScene({ revealed, selectedProjectId, onSelectProject }: ThreeWorksSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const archesCanvasRef = useRef<HTMLCanvasElement>(null);
   const cardsCanvasRef = useRef<HTMLCanvasElement>(null);
   const linksRef = useRef<(HTMLAnchorElement | null)[]>([]);
 
+  // Keep a ref of selectedProjectId for access in resize handler without re-creating event listeners
+  const selectedProjectIdRef = useRef(selectedProjectId);
+  useEffect(() => {
+    selectedProjectIdRef.current = selectedProjectId;
+  }, [selectedProjectId]);
+
   // Layout sizing calculations
-  const calculateLayout = useCallback((width: number, height: number) => {
+  const calculateLayout = useCallback((width: number, height: number, activeCount: number) => {
     const pad = width >= 1024 ? 0.055 * width : 0.045 * width;
     const gap = width >= 1024 ? 0.022 * width : 0.04 * width;
     const cardW = width >= 768 ? (width >= 1024 ? width / 2 - 2 * pad : width / 1.5 - 2 * pad) : width - 2 * pad;
     const cardH = (0.6 * cardW) / 0.86;
     const verticalGap = 1.2 * gap;
-    const numCards = works.length;
+    const numCards = activeCount;
 
     const startYOffset = width >= 768 ? 0.1 * height : 0.2 * height;
     const startY = startYOffset - cardH / 2;
 
     const positions: { x: number; y: number }[] = [];
-    works.forEach((_, idx) => {
+    for (let idx = 0; idx < numCards; idx++) {
       positions.push({ x: 0, y: startY - idx * (cardH + verticalGap) });
-    });
+    }
 
     const maxScroll = Math.max(0, startYOffset - (startY - (numCards - 1) * (cardH + verticalGap) - cardH / 2) - 0.15 * height);
 
@@ -453,6 +466,22 @@ export default function ThreeWorksScene({ revealed }: { revealed: boolean }) {
       maxScroll,
     };
   }, []);
+
+  // Compute active items list for React rendering
+  const activeItems = selectedProjectId
+    ? (works.find((w) => w.id === selectedProjectId)?.items || []).map((item, idx) => ({
+        ...item,
+        id: `${selectedProjectId}-sub-${idx}`,
+      }))
+    : works;
+
+  const onProjectChangeRef = useRef<((id: string | null) => void) | null>(null);
+
+  useEffect(() => {
+    if (onProjectChangeRef.current) {
+      onProjectChangeRef.current(selectedProjectId);
+    }
+  }, [selectedProjectId]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -492,72 +521,108 @@ export default function ThreeWorksScene({ revealed }: { revealed: boolean }) {
 
     scArches.background = new THREE.Color(0xffffff);
 
-    const layout = calculateLayout(vw, vh);
+    // Initial card setup
+    const initialCount = selectedProjectIdRef.current
+      ? (works.find((w) => w.id === selectedProjectIdRef.current)?.items || []).length
+      : works.length;
+    let layout = calculateLayout(vw, vh, initialCount);
+
     const cardList: CardItem[] = [];
 
     // Bending Threshold and Radius
     const bendThreshold = vw >= 768 ? (vw >= 1024 ? 0.15 * vh : 0.05 * vh) : 0.2 * vh;
     const bendRadius = vw >= 768 ? (vw >= 1024 ? 0.22 * vh : 0.18 * vh) : 0.1 * vh;
 
-    // Create plane meshes for projects
-    works.forEach((w, idx) => {
-      const pos = layout.positions[idx];
-      const geom = new THREE.PlaneGeometry(layout.cW, layout.cH, 30, 150);
-      const mat = new THREE.ShaderMaterial({
-        vertexShader: cardVertexShader,
-        fragmentShader: cardFragmentShader,
-        uniforms: {
-          uTexture: { value: new THREE.Texture() },
-          uBendThreshold: { value: bendThreshold },
-          uBendRadius: { value: bendRadius },
-          uCardCenterY: { value: pos.y },
-          uTime: { value: 0 },
-        },
-        transparent: true,
-        side: THREE.DoubleSide,
-        depthWrite: false,
-        depthTest: true,
+    // Define helper to load a list of items
+    const loadCards = (items: any[]) => {
+      // 1. Clean up existing cards
+      cardList.forEach((c) => {
+        scCards.remove(c.mesh);
+        c.mesh.geometry.dispose();
+        if (Array.isArray(c.mesh.material)) {
+          c.mesh.material.forEach((m) => m.dispose());
+        } else {
+          c.mesh.material.dispose();
+        }
       });
+      cardList.length = 0;
 
-      const mesh = new THREE.Mesh(geom, mat);
-      mesh.renderOrder = idx;
-      mesh.position.set(pos.x, pos.y, 0);
-      scCards.add(mesh);
+      // 2. Re-calculate layout based on the new count
+      const activeCount = items.length;
+      const currentLayout = calculateLayout(vw, vh, activeCount);
+      layout = currentLayout;
 
-      cardList.push({
-        mesh,
-        baseY: pos.y,
-        w: layout.cW,
-        h: layout.cH,
+      state.maxScroll = currentLayout.maxScroll;
+      state.scrollT = 0;
+      state.scrollC = 0;
+
+      // 3. Create plane meshes
+      items.forEach((item, idx) => {
+        const pos = currentLayout.positions[idx];
+        const geom = new THREE.PlaneGeometry(currentLayout.cW, currentLayout.cH, 30, 150);
+        const mat = new THREE.ShaderMaterial({
+          vertexShader: cardVertexShader,
+          fragmentShader: cardFragmentShader,
+          uniforms: {
+            uTexture: { value: new THREE.Texture() },
+            uTransitionOpacity: { value: 1.0 },
+            uBendThreshold: { value: bendThreshold },
+            uBendRadius: { value: bendRadius },
+            uCardCenterY: { value: pos.y },
+            uTime: { value: 0 },
+          },
+          transparent: true,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+          depthTest: true,
+        });
+
+        const mesh = new THREE.Mesh(geom, mat);
+        mesh.renderOrder = idx;
+        mesh.position.set(pos.x, pos.y, 0);
+        scCards.add(mesh);
+
+        cardList.push({
+          mesh,
+          baseY: pos.y,
+          w: currentLayout.cW,
+          h: currentLayout.cH,
+        });
+
+        // Load image
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => {
+          mat.uniforms.uTexture.value = createCardTexture(
+            img,
+            item.title,
+            item.tags || "",
+            1024,
+            Math.round((1024 * currentLayout.cH) / currentLayout.cW),
+            currentLayout.lblFrac,
+            currentLayout.cW
+          );
+        };
+        img.onerror = () => {
+          mat.uniforms.uTexture.value = createCardTexture(
+            null,
+            item.title,
+            item.tags || "",
+            1024,
+            Math.round((1024 * currentLayout.cH) / currentLayout.cW),
+            currentLayout.lblFrac,
+            currentLayout.cW
+          );
+        };
+        img.src = item.img;
       });
+    };
 
-      // Load Image
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.onload = () => {
-        mat.uniforms.uTexture.value = createCardTexture(
-          img,
-          w.title,
-          w.tags,
-          1024,
-          Math.round((1024 * layout.cH) / layout.cW),
-          layout.lblFrac,
-          layout.cW
-        );
-      };
-      img.onerror = () => {
-        mat.uniforms.uTexture.value = createCardTexture(
-          null,
-          w.title,
-          w.tags,
-          1024,
-          Math.round((1024 * layout.cH) / layout.cW),
-          layout.lblFrac,
-          layout.cW
-        );
-      };
-      img.src = w.img;
-    });
+    // Load initial items
+    const initialItems = selectedProjectIdRef.current
+      ? (works.find((w) => w.id === selectedProjectIdRef.current)?.items || [])
+      : works;
+    loadCards(initialItems);
 
     // Arches Setup
     const archesList: ArchItem[] = [];
@@ -640,6 +705,56 @@ export default function ThreeWorksScene({ revealed }: { revealed: boolean }) {
       raf: 0,
     };
 
+    // Define transition logic when project id changes
+    const onProjectChange = (id: string | null) => {
+      const targetItems = id
+        ? (works.find((w) => w.id === id)?.items || [])
+        : works;
+
+      const duration = 250; // ms
+      const startTime = performance.now();
+
+      const fadeOutTick = (now: number) => {
+        const elapsed = now - startTime;
+        const t = Math.min(1, elapsed / duration);
+
+        cardList.forEach((c) => {
+          if (c.mesh.material && (c.mesh.material as THREE.ShaderMaterial).uniforms.uTransitionOpacity) {
+            (c.mesh.material as THREE.ShaderMaterial).uniforms.uTransitionOpacity.value = 1.0 - t;
+          }
+        });
+
+        if (t < 1) {
+          requestAnimationFrame(fadeOutTick);
+        } else {
+          // Clear and recreate cards
+          linksRef.current = [];
+          loadCards(targetItems);
+
+          // Animate Fade In
+          const startInTime = performance.now();
+          const fadeInTick = (nowIn: number) => {
+            const elapsedIn = nowIn - startInTime;
+            const tIn = Math.min(1, elapsedIn / duration);
+
+            cardList.forEach((c) => {
+              if (c.mesh.material && (c.mesh.material as THREE.ShaderMaterial).uniforms.uTransitionOpacity) {
+                (c.mesh.material as THREE.ShaderMaterial).uniforms.uTransitionOpacity.value = tIn;
+              }
+            });
+
+            if (tIn < 1) {
+              requestAnimationFrame(fadeInTick);
+            }
+          };
+          requestAnimationFrame(fadeInTick);
+        }
+      };
+      requestAnimationFrame(fadeOutTick);
+    };
+
+    onProjectChangeRef.current = onProjectChange;
+
     // Camera interactive panning variables
     let mouseX = 0;
     let mouseY = 0;
@@ -653,7 +768,6 @@ export default function ThreeWorksScene({ revealed }: { revealed: boolean }) {
     // Scroll handlers
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
-      // Increase scroll distance slightly for smoother control
       state.scrollT = Math.max(0, Math.min(state.scrollT + 1.1 * e.deltaY, state.maxScroll));
     };
     container.addEventListener("wheel", onWheel, { passive: false });
@@ -713,7 +827,6 @@ export default function ThreeWorksScene({ revealed }: { revealed: boolean }) {
               displayY = threshold + Math.sin(angle) * radius;
               bendScale = Math.max(0.2, Math.cos(angle));
 
-              // If cards rotate too far away, disable clicking
               if (angle > 1.8) {
                 anchor.style.pointerEvents = "none";
               } else {
@@ -760,7 +873,12 @@ export default function ThreeWorksScene({ revealed }: { revealed: boolean }) {
       camera.far = 3 * zHeight;
       camera.updateProjectionMatrix();
 
-      const newLayout = calculateLayout(vw, vh);
+      const activeCount = selectedProjectIdRef.current
+        ? (works.find((w) => w.id === selectedProjectIdRef.current)?.items || []).length
+        : works.length;
+
+      const newLayout = calculateLayout(vw, vh, activeCount);
+      layout = newLayout;
       state.maxScroll = newLayout.maxScroll;
       state.scrollT = Math.min(state.scrollT, state.maxScroll);
 
@@ -872,14 +990,22 @@ export default function ThreeWorksScene({ revealed }: { revealed: boolean }) {
             zIndex: 10,
           }}
         >
-          {works.map((work, idx) => (
+          {activeItems.map((item: any, idx) => (
             <a
-              key={work.id}
-              href={(work as any).website ?? "#"}
-              target={(work as any).website ? "_blank" : undefined}
-              rel={(work as any).website ? "noopener noreferrer" : undefined}
+              key={item.id || idx}
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                if (!selectedProjectId) {
+                  onSelectProject(item.id);
+                } else {
+                  window.open(item.img, "_blank");
+                }
+              }}
               ref={(el) => {
-                linksRef.current[idx] = el;
+                if (el) {
+                  linksRef.current[idx] = el;
+                }
               }}
               style={{
                 position: "absolute",
@@ -889,8 +1015,8 @@ export default function ThreeWorksScene({ revealed }: { revealed: boolean }) {
                 cursor: "pointer",
                 display: "none",
               }}
-              aria-label={work.title}
-              title={work.title}
+              aria-label={item.title}
+              title={item.title}
             />
           ))}
         </div>
