@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, ArrowLeft, X } from "lucide-react";
@@ -27,6 +27,15 @@ export default function BlogClient() {
       document.body.style.overflow = "auto";
     }
     return () => { document.body.style.overflow = "auto"; };
+  }, [selectedPost]);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Reset modal scroll to top when post changes
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
+    }
   }, [selectedPost]);
 
   return (
@@ -145,7 +154,7 @@ export default function BlogClient() {
               </div>
 
               {/* Scrollable Content */}
-              <div className="w-full h-full overflow-y-auto pt-24 pb-32 px-6 scroll-smooth">
+              <div ref={scrollRef} className="w-full h-full overflow-y-auto pt-24 pb-32 px-6 scroll-smooth">
                 <div className="max-w-[800px] mx-auto">
                   <div className="flex flex-col gap-6 mb-12 text-center md:text-left">
                     <div className="flex items-center justify-center md:justify-start gap-3 text-xs font-bold tracking-widest text-[#0047FF] uppercase">

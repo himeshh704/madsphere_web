@@ -1,10 +1,15 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { SectionBlurIn } from "@/components/Animations";
 
 export default function ArticleClient({ post }: { post: any }) {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
+
   return (
     <main className="pt-24 md:pt-32 pb-32 min-h-screen bg-white dark:bg-[#070708] overflow-x-clip relative">
       {/* Minimal Header */}
