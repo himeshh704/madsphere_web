@@ -80,6 +80,8 @@ import Footer from "@/components/Footer";
 import Mascot from "@/components/Mascot";
 import Preloader from "@/components/Preloader";
 import { FloatingOrbs, CustomCursor } from "@/components/Animations";
+import SmoothScroll from "@/components/SmoothScroll";
+import PageTransition from "@/components/PageTransition";
 
 export default function RootLayout({
   children,
@@ -102,12 +104,16 @@ export default function RootLayout({
           <Preloader />
           <CustomCursor />
           <FloatingOrbs />
-          <Navbar />
-          <Mascot />
-          <div className="flex-1 flex flex-col">
-            {children}
-          </div>
-          <Footer />
+          <SmoothScroll>
+            <Navbar />
+            <Mascot />
+            <div className="flex-1 flex flex-col">
+              <PageTransition>
+                {children}
+              </PageTransition>
+            </div>
+            <Footer />
+          </SmoothScroll>
         </ThemeProvider>
       </body>
     </html>

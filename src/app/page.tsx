@@ -16,6 +16,7 @@ import { stagger } from "@/lib/motion";
 import { heroCards, socials, process, clients, hero, blogPosts } from "@/data/site";
 import SectionTag from "@/components/SectionTag";
 import { ParallaxScrollFeatureSection } from "@/components/ui/parallax-scroll-feature-section";
+import HeroCanvas from "@/components/HeroCanvas";
 
 
 
@@ -149,6 +150,7 @@ export default function Home() {
             <motion.div style={{ y: mounted ? bgY : undefined }} className="absolute inset-0 scale-110">
               <img src={hero.img} alt="" className="w-full h-full object-cover" />
             </motion.div>
+            <HeroCanvas />
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/50" />
             {/* Bottom gradient — softly fades text before cards cover it */}
             <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-black/85 via-black/40 to-transparent z-[5] pointer-events-none" />
