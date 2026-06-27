@@ -733,7 +733,6 @@ export default function ThreeWorksScene({ revealed, selectedProjectId, onSelectP
           requestAnimationFrame(fadeOutTick);
         } else {
           // Clear and recreate cards
-          linksRef.current = [];
           loadCards(targetItems);
 
           // Animate Fade In

@@ -56,7 +56,7 @@ export default function WorksClient() {
         <button
           onClick={toggleMute}
           aria-label={muted ? "Unmute background music" : "Mute background music"}
-          className="fixed bottom-6 left-6 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white border border-zinc-200 shadow-lg cursor-pointer flex items-center justify-center text-zinc-900 transition-all duration-300 hover:scale-105 active:scale-95"
+          className="fixed bottom-6 right-6 md:right-auto md:left-6 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white border border-zinc-200 shadow-lg cursor-pointer flex items-center justify-center text-zinc-900 transition-all duration-300 hover:scale-105 active:scale-95"
         >
           {muted ? (
             <VolumeX className="w-5 h-5 md:w-6 md:h-6 text-zinc-900" />
@@ -101,16 +101,16 @@ export default function WorksClient() {
 
       {/* Floating Center/Left Title Section */}
       <div
-        className="fixed left-6 md:left-12 bottom-20 md:bottom-24 z-30 transition-all duration-1000 ease-out select-none pointer-events-none"
+        className="fixed left-6 md:left-12 bottom-20 md:bottom-24 max-w-[70vw] md:max-w-none z-30 transition-all duration-1000 ease-out select-none pointer-events-none"
         style={{
           transform: revealed ? "translateY(0)" : "translateY(50px)",
           opacity: revealed ? 1 : 0,
         }}
       >
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-zinc-900 leading-none mb-2">
+        <h1 className="text-2xl md:text-6xl font-bold tracking-tighter text-zinc-900 leading-none mb-1 md:mb-2">
           {titleText}
         </h1>
-        <p className="text-sm font-medium tracking-widest uppercase text-zinc-500">
+        <p className="text-[10px] md:text-sm font-medium tracking-widest uppercase text-zinc-500">
           {subtitleText}
         </p>
       </div>
