@@ -110,16 +110,16 @@ export default function CareersClient() {
   const [applyRole, setApplyRole] = useState<string | null>(null);
 
   return (
-    <main className="pt-32 md:pt-40 pb-0 min-h-screen bg-white dark:bg-[#070708] overflow-hidden">
+    <main className="pt-24 md:pt-32 pb-0 min-h-screen bg-white dark:bg-[#070708] overflow-hidden">
 
       {/* 1. Header Hero Section */}
       <SectionBlurIn>
-      <section className="px-6 md:px-16 max-w-[1400px] mx-auto text-center mb-24 md:mb-32 relative z-10">
-        <div className="flex justify-center items-center mb-6">
+      <section className="px-6 md:px-16 max-w-[1400px] mx-auto text-center mb-12 md:mb-16 relative z-10">
+        <div className="flex justify-center items-center mb-4">
           <SectionTag label="Career Inquiries" />
         </div>
 
-        <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-[7.5rem] font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 leading-none mb-8">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 leading-none mb-4">
           <TextReveal>Join the MadSphere</TextReveal>
         </h1>
 

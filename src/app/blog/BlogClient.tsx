@@ -39,7 +39,7 @@ export default function BlogClient() {
   }, [selectedPost]);
 
   return (
-    <main className="pt-32 md:pt-40 pb-32 min-h-screen bg-white dark:bg-[#070708] overflow-x-clip relative">
+    <main className="pt-24 md:pt-32 pb-32 min-h-screen bg-white dark:bg-[#070708] overflow-x-clip relative">
       {/* Minimal Header & Navigation Overlay */}
       <div className="absolute top-0 inset-x-0 z-40 py-6 md:py-8">
         <div className="max-w-[1400px] mx-auto px-6 md:px-16 flex items-center justify-between">
@@ -57,12 +57,12 @@ export default function BlogClient() {
       </div>
 
       <SectionBlurIn>
-      <section className="px-6 md:px-16 max-w-[1400px] mx-auto text-center mb-24 relative z-10">
-        <div className="flex justify-center items-center mb-6">
+      <section className="px-6 md:px-16 max-w-[1400px] mx-auto text-center mb-12 md:mb-16 relative z-10">
+        <div className="flex justify-center items-center mb-4">
           <SectionTag label={blogHero.title} />
         </div>
 
-        <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-[7.5rem] font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 leading-none mb-8">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 leading-none mb-4">
           <TextReveal>{blogHero.splashText}</TextReveal>
         </h1>
 
