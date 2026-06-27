@@ -492,6 +492,8 @@ export default function ThreeWorksScene({ revealed, selectedProjectId, onSelectP
     let vw = container.clientWidth;
     let vh = container.clientHeight;
 
+    let state: SceneState;
+
     // Renderer 1 (Arches - Solid background pass)
     const renArches = new THREE.WebGLRenderer({
       canvas: archesCanvas,
@@ -552,9 +554,11 @@ export default function ThreeWorksScene({ revealed, selectedProjectId, onSelectP
       const currentLayout = calculateLayout(vw, vh, activeCount);
       layout = currentLayout;
 
-      state.maxScroll = currentLayout.maxScroll;
-      state.scrollT = 0;
-      state.scrollC = 0;
+      if (state) {
+        state.maxScroll = currentLayout.maxScroll;
+        state.scrollT = 0;
+        state.scrollC = 0;
+      }
 
       // 3. Create plane meshes
       items.forEach((item, idx) => {
@@ -689,7 +693,7 @@ export default function ThreeWorksScene({ revealed, selectedProjectId, onSelectP
       }
     );
 
-    const state: SceneState = {
+    state = {
       scArches,
       scCards,
       cam: camera,
