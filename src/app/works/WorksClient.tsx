@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
-import { Play, Volume2, VolumeX, ArrowLeft } from "lucide-react";
+import { Play, Volume2, VolumeX, ArrowLeft, X } from "lucide-react";
 import ThreeWorksScene from "@/components/ThreeWorksScene";
 import { worksHero, works } from "@/data/site";
 
@@ -10,6 +10,7 @@ export default function WorksClient() {
   const [revealed, setRevealed] = useState(false);
   const [muted, setMuted] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const [activeLightboxImg, setActiveLightboxImg] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const selectedProject = works.find((w) => w.id === selectedProjectId);
@@ -47,6 +48,7 @@ export default function WorksClient() {
         revealed={revealed}
         selectedProjectId={selectedProjectId}
         onSelectProject={setSelectedProjectId}
+        onShowLightbox={setActiveLightboxImg}
       />
 
       {/* Ambient Sound Controller */}
@@ -152,6 +154,52 @@ export default function WorksClient() {
           </button>
         </div>
       </div>
+
+      {/* Showcase Lightbox Modal */}
+      {activeLightboxImg && (
+        <div
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/95 backdrop-blur-xl"
+          onClick={() => setActiveLightboxImg(null)}
+          style={{
+            animation: "worksFadeIn 0.25s ease-out forwards",
+          }}
+        >
+          <style>{`
+            @keyframes worksFadeIn {
+              from { opacity: 0; }
+              to { opacity: 1; }
+            }
+            @keyframes worksScaleUp {
+              from { transform: scale(0.96); opacity: 0; }
+              to { transform: scale(1); opacity: 1; }
+            }
+          `}</style>
+
+          {/* Close Button */}
+          <button
+            onClick={() => setActiveLightboxImg(null)}
+            className="absolute top-6 right-6 z-50 p-3 bg-zinc-900/60 hover:bg-zinc-800/80 text-white rounded-full border border-zinc-800 cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center"
+            aria-label="Close image showcase"
+          >
+            <X className="w-5 h-5 text-white" />
+          </button>
+
+          {/* Image Frame */}
+          <div
+            className="relative max-w-[90vw] max-h-[80vh] flex items-center justify-center rounded-lg overflow-hidden shadow-2xl border border-zinc-800"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              animation: "worksScaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+            }}
+          >
+            <img
+              src={activeLightboxImg}
+              alt="Client work detail showcase"
+              className="max-w-full max-h-[80vh] object-contain"
+            />
+          </div>
+        </div>
+      )}
     </main>
   );
 }

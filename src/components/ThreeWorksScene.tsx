@@ -422,9 +422,10 @@ interface ThreeWorksSceneProps {
   revealed: boolean;
   selectedProjectId: string | null;
   onSelectProject: (id: string | null) => void;
+  onShowLightbox: (img: string) => void;
 }
 
-export default function ThreeWorksScene({ revealed, selectedProjectId, onSelectProject }: ThreeWorksSceneProps) {
+export default function ThreeWorksScene({ revealed, selectedProjectId, onSelectProject, onShowLightbox }: ThreeWorksSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const archesCanvasRef = useRef<HTMLCanvasElement>(null);
   const cardsCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -1003,7 +1004,7 @@ export default function ThreeWorksScene({ revealed, selectedProjectId, onSelectP
                 if (!selectedProjectId) {
                   onSelectProject(item.id);
                 } else {
-                  window.open(item.img, "_blank");
+                  onShowLightbox(item.img);
                 }
               }}
               ref={(el) => {

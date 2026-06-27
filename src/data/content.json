@@ -284,6 +284,10 @@
       "href": "/"
     },
     {
+      "label": "Our Works",
+      "href": "/works"
+    },
+    {
       "label": "About Us",
       "href": "/about"
     },
