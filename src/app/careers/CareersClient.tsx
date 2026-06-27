@@ -2,7 +2,17 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, ArrowRight, Plus } from "lucide-react";
+import { 
+  ArrowUpRight, 
+  ArrowRight, 
+  Plus, 
+  DollarSign, 
+  Home, 
+  BookOpen, 
+  Heart, 
+  TrendingUp, 
+  Sparkles 
+} from "lucide-react";
 import { TextReveal, Tilt3D, SectionBlurIn } from "@/components/Animations";
 import ApplyModal from "@/components/ApplyModal";
 import { careerEnquiry } from "@/data/site";
@@ -20,38 +30,44 @@ function SectionTag({ label }: { label: string }) {
 // Perks Data
 const perks = [
   {
-    emoji: "💰",
-    bgColor: "bg-yellow-50 dark:bg-yellow-950/20",
+    icon: DollarSign,
+    iconColor: "text-amber-500 dark:text-amber-400",
+    bgColor: "bg-amber-50 dark:bg-amber-950/20 border-amber-200/50 dark:border-amber-900/30",
     title: "Competitive Pay",
     desc: "Market-rate salaries with performance bonuses. We believe in paying people what they're worth.",
   },
   {
-    emoji: "🏡",
-    bgColor: "bg-rose-50 dark:bg-rose-950/20",
+    icon: Home,
+    iconColor: "text-rose-500 dark:text-rose-400",
+    bgColor: "bg-rose-50 dark:bg-rose-950/20 border-rose-200/50 dark:border-rose-900/30",
     title: "Flexible Work",
     desc: "Hybrid and remote options available for most roles. Work where you do your best work.",
   },
   {
-    emoji: "📚",
-    bgColor: "bg-green-50 dark:bg-green-950/20",
+    icon: BookOpen,
+    iconColor: "text-emerald-500 dark:text-emerald-400",
+    bgColor: "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200/50 dark:border-emerald-900/30",
     title: "Learning Budget",
     desc: "₹20,000/year per person for courses, books, conferences, and anything that makes you sharper.",
   },
   {
-    emoji: "📋",
-    bgColor: "bg-blue-50 dark:bg-blue-950/20",
+    icon: Heart,
+    iconColor: "text-blue-500 dark:text-blue-400",
+    bgColor: "bg-blue-50 dark:bg-blue-950/20 border-blue-200/50 dark:border-blue-900/30",
     title: "Health Coverage",
     desc: "Comprehensive health insurance for you and your immediate family. Your wellbeing matters.",
   },
   {
-    emoji: "🚀",
-    bgColor: "bg-purple-50 dark:bg-purple-950/20",
+    icon: TrendingUp,
+    iconColor: "text-purple-500 dark:text-purple-400",
+    bgColor: "bg-purple-50 dark:bg-purple-950/20 border-purple-200/50 dark:border-purple-900/30",
     title: "Fast Growth",
     desc: "Small team, big impact. You'll take on real responsibility from day one and grow quickly.",
   },
   {
-    emoji: "🎉",
-    bgColor: "bg-orange-50 dark:bg-orange-950/20",
+    icon: Sparkles,
+    iconColor: "text-orange-500 dark:text-orange-400",
+    bgColor: "bg-orange-50 dark:bg-orange-950/20 border-orange-200/50 dark:border-orange-900/30",
     title: "Great Culture",
     desc: "Team retreats, celebrations, and a culture that balances high performance with genuine fun.",
   },
@@ -165,20 +181,21 @@ export default function CareersClient() {
             <SectionTag label="Why MadSphere" />
           </div>
 
-          {/* Center-aligned Grid list of perks */}
+          {/* Grid list of perks */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {perks.map((perk, idx) => {
+              const Icon = perk.icon;
               return (
                 <motion.div
                   key={perk.title}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, delay: idx * 0.1, type: "spring", stiffness: 100 }}
-                  className="bg-white dark:bg-[#0c0c0e] border border-zinc-200/50 dark:border-zinc-800/60 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col items-center text-center gap-6"
+                  transition={{ duration: 0.6, delay: idx * 0.08, type: "spring", stiffness: 100 }}
+                  className="bg-white dark:bg-[#0c0c0e] border border-zinc-200/60 dark:border-zinc-800/80 p-8 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-blue-500/5 dark:hover:shadow-blue-500/5 hover:border-blue-500/30 dark:hover:border-blue-500/20 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-start text-left gap-6 group"
                 >
-                  <div className={`w-12 h-12 rounded-2xl ${perk.bgColor} flex items-center justify-center shrink-0 text-2xl`}>
-                    {perk.emoji}
+                  <div className={`w-12 h-12 rounded-2xl ${perk.bgColor} border flex items-center justify-center shrink-0 text-xl group-hover:scale-110 transition-transform duration-300`}>
+                    <Icon className={`w-5 h-5 ${perk.iconColor}`} />
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-2">

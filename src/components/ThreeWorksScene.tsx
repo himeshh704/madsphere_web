@@ -500,6 +500,8 @@ export default function ThreeWorksScene({ revealed, selectedProjectId, onSelectP
       canvas: archesCanvas,
       antialias: true,
       alpha: false,
+      powerPreference: "high-performance",
+      precision: "highp",
     });
     renArches.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renArches.setSize(vw, vh);
@@ -510,6 +512,8 @@ export default function ThreeWorksScene({ revealed, selectedProjectId, onSelectP
       canvas: cardsCanvas,
       antialias: true,
       alpha: true,
+      powerPreference: "high-performance",
+      precision: "highp",
     });
     renCards.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renCards.setSize(vw, vh);
@@ -542,6 +546,13 @@ export default function ThreeWorksScene({ revealed, selectedProjectId, onSelectP
       cardList.forEach((c) => {
         scCards.remove(c.mesh);
         c.mesh.geometry.dispose();
+
+        // Dispose texture to prevent GPU VRAM memory leaks
+        const mat = c.mesh.material as THREE.ShaderMaterial;
+        if (mat.uniforms && mat.uniforms.uTexture && mat.uniforms.uTexture.value) {
+          mat.uniforms.uTexture.value.dispose();
+        }
+
         if (Array.isArray(c.mesh.material)) {
           c.mesh.material.forEach((m) => m.dispose());
         } else {
@@ -921,6 +932,12 @@ export default function ThreeWorksScene({ revealed, selectedProjectId, onSelectP
       dracoLoader.dispose();
       state.cards.forEach((c) => {
         c.mesh.geometry.dispose();
+
+        const mat = c.mesh.material as THREE.ShaderMaterial;
+        if (mat.uniforms && mat.uniforms.uTexture && mat.uniforms.uTexture.value) {
+          mat.uniforms.uTexture.value.dispose();
+        }
+
         if (Array.isArray(c.mesh.material)) {
           c.mesh.material.forEach((m) => m.dispose());
         } else {
@@ -1018,6 +1035,7 @@ export default function ThreeWorksScene({ revealed, selectedProjectId, onSelectP
                 pointerEvents: "auto",
                 cursor: "pointer",
                 display: "none",
+                willChange: "transform",
               }}
               aria-label={item.title}
               title={item.title}
