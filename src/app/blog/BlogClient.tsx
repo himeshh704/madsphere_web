@@ -154,7 +154,7 @@ export default function BlogClient() {
               </div>
 
               {/* Scrollable Content */}
-              <div ref={scrollRef} className="w-full h-full overflow-y-auto pt-24 pb-32 px-6 scroll-smooth">
+              <div ref={scrollRef} data-lenis-prevent className="w-full h-full overflow-y-auto pt-24 pb-32 px-6 scroll-smooth">
                 <div className="max-w-[800px] mx-auto">
                   <div className="flex flex-col gap-6 mb-12 text-center md:text-left">
                     <div className="flex items-center justify-center md:justify-start gap-3 text-xs font-bold tracking-widest text-[#0047FF] uppercase">
