@@ -8,7 +8,14 @@ import {
   AnimatePresence
 } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Instagram, Linkedin, Mail, MessageCircle } from "lucide-react";
+
+const socialIconMap: Record<string, React.ReactNode> = {
+  Ig: <Instagram className="w-[18px] h-[18px]" />,
+  in: <Linkedin className="w-[18px] h-[18px]" />,
+  Gm: <Mail className="w-[18px] h-[18px]" />,
+  Wa: <MessageCircle className="w-[18px] h-[18px]" />
+};
 import Marquee from "@/components/Marquee";
 import ExpertiseScroll from "@/components/ExpertiseScroll";
 import { TextReveal, ScrollBlurReveal } from "@/components/Animations";
@@ -16,7 +23,8 @@ import { stagger } from "@/lib/motion";
 import { heroCards, socials, process, clients, hero, blogPosts } from "@/data/site";
 import SectionTag from "@/components/SectionTag";
 import { ParallaxScrollFeatureSection } from "@/components/ui/parallax-scroll-feature-section";
-import HeroCanvas from "@/components/HeroCanvas";
+import dynamic from "next/dynamic";
+const HeroCanvas = dynamic(() => import("@/components/HeroCanvas"), { ssr: false });
 
 
 
@@ -169,7 +177,7 @@ export default function Home() {
                   className="w-10 h-10 bg-white/30 backdrop-blur-md border border-white/20 rounded-lg flex items-center justify-center text-white text-sm font-semibold"
                   data-cursor
                 >
-                  {label}
+                  {socialIconMap[label] || label}
                 </motion.a>
               ))}
             </div>
