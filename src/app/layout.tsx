@@ -74,6 +74,7 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -114,6 +115,7 @@ export default function RootLayout({
             </div>
             <Footer />
           </SmoothScroll>
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
