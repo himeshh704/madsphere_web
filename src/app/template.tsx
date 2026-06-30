@@ -10,24 +10,21 @@ export default function Template({ children }: { children: React.ReactNode }) {
     <motion.div
       initial={{ 
         opacity: 0, 
-        filter: pathname === "/" ? "blur(16px)" : "blur(4px)", 
-        y: pathname === "/" ? 60 : 10,
-        scale: pathname === "/" ? 0.94 : 1
+        y: pathname === "/" ? 30 : 10,
+        scale: pathname === "/" ? 0.97 : 1
       }}
       animate={{ 
         opacity: 1, 
-        filter: "blur(0px)", 
         y: 0,
         scale: 1
       }}
       exit={{ 
         opacity: 0, 
-        filter: pathname === "/" ? "blur(8px)" : "blur(4px)", 
-        y: pathname === "/" ? -20 : -10,
-        scale: pathname === "/" ? 0.98 : 1
+        y: pathname === "/" ? -15 : -10,
+        scale: pathname === "/" ? 0.99 : 1
       }}
       transition={{ 
-        duration: pathname === "/" ? 2.2 : 0.45, 
+        duration: pathname === "/" ? 0.8 : 0.35, 
         ease: [0.16, 1, 0.3, 1] 
       }}
     >

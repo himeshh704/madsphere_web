@@ -283,7 +283,7 @@ export function Tilt3D({ children, className }: { children: React.ReactNode; cla
   );
 }
 
-// Wraps any section with a blur-in animation as it enters the viewport
+// Wraps any section with a smooth slide-in animation as it enters the viewport
 export function SectionBlurIn({
   children,
   className,
@@ -295,10 +295,10 @@ export function SectionBlurIn({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 28, filter: "blur(14px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.75, delay, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.65, delay, ease: [0.16, 1, 0.3, 1] }}
       className={className}
     >
       {children}
@@ -315,10 +315,10 @@ export function ScrollBlurReveal({
 }) {
   return (
     <motion.div
-      initial={{ filter: "blur(14px)", opacity: 0, y: 40 }}
-      whileInView={{ filter: "blur(0px)", opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       className={className}
     >
       {children}
