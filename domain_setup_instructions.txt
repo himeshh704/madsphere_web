@@ -1,0 +1,35 @@
+======================================================================
+              MADSPHERE DNS SETUP INSTRUCTIONS FOR VERCEL
+======================================================================
+
+If you have purchased "madsphere.in" from Hostinger, please add/update the 
+following DNS records in the Hostinger hPanel to connect the domain to Vercel:
+
+----------------------------------------------------------------------
+1. DELETE OLD RECORDS (if any exist)
+----------------------------------------------------------------------
+Under DNS Records, delete or edit any existing "A" records with Host "@"
+and any existing "CNAME" records with Host "www".
+
+----------------------------------------------------------------------
+2. ADD NEW A RECORD (Apex Domain: madsphere.in)
+----------------------------------------------------------------------
+* Record Type:    A
+* Name/Host:      @
+* Points to:      76.76.21.21
+* TTL:            Default (e.g., 14400 or 3600)
+
+----------------------------------------------------------------------
+3. ADD NEW CNAME RECORD (Subdomain: www.madsphere.in)
+----------------------------------------------------------------------
+* Record Type:    CNAME
+* Name/Host:      www
+* Points to:      cname.vercel-dns.com
+* TTL:            Default (e.g., 14400 or 3600)
+
+----------------------------------------------------------------------
+4. WAIT FOR PROPAGATION
+----------------------------------------------------------------------
+Once these changes are saved, it can take between 5 minutes to 2 hours for 
+the domain to be fully linked to Vercel. Vercel will automatically configure 
+the HTTPS SSL certificate.
