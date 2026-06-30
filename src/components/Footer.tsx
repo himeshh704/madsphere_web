@@ -3,14 +3,8 @@
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Instagram, Linkedin, Facebook } from "lucide-react";
+import { Instagram, Linkedin, Mail, MessageCircle } from "lucide-react";
 import { MagneticWrap, TextReveal } from "@/components/Animations";
-
-const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-  </svg>
-);
 
 export default function Footer() {
   const router = useRouter();
@@ -126,8 +120,8 @@ export default function Footer() {
             {[
               { Icon: Instagram, href: "https://www.instagram.com/madsphere.co?igsh=d2xldzdtb3VweW51" },
               { Icon: Linkedin, href: "https://www.linkedin.com/company/madsphere/" },
-              { Icon: Facebook, href: "#" },
-              { Icon: XIcon, href: "#" }
+              { Icon: Mail, href: "mailto:hello@madsphere.in" },
+              { Icon: MessageCircle, href: "https://wa.me/918619852610" }
             ].map(({ Icon, href }, i) => (
               <MagneticWrap key={i}>
                 <a href={href} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-800/80 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
