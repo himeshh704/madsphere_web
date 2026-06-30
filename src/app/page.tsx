@@ -439,7 +439,7 @@ export default function Home() {
       */}
 
       {/* Why Choose Us Section */}
-      <section ref={whyUsRef} className="relative z-10 py-32 px-6 md:px-16 bg-[#fcfcfc] dark:bg-[#070708]" style={{ contentVisibility: "auto", containIntrinsicSize: "0 1200px" }}>
+      <section ref={whyUsRef} className="relative z-10 py-32 px-6 md:px-16 bg-[#fcfcfc] dark:bg-[#070708]">
         <div className="max-w-[1200px] mx-auto flex flex-col items-center text-center gap-12">
           
           <div className="flex flex-col items-center gap-4">
@@ -561,13 +561,13 @@ export default function Home() {
       </section>
 
       {/* Expertise */}
-      <section id="services" className="relative z-10" style={{ contentVisibility: "auto", containIntrinsicSize: "0 1000px" }}>
+      <section id="services" className="relative z-10">
         <ExpertiseScroll />
       </section>
 
       {/* Parallax Showcase - commented out to hide the mountain parallax */}
       {/*
-      <section style={{ contentVisibility: "auto", containIntrinsicSize: "0 1000px" }}>
+      <section>
         <ParallaxComponent />
       </section>
       */}
