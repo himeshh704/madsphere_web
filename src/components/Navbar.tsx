@@ -27,6 +27,8 @@ export default function Navbar() {
 
   if (pathname === "/works" || pathname.startsWith("/admin") || pathname.startsWith("/blog")) return null;
 
+  const visibleNav = nav.filter((item) => item.href !== "/works");
+
   return (
     <header className={cn(
       "fixed top-0 inset-x-0 z-50 transition-all duration-300 py-4",
@@ -40,7 +42,7 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden md:flex items-center bg-zinc-100/80 dark:bg-zinc-900/80 backdrop-blur rounded-full px-1.5 py-1 border border-zinc-200 dark:border-zinc-800">
-          {nav.map(({ label, href }) => (
+          {visibleNav.map(({ label, href }) => (
             <Link
               key={label}
               href={href}
@@ -92,7 +94,7 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden absolute top-full inset-x-0 bg-white dark:bg-[#050505] border-b border-zinc-200 dark:border-zinc-800 shadow-xl">
           <div className="px-6 py-8 flex flex-col gap-3">
-            {nav.map(({ label, href }) => (
+            {visibleNav.map(({ label, href }) => (
               <Link
                 key={label}
                 href={href}

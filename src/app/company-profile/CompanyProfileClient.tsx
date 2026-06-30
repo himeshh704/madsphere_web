@@ -221,7 +221,7 @@ export default function CompanyProfileClient() {
         </div>
       )
     }
-  ];
+  ].filter((slide) => slide.title !== "Selected Case Studies");
 
   const handlePrint = () => {
     window.print();

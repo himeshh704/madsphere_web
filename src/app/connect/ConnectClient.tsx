@@ -88,7 +88,7 @@ export default function ConnectClient() {
           </h2>
 
           <div className="flex flex-col gap-4">
-            {connectLinks.map((link, i) => {
+            {connectLinks.filter(link => link.href !== "/works").map((link, i) => {
               const IconComponent = iconMap[link.icon] || Globe;
               return (
                 <motion.div

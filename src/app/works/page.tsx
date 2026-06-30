@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import WorksClient from "./WorksClient";
 
 export const metadata: Metadata = {
@@ -16,5 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default function WorksPage() {
+  redirect("/");
   return <WorksClient />;
 }
+

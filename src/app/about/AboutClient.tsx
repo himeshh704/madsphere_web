@@ -83,24 +83,27 @@ export default function AboutClient() {
           <p className="mt-4">{aboutHero.desc3}</p>
         </div>
 
-        <div className="flex justify-center mt-10">
-          <motion.button 
-            onClick={() => router.push('/works')}
-            whileHover="hover"
-            whileTap={{ scale: 0.96 }}
-            transition={{ type: "spring", stiffness: 350, damping: 15 }}
-            className="h-12 flex items-center bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-6 pr-2 text-xs font-bold uppercase tracking-widest shadow-lg shadow-blue-500/20 cursor-pointer"
-          >
-            See Our Work
-            <motion.span
-              variants={{ hover: { x: 2, y: -2 } }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="ml-3 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0"
+        {/* Hide for now: works page hidden */}
+        {false && (
+          <div className="flex justify-center mt-10">
+            <motion.button 
+              onClick={() => router.push('/works')}
+              whileHover="hover"
+              whileTap={{ scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 350, damping: 15 }}
+              className="h-12 flex items-center bg-[#0047FF] hover:bg-blue-700 text-white rounded-full pl-6 pr-2 text-xs font-bold uppercase tracking-widest shadow-lg shadow-blue-500/20 cursor-pointer"
             >
-              <ArrowUpRight className="w-3.5 h-3.5 text-white" />
-            </motion.span>
-          </motion.button>
-        </div>
+              See Our Work
+              <motion.span
+                variants={{ hover: { x: 2, y: -2 } }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                className="ml-3 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0"
+              >
+                <ArrowUpRight className="w-3.5 h-3.5 text-white" />
+              </motion.span>
+            </motion.button>
+          </div>
+        )}
       </section>
       </SectionBlurIn>
 
