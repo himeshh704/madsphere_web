@@ -41,21 +41,31 @@ export default function Navbar() {
           <img src="/logo_white.png" alt="Madsphere" className="h-6 md:h-7 w-auto hidden dark:block" />
         </Link>
 
-        <nav className="hidden md:flex items-center bg-zinc-100/80 dark:bg-zinc-900/80 backdrop-blur rounded-full px-1.5 py-1 border border-zinc-200 dark:border-zinc-800">
-          {visibleNav.map(({ label, href }) => (
-            <Link
-              key={label}
-              href={href}
-              className={cn(
-                "px-5 py-2.5 rounded-full text-xs font-medium tracking-wide transition-colors",
-                (pathname === href || (href !== "/" && pathname.startsWith(href)))
-                  ? "bg-[#0047FF] text-white"
-                  : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
-              )}
-            >
-              {label}
-            </Link>
-          ))}
+        <nav className="hidden md:flex items-center bg-zinc-100/80 dark:bg-zinc-900/80 backdrop-blur rounded-full px-1.5 py-1 border border-zinc-200 dark:border-zinc-800 relative">
+          {visibleNav.map(({ label, href }) => {
+            const isActive = pathname === href || (href !== "/" && pathname.startsWith(href));
+            return (
+              <Link
+                key={label}
+                href={href}
+                className={cn(
+                  "px-5 py-2.5 rounded-full text-xs font-medium tracking-wide transition-colors relative z-10",
+                  isActive
+                    ? "text-white"
+                    : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
+                )}
+              >
+                {label}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeNavPill"
+                    className="absolute inset-0 bg-[#0047FF] rounded-full -z-10"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
