@@ -42,36 +42,24 @@ export default function Preloader() {
       return;
     }
 
-    let wordTimer: NodeJS.Timeout;
-    
-    const animateWords = (index: number) => {
-      if (index < words.length - 1) {
-        wordTimer = setTimeout(() => {
-          setWordIndex(index + 1);
-          animateWords(index + 1);
-        }, 380); // 380ms per word
+    let current = 0;
+    let exitTimeout: NodeJS.Timeout;
+    const interval = setInterval(() => {
+      if (current < words.length - 1) {
+        current += 1;
+        setWordIndex(current);
       } else {
-        // Last word "MADSPHERE" reached.
-        // Wait for page to be complete
-        const finishPreloader = () => {
-          setTimeout(() => {
-            sessionStorage.setItem("madsphere_preloader_done", "true");
-            setIsLoading(false);
-          }, 800); // Give the final word some screen time
-        };
-        
-        if (document.readyState === "complete") {
-          finishPreloader();
-        } else {
-          window.addEventListener("load", finishPreloader);
-        }
+        clearInterval(interval);
+        exitTimeout = setTimeout(() => {
+          sessionStorage.setItem("madsphere_preloader_done", "true");
+          setIsLoading(false);
+        }, 800);
       }
-    };
-
-    animateWords(0);
+    }, 380);
 
     return () => {
-      clearTimeout(wordTimer);
+      clearInterval(interval);
+      clearTimeout(exitTimeout);
     };
   }, [isHome]);
 
