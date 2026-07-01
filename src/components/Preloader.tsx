@@ -31,13 +31,7 @@ export default function Preloader() {
   }, [isLoading, isHome]);
 
   useEffect(() => {
-    if (!isHome) {
-      sessionStorage.setItem("madsphere_preloader_done", "true");
-      setIsLoading(false);
-      return;
-    }
-
-    if (sessionStorage.getItem("madsphere_preloader_done")) {
+    if (!isHome || !isLoading) {
       setIsLoading(false);
       return;
     }
@@ -51,7 +45,6 @@ export default function Preloader() {
       } else {
         clearInterval(interval);
         exitTimeout = setTimeout(() => {
-          sessionStorage.setItem("madsphere_preloader_done", "true");
           setIsLoading(false);
         }, 800);
       }
@@ -61,7 +54,7 @@ export default function Preloader() {
       clearInterval(interval);
       clearTimeout(exitTimeout);
     };
-  }, [isHome]);
+  }, [isHome, isLoading]);
 
   return (
     <AnimatePresence>
