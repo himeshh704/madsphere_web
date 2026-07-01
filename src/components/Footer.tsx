@@ -50,7 +50,7 @@ export default function Footer() {
                   className="w-full h-full relative"
                 >
                   <div className="absolute inset-0 bg-red-600 mix-blend-overlay z-10 pointer-events-none"></div>
-                  <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&fit=crop" className="w-full h-full object-cover filter grayscale contrast-125" alt="Portrait" />
+                  <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&fit=crop" className="w-full h-full object-cover filter grayscale contrast-125" alt="Portrait" loading="lazy" />
                 </motion.div>
               </motion.div>
               
@@ -70,7 +70,7 @@ export default function Footer() {
                   className="w-full h-full relative"
                 >
                   <div className="absolute inset-0 bg-red-600 mix-blend-overlay z-10 pointer-events-none"></div>
-                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&fit=crop" className="w-full h-full object-cover filter grayscale contrast-125" alt="Portrait" />
+                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&fit=crop" className="w-full h-full object-cover filter grayscale contrast-125" alt="Portrait" loading="lazy" />
                 </motion.div>
               </motion.div>
             </div>
@@ -101,7 +101,7 @@ export default function Footer() {
         )}
 
         <div data-cursor-square="MADSPHERE" className="w-full relative px-6 md:px-16 mb-16 overflow-visible lg:cursor-none">
-          <h1 
+          <div 
             className="text-center text-[9.5vw] md:text-[13vw] font-bold leading-none select-none tracking-tight pr-4"
             style={{ 
               fontFamily: "Georgia, serif", 
@@ -112,7 +112,7 @@ export default function Footer() {
             }}
           >
             MADSPHERE
-          </h1>
+          </div>
         </div>
 
         <div className="w-full max-w-[1500px] px-6 md:px-16 flex flex-col md:flex-row items-center justify-between gap-8 pt-8 border-t border-zinc-900">

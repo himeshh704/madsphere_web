@@ -154,9 +154,9 @@ export default function Home() {
           }}
           className="relative w-full rounded-[24px] overflow-hidden shadow-2xl"
         >
-          <div style={{ height: "85vh", minHeight: 550 }} className="relative">
+          <div className="relative h-[85vh] min-h-[550px]">
             <motion.div style={{ y: mounted ? bgY : undefined }} className="absolute inset-0 scale-110">
-              <img src={hero.img} alt="" className="w-full h-full object-cover" />
+              <img src={hero.img} alt="Madsphere Cinematic Hero Background" className="w-full h-full object-cover" />
             </motion.div>
             <HeroCanvas />
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/50" />
@@ -269,14 +269,12 @@ export default function Home() {
               <motion.div
                 animate={{ x: ["0%", "-50%"] }}
                 transition={{ repeat: Infinity, repeatType: "loop", duration: 15, ease: "linear" }}
-                className="flex gap-3 shrink-0"
-                style={{ width: "fit-content" }}
+                className="flex gap-3 shrink-0 w-fit"
               >
                 {[...heroCards, ...heroCards].map((card, idx) => (
                   <div
                     key={`${card.id}-${idx}`}
-                    className="shrink-0 flex items-center gap-3 bg-white/35 backdrop-blur-xl border border-white/25 rounded-xl px-3 py-2"
-                    style={{ width: 180 }}
+                    className="shrink-0 flex items-center gap-3 bg-white/35 backdrop-blur-xl border border-white/25 rounded-xl px-3 py-2 w-[180px]"
                   >
                     <div className="relative w-11 h-11 rounded-lg overflow-hidden shrink-0 bg-zinc-800">
                       <img 
@@ -703,6 +701,7 @@ export default function Home() {
                       target.src = "/hero_gradient_bg.png";
                     }}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
                 </div>

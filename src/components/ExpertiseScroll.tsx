@@ -86,7 +86,7 @@ export default function ExpertiseScroll() {
                             className="overflow-hidden pb-6 flex flex-col gap-4"
                           >
                             <div className="rounded-xl overflow-hidden shadow-md bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
-                              <img src={ex.img} alt={ex.label} className="w-full aspect-[16/10] object-cover" />
+                              <img src={ex.img} alt={ex.label} className="w-full aspect-[16/10] object-cover" loading="lazy" />
                             </div>
                             <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans font-medium">
                               {ex.desc}
@@ -154,7 +154,7 @@ export default function ExpertiseScroll() {
                 onMouseLeave={onLeave}
                 className="rounded-xl overflow-hidden shadow-2xl cursor-pointer"
               >
-                <img src={item.img} alt={item.label} className="w-full aspect-[4/3] object-cover" draggable={false} />
+                <img src={item.img} alt={item.label} className="w-full aspect-[4/3] object-cover" draggable={false} loading="lazy" />
               </motion.div>
 
               <motion.p

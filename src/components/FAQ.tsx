@@ -81,8 +81,9 @@ export default function FAQ() {
           <Tilt3D className="w-full rounded-2xl overflow-hidden aspect-[4/3] bg-zinc-200 dark:bg-zinc-800 relative">
             <img 
               src={faqContactImg} 
-              alt="VR Developer" 
+              alt="VR Developer Illustration" 
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </Tilt3D>
           <div className="flex flex-col gap-4">

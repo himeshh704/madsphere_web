@@ -147,9 +147,10 @@ export default function CareersClient() {
             <Tilt3D className="w-full max-w-[320px] aspect-square rounded-[2rem] overflow-hidden shadow-2xl relative border border-zinc-200 dark:border-zinc-800">
               <img
                 src="/images/careers_portrait.png"
-                alt="Creative portrait"
+                alt="MadSphere Creative Team Portrait"
                 className="w-full h-full object-cover"
                 draggable={false}
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
             </Tilt3D>
@@ -326,7 +327,7 @@ export default function CareersClient() {
               transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.1 }}
               className="inline-flex w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-white/20 align-middle shadow-md shrink-0 cursor-pointer"
             >
-              <img src={careerEnquiry.img1} className="w-full h-full object-cover" alt="" />
+              <img src={careerEnquiry.img1} className="w-full h-full object-cover" alt="MadSphere Team Member Avatar 1" loading="lazy" />
             </motion.span>
             <span>your CV at</span>
             <motion.span
@@ -338,7 +339,7 @@ export default function CareersClient() {
               transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.25 }}
               className="inline-flex w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-white/20 align-middle shadow-md shrink-0 cursor-pointer"
             >
-              <img src={careerEnquiry.img2} className="w-full h-full object-cover" alt="" />
+              <img src={careerEnquiry.img2} className="w-full h-full object-cover" alt="MadSphere Team Member Avatar 2" loading="lazy" />
             </motion.span>
           </h2>
 

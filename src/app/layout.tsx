@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     default: "Madsphere | Premium Creative Branding & Digital Agency",
     template: "%s | Madsphere Studio",
   },
-  description: "MadSphere is a premium digital design and branding agency delivering high-fidelity interactive websites, brand strategy, creative content, and performance marketing in Mumbai.",
+  description: "MadSphere is a premium digital design and branding agency in Mumbai, delivering interactive websites, brand strategy, and creative marketing campaigns.",
   keywords: [
     "creative branding agency",
     "branding studio mumbai",
@@ -102,6 +102,37 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          {/* Schema.org / JSON-LD Structured Data */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "ProfessionalService",
+                "name": "MadSphere",
+                "url": "https://madsphere.in",
+                "logo": "https://madsphere.in/logo.png",
+                "image": "https://madsphere.in/mascot.png",
+                "description": "MadSphere is a premium digital design and branding agency in Mumbai, delivering interactive websites, brand strategy, and creative marketing campaigns.",
+                "address": {
+                  "@type": "PostalAddress",
+                  "addressLocality": "Mumbai",
+                  "addressRegion": "Maharashtra",
+                  "addressCountry": "IN"
+                },
+                "contactPoint": {
+                  "@type": "ContactPoint",
+                  "contactType": "customer service",
+                  "email": "hello@madsphere.in",
+                  "telephone": "+91-93702-64247"
+                },
+                "sameAs": [
+                  "https://www.instagram.com/madsphere.co",
+                  "https://www.linkedin.com/company/madsphere/"
+                ]
+              })
+            }}
+          />
           <Preloader />
           <CustomCursor />
           <FloatingOrbs />
