@@ -64,7 +64,7 @@ export default function ApplyModal({ role, onClose }: ApplyModalProps) {
 
   const rowClass = "flex items-start gap-4 px-6 py-4 border-b border-zinc-200/50 group transition-colors hover:bg-zinc-500/5";
   const labelClass = "w-20 shrink-0 text-[11px] font-bold tracking-wider uppercase text-zinc-400 pt-0.5 select-none";
-  const inputClass = "flex-1 bg-transparent text-zinc-805 text-sm font-semibold placeholder:text-zinc-400 outline-none transition-colors";
+  const inputClass = "flex-1 bg-transparent text-zinc-900 text-sm font-semibold placeholder:text-zinc-400 outline-none transition-colors";
 
   if (!mounted) return null;
 
@@ -225,7 +225,7 @@ export default function ApplyModal({ role, onClose }: ApplyModalProps) {
                   placeholder="Say something about yourself and why you want to join MadSphere..."
                   value={form.message}
                   onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-                  className="w-full bg-transparent text-zinc-850 text-sm font-semibold placeholder:text-zinc-400 outline-none resize-none leading-relaxed transition-colors"
+                  className="w-full bg-transparent text-zinc-900 text-sm font-semibold placeholder:text-zinc-400 outline-none resize-none leading-relaxed transition-colors"
                 />
               </div>
 

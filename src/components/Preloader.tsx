@@ -1,98 +1,15 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-function Constellation() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-
-    const particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = [];
-    const numParticles = Math.floor((width * height) / 15000); // Density
-
-    for (let i = 0; i < numParticles; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        radius: Math.random() * 1.5 + 0.5,
-      });
-    }
-
-    let animationFrameId: number;
-
-    const render = () => {
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-      ctx.lineWidth = 0.5;
-
-      // Update and draw particles
-      for (let i = 0; i < numParticles; i++) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Connect particles
-        for (let j = i + 1; j < numParticles; j++) {
-          const p2 = particles[j];
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 120) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(255, 255, 255, ${0.2 - dist / 120 * 0.2})`;
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-          }
-        }
-      }
-      animationFrameId = requestAnimationFrame(render);
-    };
-
-    render();
-
-    const handleResize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-    };
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} className="absolute inset-0 z-0 opacity-40 pointer-events-none" />;
-}
-
 import { usePathname } from "next/navigation";
+
+const words = ["DESIGN", "CREATIVE", "ENGINEERING", "MADSPHERE"];
 
 export default function Preloader() {
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(true);
+  const [wordIndex, setWordIndex] = useState(0);
 
   const isHome = pathname === "/";
 
@@ -125,36 +42,37 @@ export default function Preloader() {
       return;
     }
 
-    let frame: number;
-    let start: number | null = null;
-    const duration = 2000; // 2 seconds minimum to ensure assets buffer
-
-    const update = (timestamp: number) => {
-      if (!start) start = timestamp;
-      const elapsed = timestamp - start;
-      const rawProgress = Math.min(elapsed / duration, 1);
-      
-      if (rawProgress < 1) {
-        frame = requestAnimationFrame(update);
+    let wordTimer: NodeJS.Timeout;
+    
+    const animateWords = (index: number) => {
+      if (index < words.length - 1) {
+        wordTimer = setTimeout(() => {
+          setWordIndex(index + 1);
+          animateWords(index + 1);
+        }, 380); // 380ms per word
       } else {
-        // At 100%, check if window is actually loaded
+        // Last word "MADSPHERE" reached.
+        // Wait for page to be complete
         const finishPreloader = () => {
           setTimeout(() => {
             sessionStorage.setItem("madsphere_preloader_done", "true");
             setIsLoading(false);
-          }, 300);
+          }, 800); // Give the final word some screen time
         };
         
         if (document.readyState === "complete") {
           finishPreloader();
         } else {
-          window.addEventListener('load', finishPreloader);
+          window.addEventListener("load", finishPreloader);
         }
       }
     };
 
-    frame = requestAnimationFrame(update);
-    return () => cancelAnimationFrame(frame);
+    animateWords(0);
+
+    return () => {
+      clearTimeout(wordTimer);
+    };
   }, [isHome]);
 
   return (
@@ -163,38 +81,42 @@ export default function Preloader() {
         <motion.div
           key="preloader"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.9, ease: [0.76, 0, 0.24, 1] } }}
+          exit={{ 
+            y: "-100%", // Curtain slide up transition
+            transition: { duration: 0.85, ease: [0.76, 0, 0.24, 1] } 
+          }}
           className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#070708] text-white overflow-hidden"
         >
-          {/* Constellation Background */}
-          <Constellation />
-
           {/* Subtle background glow */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,71,255,0.08)_0%,transparent_50%)] z-0" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,71,255,0.06)_0%,transparent_60%)] z-0" />
 
-          <div className="flex flex-col items-center justify-center z-10 w-full">
-            <motion.div
-               initial={{ opacity: 0, scale: 0.85 }}
-               animate={{ 
-                 opacity: 1, 
-                 scale: 1,
-                 y: [0, -8, 0],
-               }}
-               exit={{ 
-                 scale: 90, 
-                 x: "30.5%", // Centers the stick-man 'A' (19.5% from left) to the middle of the screen
-                 opacity: [1, 1, 1, 0],
-                 transition: { duration: 2.2, ease: [0.76, 0, 0.24, 1] }
-               }}
-               transition={{
-                 opacity: { duration: 0.8 },
-                 scale: { duration: 0.8 },
-                 y: { duration: 3.5, repeat: Infinity, ease: "easeInOut" }
-               }}
-               style={{ transformOrigin: "19.5% 52%" }}
-            >
-              <img src="/logo_white.png" alt="Madsphere Logo" className="h-12 md:h-16 w-auto object-contain" />
-            </motion.div>
+          {/* Word Sequence Container */}
+          <div className="relative z-10 w-full overflow-hidden h-24 flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              {words[wordIndex] === "MADSPHERE" ? (
+                <motion.div
+                  key="logo"
+                  initial={{ y: "100%", opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: "-100%", opacity: 0 }}
+                  transition={{ duration: 0.35, ease: [0.215, 0.61, 0.355, 1] }}
+                  className="flex items-center justify-center"
+                >
+                  <img src="/logo_white.png" alt="Madsphere Logo" className="h-12 md:h-16 w-auto object-contain" />
+                </motion.div>
+              ) : (
+                <motion.span
+                  key={wordIndex}
+                  initial={{ y: "100%", opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: "-100%", opacity: 0 }}
+                  transition={{ duration: 0.35, ease: [0.215, 0.61, 0.355, 1] }}
+                  className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-[0.2em] uppercase font-sans text-white text-center block"
+                >
+                  {words[wordIndex]}
+                </motion.span>
+              )}
+            </AnimatePresence>
           </div>
         </motion.div>
       )}

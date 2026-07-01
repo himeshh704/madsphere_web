@@ -117,24 +117,24 @@ export default function ContactClient() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-2">
                       <label className="text-[11px] font-bold tracking-widest uppercase text-zinc-500">Full Name</label>
-                      <input required name="name" value={formState.name} onChange={handleChange} type="text" placeholder="Steve Jobs" className="w-full p-3.5 rounded-xl border border-zinc-200/80 bg-white/45 text-zinc-805 placeholder:text-zinc-400 outline-none focus:border-[#0047FF] focus:bg-white transition-all shadow-sm text-sm font-semibold" />
+                      <input required name="name" value={formState.name} onChange={handleChange} type="text" placeholder="Steve Jobs" className="w-full p-3.5 rounded-xl border border-zinc-200/80 bg-white/45 text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-[#0047FF] focus:bg-white transition-all shadow-sm text-sm font-semibold" />
                     </div>
                     <div className="flex flex-col gap-2">
                       <label className="text-[11px] font-bold tracking-widest uppercase text-zinc-500">Phone Number</label>
-                      <input required name="phone" value={formState.phone} onChange={handleChange} type="tel" placeholder="+1 800 692 7753" className="w-full p-3.5 rounded-xl border border-zinc-200/80 bg-white/45 text-zinc-805 placeholder:text-zinc-400 outline-none focus:border-[#0047FF] focus:bg-white transition-all shadow-sm text-sm font-semibold" />
+                      <input required name="phone" value={formState.phone} onChange={handleChange} type="tel" placeholder="+1 800 692 7753" className="w-full p-3.5 rounded-xl border border-zinc-200/80 bg-white/45 text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-[#0047FF] focus:bg-white transition-all shadow-sm text-sm font-semibold" />
                     </div>
                     <div className="flex flex-col gap-2">
                       <label className="text-[11px] font-bold tracking-widest uppercase text-zinc-500">Email</label>
-                      <input required name="email" value={formState.email} onChange={handleChange} type="email" placeholder="steve@apple.com" className="w-full p-3.5 rounded-xl border border-zinc-200/80 bg-white/45 text-zinc-805 placeholder:text-zinc-400 outline-none focus:border-[#0047FF] focus:bg-white transition-all shadow-sm text-sm font-semibold" />
+                      <input required name="email" value={formState.email} onChange={handleChange} type="email" placeholder="steve@apple.com" className="w-full p-3.5 rounded-xl border border-zinc-200/80 bg-white/45 text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-[#0047FF] focus:bg-white transition-all shadow-sm text-sm font-semibold" />
                     </div>
                     <div className="flex flex-col gap-2">
                       <label className="text-[11px] font-bold tracking-widest uppercase text-zinc-500">Company</label>
-                      <input required name="company" value={formState.company} onChange={handleChange} type="text" placeholder="Apple Inc." className="w-full p-3.5 rounded-xl border border-zinc-200/80 bg-white/45 text-zinc-805 placeholder:text-zinc-400 outline-none focus:border-[#0047FF] focus:bg-white transition-all shadow-sm text-sm font-semibold" />
+                      <input required name="company" value={formState.company} onChange={handleChange} type="text" placeholder="Apple Inc." className="w-full p-3.5 rounded-xl border border-zinc-200/80 bg-white/45 text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-[#0047FF] focus:bg-white transition-all shadow-sm text-sm font-semibold" />
                     </div>
                     <div className="flex flex-col gap-2">
                       <label className="text-[11px] font-bold tracking-widest uppercase text-zinc-500">Service</label>
                       <div className="relative">
-                        <select name="service" value={formState.service} onChange={handleChange} className="w-full p-3.5 rounded-xl border border-zinc-200/80 bg-white/45 text-zinc-805 outline-none focus:border-[#0047FF] focus:bg-white transition-all shadow-sm text-sm font-semibold appearance-none pr-10 cursor-pointer">
+                        <select name="service" value={formState.service} onChange={handleChange} className="w-full p-3.5 rounded-xl border border-zinc-200/80 bg-white/45 text-zinc-900 outline-none focus:border-[#0047FF] focus:bg-white transition-all shadow-sm text-sm font-semibold appearance-none pr-10 cursor-pointer">
                           <option value="Design" className="bg-white text-zinc-900 font-semibold">UI/UX Design</option>
                           <option value="Development" className="bg-white text-zinc-900 font-semibold">Web Development</option>
                           <option value="Marketing" className="bg-white text-zinc-900 font-semibold">Digital Marketing</option>
@@ -146,7 +146,7 @@ export default function ContactClient() {
                     <div className="flex flex-col gap-2">
                       <label className="text-[11px] font-bold tracking-widest uppercase text-zinc-500">Budget</label>
                       <div className="relative">
-                        <select name="budget" value={formState.budget} onChange={handleChange} className="w-full p-3.5 rounded-xl border border-zinc-200/80 bg-white/45 text-zinc-805 outline-none focus:border-[#0047FF] focus:bg-white transition-all shadow-sm text-sm font-semibold appearance-none pr-10 cursor-pointer">
+                        <select name="budget" value={formState.budget} onChange={handleChange} className="w-full p-3.5 rounded-xl border border-zinc-200/80 bg-white/45 text-zinc-900 outline-none focus:border-[#0047FF] focus:bg-white transition-all shadow-sm text-sm font-semibold appearance-none pr-10 cursor-pointer">
                           <option value="<10k" className="bg-white text-zinc-900 font-semibold">Less than $10k</option>
                           <option value="10k-25k" className="bg-white text-zinc-900 font-semibold">$10k - $25k</option>
                           <option value="25k-50k" className="bg-white text-zinc-900 font-semibold">$25k - $50k</option>
@@ -159,7 +159,7 @@ export default function ContactClient() {
 
                   <div className="flex flex-col gap-2">
                     <label className="text-[11px] font-bold tracking-widest uppercase text-zinc-500">Message</label>
-                    <textarea required name="message" value={formState.message} onChange={handleChange} placeholder="Tell us about the next big thing you're building..." rows={4} className="w-full p-4 rounded-xl border border-zinc-200/80 bg-white/45 text-zinc-805 placeholder:text-zinc-400 outline-none focus:border-[#0047FF] focus:bg-white transition-all shadow-sm resize-none text-sm font-semibold" />
+                    <textarea required name="message" value={formState.message} onChange={handleChange} placeholder="Tell us about the next big thing you're building..." rows={4} className="w-full p-4 rounded-xl border border-zinc-200/80 bg-white/45 text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-[#0047FF] focus:bg-white transition-all shadow-sm resize-none text-sm font-semibold" />
                   </div>
 
               <motion.button 

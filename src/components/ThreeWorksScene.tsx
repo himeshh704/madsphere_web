@@ -493,6 +493,7 @@ export default function ThreeWorksScene({ revealed, selectedProjectId, onSelectP
     let vw = container.clientWidth;
     let vh = container.clientHeight;
 
+    // eslint-disable-next-line prefer-const
     let state: SceneState;
 
     // Renderer 1 (Arches - Solid background pass)
